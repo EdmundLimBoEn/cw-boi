@@ -1,0 +1,22 @@
+{
+  "arguments": {
+    "steps": 4000,
+    "batch_size": 8,
+    "workers": 2,
+    "device": "cuda",
+    "eval_every": 1000,
+    "eval_count": 48,
+    "seed": 330001,
+    "output": "models\\rough-fist-gpu-v2",
+    "checkpoint": "models\\rough-fist-gpu-v1\\last.pt",
+    "hard_fraction": 0.45
+  },
+  "torch": "2.8.0+cu128",
+  "torchaudio": "2.8.0+cu128",
+  "script_sha256": "3f1e7fd225f099e1a1e09d532cf8fc5e7b9a69c4b5bbb099130326f563c58cc7",
+  "hardware": "NVIDIA GeForce RTX 3080",
+  "elapsed_training_seconds": 295,
+  "selected_step": 3000,
+  "completed_steps": 4000,
+  "status": "Completed. Selected candidate passed development and independent-seed tests but was not promoted due to regressions in the separate streaming-generator comparison."
+}

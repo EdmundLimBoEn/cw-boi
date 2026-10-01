@@ -1,0 +1,277 @@
+{
+  "step": 3000,
+  "accepted": true,
+  "metrics": {
+    "clean": {
+      "edits": 1,
+      "characters": 80,
+      "clips": 12,
+      "false_characters": 0,
+      "cer": 0.0125
+    },
+    "rough": {
+      "edits": 4,
+      "characters": 76,
+      "clips": 12,
+      "false_characters": 0,
+      "cer": 0.05263157894736842
+    },
+    "chaos": {
+      "edits": 24,
+      "characters": 51,
+      "clips": 12,
+      "false_characters": 0,
+      "cer": 0.47058823529411764
+    },
+    "noise": {
+      "edits": 2,
+      "characters": 0,
+      "clips": 12,
+      "false_characters": 2,
+      "cer": 2.0
+    }
+  },
+  "examples": [
+    {
+      "family": "clean",
+      "expected": "KER",
+      "actual": "KR"
+    },
+    {
+      "family": "rough",
+      "expected": "ZWSK 70",
+      "actual": "ZWSK70"
+    },
+    {
+      "family": "chaos",
+      "expected": "QSL K",
+      "actual": "TSLK"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    },
+    {
+      "family": "clean",
+      "expected": "599 RST",
+      "actual": "599 RST"
+    },
+    {
+      "family": "rough",
+      "expected": "TNX NAME ES",
+      "actual": "TNX NAME ES"
+    },
+    {
+      "family": "chaos",
+      "expected": "RIG HR",
+      "actual": "RIG HR"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    },
+    {
+      "family": "clean",
+      "expected": "JU9I",
+      "actual": "JU9I"
+    },
+    {
+      "family": "rough",
+      "expected": "CQ RIG",
+      "actual": "CQ RIG"
+    },
+    {
+      "family": "chaos",
+      "expected": "589 FER K",
+      "actual": "Z9 F"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    },
+    {
+      "family": "clean",
+      "expected": "AGN",
+      "actual": "AGN"
+    },
+    {
+      "family": "rough",
+      "expected": "H729",
+      "actual": "H79"
+    },
+    {
+      "family": "chaos",
+      "expected": "H5Q",
+      "actual": "HA"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    },
+    {
+      "family": "clean",
+      "expected": "CQ PWR CALL",
+      "actual": "CQ PWR CALL"
+    },
+    {
+      "family": "rough",
+      "expected": "AGN AGN",
+      "actual": "AGN AGN"
+    },
+    {
+      "family": "chaos",
+      "expected": "ES",
+      "actual": ""
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    },
+    {
+      "family": "clean",
+      "expected": "589 HR",
+      "actual": "589 HR"
+    },
+    {
+      "family": "rough",
+      "expected": "HR RIG NAME",
+      "actual": "HR RIG NAME"
+    },
+    {
+      "family": "chaos",
+      "expected": "UU",
+      "actual": "U"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    },
+    {
+      "family": "clean",
+      "expected": "AJ6FH",
+      "actual": "AJ6FH"
+    },
+    {
+      "family": "rough",
+      "expected": "GDE5",
+      "actual": "DE5"
+    },
+    {
+      "family": "chaos",
+      "expected": "O8D",
+      "actual": "8DD"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    },
+    {
+      "family": "clean",
+      "expected": "ANT HR",
+      "actual": "ANT HR"
+    },
+    {
+      "family": "rough",
+      "expected": "DG5H",
+      "actual": "DG5H"
+    },
+    {
+      "family": "chaos",
+      "expected": "8F44",
+      "actual": "DF4"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    },
+    {
+      "family": "clean",
+      "expected": "559 559",
+      "actual": "559 559"
+    },
+    {
+      "family": "rough",
+      "expected": "AGN",
+      "actual": "AGN"
+    },
+    {
+      "family": "chaos",
+      "expected": "WX TNX",
+      "actual": "K TNX"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    },
+    {
+      "family": "clean",
+      "expected": "K PWR ANT",
+      "actual": "K PWR ANT"
+    },
+    {
+      "family": "rough",
+      "expected": "C2O D0Q",
+      "actual": "C2O D0Q"
+    },
+    {
+      "family": "chaos",
+      "expected": "XKA",
+      "actual": "XKA"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": "TE"
+    },
+    {
+      "family": "clean",
+      "expected": "DE BK PWR",
+      "actual": "DE BK PWR"
+    },
+    {
+      "family": "rough",
+      "expected": "K3JR L1G",
+      "actual": "K3JR LOG"
+    },
+    {
+      "family": "chaos",
+      "expected": "TEST",
+      "actual": "T"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    },
+    {
+      "family": "clean",
+      "expected": "J6 33PHV4Y",
+      "actual": "J6 33PHV4Y"
+    },
+    {
+      "family": "rough",
+      "expected": "Q52J",
+      "actual": "Q52J"
+    },
+    {
+      "family": "chaos",
+      "expected": "CALL",
+      "actual": "CIL"
+    },
+    {
+      "family": "noise",
+      "expected": "",
+      "actual": ""
+    }
+  ],
+  "seed": 2000000
+}

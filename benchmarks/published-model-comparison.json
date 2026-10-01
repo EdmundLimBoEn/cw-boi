@@ -1,0 +1,62 @@
+{
+  "seed": 39181,
+  "knownCarrier": true,
+  "sampleRate": 8000,
+  "model": "Morseformer 0.6.4 rnnt_phase11b",
+  "results": [
+    {
+      "challenge": "clean",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "neural": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptiveCER": 0,
+      "neuralCER": 0,
+      "neuralMs": 575
+    },
+    {
+      "challenge": "human",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "neural": "CQ DE 9V1ABC UR RST 579 QTTH SINGAPORE K",
+      "adaptiveCER": 0,
+      "neuralCER": 0.02564102564102564,
+      "neuralMs": 745
+    },
+    {
+      "challenge": "fading",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "CQ DE 9V1ABT E UR RST 579 QTH SINGAPORE K",
+      "neural": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptiveCER": 0.07692307692307693,
+      "neuralCER": 0,
+      "neuralMs": 509
+    },
+    {
+      "challenge": "crowded",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "neural": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptiveCER": 0,
+      "neuralCER": 0,
+      "neuralMs": 436
+    },
+    {
+      "challenge": "rough",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "CQ DE 9V1ABC UR RST 579 QTH SINGAPOREK",
+      "neural": "CQ DE 9V1ABC UR RST 579 QTH 5NGAPOL K",
+      "adaptiveCER": 0.02564102564102564,
+      "neuralCER": 0.10256410256410256,
+      "neuralMs": 984
+    },
+    {
+      "challenge": "chaos",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "TEEI E EET EI NEA ET N TD TE E E E E T J T O T ET A IME S EE E I E E IEE E T ME TTE TTT EAI EE TUEI TE E A E E",
+      "neural": "LODE OR4CL AN99BNNPZHZ",
+      "adaptiveCER": 2.41025641025641,
+      "neuralCER": 0.7948717948717948,
+      "neuralMs": 617
+    }
+  ]
+}

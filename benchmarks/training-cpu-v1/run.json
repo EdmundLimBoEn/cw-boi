@@ -1,0 +1,15 @@
+{
+  "device": "cpu",
+  "torch": "2.14.1",
+  "torchaudio": "2.11.0",
+  "steps": 600,
+  "batch_size": 4,
+  "workers": 2,
+  "training_seed": 110001,
+  "validation_seed": 2000000,
+  "validation_clips": 48,
+  "chaos_fraction": 0.25,
+  "elapsed_training_seconds": 385,
+  "accepted": false,
+  "note": "Initial experiment before per-batch weighting of empty-target RNN-T loss was corrected. All candidates failed the strict chaos improvement gate. UI continues to use the published model."
+}

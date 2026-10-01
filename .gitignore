@@ -1,0 +1,11 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+.env*
+!.env.example
+.venv/
+.research/
+__pycache__/
+models/
+benchmarks/audio/

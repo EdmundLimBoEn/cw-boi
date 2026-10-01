@@ -1,0 +1,18 @@
+{
+  "arguments": {
+    "steps": 600,
+    "batch_size": 4,
+    "workers": 2,
+    "device": "cuda",
+    "eval_every": 200,
+    "eval_count": 48,
+    "seed": 220001,
+    "output": "models\\rough-fist-gpu-v1",
+    "checkpoint": "rnnt_phase11b.pt",
+    "hard_fraction": 0.45
+  },
+  "torch": "2.8.0+cu128",
+  "torchaudio": "2.8.0+cu128",
+  "script_sha256": "3a157a1f88ecf8c0f40d932ebede04dfd66f6bb1da2ddd09d125e0eca4e78ec3",
+  "hardware": "NVIDIA GeForce RTX 3080"
+}

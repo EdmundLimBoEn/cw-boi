@@ -1,0 +1,68 @@
+{
+  "seed": 39181,
+  "knownCarrier": true,
+  "sampleRate": 8000,
+  "model": {
+    "ready": true,
+    "model": "Morseformer 0.6.4",
+    "checkpoint": "rough-fist-gpu-v2/best.pt",
+    "device": "cpu",
+    "base_revision": "9eab86a3ad7482f8c5801eabf26ec46f9493b919"
+  },
+  "results": [
+    {
+      "challenge": "clean",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "neural": "CQ DE 9V1ABC URRST 579 QTH SINGAPORE K",
+      "adaptiveCER": 0,
+      "neuralCER": 0.02564102564102564,
+      "neuralMs": 537
+    },
+    {
+      "challenge": "human",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "neural": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptiveCER": 0,
+      "neuralCER": 0,
+      "neuralMs": 694
+    },
+    {
+      "challenge": "fading",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "CQ DE 9V1ABT E UR RST 579 QTH SINGAPORE K",
+      "neural": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptiveCER": 0.07692307692307693,
+      "neuralCER": 0,
+      "neuralMs": 475
+    },
+    {
+      "challenge": "crowded",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "neural": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptiveCER": 0,
+      "neuralCER": 0,
+      "neuralMs": 451
+    },
+    {
+      "challenge": "rough",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "CQ DE 9V1ABC UR RST 579 QTH SINGAPOREK",
+      "neural": "CQ DE 9V1ABCR RST 579QTH 5INGAPOL K",
+      "adaptiveCER": 0.02564102564102564,
+      "neuralCER": 0.15384615384615385,
+      "neuralMs": 791
+    },
+    {
+      "challenge": "chaos",
+      "expected": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+      "adaptive": "TEEI E EET EI NEA ET N TD TE E E E E T J T O T ET A IME S EE E I E E IEE E T ME TTE TTT EAI EE TUEI TE E A E E",
+      "neural": "LDE ARSCL77RNGPPPR",
+      "adaptiveCER": 2.41025641025641,
+      "neuralCER": 0.717948717948718,
+      "neuralMs": 522
+    }
+  ]
+}

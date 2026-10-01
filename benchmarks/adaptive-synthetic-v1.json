@@ -1,0 +1,396 @@
+{
+  "suite": "synthetic-v1",
+  "sampleRate": 8000,
+  "autoTune": true,
+  "seed": 92017,
+  "disclaimer": "Synthetic regression tests only; no real-world accuracy or superiority claim.",
+  "total": 48,
+  "exact": 32,
+  "cer": 0.09642857142857143,
+  "results": [
+    {
+      "name": "hand-10wpm-0pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "Y8QH8 3GO2M 7Q129 G1IOK K46T5 VE7SP",
+      "actual": "Y8QH8 3GO2M 7Q129 G1IOK K46T5 VE7SP",
+      "milliseconds": 585
+    },
+    {
+      "name": "hand-10wpm-0pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "Q0S4T 6GONP 1E1CM AMDV9 TT801 A92XR",
+      "actual": "Q0S4T 6GONP 1E1CM AMDV9 TT801 A92XR",
+      "milliseconds": 552
+    },
+    {
+      "name": "hand-10wpm-0pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "VBE3H OHV0C T6FD1 EGADC FFCQX NIQAA",
+      "actual": "VBE3H OHV0C T6FD1 EGADC FFCQX NIQAA",
+      "milliseconds": 541
+    },
+    {
+      "name": "hand-10wpm-20pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "DOOGB GG98D HSOTN LU45M TLWN8 FHRFB",
+      "actual": "DOOGB GG98D HSOTN LU45M TLWN8 FHRFB",
+      "milliseconds": 418
+    },
+    {
+      "name": "hand-10wpm-20pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "XJXSG ZRBIW 97UXN 8LTY0 G4UOH TA77F",
+      "actual": "XJXSG ZRBIW 97UXN 8LTY0 G4UOH TA77F",
+      "milliseconds": 536
+    },
+    {
+      "name": "hand-10wpm-20pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "BVTOD V844A 0ZCDN 7FXES 96TV2 VSFI8",
+      "actual": "BVTOD V844A 0ZCDN 7FXES 96TV2 VSFI8",
+      "milliseconds": 583
+    },
+    {
+      "name": "hand-10wpm-35pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "52OG5 BT2RJ 1E0J9 XS502 4JK1N PXEQT",
+      "actual": "52OG5 BT2RJ 1E0J9 XS502 4JK1N PXEQT",
+      "milliseconds": 589
+    },
+    {
+      "name": "hand-10wpm-35pct-3.6dah",
+      "errors": 1,
+      "cer": 0.02857142857142857,
+      "expected": "N2QKS 566L9 86876 0T5GF WN4PD OR87Z",
+      "actual": "N2QKS 566L9 86876 0T5GF WN4PDOR87Z",
+      "milliseconds": 743
+    },
+    {
+      "name": "hand-10wpm-35pct-4.4dah",
+      "errors": 1,
+      "cer": 0.02857142857142857,
+      "expected": "22A76 6D68C JAT3L APOHH 48BXC W2PM8",
+      "actual": "22A76 6D68C JA T3L APOHH 48BXC W2PM8",
+      "milliseconds": 811
+    },
+    {
+      "name": "hand-18wpm-0pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "Y75HN ZYXH2 6EC1X HODP8 5SWBR XDHLL",
+      "actual": "Y75HN ZYXH2 6EC1X HODP8 5SWBR XDHLL",
+      "milliseconds": 316
+    },
+    {
+      "name": "hand-18wpm-0pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "XCZTZ CFQDY VNEPD 52VUJ 6NFJS IHKS7",
+      "actual": "XCZTZ CFQDY VNEPD 52VUJ 6NFJS IHKS7",
+      "milliseconds": 293
+    },
+    {
+      "name": "hand-18wpm-0pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "WMGUA MDF47 5YQXH TPS4G Y0A1S 5JN3W",
+      "actual": "WMGUA MDF47 5YQXH TPS4G Y0A1S 5JN3W",
+      "milliseconds": 347
+    },
+    {
+      "name": "hand-18wpm-20pct-2.6dah",
+      "errors": 3,
+      "cer": 0.08571428571428572,
+      "expected": "6LVZL EUZL5 ANJKA 4GH78 YRQFB P68CJ",
+      "actual": "6LVZL EU Z L 5 ANJKA 4GH78 YRQFB P68CJ",
+      "milliseconds": 318
+    },
+    {
+      "name": "hand-18wpm-20pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "9H0X8 KM4UX AJ1QM AJ5Q4 8RD4S I204B",
+      "actual": "9H0X8 KM4UX AJ1QM AJ5Q4 8RD4S I204B",
+      "milliseconds": 383
+    },
+    {
+      "name": "hand-18wpm-20pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "TJVVN WG2BW RXUGP JFVCA X9RGT UIQYZ",
+      "actual": "TJVVN WG2BW RXUGP JFVCA X9RGT UIQYZ",
+      "milliseconds": 325
+    },
+    {
+      "name": "hand-18wpm-35pct-2.6dah",
+      "errors": 3,
+      "cer": 0.08571428571428572,
+      "expected": "A24YV UXV20 PI7HE 0MLTR JGWRA XECUZ",
+      "actual": "A24YV UXV20 PI7HE 0MLER PDWRA XECUZ",
+      "milliseconds": 308
+    },
+    {
+      "name": "hand-18wpm-35pct-3.6dah",
+      "errors": 2,
+      "cer": 0.05714285714285714,
+      "expected": "EKJ54 YM4RN 85YZH OS0ES AAPKZ FJMHX",
+      "actual": "EKJ54 YM4RN 85YZH OS0ESAAPKZFJMHX",
+      "milliseconds": 299
+    },
+    {
+      "name": "hand-18wpm-35pct-4.4dah",
+      "errors": 4,
+      "cer": 0.11428571428571428,
+      "expected": "NRNMN HVGNG NAZ7D P86QD CBSIV 44X9I",
+      "actual": "NRNMN H VG NG NA Z7D P86QD CBSIV44X9I",
+      "milliseconds": 299
+    },
+    {
+      "name": "hand-28wpm-0pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "IJGKT QQDLP RD4PW 0HDAZ A3LE5 EJYUM",
+      "actual": "IJGKT QQDLP RD4PW 0HDAZ A3LE5 EJYUM",
+      "milliseconds": 171
+    },
+    {
+      "name": "hand-28wpm-0pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "6RNUR TPS7O T81M4 YGLL0 KCTM4 NAATH",
+      "actual": "6RNUR TPS7O T81M4 YGLL0 KCTM4 NAATH",
+      "milliseconds": 184
+    },
+    {
+      "name": "hand-28wpm-0pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "1OO3H OIHYJ RRY9Y 56K77 XH73R RQ4IA",
+      "actual": "1OO3H OIHYJ RRY9Y 56K77 XH73R RQ4IA",
+      "milliseconds": 264
+    },
+    {
+      "name": "hand-28wpm-20pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "0YDOJ MWZ0Q S7UX0 IG7D7 Z34VM HH90H",
+      "actual": "0YDOJ MWZ0Q S7UX0 IG7D7 Z34VM HH90H",
+      "milliseconds": 236
+    },
+    {
+      "name": "hand-28wpm-20pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "6NV2K DNMKI 5H1FO LRD5W ZPG9B J6NFE",
+      "actual": "6NV2K DNMKI 5H1FO LRD5W ZPG9B J6NFE",
+      "milliseconds": 212
+    },
+    {
+      "name": "hand-28wpm-20pct-4.4dah",
+      "errors": 2,
+      "cer": 0.05714285714285714,
+      "expected": "BSGKC 2GCEV G9VZE BH0GN UC7I1 AHO69",
+      "actual": "BSGKC 2GCEV G9VZE BH0GN UC7I1 AHO6T�",
+      "milliseconds": 240
+    },
+    {
+      "name": "hand-28wpm-35pct-2.6dah",
+      "errors": 7,
+      "cer": 0.2,
+      "expected": "3A2WL J18SC C2A8X K4NV3 A18RA 85V9H",
+      "actual": "3 A2W L J 1 8S C C2A8X K4-3 A18RA 85V9H",
+      "milliseconds": 257
+    },
+    {
+      "name": "hand-28wpm-35pct-3.6dah",
+      "errors": 1,
+      "cer": 0.02857142857142857,
+      "expected": "IXEAU HKP0V 0IE8W WIL1R E70VJ K2H2J",
+      "actual": "IXEAU HKP0V 0IE8W WIL1R E70VJK2H2J",
+      "milliseconds": 228
+    },
+    {
+      "name": "hand-28wpm-35pct-4.4dah",
+      "errors": 2,
+      "cer": 0.05714285714285714,
+      "expected": "SI2IO 00FQ3 L78C6 6ZRA4 34OZK 7M32P",
+      "actual": "SI2IO 00FQ3 L78C6 6ZRA4 34OZK 7M32EG",
+      "milliseconds": 312
+    },
+    {
+      "name": "hand-40wpm-0pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "UWLWS 6JTG3 8Q1FA 8AMA6 YCOSR J586F",
+      "actual": "UWLWS 6JTG3 8Q1FA 8AMA6 YCOSR J586F",
+      "milliseconds": 152
+    },
+    {
+      "name": "hand-40wpm-0pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "PT7A8 4R9QD AN897 JZNPU LLY38 J0HHB",
+      "actual": "PT7A8 4R9QD AN897 JZNPU LLY38 J0HHB",
+      "milliseconds": 189
+    },
+    {
+      "name": "hand-40wpm-0pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "W9F34 PQ8FJ QI641 T8N22 1QSG4 VS4UR",
+      "actual": "W9F34 PQ8FJ QI641 T8N22 1QSG4 VS4UR",
+      "milliseconds": 212
+    },
+    {
+      "name": "hand-40wpm-20pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "AICIJ H78UZ FLDRQ SW9TH 8Z6GT NAKEP",
+      "actual": "AICIJ H78UZ FLDRQ SW9TH 8Z6GT NAKEP",
+      "milliseconds": 131
+    },
+    {
+      "name": "hand-40wpm-20pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "H1X4H 7C3U8 XBXES JYKIH PUJKE DKA6F",
+      "actual": "H1X4H 7C3U8 XBXES JYKIH PUJKE DKA6F",
+      "milliseconds": 165
+    },
+    {
+      "name": "hand-40wpm-20pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "2GX9A FDLHB 3XF61 EGQSS CTEDP 2V42P",
+      "actual": "2GX9A FDLHB 3XF61 EGQSS CTEDP 2V42P",
+      "milliseconds": 181
+    },
+    {
+      "name": "hand-40wpm-35pct-2.6dah",
+      "errors": 12,
+      "cer": 0.34285714285714286,
+      "expected": "HN6EK 9F2MA VG3ZX 0L64J X3RVV OROIN",
+      "actual": "HN5 E K 9 F 2M A VG3 Z TIT 0L65J X3RVV OROIN",
+      "milliseconds": 164
+    },
+    {
+      "name": "hand-40wpm-35pct-3.6dah",
+      "errors": 36,
+      "cer": 1.0285714285714285,
+      "expected": "YKDR9 3F9JL 5YV8B Z6RI8 LZDGX KHMHC",
+      "actual": "NM KTEE R MG IETT F 9 J ETI EEIEY IET MTI B Z6RI8 LZDGX KHM H C",
+      "milliseconds": 199
+    },
+    {
+      "name": "hand-40wpm-35pct-4.4dah",
+      "errors": 1,
+      "cer": 0.02857142857142857,
+      "expected": "ZHIFK SMEK9 DZ6P8 W0UWT WIURY Y8XHZ",
+      "actual": "ZHIFK SMEK9 DZ6P8 W0UWTWIURY Y8XHZ",
+      "milliseconds": 169
+    },
+    {
+      "name": "radio-15db-400hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "R4KBI 714UH ZT0TQ F1052 0FK7M WSR5U",
+      "actual": "R4KBI 714UH ZT0TQ F1052 0FK7M WSR5U",
+      "milliseconds": 318
+    },
+    {
+      "name": "radio-15db-650hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "V33W1 0MXFG 9NHQF NZAKQ 847TJ 3H51L",
+      "actual": "V33W1 0MXFG 9NHQF NZAKQ 847TJ 3H51L",
+      "milliseconds": 308
+    },
+    {
+      "name": "radio-15db-1000hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "FGSUE 9NZ54 9V4PI 3DDE1 79XA6 4GU0S",
+      "actual": "FGSUE 9NZ54 9V4PI 3DDE1 79XA6 4GU0S",
+      "milliseconds": 292
+    },
+    {
+      "name": "radio-5db-400hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "2DT3Z 1I13Y BYO9T D5U69 RKG7P WGB8V",
+      "actual": "2DT3Z 1I13Y BYO9T D5U69 RKG7P WGB8V",
+      "milliseconds": 317
+    },
+    {
+      "name": "radio-5db-650hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "A3OEX 7DKQV 7UMA4 5WSUV XMJO8 1NP3N",
+      "actual": "A3OEX 7DKQV 7UMA4 5WSUV XMJO8 1NP3N",
+      "milliseconds": 276
+    },
+    {
+      "name": "radio-5db-1000hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "VP7T3 8A4CA OO3XQ GW8T2 MPKTL EZU61",
+      "actual": "VP7T3 8A4CA OO3XQ GW8T2 MPKTL EZU61",
+      "milliseconds": 276
+    },
+    {
+      "name": "radio-0db-400hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "UFMN7 UZLHO M6KXM F8XWA KN88L RVUNQ",
+      "actual": "UFMN7 UZLHO M6KXM F8XWA KN88L RVUNQ",
+      "milliseconds": 302
+    },
+    {
+      "name": "radio-0db-650hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "OHE01 A23A2 SDP0E TXWND ED9LB FAIBM",
+      "actual": "OHE01 A23A2 SDP0E TXWND ED9LB FAIBM",
+      "milliseconds": 249
+    },
+    {
+      "name": "radio-0db-1000hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "MZE3Y NF0KG LQUFK 2XWAO B8L7O AX29U",
+      "actual": "MZE3Y NF0KG LQUFK 2XWAO B8L7O AX29U",
+      "milliseconds": 313
+    },
+    {
+      "name": "radio--5db-400hz",
+      "errors": 29,
+      "cer": 0.8285714285714286,
+      "expected": "GJ38A 4SJNP FJHU3 OPVRH VS2CU V5NC6",
+      "actual": "GIEER�UAZAE4S�IS E<HH> FJHU3 -<HH>VRH VS�HRES 45NC6",
+      "milliseconds": 509
+    },
+    {
+      "name": "radio--5db-650hz",
+      "errors": 32,
+      "cer": 0.9142857142857143,
+      "expected": "3N0X6 AY2LR ALP7H PDDUL 1X4VN IKWYS",
+      "actual": "DIEUAGX6 A<KN>FIES S SLP7H SE BD UL 1<BT>5 SE I IKWYS",
+      "milliseconds": 352
+    },
+    {
+      "name": "radio--5db-1000hz",
+      "errors": 26,
+      "cer": 0.7428571428571429,
+      "expected": "AR5S5 MJU9M 6X5JA U3XM9 DB8FP P51EX",
+      "actual": "UH HI 5 MJU9IE SE45JA F�SE59 DB�EESES <AR>51EX",
+      "milliseconds": 357
+    }
+  ]
+}

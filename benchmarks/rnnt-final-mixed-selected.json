@@ -1,0 +1,1656 @@
+{
+  "version": 1,
+  "split": "final",
+  "seed": 8321907,
+  "manifest": ".research/receiver-noise-final/manifest.json",
+  "manifestSHA256": "8d7ca6e5f34f525732ff6ab2b5b187b5f04da1e5ee133ebc22ef156eae7df7aa",
+  "checkpoint": "models/radio-noise-gpu-v4-blends/candidate-0.75.pt",
+  "checkpointSHA256": "421ec784604b6d238aa2641d94160a4e6659b66206c3ac363f1d695173a06495",
+  "mode": "stream",
+  "decoder": "app",
+  "chunkSeconds": 1.0,
+  "device": "cpu",
+  "torchVersion": "2.14.1",
+  "morseformerVersion": "0.6.4",
+  "decoderSHA256": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e",
+  "serverSHA256": "e72ed300de21da9f2443d5d423446877e3118e7ed63da35c2a6a622ec79c58e3",
+  "benchmarkSHA256": "94bf37693311363eb46157d24c7c723fb94f1b13b6034f9d4853b1c1fd9b6381",
+  "knownCarrier": true,
+  "complete": true,
+  "results": [
+    {
+      "id": "clean-1-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "CQ DE M7XDB UR RST 459 NAME PETER K",
+      "actual": "CQ DE M7XDB UR RST 459 NAME PETER K",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.12125,
+      "inferenceSeconds": 0.6219337079674006,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 882.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ DE"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " M7X"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "DB"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " UR R"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "ST 4"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "59"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " NAM"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "E PE"
+        },
+        {
+          "atSeconds": 21.12125,
+          "text": "TER K",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-1-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "CQ DE M7XDB UR RST 459 NAME PETER K",
+      "actual": "CQ DE M7XDB UR RST 459 NAME PETER K",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.12125,
+      "inferenceSeconds": 0.547391708008945,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 882.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ DE"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " M7X"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "DB"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " UR R"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "ST 4"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "59"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " NAM"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "E PE"
+        },
+        {
+          "atSeconds": 21.12125,
+          "text": "TER K",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-2-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+      "actual": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 17.35525,
+      "inferenceSeconds": 0.4003004579572007,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 598.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "OAQ7"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " XX"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "6C 4"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "LFV"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " VB1"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "Q 6"
+        },
+        {
+          "atSeconds": 17.35525,
+          "text": "YZT",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-2-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+      "actual": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 17.35525,
+      "inferenceSeconds": 0.40085045801242813,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 598.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "OAQ7"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " XX"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "6C 4"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "LFV"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " VB1"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "Q 6"
+        },
+        {
+          "atSeconds": 17.35525,
+          "text": "YZT",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-3-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+      "actual": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.595875,
+      "inferenceSeconds": 0.6211816670256667,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 603.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "STONE N"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "ORTH"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " HIL"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "L LIG"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "HT EA"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "RLY"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " VAL"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "LEY B"
+        },
+        {
+          "atSeconds": 21.595875,
+          "text": "RIDGE",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-3-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+      "actual": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.595875,
+      "inferenceSeconds": 0.5632486250251532,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 603.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "STONE N"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "ORTH"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " HIL"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "L LIG"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "HT EA"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "RLY"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " VAL"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "LEY B"
+        },
+        {
+          "atSeconds": 21.595875,
+          "text": "RIDGE",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-4-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+      "actual": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.342625,
+      "inferenceSeconds": 0.5162127499934286,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 624.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ DE K"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "0L"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "WL"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " UR "
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "RST 5"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "79"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " NA"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "ME AL"
+        },
+        {
+          "atSeconds": 21.342625,
+          "text": "AN K",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-4-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+      "actual": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.342625,
+      "inferenceSeconds": 0.5171244589728303,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 624.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ DE K"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "0L"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "WL"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " UR "
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "RST 5"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "79"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " NA"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "ME AL"
+        },
+        {
+          "atSeconds": 21.342625,
+          "text": "AN K",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-5-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "8LDN HNE7 0YAK 3E6H FN3C",
+      "actual": "8LDN HNE7 0YAK 3E6H FN3C",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 15.326375,
+      "inferenceSeconds": 0.3487289589829743,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 910.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "8LDN H"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "NE7 0"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "YA"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "K 3"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "E6H F"
+        },
+        {
+          "atSeconds": 15.326375,
+          "text": "N3C",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-5-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "8LDN HNE7 0YAK 3E6H FN3C",
+      "actual": "8LDN HNE7 0YAK 3E6H FN3C",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 15.326375,
+      "inferenceSeconds": 0.36486649996368214,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 910.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "8LDN H"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "NE7 0"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "YA"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "K 3"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "E6H F"
+        },
+        {
+          "atSeconds": 15.326375,
+          "text": "N3C",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-6-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+      "actual": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.10675,
+      "inferenceSeconds": 0.6024914999725297,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 494.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "AFTER N"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "IGHT"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " NIG"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "HT RI"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "VER"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": " RIVE"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "R GR"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "EEN RA"
+        },
+        {
+          "atSeconds": 21.10675,
+          "text": "DIO",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-6-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+      "actual": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.10675,
+      "inferenceSeconds": 0.5502031249925494,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 494.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "AFTER N"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "IGHT"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " NIG"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "HT RI"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "VER"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": " RIVE"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "R GR"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "EEN RA"
+        },
+        {
+          "atSeconds": 21.10675,
+          "text": "DIO",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-1-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "CQ DE 9V2EMF UR RST",
+      "actual": "CQDE 9VUEMMF UR RST",
+      "errors": 3,
+      "cer": 0.15789473684210525,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 23.27175,
+      "inferenceSeconds": 0.63554354198277,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 748.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "DE"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " 9"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "VU"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "EMM"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "F"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " U"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "R"
+        },
+        {
+          "atSeconds": 23.27175,
+          "text": " RST",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-1-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "CQ DE 9V2EMF UR RST",
+      "actual": "CQDE 9VUEMF UR RST",
+      "errors": 2,
+      "cer": 0.10526315789473684,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 23.27175,
+      "inferenceSeconds": 0.6517218750086613,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 748.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "DE"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " 9"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "VU"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "EM"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "F"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " U"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "R"
+        },
+        {
+          "atSeconds": 23.27175,
+          "text": " RST",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-2-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "BIAG YQ0C EJWC UF3I VUKV",
+      "actual": "BIAG YQ0C EJWCU3I VUKV",
+      "errors": 2,
+      "cer": 0.08333333333333333,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 26.065625,
+      "inferenceSeconds": 0.7296307499636896,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 687.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "BIAG"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " YQ"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "0"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "C"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " EJ"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "WC"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "U"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "3"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "I"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " V"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "UK"
+        },
+        {
+          "atSeconds": 26.065625,
+          "text": "V",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-2-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "BIAG YQ0C EJWC UF3I VUKV",
+      "actual": "BIAG YQ0C EJWCU3I VUKKV",
+      "errors": 3,
+      "cer": 0.125,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 26.065625,
+      "inferenceSeconds": 0.7193380829994567,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 687.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "BIAG"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " YQ"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "0"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "C"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " EJ"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "WC"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "U"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "3"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "I"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " V"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "UKK"
+        },
+        {
+          "atSeconds": 26.065625,
+          "text": "V",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-3-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "CLOUD WATER GREEN RAIN RIVER",
+      "actual": "CLOUD WTER GREN RLN RIVER",
+      "errors": 4,
+      "cer": 0.14285714285714285,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 26.315625,
+      "inferenceSeconds": 0.7939962079981342,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 478.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CLOU"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "D "
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "WT"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "ER"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " G"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "RE"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "N"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " R"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "LN"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " R"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "IV"
+        },
+        {
+          "atSeconds": 26.315625,
+          "text": "ER",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-3-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "CLOUD WATER GREEN RAIN RIVER",
+      "actual": "CLOUD WATER GREN RLN RIVER",
+      "errors": 3,
+      "cer": 0.10714285714285714,
+      "errorsWithoutSpaces": 3,
+      "durationSeconds": 26.315625,
+      "inferenceSeconds": 0.7495783329941332,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 478.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CLOU"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "D "
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "WAT"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "ER"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " G"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "RE"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "N"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " R"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "LN"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " R"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "IV"
+        },
+        {
+          "atSeconds": 26.315625,
+          "text": "ER",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-4-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "CQ DE G2JWU UR RST 459",
+      "actual": "CQ DE G21WUUU R RST 459",
+      "errors": 3,
+      "cer": 0.13636363636363635,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 28.172875,
+      "inferenceSeconds": 0.903914958005771,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 597.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " DE"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " G"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "2"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "1W"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "UU"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "U R"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": " R"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "ST"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": " 4"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": "59"
+        }
+      ]
+    },
+    {
+      "id": "rough-4-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "CQ DE G2JWU UR RST 459",
+      "actual": "CQ DE G21WUUUR RST 459",
+      "errors": 2,
+      "cer": 0.09090909090909091,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 28.172875,
+      "inferenceSeconds": 0.778517541999463,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 597.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " DE"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " G"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "2"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "1W"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "UU"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "UR"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": " R"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "ST"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": " 4"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": "59"
+        }
+      ]
+    },
+    {
+      "id": "rough-5-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "FAB3 IARS J2LC WE2T",
+      "actual": "FABSIARSMMLE2T",
+      "errors": 8,
+      "cer": 0.42105263157894735,
+      "errorsWithoutSpaces": 5,
+      "durationSeconds": 25.413125,
+      "inferenceSeconds": 0.6869491250254214,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 768.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "FABS"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "IA"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "RS"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "M"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "M"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "L"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "E"
+        },
+        {
+          "atSeconds": 25.413125,
+          "text": "2T",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-5-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "FAB3 IARS J2LC WE2T",
+      "actual": "FABMIARSJMLYE2T",
+      "errors": 7,
+      "cer": 0.3684210526315789,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 25.413125,
+      "inferenceSeconds": 0.6809196660178714,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 768.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "FABM"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "IA"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "RS"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "J"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "M"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "L"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "Y"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "E"
+        },
+        {
+          "atSeconds": 25.413125,
+          "text": "2T",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-6-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "WATER WATER NIGHT SOUTH BRIDGE",
+      "actual": "WTER WATER NIG HT WTH BRIDGE",
+      "errors": 5,
+      "cer": 0.16666666666666666,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 27.792,
+      "inferenceSeconds": 0.7255793330259621,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 595.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "WTER W"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "AT"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "ER"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " NI"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "G H"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "T W"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "TH"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " B"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "RI"
+        },
+        {
+          "atSeconds": 27.792,
+          "text": "DGE",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-6-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "WATER WATER NIGHT SOUTH BRIDGE",
+      "actual": "WTER WATER NIG HT WTH BRIDGE",
+      "errors": 5,
+      "cer": 0.16666666666666666,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 27.792,
+      "inferenceSeconds": 0.7619944580364972,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 595.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "WTER W"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "AT"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "ER"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " NI"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "G H"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "T W"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "TH"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " B"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "RI"
+        },
+        {
+          "atSeconds": 27.792,
+          "text": "DGE",
+          "final": true
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "cases": 24,
+    "speechCases": 24,
+    "characters": 684,
+    "errors": 47,
+    "cer": 0.06871345029239766,
+    "exact": 12,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 549.75825,
+    "inferenceSeconds": 14.87221778993262
+  },
+  "conditions": {
+    "mixed-real-receiver-noise-clean-0db": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 200,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 6,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 117.84812500000001,
+      "inferenceSeconds": 2.943684874975588
+    },
+    "mixed-real-receiver-noise-clean-10db": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 200,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 6,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 117.84812500000001,
+      "inferenceSeconds": 3.1108490418992005
+    },
+    "mixed-real-receiver-noise-rough-0db": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 142,
+      "errors": 22,
+      "cer": 0.15492957746478872,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 157.031,
+      "inferenceSeconds": 4.342069957056083
+    },
+    "mixed-real-receiver-noise-rough-10db": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 142,
+      "errors": 25,
+      "cer": 0.176056338028169,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 157.031,
+      "inferenceSeconds": 4.475613916001748
+    }
+  }
+}

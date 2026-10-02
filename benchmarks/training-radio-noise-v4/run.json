@@ -1,0 +1,36 @@
+{
+  "arguments": {
+    "steps": 4000,
+    "batch_size": 8,
+    "workers": 2,
+    "device": "cuda",
+    "eval_every": 1000,
+    "eval_count": 48,
+    "eval_seed": 2000000,
+    "evaluate_only": false,
+    "seed": 550001,
+    "output": "models\\radio-noise-gpu-v4",
+    "checkpoint": "models\\continuous-gpu-v3\\step-2000.pt",
+    "hard_fraction": 0.45,
+    "continuous_fraction": 0.8,
+    "save_checkpoints": true,
+    "noise_recordings": [
+      "cwformer-experiment\\noise\\noise_20m_day.wav",
+      "cwformer-experiment\\noise\\noise_20m_night.wav"
+    ]
+  },
+  "torch": "2.8.0+cu128",
+  "torchaudio": "2.8.0+cu128",
+  "script_sha256": "4b3a633683b3e8c5ce2921bd78be016c6603297cbb69aa2307af7ca6448f6772",
+  "noise_recordings": [
+    {
+      "path": "cwformer-experiment\\noise\\noise_20m_day.wav",
+      "sha256": "5a66a1107a3b1c6948dc455f3895d922b6cb246686bce0f435928252ab7ab5fe"
+    },
+    {
+      "path": "cwformer-experiment\\noise\\noise_20m_night.wav",
+      "sha256": "4d52568e9db5073bfad1b94b420495d9d880fdd27bcc789d0ecec73bc35b16ad"
+    }
+  ],
+  "hardware": "NVIDIA GeForce RTX 3080"
+}

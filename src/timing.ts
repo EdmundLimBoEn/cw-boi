@@ -7,16 +7,25 @@ type Timing = { dot: number; dash: number; element: number; letter: number; word
 type Hypothesis = { text: string; pending: string; score: number }
 const distance = (duration: number, mean: number) => Math.log(Math.max(0.002, duration) / mean) ** 2
 
-function clusters(values: number[], initial: number[], rounds = 5) {
+function clusters(values: number[], initial: number[], rounds = 5, gap = false) {
   const centers = [...initial]
+  // Element gaps outnumber letter and word gaps; without a prior, jitter invents extra classes.
+  const deviation = gap ? median(values.map(value => Math.sqrt(Math.min(...initial.map(center => distance(value, center)))))) * 1.4826 : 0
+  const variance = Math.min(0.16, deviation ** 2)
+  const biases = gap ? [0, 2 * variance * Math.log(3), 2 * variance * Math.log(14)] : initial.map(() => 0)
   for (let iteration = 0; iteration < rounds; iteration++) {
     const groups: number[][] = centers.map(() => [])
     for (const value of values) {
       let nearest = 0
-      for (let j = 1; j < centers.length; j++) if (distance(value, centers[j]) < distance(value, centers[nearest])) nearest = j
+      for (let j = 1; j < centers.length; j++) if (distance(value, centers[j]) + biases[j] < distance(value, centers[nearest]) + biases[nearest]) nearest = j
       groups[nearest].push(value)
     }
-    groups.forEach((group, i) => { if (group.length >= 2) centers[i] = median(group) })
+    groups.forEach((group, i) => {
+      if (group.length < 2) return
+      // A few local gaps must not redefine a whole class during a pause or speed change.
+      const weight = gap ? group.length / (group.length + 4) : 1
+      centers[i] = Math.exp(weight * Math.log(median(group)) + (1 - weight) * Math.log(initial[i]))
+    })
   }
   return centers
 }
@@ -25,10 +34,11 @@ function learn(runs: Run[], initial: Timing): Timing {
   const marks = runs.filter(run => run.on && run.duration > initial.dot * 0.3 && run.duration < initial.dash * 2.5).map(run => run.duration)
   const gaps = runs.filter(run => !run.on && run.duration > initial.element * 0.25 && run.duration < initial.word * 2.5).map(run => run.duration)
   const [dot, dash] = clusters(marks, [initial.dot, initial.dash])
-  const [element, letter, word] = clusters(gaps, [initial.element, initial.letter, initial.word])
+  const [element, letter, word] = clusters(gaps, [initial.element, initial.letter, initial.word], 5, true)
+  // Long hesitations are still word boundaries; they must not swallow ordinary word gaps.
   return {
     dot, dash: Math.max(dot * 1.8, dash), element,
-    letter: Math.max(element * 1.7, letter), word: Math.max(letter * 1.55, word),
+    letter: Math.max(element * 1.7, letter), word: Math.min(letter * 2.8, Math.max(letter * 1.55, word)),
   }
 }
 
@@ -49,7 +59,7 @@ export function decodeTiming(runs: Run[], dit: number, gapUnit: number, adaptive
   let hypotheses: Hypothesis[] = [{ text: '', pending: '', score: 0 }]
   for (let index = 0; index < runs.length; index++) {
     // Local clusters follow a changing fist. No vocabulary model can rewrite a callsign.
-    if (adaptive && index % 24 === 0) local = learn(runs.slice(Math.max(0, index - 48), index + 72), global)
+    if (adaptive && index % 8 === 0) local = learn(runs.slice(Math.max(0, index - 24), index + 24), global)
     const run = runs[index]
     const next: Hypothesis[] = []
     const trailingGap = !final && index === runs.length - 1 && !run.on

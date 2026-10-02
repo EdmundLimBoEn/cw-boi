@@ -1,0 +1,1451 @@
+{
+  "version": 1,
+  "split": "dev",
+  "seed": 817351,
+  "manifest": ".research/continuous-dev/manifest.json",
+  "manifestSHA256": "a113892ccb18e874a04e3c1ff5b70ee82f092d3674556786570436cdf02b0f5c",
+  "checkpoint": "models/continuous-gpu-v3-blends/candidate-0.5.pt",
+  "checkpointSHA256": "5a59498f8b154a457dd0a5cab1a6102863dbbbab5591e6aa0317b0dd9cb02022",
+  "mode": "stream",
+  "chunkSeconds": 1.0,
+  "device": "cpu",
+  "torchVersion": "2.14.1",
+  "morseformerVersion": "0.6.4",
+  "decoderSHA256": "4951108217a2ec2e2f9b7598a5f5293aa70541e2aeef21a5469b50dcf2544cfd",
+  "serverSHA256": "b52df45aac75609f90fc09d2d925940daceaf53a30a5d4bb61251be616fef75f",
+  "benchmarkSHA256": "d6373857ca548515cb56ebbb873f9abc4de47e4d7a51165312a4a0e027e25d3a",
+  "knownCarrier": true,
+  "complete": true,
+  "results": [
+    {
+      "id": "clean-1",
+      "condition": "clean",
+      "expected": "CQ DE VK4WHW UR RST 599 NAME MARY K",
+      "actual": "CQ DE VK4WHW UR RST 599 NAME MARY K",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 19.559875,
+      "inferenceSeconds": 0.6411562910070643,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 560.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ DE V"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "K4W"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "HW U"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "R RST"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " 59"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "9 N"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "AME MA"
+        },
+        {
+          "atSeconds": 19.559875,
+          "text": "RY K",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-2",
+      "condition": "clean",
+      "expected": "YX9T FUNU CPV9 21DW 8SC9",
+      "actual": "YX9T FUNU CPV9 21DW 8SC9",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 17.03825,
+      "inferenceSeconds": 0.5194629170000553,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 553.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "YX9T "
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "FUNU"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " CPV"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "9 2"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "1D"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "W 8S"
+        },
+        {
+          "atSeconds": 17.03825,
+          "text": "C9",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "clean-3",
+      "condition": "clean",
+      "expected": "AFTER CLEAR RIVER ROAD ROAD RADIO STONE",
+      "actual": "AFTER CLEAR RIVER ROAD ROAD RADIO STONE",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.391,
+      "inferenceSeconds": 0.5905397080350667,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 473.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "AFTER C"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "LEAR"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " RIV"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "ER R"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "OAD"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": " ROA"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "D RA"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "DIO"
+        },
+        {
+          "atSeconds": 21.391,
+          "text": " STONE",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "human-1",
+      "condition": "human",
+      "expected": "CQ DE K8PDP UR RST 339 NAME JOHN K",
+      "actual": "CQ DE K8PD UR RST 339 NAME JOHN K",
+      "errors": 1,
+      "cer": 0.029411764705882353,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 23.70725,
+      "inferenceSeconds": 0.7756577500258572,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 671.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ DE"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " K8"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "PD"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " "
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "UR R"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "ST 3"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "39"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " NA"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "ME J"
+        },
+        {
+          "atSeconds": 23.70725,
+          "text": "OHN K",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "human-2",
+      "condition": "human",
+      "expected": "QKNA L0HV UY0S QAZL 5AB3",
+      "actual": "QKNA L0HV UY0S QAZL 5AB3",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 25.082,
+      "inferenceSeconds": 0.8871018749778159,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 525.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "QKNA"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " L"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "0"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "HV"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " UY"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "0"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "S"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " QA"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "ZL"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " 5A"
+        },
+        {
+          "atSeconds": 25.082,
+          "text": "B3",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "human-3",
+      "condition": "human",
+      "expected": "WATER TODAY CLOUD ROAD ROAD WATER EARLY",
+      "actual": "WATER TODAY CLOUD ROAD ROAD WATER EARLY",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 26.291,
+      "inferenceSeconds": 0.9714531669742428,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 704.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "WATER T"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "OD"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "AY"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " CL"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "OU"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "D R"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "OA"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "D RO"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "AD"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " WATE"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "R EARL"
+        },
+        {
+          "atSeconds": 26.291,
+          "text": "Y",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "fading-1",
+      "condition": "fading",
+      "expected": "CQ DE ZS5LO UR RST 579 NAME JOHN K",
+      "actual": "CQ DE ZS5LO UR RST 579 NAME JOHN K",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 17.37275,
+      "inferenceSeconds": 0.6631005830131471,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 754.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ DE Z"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "S5L"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "O UR "
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "RST 57"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "9 N"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "AME J"
+        },
+        {
+          "atSeconds": 17.37275,
+          "text": "OHN K",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "fading-2",
+      "condition": "fading",
+      "expected": "E0Z5 XCGX Y18D 5U3B TN84",
+      "actual": "E0Z5 XCGX Y18D 5U3B TN84",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 15.8835,
+      "inferenceSeconds": 0.5523497500107624,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 840.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "E0Z5 XC"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "GX"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " Y1"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "8D 5"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "U3B"
+        },
+        {
+          "atSeconds": 15.8835,
+          "text": " TN84",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "fading-3",
+      "condition": "fading",
+      "expected": "ROAD WATER RADIO NIGHT LIGHT LIGHT CLEAR",
+      "actual": "ROD WATER RADIO NIGHT LIGHT LIGHT CLUR",
+      "errors": 3,
+      "cer": 0.075,
+      "errorsWithoutSpaces": 3,
+      "durationSeconds": 20.8165,
+      "inferenceSeconds": 0.7176516249892302,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 767.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "ROD"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " WATER"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " RAD"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "IO NI"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "GHT L"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "IGH"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "T LIG"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "HT C"
+        },
+        {
+          "atSeconds": 20.8165,
+          "text": "LUR",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "crowded-1",
+      "condition": "crowded",
+      "expected": "CQ DE 9V3XA UR RST 579 NAME JOHN K",
+      "actual": "CQ DE 9V3XA UR RST 579 NAME JOHN K",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 18.49075,
+      "inferenceSeconds": 0.7538400000194088,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 476.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ DE 9"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "V3X"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "A UR"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " RST 5"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "79"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": " NAME"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " JOH"
+        },
+        {
+          "atSeconds": 18.49075,
+          "text": "N K",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "crowded-2",
+      "condition": "crowded",
+      "expected": "74DU GIEK JIPK 25PU FW20",
+      "actual": "74DU GIEK JIPK 25PU FW20",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 16.242875,
+      "inferenceSeconds": 0.575966791016981,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 906.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "74DU"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " GIEK"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " JIP"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "K 2"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "5PU "
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "FW2"
+        },
+        {
+          "atSeconds": 16.242875,
+          "text": "0",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "crowded-3",
+      "condition": "crowded",
+      "expected": "LIGHT RIVER HILL NORTH ROAD BRIDGE VALLEY",
+      "actual": "LIGHT RIVER HILL NORTH ROAD BRIDGE VALLEY",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.29375,
+      "inferenceSeconds": 0.9436840420239605,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 903.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "LIGHT RI"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "VER H"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "ILL"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " NOR"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "TH RO"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "AD B"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "RIDG"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "E VA"
+        },
+        {
+          "atSeconds": 21.29375,
+          "text": "LLEY",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-1",
+      "condition": "rough",
+      "expected": "CQ DE 9V1YTU UR RST 339",
+      "actual": "CQ DE 9V1YTU F R ST 339",
+      "errors": 3,
+      "cer": 0.13043478260869565,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 26.52925,
+      "inferenceSeconds": 0.9868320419918746,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 529.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CQ D"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "E 9"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "V"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "1"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "Y"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "TU"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " F"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " R"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": " ST"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " 3"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "39"
+        }
+      ]
+    },
+    {
+      "id": "rough-2",
+      "condition": "rough",
+      "expected": "NTBZ 8UHB 91GA RVD3",
+      "actual": "K= 8UHB ONA VDD 3",
+      "errors": 10,
+      "cer": 0.5263157894736842,
+      "errorsWithoutSpaces": 9,
+      "durationSeconds": 25.035375,
+      "inferenceSeconds": 1.0801287079812028,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 738.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "K="
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " 8"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "UH"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "B"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " "
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "O"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "NA"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": " V"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "DD"
+        },
+        {
+          "atSeconds": 25.035375,
+          "text": " 3",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "rough-3",
+      "condition": "rough",
+      "expected": "BRIDGE SOUTH WIND VALLEY",
+      "actual": "BRIDG SOU T HOIGEU AGL E",
+      "errors": 12,
+      "cer": 0.5,
+      "errorsWithoutSpaces": 7,
+      "durationSeconds": 28.07675,
+      "inferenceSeconds": 1.0314782080240548,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 479.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "BRID"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "G"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " SO"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "U "
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "T H"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "O"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "IG"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "EU"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " A"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "GL"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": " E"
+        }
+      ]
+    },
+    {
+      "id": "chaos-1",
+      "condition": "chaos",
+      "expected": "CQ DE VK1DO UR RST 579 NAME ALAN K",
+      "actual": "DB VBOLIPSALLRAG ARAT",
+      "errors": 25,
+      "cer": 0.7352941176470589,
+      "errorsWithoutSpaces": 19,
+      "durationSeconds": 24.56525,
+      "inferenceSeconds": 0.8603710000170395,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 743.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 8.0,
+          "text": "DB"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " V"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "BO"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "L"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "IP"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "SA"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "LLR"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "AG AR"
+        },
+        {
+          "atSeconds": 24.56525,
+          "text": "AT",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "chaos-2",
+      "condition": "chaos",
+      "expected": "8V3K IT46 FNNA 3ZEX AVJQ",
+      "actual": "Z V6A FFN=4U AVJQ",
+      "errors": 15,
+      "cer": 0.625,
+      "errorsWithoutSpaces": 13,
+      "durationSeconds": 16.55225,
+      "inferenceSeconds": 0.6052594580105506,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 821.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "Z"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " V"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "6"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "A FFN="
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "4"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "U A"
+        },
+        {
+          "atSeconds": 16.55225,
+          "text": "VJQ",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "chaos-3",
+      "condition": "chaos",
+      "expected": "SOUTH SOUTH RADIO ROAD STONE NORTH CLOUD",
+      "actual": "SOUT SAIY NXUD VD MQSOOU",
+      "errors": 26,
+      "cer": 0.65,
+      "errorsWithoutSpaces": 23,
+      "durationSeconds": 20.8365,
+      "inferenceSeconds": 0.7593905000248924,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 719.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 8.0,
+          "text": "SOU"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "T S"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "AIY"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " "
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "NXUD"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " VD"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " MQS"
+        },
+        {
+          "atSeconds": 20.8365,
+          "text": "OOU",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "noise-1",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "cer": null,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.64676429098472,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 640.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": []
+    },
+    {
+      "id": "noise-2",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "cer": null,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.661484791955445,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 578.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": []
+    },
+    {
+      "id": "noise-3",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "cer": null,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.7224485409678891,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 656.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": []
+    },
+    {
+      "id": "noise-4",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "cer": null,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.665928625036031,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 578.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": []
+    },
+    {
+      "id": "noise-5",
+      "condition": "noise",
+      "expected": "",
+      "actual": "TE TM TON",
+      "errors": 9,
+      "cer": null,
+      "errorsWithoutSpaces": 7,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.59519345901208,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 584.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "TE TM"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " T"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "ON "
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " "
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " ",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "noise-6",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "cer": null,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.8559874999918975,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 843.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": []
+    }
+  ],
+  "aggregate": {
+    "cases": 24,
+    "speechCases": 18,
+    "characters": 556,
+    "errors": 95,
+    "cer": 0.17086330935251798,
+    "exact": 10,
+    "noiseCases": 6,
+    "noiseSeconds": 120.0,
+    "falseCharacters": 7,
+    "falseCharactersPerMinute": 3.5,
+    "audioSeconds": 504.764875,
+    "inferenceSeconds": 18.06323162309127
+  },
+  "conditions": {
+    "chaos": {
+      "cases": 3,
+      "speechCases": 3,
+      "characters": 98,
+      "errors": 66,
+      "cer": 0.673469387755102,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 61.954,
+      "inferenceSeconds": 2.2250209580524825
+    },
+    "clean": {
+      "cases": 3,
+      "speechCases": 3,
+      "characters": 98,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 3,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 57.989125,
+      "inferenceSeconds": 1.7511589160421863
+    },
+    "crowded": {
+      "cases": 3,
+      "speechCases": 3,
+      "characters": 99,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 3,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 56.027375,
+      "inferenceSeconds": 2.2734908330603503
+    },
+    "fading": {
+      "cases": 3,
+      "speechCases": 3,
+      "characters": 98,
+      "errors": 3,
+      "cer": 0.030612244897959183,
+      "exact": 2,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 54.07275,
+      "inferenceSeconds": 1.9331019580131397
+    },
+    "human": {
+      "cases": 3,
+      "speechCases": 3,
+      "characters": 97,
+      "errors": 1,
+      "cer": 0.010309278350515464,
+      "exact": 2,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 75.08025,
+      "inferenceSeconds": 2.634212791977916
+    },
+    "noise": {
+      "cases": 6,
+      "speechCases": 0,
+      "characters": 0,
+      "errors": 0,
+      "cer": null,
+      "exact": 0,
+      "noiseCases": 6,
+      "noiseSeconds": 120.0,
+      "falseCharacters": 7,
+      "falseCharactersPerMinute": 3.5,
+      "audioSeconds": 120.0,
+      "inferenceSeconds": 4.147807207948063
+    },
+    "rough": {
+      "cases": 3,
+      "speechCases": 3,
+      "characters": 66,
+      "errors": 25,
+      "cer": 0.3787878787878788,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 79.641375,
+      "inferenceSeconds": 3.098438957997132
+    }
+  }
+}

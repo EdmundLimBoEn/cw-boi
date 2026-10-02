@@ -1,0 +1,30 @@
+[
+  {
+    "wpm": 12,
+    "expected": "CQ TEST 73",
+    "normal": "CQ TEST 73",
+    "delayedStream": "CQ TEST 73",
+    "delayedFile": "CQ TEST 73"
+  },
+  {
+    "wpm": 20,
+    "expected": "CQ TEST 73",
+    "normal": "CQ TEST 73",
+    "delayedStream": "CQ TEST 73",
+    "delayedFile": "CQ TEST 73"
+  },
+  {
+    "wpm": 32,
+    "expected": "CQ TEST 73",
+    "normal": "CQQ TEST 73",
+    "delayedStream": "CQ TEST 73",
+    "delayedFile": "CQ TEST 73"
+  },
+  {
+    "wpm": 40,
+    "expected": "CQ TEST 73",
+    "normal": "CCQEST 73",
+    "delayedStream": "CQQEST 73",
+    "delayedFile": "CQQEST 73"
+  }
+]

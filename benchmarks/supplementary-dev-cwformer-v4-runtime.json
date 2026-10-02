@@ -1,0 +1,648 @@
+{
+  "model": "models/cwformer-adapt-v4/cwformer_streaming_fp32.onnx",
+  "modelSHA256": "c1a956b35cc184a8fac7641b586d500514c18a99254aff2ed933697775e808a3",
+  "manifestSHA256": "123632a953e67ce43b363ef7aac4e3db6479271a84c6d2ab986f7fff94bec129",
+  "bandwidth": 150,
+  "results": [
+    {
+      "id": "clean-1",
+      "condition": "clean",
+      "expected": "UWWWE BMWW 6M VZY D9178",
+      "actual": "UWWWE BMWW 6M VZY D9178",
+      "errors": 0,
+      "durationSeconds": 11.46625,
+      "inferenceSeconds": 0.16996595897944644
+    },
+    {
+      "id": "clean-2",
+      "condition": "clean",
+      "expected": "J2 KR 1D WI TNWP",
+      "actual": "J2 KR 1D WI TNWP",
+      "errors": 0,
+      "durationSeconds": 9.757875,
+      "inferenceSeconds": 0.14465029095299542
+    },
+    {
+      "id": "clean-3",
+      "condition": "clean",
+      "expected": "YOI5 I5U 2MV0W GMQ 0G",
+      "actual": "YOI5 I5U 2MV0W GMQ 0G",
+      "errors": 0,
+      "durationSeconds": 16.70975,
+      "inferenceSeconds": 0.23663716699229553
+    },
+    {
+      "id": "clean-4",
+      "condition": "clean",
+      "expected": "AF7M KBP 4K003 LOX90 1JT",
+      "actual": "AF7M KBP 4K003 LOX90 1JT",
+      "errors": 0,
+      "durationSeconds": 13.019875,
+      "inferenceSeconds": 0.19456145801814273
+    },
+    {
+      "id": "clean-5",
+      "condition": "clean",
+      "expected": "XBA BX085 KJTK7 BH NSJG",
+      "actual": "XBA BX085 KJTK7 BH NSJG",
+      "errors": 0,
+      "durationSeconds": 19.03075,
+      "inferenceSeconds": 0.27452254097443074
+    },
+    {
+      "id": "clean-6",
+      "condition": "clean",
+      "expected": "C5L 5CV MZ XMMM EJ",
+      "actual": "C5L 5CV MZ XMMM EJ",
+      "errors": 0,
+      "durationSeconds": 8.258625,
+      "inferenceSeconds": 0.12403912504669279
+    },
+    {
+      "id": "clean-7",
+      "condition": "clean",
+      "expected": "PFCSG FOB NPGED RDS BCY",
+      "actual": "PFCSG FOB NPGED RDS BCY",
+      "errors": 0,
+      "durationSeconds": 12.784,
+      "inferenceSeconds": 0.18441512499703094
+    },
+    {
+      "id": "clean-8",
+      "condition": "clean",
+      "expected": "3S EBCJ NTRF Z6 9YJ",
+      "actual": "3S EBCJ NTRF Z6 9YJ",
+      "errors": 0,
+      "durationSeconds": 7.331625,
+      "inferenceSeconds": 0.11080075002973899
+    },
+    {
+      "id": "clean-9",
+      "condition": "clean",
+      "expected": "91L G2 IRAZ WMY 7T94R",
+      "actual": "91L G2 IRAZ WMY 7T94R",
+      "errors": 0,
+      "durationSeconds": 24.717125,
+      "inferenceSeconds": 0.3436398330377415
+    },
+    {
+      "id": "clean-10",
+      "condition": "clean",
+      "expected": "I1 6GQ 6M AP 9VS8R",
+      "actual": "I1 6GQ 6M AP 9VS8R",
+      "errors": 0,
+      "durationSeconds": 16.895625,
+      "inferenceSeconds": 0.23656483297236264
+    },
+    {
+      "id": "human-11",
+      "condition": "human",
+      "expected": "RAF IOCVC S6K AXFN5 ZGQ",
+      "actual": "RAF IOCVC S6K AXFN5 ZGQ",
+      "errors": 0,
+      "durationSeconds": 13.66175,
+      "inferenceSeconds": 0.199600207968615
+    },
+    {
+      "id": "human-12",
+      "condition": "human",
+      "expected": "ZIQ9U 4YF01 5I 1Z5 LEWU",
+      "actual": "ZIQ9U 4YF01 5I 1Z5 LEWU",
+      "errors": 0,
+      "durationSeconds": 13.15125,
+      "inferenceSeconds": 0.18937283294508234
+    },
+    {
+      "id": "human-13",
+      "condition": "human",
+      "expected": "MHVE 15TAU UGKO1 N3 4E3",
+      "actual": "MHVE 15TAU UGKO1 N3 4E3",
+      "errors": 0,
+      "durationSeconds": 28.378125,
+      "inferenceSeconds": 0.3892490829457529
+    },
+    {
+      "id": "human-14",
+      "condition": "human",
+      "expected": "4J 9KW IL 8YB8 P5KRA",
+      "actual": "4J 9KW IL 8YB8 P5KRA",
+      "errors": 0,
+      "durationSeconds": 17.3865,
+      "inferenceSeconds": 0.2457554170396179
+    },
+    {
+      "id": "human-15",
+      "condition": "human",
+      "expected": "40E JL MCSWF SYXC 4YUHY",
+      "actual": "40E JL MCSWF SYXC 4YUHY",
+      "errors": 0,
+      "durationSeconds": 24.496,
+      "inferenceSeconds": 0.34135487501043826
+    },
+    {
+      "id": "human-16",
+      "condition": "human",
+      "expected": "98 FCUUL H7G2L QSJ8Z HA",
+      "actual": "98 FCUUL H7G2L QSJ8Z HA",
+      "errors": 0,
+      "durationSeconds": 22.132,
+      "inferenceSeconds": 0.31449900002917275
+    },
+    {
+      "id": "human-17",
+      "condition": "human",
+      "expected": "ES NO 6Q4GB 3Z2YO AX",
+      "actual": "ES NO 6Q4GB 3Z2YO AX",
+      "errors": 0,
+      "durationSeconds": 21.472125,
+      "inferenceSeconds": 0.29916466696886346
+    },
+    {
+      "id": "human-18",
+      "condition": "human",
+      "expected": "M8K0 GPVX LNL0 QSPVX DNM",
+      "actual": "M8K0 GPVX LNL0 QSPVX DNM",
+      "errors": 0,
+      "durationSeconds": 16.300875,
+      "inferenceSeconds": 0.22944254195317626
+    },
+    {
+      "id": "human-19",
+      "condition": "human",
+      "expected": "XT59G URA2G 5L NVQHW BWXUD",
+      "actual": "XT59G URA2G 5L NVQHW BWXUD",
+      "errors": 0,
+      "durationSeconds": 12.205875,
+      "inferenceSeconds": 0.1774120419868268
+    },
+    {
+      "id": "human-20",
+      "condition": "human",
+      "expected": "AA 7R8 EWM KVU WI",
+      "actual": "AA 7R8 EWM KVU WI",
+      "errors": 0,
+      "durationSeconds": 9.342625,
+      "inferenceSeconds": 0.1367575000040233
+    },
+    {
+      "id": "fading-21",
+      "condition": "fading",
+      "expected": "OKRIL 273 SZIWH JQX6 Y8RZF",
+      "actual": "OKRIL 273 SZIWH JQX6 Y8RZF",
+      "errors": 0,
+      "durationSeconds": 16.30275,
+      "inferenceSeconds": 0.22948570898734033
+    },
+    {
+      "id": "fading-22",
+      "condition": "fading",
+      "expected": "4QS CP TZIU 2ZH 9P",
+      "actual": "4QS CP TZIU 2ZH 9P",
+      "errors": 0,
+      "durationSeconds": 11.595875,
+      "inferenceSeconds": 0.16890908300410956
+    },
+    {
+      "id": "fading-23",
+      "condition": "fading",
+      "expected": "JCW 4Q 525 68 XI",
+      "actual": "JCW 4Q 525 68 XI",
+      "errors": 0,
+      "durationSeconds": 13.929375,
+      "inferenceSeconds": 0.1952434999984689
+    },
+    {
+      "id": "fading-24",
+      "condition": "fading",
+      "expected": "PB VHQ QE 9PEA7 64O3",
+      "actual": "PB VHQ QE 9PEA7 64O3",
+      "errors": 0,
+      "durationSeconds": 7.943375,
+      "inferenceSeconds": 0.11966404202394187
+    },
+    {
+      "id": "fading-25",
+      "condition": "fading",
+      "expected": "LK WWR5 9DZ61 9SW TWK",
+      "actual": "LK WWR5 9DZ61 9SW TWK",
+      "errors": 0,
+      "durationSeconds": 13.054,
+      "inferenceSeconds": 0.19281229202169925
+    },
+    {
+      "id": "fading-26",
+      "condition": "fading",
+      "expected": "MN9 1ZSJ DC7 LE9VD WF74B",
+      "actual": "MN9 1ZSJ DC7 LE9VD WF74B",
+      "errors": 0,
+      "durationSeconds": 24.041625,
+      "inferenceSeconds": 0.3374609589809552
+    },
+    {
+      "id": "fading-27",
+      "condition": "fading",
+      "expected": "GD EXBL X3VQ G1E NKQ",
+      "actual": "GD EXBL X3VQ G1E NKQ",
+      "errors": 0,
+      "durationSeconds": 16.765875,
+      "inferenceSeconds": 0.2364434580085799
+    },
+    {
+      "id": "fading-28",
+      "condition": "fading",
+      "expected": "FHK UY NIDEU WH MNF",
+      "actual": "FHK UY NIDEU WH MNF",
+      "errors": 0,
+      "durationSeconds": 6.45975,
+      "inferenceSeconds": 0.0972222089767456
+    },
+    {
+      "id": "fading-29",
+      "condition": "fading",
+      "expected": "1VA PV Z1 U2B 04TEP",
+      "actual": "1VA PV Z1 U2B 04TEP",
+      "errors": 0,
+      "durationSeconds": 12.259875,
+      "inferenceSeconds": 0.179496583994478
+    },
+    {
+      "id": "fading-30",
+      "condition": "fading",
+      "expected": "10KR AA A5JV VT IDN",
+      "actual": "10KR AA A5JV VT IDN",
+      "errors": 0,
+      "durationSeconds": 8.953,
+      "inferenceSeconds": 0.13066170795354992
+    },
+    {
+      "id": "crowded-31",
+      "condition": "crowded",
+      "expected": "KXA FRKF BYQD RK G00HR",
+      "actual": "KXA FRKF BYQD RK G00HR",
+      "errors": 0,
+      "durationSeconds": 23.233875,
+      "inferenceSeconds": 0.3225572090013884
+    },
+    {
+      "id": "crowded-32",
+      "condition": "crowded",
+      "expected": "BST JCL 54GFC 4QF 1XBDF",
+      "actual": "BST JCL 54GFC 4QF 1XBDF",
+      "errors": 0,
+      "durationSeconds": 16.090625,
+      "inferenceSeconds": 0.22816758399130777
+    },
+    {
+      "id": "crowded-33",
+      "condition": "crowded",
+      "expected": "0USX ZQMO 5FM BRA N3NA",
+      "actual": "0USX ZQMO 5FM BRA N3NA",
+      "errors": 0,
+      "durationSeconds": 11.8585,
+      "inferenceSeconds": 0.16833408398088068
+    },
+    {
+      "id": "crowded-34",
+      "condition": "crowded",
+      "expected": "J6BXN YC5 F4X H95K ZC7H",
+      "actual": "J6BXN YC5 F4X H95K ZC7H",
+      "errors": 0,
+      "durationSeconds": 14.56175,
+      "inferenceSeconds": 0.209656624996569
+    },
+    {
+      "id": "crowded-35",
+      "condition": "crowded",
+      "expected": "41 NJ AZ5SU N11 V8OR",
+      "actual": "41 NJ AZ5SU N11 V8OR",
+      "errors": 0,
+      "durationSeconds": 12.53025,
+      "inferenceSeconds": 0.18578779202653095
+    },
+    {
+      "id": "crowded-36",
+      "condition": "crowded",
+      "expected": "F906 7W39 XBM 71HPK 6ALA",
+      "actual": "F906 7W39 XBM 71HPK 6ALA",
+      "errors": 0,
+      "durationSeconds": 11.710875,
+      "inferenceSeconds": 0.17192983400309458
+    },
+    {
+      "id": "crowded-37",
+      "condition": "crowded",
+      "expected": "1ZD TCGTW 1TU HFE7 F7IO",
+      "actual": "1ZD TCGTW 1TU HFE7 F7IO",
+      "errors": 0,
+      "durationSeconds": 14.50625,
+      "inferenceSeconds": 0.21178287494694814
+    },
+    {
+      "id": "crowded-38",
+      "condition": "crowded",
+      "expected": "T9 97I2 7F 3L 4M34",
+      "actual": "T9 97I2 7F 3L 4M34",
+      "errors": 0,
+      "durationSeconds": 13.401375,
+      "inferenceSeconds": 0.1907850420102477
+    },
+    {
+      "id": "crowded-39",
+      "condition": "crowded",
+      "expected": "Q1D D3E E3 EM W4259",
+      "actual": "Q1D D3E E3 EM W4259",
+      "errors": 0,
+      "durationSeconds": 17.246875,
+      "inferenceSeconds": 0.2457047079806216
+    },
+    {
+      "id": "crowded-40",
+      "condition": "crowded",
+      "expected": "0PG 7BSTX O5KIZ TAF 7HCXG",
+      "actual": "0PG 7BSTX O5KIZ TAF 7HCXG",
+      "errors": 0,
+      "durationSeconds": 11.474875,
+      "inferenceSeconds": 0.16337145795114338
+    },
+    {
+      "id": "rough-41",
+      "condition": "rough",
+      "expected": "AV1EL CGV O7C 7DX3 TQFZK",
+      "actual": "AV1EL CGV O7NN 7DX 3 TQFZK",
+      "errors": 3,
+      "durationSeconds": 42.02025,
+      "inferenceSeconds": 0.577978459012229
+    },
+    {
+      "id": "rough-42",
+      "condition": "rough",
+      "expected": "4C EO 77Q6W H54J0 T2",
+      "actual": "4C EO 77Q6WH54J0 2",
+      "errors": 2,
+      "durationSeconds": 27.87875,
+      "inferenceSeconds": 0.38042341702384874
+    },
+    {
+      "id": "rough-43",
+      "condition": "rough",
+      "expected": "35PSN IMGVJ 64 NZJT NHFM",
+      "actual": "I35PSN IMGVJ 64 NZJT NHFM",
+      "errors": 1,
+      "durationSeconds": 21.098125,
+      "inferenceSeconds": 0.2975171249709092
+    },
+    {
+      "id": "rough-44",
+      "condition": "rough",
+      "expected": "I154X ASE P5B18 BM80W 2WBHB",
+      "actual": "E154X ASE P5B18 BM80 W 2WBHB",
+      "errors": 2,
+      "durationSeconds": 32.73275,
+      "inferenceSeconds": 0.4680495000211522
+    },
+    {
+      "id": "rough-45",
+      "condition": "rough",
+      "expected": "ESG9 8IQD FU 3CZA UI9DS",
+      "actual": "ES G9 8AQD FU EA3CZA M9DS",
+      "errors": 6,
+      "durationSeconds": 43.7305,
+      "inferenceSeconds": 0.5950332499924116
+    },
+    {
+      "id": "rough-46",
+      "condition": "rough",
+      "expected": "1XB6 DX MQ V3YA PCMY",
+      "actual": "1XB6 DX MQ V3YAPCMY",
+      "errors": 1,
+      "durationSeconds": 16.745875,
+      "inferenceSeconds": 0.2366155410418287
+    },
+    {
+      "id": "rough-47",
+      "condition": "rough",
+      "expected": "DK LLW G54 9YVF1 H7BH",
+      "actual": "DK LLW G54 9YVF1 H7BH",
+      "errors": 0,
+      "durationSeconds": 14.3045,
+      "inferenceSeconds": 0.20251812500646338
+    },
+    {
+      "id": "rough-48",
+      "condition": "rough",
+      "expected": "VA78V YQ1S 106 R00R 0EK",
+      "actual": "VA78V YQ1S 106 0R 0EK",
+      "errors": 2,
+      "durationSeconds": 28.73,
+      "inferenceSeconds": 0.39575616701040417
+    },
+    {
+      "id": "rough-49",
+      "condition": "rough",
+      "expected": "RIX KRH 0H YPL JQ",
+      "actual": "RIX KRH 0ES WPL JQ",
+      "errors": 3,
+      "durationSeconds": 29.72825,
+      "inferenceSeconds": 0.47884045902173966
+    },
+    {
+      "id": "rough-50",
+      "condition": "rough",
+      "expected": "E9Q EKKE 6K4 PX7 VJJ1",
+      "actual": "E9Q EKKE 6K4 PX7VJJ1",
+      "errors": 1,
+      "durationSeconds": 25.1665,
+      "inferenceSeconds": 0.3723784160101786
+    },
+    {
+      "id": "chaos-51",
+      "condition": "chaos",
+      "expected": "P87UT R96K VSGBK GACJJ 4TT",
+      "actual": "NIHG WA RQNK FS3 BA GACJ. 5T",
+      "errors": 16,
+      "durationSeconds": 19.841875,
+      "inferenceSeconds": 0.27841758297290653
+    },
+    {
+      "id": "chaos-52",
+      "condition": "chaos",
+      "expected": "VCEB4 XSH SWZS 3D7BI ZNC",
+      "actual": "4B4X HSWO N7BI ZXC",
+      "errors": 11,
+      "durationSeconds": 19.10325,
+      "inferenceSeconds": 0.27108824998140335
+    },
+    {
+      "id": "chaos-53",
+      "condition": "chaos",
+      "expected": "KRX SN3 QKA OTJH BW",
+      "actual": "5S ANB3TTE JIE BW",
+      "errors": 13,
+      "durationSeconds": 12.685375,
+      "inferenceSeconds": 0.18390987504972145
+    },
+    {
+      "id": "chaos-54",
+      "condition": "chaos",
+      "expected": "MSQ BS7 SE M7LZ3 OI",
+      "actual": "73 BS7 H GRMY OI",
+      "errors": 10,
+      "durationSeconds": 12.446875,
+      "inferenceSeconds": 0.17694083298556507
+    },
+    {
+      "id": "chaos-55",
+      "condition": "chaos",
+      "expected": "T6DDG GHD6 3V BQ UIA",
+      "actual": "N5DDGMHD6 V B LIA",
+      "errors": 7,
+      "durationSeconds": 16.067125,
+      "inferenceSeconds": 0.22957954200683162
+    },
+    {
+      "id": "chaos-56",
+      "condition": "chaos",
+      "expected": "E0F PXZT 2M 7EBF FSB4",
+      "actual": "AZT2M 7S A",
+      "errors": 14,
+      "durationSeconds": 8.822625,
+      "inferenceSeconds": 0.13037779199657962
+    },
+    {
+      "id": "chaos-57",
+      "condition": "chaos",
+      "expected": "LHC5 WB9NB 0HX9 LWK 33X",
+      "actual": "RANR5 EMB9T B YX9 LWE3WX",
+      "errors": 13,
+      "durationSeconds": 21.42575,
+      "inferenceSeconds": 0.2994967079721391
+    },
+    {
+      "id": "chaos-58",
+      "condition": "chaos",
+      "expected": "70K HK 61BDK CHI66 RC1",
+      "actual": "R HTT 6L KCRH6 R0",
+      "errors": 14,
+      "durationSeconds": 13.3325,
+      "inferenceSeconds": 0.1935354580054991
+    },
+    {
+      "id": "chaos-59",
+      "condition": "chaos",
+      "expected": "PIR 13A S17G 42N Y58",
+      "actual": "GR1VTA S17M TJN C8",
+      "errors": 10,
+      "durationSeconds": 19.850875,
+      "inferenceSeconds": 0.2845413750037551
+    },
+    {
+      "id": "chaos-60",
+      "condition": "chaos",
+      "expected": "64QL 09 L48J1 JWN W1K",
+      "actual": "BA/.L99 L4WX OOJV1",
+      "errors": 15,
+      "durationSeconds": 19.701875,
+      "inferenceSeconds": 0.2814485830022022
+    }
+  ],
+  "aggregate": {
+    "cases": 60,
+    "speechCases": 60,
+    "characters": 1284,
+    "errors": 144,
+    "cer": 0.11214953271028037,
+    "exact": 41,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 1041.833,
+    "inferenceSeconds": 14.862328461778816
+  },
+  "conditions": {
+    "chaos": {
+      "cases": 10,
+      "speechCases": 10,
+      "characters": 215,
+      "errors": 123,
+      "cer": 0.5720930232558139,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 163.278125,
+      "inferenceSeconds": 2.329335998976603
+    },
+    "clean": {
+      "cases": 10,
+      "speechCases": 10,
+      "characters": 206,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 10,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 139.9715,
+      "inferenceSeconds": 2.0197970820008777
+    },
+    "crowded": {
+      "cases": 10,
+      "speechCases": 10,
+      "characters": 219,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 10,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 146.61525,
+      "inferenceSeconds": 2.0980772108887322
+    },
+    "fading": {
+      "cases": 10,
+      "speechCases": 10,
+      "characters": 202,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 10,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 131.3055,
+      "inferenceSeconds": 1.8873995439498685
+    },
+    "human": {
+      "cases": 10,
+      "speechCases": 10,
+      "characters": 222,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 10,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 178.527125,
+      "inferenceSeconds": 2.522608166851569
+    },
+    "rough": {
+      "cases": 10,
+      "speechCases": 10,
+      "characters": 220,
+      "errors": 21,
+      "cer": 0.09545454545454546,
+      "exact": 1,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 282.1355,
+      "inferenceSeconds": 4.005110459111165
+    }
+  }
+}

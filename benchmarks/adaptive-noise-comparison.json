@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "report": "benchmarks/adaptive-continuous-dev.json",
+  "manifest": ".research/continuous-dev/manifest.json",
+  "manifestSHA256": "a113892ccb18e874a04e3c1ff5b70ee82f092d3674556786570436cdf02b0f5c",
+  "sources": [
+    {
+      "file": "src/decoder.ts",
+      "sha256": "8326b1304e5cb93c6c522cd68950a7bcf0c5a87f40ab7fe1f2e07935da27c676"
+    },
+    {
+      "file": "src/timing.ts",
+      "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+    },
+    {
+      "file": "src/morse.ts",
+      "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+    }
+  ],
+  "baselineCommit": "2949031a9c23b3538771dbd34e00a35fa01367f6",
+  "baselineSources": [
+    {
+      "file": "src/decoder.ts",
+      "sha256": "dd957be6784cea075fc114a9472ee80d6f37130eb46d3b8d6eaaa6b49ba90c5f"
+    },
+    {
+      "file": "src/timing.ts",
+      "sha256": "99455e777d03f0a271cffef957783b6adb8fa2d2fa507c8c6f5b0a0269405294"
+    },
+    {
+      "file": "src/morse.ts",
+      "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+    }
+  ],
+  "summary": {
+    "cases": 6,
+    "speechCases": 0,
+    "characters": 0,
+    "errors": 0,
+    "cer": null,
+    "exact": 0,
+    "noiseCases": 6,
+    "noiseSeconds": 120,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": 0,
+    "audioSeconds": 120,
+    "inferenceSeconds": 0.3743734180000001
+  },
+  "baselineSummary": {
+    "cases": 6,
+    "speechCases": 0,
+    "characters": 0,
+    "errors": 0,
+    "cer": null,
+    "exact": 0,
+    "noiseCases": 6,
+    "noiseSeconds": 120,
+    "falseCharacters": 21,
+    "falseCharactersPerMinute": 10.5,
+    "audioSeconds": 120,
+    "inferenceSeconds": 0.19404129100000048
+  },
+  "cases": [
+    {
+      "id": "noise-1",
+      "durationSeconds": 20,
+      "actual": "",
+      "baselineActual": "",
+      "falseCharacters": 0,
+      "baselineFalseCharacters": 0
+    },
+    {
+      "id": "noise-2",
+      "durationSeconds": 20,
+      "actual": "",
+      "baselineActual": "",
+      "falseCharacters": 0,
+      "baselineFalseCharacters": 0
+    },
+    {
+      "id": "noise-3",
+      "durationSeconds": 20,
+      "actual": "",
+      "baselineActual": "",
+      "falseCharacters": 0,
+      "baselineFalseCharacters": 0
+    },
+    {
+      "id": "noise-4",
+      "durationSeconds": 20,
+      "actual": "",
+      "baselineActual": "",
+      "falseCharacters": 0,
+      "baselineFalseCharacters": 0
+    },
+    {
+      "id": "noise-5",
+      "durationSeconds": 20,
+      "actual": "",
+      "baselineActual": "T T MI T ST E I T D TE T TI T N TI",
+      "falseCharacters": 0,
+      "baselineFalseCharacters": 20
+    },
+    {
+      "id": "noise-6",
+      "durationSeconds": 20,
+      "actual": "",
+      "baselineActual": "T",
+      "falseCharacters": 0,
+      "baselineFalseCharacters": 1
+    }
+  ],
+  "limitations": "Six synthetic negative cases (120 seconds); not a general zero-false-positive claim. Separate unit checks cover colored noise, narrow receiver filters, static crashes, carrier resumption, and retaining real keyed audio."
+}

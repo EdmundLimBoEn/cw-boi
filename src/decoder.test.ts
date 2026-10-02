@@ -50,6 +50,66 @@ describe('Morse timing and audio', () => {
       expect(decodeSamples(noise, 8000).text).toBe('')
     }
   })
+  test('rejects colored receiver noise and still acquires a carrier above it', () => {
+    for (const seed of [915, 919]) {
+      const random = randomSource(seed)
+      let colored = 0
+      const noise = Float32Array.from({ length: 8000 * 30 }, () => {
+        const white = 0.3 * Math.sqrt(-2 * Math.log(Math.max(1e-12, random()))) * Math.cos(2 * Math.PI * random())
+        colored = colored * 0.9 + white * 0.1
+        return colored * 3
+      })
+      expect(decodeSamples(noise, 8000).text).toBe('')
+      const message = synthesize(transmission('CQ TEST 73', 20), 850, 8000)
+      for (let i = 0; i < message.length; i++) message[i] += noise[i]
+      expect(decodeSamples(message, 8000).text.trim()).toBe('CQ TEST 73')
+    }
+  })
+  test('rejects static crashes and a steady unkeyed carrier', () => {
+    const random = randomSource(855490107)
+    let crash = 0
+    const staticNoise = Float32Array.from({ length: 8000 * 20 }, () => {
+      const white = Math.sqrt(-2 * Math.log(Math.max(1e-12, random()))) * Math.cos(2 * Math.PI * random())
+      if (random() < 1.5 / 8000) crash = 3
+      crash *= 0.998
+      return white * (0.03 + crash)
+    })
+    expect(decodeSamples(staticNoise, 8000, { frequency: 584, autoTune: false }).text).toBe('')
+    const carrier = Float32Array.from({ length: 8000 * 10 }, (_, i) => 0.4 * Math.sin(2 * Math.PI * 650 * i / 8000))
+    expect(decodeSamples(carrier, 8000).text).toBe('')
+    const message = synthesize(transmission('CQ TEST', 20), 650, 8000)
+    const resumed = new Float32Array(carrier.length + 8000 + message.length)
+    resumed.set(carrier); resumed.set(message, carrier.length + 8000)
+    expect(decodeSamples(resumed, 8000).text.trim()).toBe('CQ TEST')
+  })
+  test('rejects noise shaped by a narrow receiver filter while retaining keyed audio', () => {
+    const random = randomSource(82619), noise = new Float32Array(8000 * 20)
+    let i1 = 0, q1 = 0, i2 = 0, q2 = 0
+    for (let n = 0; n < noise.length; n++) {
+      i1 = 0.94 * i1 + 0.06 * (random() * 2 - 1); q1 = 0.94 * q1 + 0.06 * (random() * 2 - 1)
+      i2 = 0.94 * i2 + 0.06 * i1; q2 = 0.94 * q2 + 0.06 * q1
+      noise[n] = 0.1 * (i2 * Math.cos(2 * Math.PI * 800 * n / 8000) + q2 * Math.sin(2 * Math.PI * 800 * n / 8000))
+    }
+    expect(decodeSamples(noise, 8000, { frequency: 800, autoTune: false }).text).toBe('')
+    const message = synthesize(transmission('CQ TEST 73', 20), 800, 8000)
+    for (let n = 0; n < message.length; n++) message[n] = message[n] * 0.1 + noise[n]
+    expect(decodeSamples(message, 8000, { frequency: 800, autoTune: false }).text.trim().startsWith('CQ TEST 73')).toBe(true)
+  })
+  test('preserves the first dot when receiver noise starts after digital silence', () => {
+    for (const snr of [15, 30]) {
+      const signal = makeSignal('AFTER WATER TEST', { ...CHALLENGES[0], frequency: 650, snr }, 1004519824)
+      const delayed = new Float32Array(signal.length + 8000)
+      delayed.set(signal, 8000)
+      expect(decodeSamples(delayed, 8000, { autoTune: false }).text.trim()).toBe('AFTER WATER TEST')
+    }
+  })
+  test('keeps a weak carrier inside the filter when manual tuning is slightly offset', () => {
+    const text = 'CQ TEST 73 DE 9V1ABC'
+    for (const offset of [-30, -18, 18, 30]) {
+      const signal = makeSignal(text, { ...CHALLENGES[0], frequency: 650 + offset, snr: 0, fading: 0.4 }, 83761)
+      expect(decodeSamples(signal, 8000, { frequency: 650, autoTune: false }).text.trim()).toBe(text)
+    }
+  })
   test('follows rough human timing and stretched dahs without a word dictionary', () => {
     const text = 'CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K'
     for (const challenge of [CHALLENGES[1], CHALLENGES[4]]) {

@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "split": "real-holdout",
+  "seed": null,
+  "manifest": ".research/real-final/manifest.json",
+  "manifestSHA256": "87a9dba85b642a46ea366ebe42db52ca6a9789f03c7f137446198bd1a47ecb0c",
+  "checkpoint": "/Users/limboenedmund/.cache/huggingface/hub/models--sderhy--morseformer/snapshots/9eab86a3ad7482f8c5801eabf26ec46f9493b919/rnnt_phase11b.pt",
+  "checkpointSHA256": "d9dba3f279090dc674800054a956bc0ddd7fd4c1d67205d6d101877da3f51d18",
+  "mode": "stream",
+  "decoder": "original",
+  "chunkSeconds": 1.0,
+  "device": "cpu",
+  "torchVersion": "2.14.1",
+  "morseformerVersion": "0.6.4",
+  "decoderSHA256": "660f16b265ae294d538ad72faf9ce2df7843bcdd4fecaf0c535e16072a3a2b01",
+  "serverSHA256": "e72ed300de21da9f2443d5d423446877e3118e7ed63da35c2a6a622ec79c58e3",
+  "benchmarkSHA256": "94bf37693311363eb46157d24c7c723fb94f1b13b6034f9d4853b1c1fd9b6381",
+  "knownCarrier": true,
+  "complete": true,
+  "results": [
+    {
+      "id": "marine-electric-nmf-callsign",
+      "condition": "real-hand-keyed",
+      "expected": "DE NMF NMF ? K",
+      "actual": "CINMF SME?K",
+      "errors": 7,
+      "cer": 0.5,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 9.65,
+      "inferenceSeconds": 0.19214925001142547,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 708.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CINMF"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " SM"
+        },
+        {
+          "atSeconds": 9.65,
+          "text": "E?K",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "marine-electric-wooh-distress",
+      "condition": "real-hand-keyed",
+      "expected": "DOWN BY HEAD AT 0800GMT",
+      "actual": "DOWN BY HEAB AT 080GMT",
+      "errors": 2,
+      "cer": 0.08695652173913043,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 20.75,
+      "inferenceSeconds": 0.5551662080106325,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 790.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "DOWN"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " BY"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " HEA"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "B A"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "T 0"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "8"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "0"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "G"
+        },
+        {
+          "atSeconds": 20.75,
+          "text": "MT",
+          "final": true
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "cases": 2,
+    "speechCases": 2,
+    "characters": 37,
+    "errors": 9,
+    "cer": 0.24324324324324326,
+    "exact": 0,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 30.4,
+    "inferenceSeconds": 0.747315458022058
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 37,
+      "errors": 9,
+      "cer": 0.24324324324324326,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 30.4,
+      "inferenceSeconds": 0.747315458022058
+    }
+  }
+}

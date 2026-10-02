@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "download_root": ".research/data",
+  "split": "real-holdout",
+  "clips": [
+    {
+      "id": "marine-electric-nmf-callsign",
+      "audio": "marine-electric/nmf-callsign-8k.wav",
+      "sourcePrefix": "marine-electric/Marine_Electric_SOS-prefix.mp3",
+      "expected": "DE NMF NMF ? K",
+      "frequency": 708,
+      "bandwidth": 100,
+      "operator": "NMF USCG COMMSTA Boston",
+      "condition": "real-hand-keyed",
+      "license": "CC0-1.0 (archive metadata)",
+      "source": "https://archive.org/details/SsMarineElectricWoohSos",
+      "provenance": "Externally published human transcript; independently bandpass-envelope checked each Morse character against dits/dahs. Core app and MF not used as ground truth. IMI (the unspaced Morse prosign ..--..) maps to ?. Crop excludes preceding WOOH; no expansion of abbreviations.",
+      "sourceAudio": "https://archive.org/download/SsMarineElectricWoohSos/Marine_Electric_SOS.mp3",
+      "sourceRangeSeconds": [
+        173.7,
+        183.35
+      ],
+      "transcriptSource": "https://archive.org/download/SsMarineElectricWoohSos/Transcript_SOS_WOOH.txt",
+      "sha256": "4cc317080c9d4effda8fd5f521ff433d287bc83f86b0f682c2de91cc35adb8dc",
+      "verifiedCharacters": [
+        [
+          "D",
+          173.889,
+          174.451,
+          "-.."
+        ],
+        [
+          "E",
+          174.605,
+          174.675,
+          "."
+        ],
+        [
+          "N",
+          175.184,
+          175.575,
+          "-."
+        ],
+        [
+          "M",
+          175.822,
+          176.358,
+          "--"
+        ],
+        [
+          "F",
+          176.602,
+          177.279,
+          "..-."
+        ],
+        [
+          "N",
+          177.857,
+          178.2,
+          "-."
+        ],
+        [
+          "M",
+          178.44,
+          178.993,
+          "--"
+        ],
+        [
+          "F",
+          179.191,
+          179.858,
+          "..-."
+        ],
+        [
+          "?",
+          180.498,
+          181.614,
+          "..--.."
+        ],
+        [
+          "K",
+          182.129,
+          182.902,
+          "-.-"
+        ]
+      ]
+    },
+    {
+      "id": "marine-electric-wooh-distress",
+      "audio": "marine-electric/wooh-distress-8k.wav",
+      "sourcePrefix": "marine-electric/Marine_Electric_SOS-prefix.mp3",
+      "expected": "DOWN BY HEAD AT 0800GMT",
+      "frequency": 790,
+      "bandwidth": 100,
+      "operator": "WOOH SS Marine Electric",
+      "condition": "real-hand-keyed",
+      "license": "CC0-1.0 (archive metadata)",
+      "source": "https://archive.org/details/SsMarineElectricWoohSos",
+      "provenance": "Publisher human transcript matched independent 790Hz envelope extraction at three thresholds 0.4,0.45,0.5; every detected Morse character reviewed against code table and source. Cropped complete transmitted words; preserve 0800GMT as one group as in publisher transcript. No corrections or expansions.",
+      "sourceAudio": "https://archive.org/download/SsMarineElectricWoohSos/Marine_Electric_SOS.mp3",
+      "sourceRangeSeconds": [
+        84.55,
+        105.3
+      ],
+      "transcriptSource": "https://archive.org/download/SsMarineElectricWoohSos/Transcript_SOS_WOOH.txt",
+      "sha256": "b36c96862fe13d9eab17ce2a9b96a74e533ed2e3b808f46292f6960e7e75028c",
+      "verifiedCharacters": null
+    }
+  ]
+}

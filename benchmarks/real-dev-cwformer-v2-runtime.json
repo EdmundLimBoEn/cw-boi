@@ -1,0 +1,56 @@
+{
+  "model": "/Users/limboenedmund/Documents/apps/claude/cw-boi/models/cwformer-adapt-v2/cwformer_streaming_fp32.onnx",
+  "modelSHA256": "573979e46b4cc94321128d9e8567deff5c92eb82e17ff6fa32bf1ada025267c6",
+  "manifestSHA256": "a946b87ba2badc30183e9347bc3c2d4d6c6eb412b8cea12262975e7c19eb06b1",
+  "bandwidth": 150,
+  "results": [
+    {
+      "id": "saq-2019-website",
+      "condition": "real-hand-keyed",
+      "expected": "OUR WEBSITE : WWW.ALEXANDER.N.SE",
+      "actual": "OUR WEBSITE 87 WWW. ALEXANDR.N+S",
+      "errors": 6,
+      "durationSeconds": 24.1,
+      "inferenceSeconds": 0.3501900830306113
+    },
+    {
+      "id": "saq-2019-website-repeat",
+      "condition": "real-hand-keyed",
+      "expected": "WWW.ALEXANDER.N.SE",
+      "actual": "WWW.AR XANDER. N.S",
+      "errors": 4,
+      "durationSeconds": 14.85,
+      "inferenceSeconds": 0.2083760829991661
+    }
+  ],
+  "aggregate": {
+    "cases": 2,
+    "speechCases": 2,
+    "characters": 50,
+    "errors": 10,
+    "cer": 0.2,
+    "exact": 0,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 38.95,
+    "inferenceSeconds": 0.5585661660297774
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 50,
+      "errors": 10,
+      "cer": 0.2,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 38.95,
+      "inferenceSeconds": 0.5585661660297774
+    }
+  }
+}

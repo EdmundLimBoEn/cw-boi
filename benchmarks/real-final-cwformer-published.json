@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "split": "real-holdout",
+  "manifest": ".research/real-final/manifest.json",
+  "manifestSHA256": "87a9dba85b642a46ea366ebe42db52ca6a9789f03c7f137446198bd1a47ecb0c",
+  "model": ".research/cwformer-release/cwformer_streaming_fp32.onnx",
+  "modelSHA256": "cbc241311f55074f3bb522ddf2823f0bc97f26b30cfb28203d042031c7187279",
+  "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+  "benchmarkSHA256": "ff217705f86a8338b094bda6d26e773bfcbbc49da9ad30ddc230b6b318f68f68",
+  "onnxruntimeVersion": "1.30.0",
+  "provider": "CPUExecutionProvider",
+  "knownCarrier": true,
+  "bandwidth": 150,
+  "complete": true,
+  "results": [
+    {
+      "id": "marine-electric-nmf-callsign",
+      "condition": "real-hand-keyed",
+      "expected": "DE NMF NMF ? K",
+      "actual": "58WOL",
+      "errors": 14,
+      "durationSeconds": 9.65,
+      "inferenceSeconds": 0.1502278340049088
+    },
+    {
+      "id": "marine-electric-wooh-distress",
+      "condition": "real-hand-keyed",
+      "expected": "DOWN BY HEAD AT 0800GMT",
+      "actual": "HDYHEAD AT0800 GM T",
+      "errors": 10,
+      "durationSeconds": 20.75,
+      "inferenceSeconds": 0.2966704170103185
+    }
+  ],
+  "aggregate": {
+    "cases": 2,
+    "speechCases": 2,
+    "characters": 37,
+    "errors": 24,
+    "cer": 0.6486486486486487,
+    "exact": 0,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 30.4,
+    "inferenceSeconds": 0.4468982510152273
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 37,
+      "errors": 24,
+      "cer": 0.6486486486486487,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 30.4,
+      "inferenceSeconds": 0.4468982510152273
+    }
+  }
+}

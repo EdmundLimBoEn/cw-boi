@@ -1,0 +1,37 @@
+{
+  "status": "prespecified-before-final-evaluation",
+  "baseline": {
+    "checkpoint": "sderhy/morseformer/rnnt_phase11b.pt",
+    "checkpointSHA256": "d9dba3f279090dc674800054a956bc0ddd7fd4c1d67205d6d101877da3f51d18",
+    "decoder": "Original morseformer.decoding.streaming.StreamingDecoder, without local boundary or startup changes",
+    "decoderSHA256": "660f16b265ae294d538ad72faf9ce2df7843bcdd4fecaf0c535e16072a3a2b01",
+    "confidenceThreshold": 0.6,
+    "digitThreshold": 0.9
+  },
+  "synthetic": {
+    "split": "final",
+    "seed": 917351,
+    "speechCasesPerCondition": 16,
+    "noiseRepeatsPerKind": 4,
+    "expectedSpeechCases": 96,
+    "expectedNegativeCases": 24,
+    "noiseSeconds": 480,
+    "aggregateSpeechCER": "strictly lower than baseline",
+    "maximumCERIncreaseAbsolute": {
+      "clean": 0.02,
+      "fading": 0.02,
+      "crowded": 0.02
+    },
+    "noiseFalseCharactersPerMinute": "no greater than baseline"
+  },
+  "real": {
+    "manifest": "neural/corpus-holdout.json",
+    "operators": [
+      "NMF",
+      "WOOH"
+    ],
+    "maximumAdditionalCharacterErrorsAcrossBothClips": 1
+  },
+  "scoring": "Levenshtein character errors include punctuation and spaces; text is uppercase with leading/trailing whitespace stripped. Noise false characters exclude spaces. Aggregate speech CER is total speech errors divided by total expected speech characters.",
+  "decision": "All guards must pass. Freeze checkpoint, frontend and thresholds before evaluating final data. Report any failure without changing criteria or tuning further on final results."
+}

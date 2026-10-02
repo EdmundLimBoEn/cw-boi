@@ -1,0 +1,720 @@
+{
+  "version": 1,
+  "split": "final",
+  "seed": 8321907,
+  "manifest": ".research/receiver-noise-final/manifest.json",
+  "manifestSHA256": "8d7ca6e5f34f525732ff6ab2b5b187b5f04da1e5ee133ebc22ef156eae7df7aa",
+  "engine": "adaptive",
+  "mode": "stream",
+  "chunkSamples": 256,
+  "knownCarrier": true,
+  "sources": [
+    {
+      "file": "src/decoder.ts",
+      "sha256": "8326b1304e5cb93c6c522cd68950a7bcf0c5a87f40ab7fe1f2e07935da27c676"
+    },
+    {
+      "file": "src/timing.ts",
+      "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+    },
+    {
+      "file": "src/morse.ts",
+      "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+    }
+  ],
+  "benchmarkSHA256": "20b228078ce7e0212e15c792c7f7957f3cd5a454174824938ae2a52e02978151",
+  "complete": true,
+  "results": [
+    {
+      "id": "clean-1-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "CQ DE M7XDB UR RST 459 NAME PETER K",
+      "actual": "CQ DE M7XDB UR RST 459 NAME PETER K",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.12125,
+      "inferenceSeconds": 0.3042539589999997
+    },
+    {
+      "id": "clean-1-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "CQ DE M7XDB UR RST 459 NAME PETER K",
+      "actual": "CQ DE M7XDB UR RST 459 NAME PETER K",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.12125,
+      "inferenceSeconds": 0.287403542
+    },
+    {
+      "id": "clean-2-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+      "actual": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 17.35525,
+      "inferenceSeconds": 0.21658616699999947
+    },
+    {
+      "id": "clean-2-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+      "actual": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 17.35525,
+      "inferenceSeconds": 0.2164289170000002
+    },
+    {
+      "id": "clean-3-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+      "actual": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.595875,
+      "inferenceSeconds": 0.34685683400000017
+    },
+    {
+      "id": "clean-3-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+      "actual": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.595875,
+      "inferenceSeconds": 0.34678179199999976
+    },
+    {
+      "id": "clean-4-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+      "actual": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.342625,
+      "inferenceSeconds": 0.2779070000000001
+    },
+    {
+      "id": "clean-4-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+      "actual": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.342625,
+      "inferenceSeconds": 0.28316179199999986
+    },
+    {
+      "id": "clean-5-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "8LDN HNE7 0YAK 3E6H FN3C",
+      "actual": "8LDN HNE7 0YAK 3E6H FN3C",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 15.326375,
+      "inferenceSeconds": 0.18002766599999995
+    },
+    {
+      "id": "clean-5-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "8LDN HNE7 0YAK 3E6H FN3C",
+      "actual": "8LDN HNE7 0YAK 3E6H FN3C",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 15.326375,
+      "inferenceSeconds": 0.18060249999999997
+    },
+    {
+      "id": "clean-6-receiver-10db",
+      "condition": "mixed-real-receiver-noise-clean-10db",
+      "expected": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+      "actual": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.10675,
+      "inferenceSeconds": 0.304985541
+    },
+    {
+      "id": "clean-6-receiver-0db",
+      "condition": "mixed-real-receiver-noise-clean-0db",
+      "expected": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+      "actual": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 21.10675,
+      "inferenceSeconds": 0.30154399999999987
+    },
+    {
+      "id": "rough-1-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "CQ DE 9V2EMF UR RST",
+      "actual": "CQ DE 9VUMEMF UR RV",
+      "errors": 4,
+      "cer": 0.21052631578947367,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 23.27175,
+      "inferenceSeconds": 0.18695441699999993
+    },
+    {
+      "id": "rough-1-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "CQ DE 9V2EMF UR RST",
+      "actual": "CQ DE 9VUMEMF UR RV",
+      "errors": 4,
+      "cer": 0.21052631578947367,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 23.27175,
+      "inferenceSeconds": 0.18766791699999977
+    },
+    {
+      "id": "rough-2-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "BIAG YQ0C EJWC UF3I VUKV",
+      "actual": "BIAG YQ0C EJWCUF3I VUKV",
+      "errors": 1,
+      "cer": 0.041666666666666664,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 26.065625,
+      "inferenceSeconds": 0.30129620799999973
+    },
+    {
+      "id": "rough-2-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "BIAG YQ0C EJWC UF3I VUKV",
+      "actual": "BIAG YQ0C EJWCUF3I VUKV",
+      "errors": 1,
+      "cer": 0.041666666666666664,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 26.065625,
+      "inferenceSeconds": 0.3059091669999998
+    },
+    {
+      "id": "rough-3-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "CLOUD WATER GREEN RAIN RIVER",
+      "actual": "CLO? WATER GREEN RLN RIVER",
+      "errors": 4,
+      "cer": 0.14285714285714285,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 26.315625,
+      "inferenceSeconds": 0.27604104200000074
+    },
+    {
+      "id": "rough-3-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "CLOUD WATER GREEN RAIN RIVER",
+      "actual": "CLO? WATF GREEN RLN RIVER",
+      "errors": 6,
+      "cer": 0.21428571428571427,
+      "errorsWithoutSpaces": 6,
+      "durationSeconds": 26.315625,
+      "inferenceSeconds": 0.2760657499999998
+    },
+    {
+      "id": "rough-4-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "CQ DE G2JWU UR RST 459",
+      "actual": "CQB G2JWU UR RST 459",
+      "errors": 3,
+      "cer": 0.13636363636363635,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 28.172875,
+      "inferenceSeconds": 0.2813942079999997
+    },
+    {
+      "id": "rough-4-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "CQ DE G2JWU UR RST 459",
+      "actual": "CQB G2JWU UR RST 459",
+      "errors": 3,
+      "cer": 0.13636363636363635,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 28.172875,
+      "inferenceSeconds": 0.28946391599999877
+    },
+    {
+      "id": "rough-5-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "FAB3 IARS J2LC WE2T",
+      "actual": "FAB3 IARS J2LCP2T",
+      "errors": 3,
+      "cer": 0.15789473684210525,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 25.413125,
+      "inferenceSeconds": 0.24265862500000002
+    },
+    {
+      "id": "rough-5-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "FAB3 IARS J2LC WE2T",
+      "actual": "FAB3 IARS J2LCP2T",
+      "errors": 3,
+      "cer": 0.15789473684210525,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 25.413125,
+      "inferenceSeconds": 0.24282225000000107
+    },
+    {
+      "id": "rough-6-receiver-10db",
+      "condition": "mixed-real-receiver-noise-rough-10db",
+      "expected": "WATER WATER NIGHT SOUTH BRIDGE",
+      "actual": "WATERWWERNIGHT SOUTH BRIDGE",
+      "errors": 4,
+      "cer": 0.13333333333333333,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 27.792,
+      "inferenceSeconds": 0.31150004199999964
+    },
+    {
+      "id": "rough-6-receiver-0db",
+      "condition": "mixed-real-receiver-noise-rough-0db",
+      "expected": "WATER WATER NIGHT SOUTH BRIDGE",
+      "actual": "WATERWATERNIGHT SOUTH BRIDGE",
+      "errors": 2,
+      "cer": 0.06666666666666667,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 27.792,
+      "inferenceSeconds": 0.3123230000000003
+    }
+  ],
+  "summary": {
+    "cases": 24,
+    "speechCases": 24,
+    "characters": 684,
+    "errors": 38,
+    "cer": 0.05555555555555555,
+    "exact": 12,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 549.7582500000001,
+    "inferenceSeconds": 6.460636252
+  },
+  "conditions": {
+    "mixed-real-receiver-noise-clean-0db": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 200,
+      "errors": 0,
+      "cer": 0,
+      "exact": 6,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 117.84812500000001,
+      "inferenceSeconds": 1.6159225429999995
+    },
+    "mixed-real-receiver-noise-clean-10db": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 200,
+      "errors": 0,
+      "cer": 0,
+      "exact": 6,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 117.84812500000001,
+      "inferenceSeconds": 1.6306171669999994
+    },
+    "mixed-real-receiver-noise-rough-0db": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 142,
+      "errors": 19,
+      "cer": 0.13380281690140844,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 157.031,
+      "inferenceSeconds": 1.6142519999999994
+    },
+    "mixed-real-receiver-noise-rough-10db": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 142,
+      "errors": 19,
+      "cer": 0.13380281690140844,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 157.031,
+      "inferenceSeconds": 1.5998445419999998
+    }
+  },
+  "baseline": {
+    "commit": "2949031a9c23b3538771dbd34e00a35fa01367f6",
+    "sources": [
+      {
+        "file": "src/decoder.ts",
+        "sha256": "dd957be6784cea075fc114a9472ee80d6f37130eb46d3b8d6eaaa6b49ba90c5f"
+      },
+      {
+        "file": "src/timing.ts",
+        "sha256": "99455e777d03f0a271cffef957783b6adb8fa2d2fa507c8c6f5b0a0269405294"
+      },
+      {
+        "file": "src/morse.ts",
+        "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+      }
+    ],
+    "results": [
+      {
+        "id": "clean-1-receiver-10db",
+        "condition": "mixed-real-receiver-noise-clean-10db",
+        "expected": "CQ DE M7XDB UR RST 459 NAME PETER K",
+        "actual": "CQ DE M7XDB UR RST 459 NAME PETER K",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 21.12125,
+        "inferenceSeconds": 0.21735320900000005
+      },
+      {
+        "id": "clean-1-receiver-0db",
+        "condition": "mixed-real-receiver-noise-clean-0db",
+        "expected": "CQ DE M7XDB UR RST 459 NAME PETER K",
+        "actual": "CQ DE M7XDB UR RST 459 NAME PETER K",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 21.12125,
+        "inferenceSeconds": 0.20052616699999998
+      },
+      {
+        "id": "clean-2-receiver-10db",
+        "condition": "mixed-real-receiver-noise-clean-10db",
+        "expected": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+        "actual": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 17.35525,
+        "inferenceSeconds": 0.14190983399999993
+      },
+      {
+        "id": "clean-2-receiver-0db",
+        "condition": "mixed-real-receiver-noise-clean-0db",
+        "expected": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+        "actual": "OAQ7 XX6C 4LFV VB1Q 6YZT",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 17.35525,
+        "inferenceSeconds": 0.1397534579999999
+      },
+      {
+        "id": "clean-3-receiver-10db",
+        "condition": "mixed-real-receiver-noise-clean-10db",
+        "expected": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+        "actual": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 21.595875,
+        "inferenceSeconds": 0.24031366700000012
+      },
+      {
+        "id": "clean-3-receiver-0db",
+        "condition": "mixed-real-receiver-noise-clean-0db",
+        "expected": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+        "actual": "STONE NORTH HILL LIGHT EARLY VALLEY BRIDGE",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 21.595875,
+        "inferenceSeconds": 0.23637341700000003
+      },
+      {
+        "id": "clean-4-receiver-10db",
+        "condition": "mixed-real-receiver-noise-clean-10db",
+        "expected": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+        "actual": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 21.342625,
+        "inferenceSeconds": 0.18017716700000005
+      },
+      {
+        "id": "clean-4-receiver-0db",
+        "condition": "mixed-real-receiver-noise-clean-0db",
+        "expected": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+        "actual": "CQ DE K0LWL UR RST 579 NAME ALAN K",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 21.342625,
+        "inferenceSeconds": 0.20007733299999994
+      },
+      {
+        "id": "clean-5-receiver-10db",
+        "condition": "mixed-real-receiver-noise-clean-10db",
+        "expected": "8LDN HNE7 0YAK 3E6H FN3C",
+        "actual": "8LDN HNE7 0YAK 3E6H FN3C",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 15.326375,
+        "inferenceSeconds": 0.11978654200000005
+      },
+      {
+        "id": "clean-5-receiver-0db",
+        "condition": "mixed-real-receiver-noise-clean-0db",
+        "expected": "8LDN HNE7 0YAK 3E6H FN3C",
+        "actual": "8LDN HNE7 0YAK 3E6H FN3C",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 15.326375,
+        "inferenceSeconds": 0.11525095800000008
+      },
+      {
+        "id": "clean-6-receiver-10db",
+        "condition": "mixed-real-receiver-noise-clean-10db",
+        "expected": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+        "actual": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 21.10675,
+        "inferenceSeconds": 0.1977881669999997
+      },
+      {
+        "id": "clean-6-receiver-0db",
+        "condition": "mixed-real-receiver-noise-clean-0db",
+        "expected": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+        "actual": "AFTER NIGHT NIGHT RIVER RIVER GREEN RADIO",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 21.10675,
+        "inferenceSeconds": 0.19652970799999958
+      },
+      {
+        "id": "rough-1-receiver-10db",
+        "condition": "mixed-real-receiver-noise-rough-10db",
+        "expected": "CQ DE 9V2EMF UR RST",
+        "actual": "C Q DE 9VUMEM F EA EN RST",
+        "errors": 9,
+        "cer": 0.47368421052631576,
+        "errorsWithoutSpaces": 6,
+        "durationSeconds": 23.27175,
+        "inferenceSeconds": 0.10759879099999989
+      },
+      {
+        "id": "rough-1-receiver-0db",
+        "condition": "mixed-real-receiver-noise-rough-0db",
+        "expected": "CQ DE 9V2EMF UR RST",
+        "actual": "CQ IE 9VUMET F EAEN RST",
+        "errors": 9,
+        "cer": 0.47368421052631576,
+        "errorsWithoutSpaces": 8,
+        "durationSeconds": 23.27175,
+        "inferenceSeconds": 0.10244025000000011
+      },
+      {
+        "id": "rough-2-receiver-10db",
+        "condition": "mixed-real-receiver-noise-rough-10db",
+        "expected": "BIAG YQ0C EJWC UF3I VUKV",
+        "actual": "BIAG YQ0C EJWTRUF3I VUKV",
+        "errors": 2,
+        "cer": 0.08333333333333333,
+        "errorsWithoutSpaces": 2,
+        "durationSeconds": 26.065625,
+        "inferenceSeconds": 0.19030733399999963
+      },
+      {
+        "id": "rough-2-receiver-0db",
+        "condition": "mixed-real-receiver-noise-rough-0db",
+        "expected": "BIAG YQ0C EJWC UF3I VUKV",
+        "actual": "BIAG YQMMT CEJWTR EAF 3I V UKV",
+        "errors": 10,
+        "cer": 0.4166666666666667,
+        "errorsWithoutSpaces": 7,
+        "durationSeconds": 26.065625,
+        "inferenceSeconds": 0.19716341699999976
+      },
+      {
+        "id": "rough-3-receiver-10db",
+        "condition": "mixed-real-receiver-noise-rough-10db",
+        "expected": "CLOUD WATER GREEN RAIN RIVER",
+        "actual": "CLOUD WA T ER G RE E N AE AI N R IVER",
+        "errors": 10,
+        "cer": 0.35714285714285715,
+        "errorsWithoutSpaces": 2,
+        "durationSeconds": 26.315625,
+        "inferenceSeconds": 0.176252833
+      },
+      {
+        "id": "rough-3-receiver-0db",
+        "condition": "mixed-real-receiver-noise-rough-0db",
+        "expected": "CLOUD WATER GREEN RAIN RIVER",
+        "actual": "CLOUD WA T ER N RE E N R AI N E R IVER",
+        "errors": 11,
+        "cer": 0.39285714285714285,
+        "errorsWithoutSpaces": 2,
+        "durationSeconds": 26.315625,
+        "inferenceSeconds": 0.16995066700000006
+      },
+      {
+        "id": "rough-4-receiver-10db",
+        "condition": "mixed-real-receiver-noise-rough-10db",
+        "expected": "CQ DE G2JWU UR RST 459",
+        "actual": "CQB E2JWU UR RST 459",
+        "errors": 4,
+        "cer": 0.18181818181818182,
+        "errorsWithoutSpaces": 2,
+        "durationSeconds": 28.172875,
+        "inferenceSeconds": 0.17613058300000012
+      },
+      {
+        "id": "rough-4-receiver-0db",
+        "condition": "mixed-real-receiver-noise-rough-0db",
+        "expected": "CQ DE G2JWU UR RST 459",
+        "actual": "CQ DE E2JWU UR RST 459",
+        "errors": 1,
+        "cer": 0.045454545454545456,
+        "errorsWithoutSpaces": 1,
+        "durationSeconds": 28.172875,
+        "inferenceSeconds": 0.15943600000000016
+      },
+      {
+        "id": "rough-5-receiver-10db",
+        "condition": "mixed-real-receiver-noise-rough-10db",
+        "expected": "FAB3 IARS J2LC WE2T",
+        "actual": "FAB3 IARS J2LCP2T",
+        "errors": 3,
+        "cer": 0.15789473684210525,
+        "errorsWithoutSpaces": 2,
+        "durationSeconds": 25.413125,
+        "inferenceSeconds": 0.14513650000000006
+      },
+      {
+        "id": "rough-5-receiver-0db",
+        "condition": "mixed-real-receiver-noise-rough-0db",
+        "expected": "FAB3 IARS J2LC WE2T",
+        "actual": "FAB3 IARS JEW LCWE�T",
+        "errors": 5,
+        "cer": 0.2631578947368421,
+        "errorsWithoutSpaces": 3,
+        "durationSeconds": 25.413125,
+        "inferenceSeconds": 0.14317624999999998
+      },
+      {
+        "id": "rough-6-receiver-10db",
+        "condition": "mixed-real-receiver-noise-rough-10db",
+        "expected": "WATER WATER NIGHT SOUTH BRIDGE",
+        "actual": "WATERWWERNIGHT SOUTH SRIDGE",
+        "errors": 5,
+        "cer": 0.16666666666666666,
+        "errorsWithoutSpaces": 3,
+        "durationSeconds": 27.792,
+        "inferenceSeconds": 0.1932470830000002
+      },
+      {
+        "id": "rough-6-receiver-0db",
+        "condition": "mixed-real-receiver-noise-rough-0db",
+        "expected": "WATER WATER NIGHT SOUTH BRIDGE",
+        "actual": "WATERWWERNIGHT S UTH SRIDGE",
+        "errors": 6,
+        "cer": 0.2,
+        "errorsWithoutSpaces": 4,
+        "durationSeconds": 27.792,
+        "inferenceSeconds": 0.1831030840000003
+      }
+    ],
+    "summary": {
+      "cases": 24,
+      "speechCases": 24,
+      "characters": 684,
+      "errors": 75,
+      "cer": 0.10964912280701754,
+      "exact": 12,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 549.7582500000001,
+      "inferenceSeconds": 4.129782419
+    },
+    "conditions": {
+      "mixed-real-receiver-noise-clean-0db": {
+        "cases": 6,
+        "speechCases": 6,
+        "characters": 200,
+        "errors": 0,
+        "cer": 0,
+        "exact": 6,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 117.84812500000001,
+        "inferenceSeconds": 1.0885110409999994
+      },
+      "mixed-real-receiver-noise-clean-10db": {
+        "cases": 6,
+        "speechCases": 6,
+        "characters": 200,
+        "errors": 0,
+        "cer": 0,
+        "exact": 6,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 117.84812500000001,
+        "inferenceSeconds": 1.097328586
+      },
+      "mixed-real-receiver-noise-rough-0db": {
+        "cases": 6,
+        "speechCases": 6,
+        "characters": 142,
+        "errors": 42,
+        "cer": 0.29577464788732394,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 157.031,
+        "inferenceSeconds": 0.9552696680000003
+      },
+      "mixed-real-receiver-noise-rough-10db": {
+        "cases": 6,
+        "speechCases": 6,
+        "characters": 142,
+        "errors": 33,
+        "cer": 0.2323943661971831,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 157.031,
+        "inferenceSeconds": 0.9886731239999997
+      }
+    }
+  }
+}

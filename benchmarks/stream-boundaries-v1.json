@@ -1,0 +1,66 @@
+{
+  "description": "Match acoustic token identities within32ms across adjacent window cutoffs; no language model or word correction. Supplementary development sweep, not heldout final model evaluation.",
+  "generator": "src/signals.ts with .research/streaming/generate.ts",
+  "seed": 7100000,
+  "channels": 6,
+  "wpm": [
+    12,
+    40
+  ],
+  "random_leading_silence_seconds": [
+    0,
+    2
+  ],
+  "summary": {
+    "published": {
+      "clips": 60,
+      "characters": 1284,
+      "beforeCER": 0.3309968847352025,
+      "afterCER": 0.3309968847352025,
+      "regressions": 0,
+      "improvements": 0
+    },
+    "v2": {
+      "clips": 60,
+      "characters": 1284,
+      "beforeCER": 0.32087227414330216,
+      "afterCER": 0.32009345794392524,
+      "regressions": 0,
+      "improvements": 1
+    }
+  },
+  "changedCases": [
+    {
+      "path": ".research/streaming/sweep-chaos-2.f32",
+      "text": "KRX SN3 QKA OTJH BW",
+      "challenge": "chaos",
+      "frequency": 620,
+      "wpm": 26,
+      "checkpoint": null,
+      "old": "OBUAE5W",
+      "new": "OBUAEB5W",
+      "old_cer": 0.8947368421052632,
+      "new_cer": 0.8947368421052632
+    },
+    {
+      "path": ".research/streaming/sweep-clean-6.f32",
+      "text": "PFCSG FOB NPGED RDS BCY",
+      "challenge": "clean",
+      "frequency": 650,
+      "wpm": 26,
+      "checkpoint": "models/rough-fist-gpu-v2/best.pt",
+      "old": "PFCSG FOBNPGED RDS BCY",
+      "new": "PFCSG FOB NPGED RDS BCY",
+      "old_cer": 0.043478260869565216,
+      "new_cer": 0.0
+    }
+  ],
+  "originalRegression": {
+    "checkpoint": "rough-fist-gpu-v2/best.pt",
+    "challenge": "clean",
+    "seed": 39181,
+    "before": "CQ DE 9V1ABC URRST 579 QTH SINGAPORE K",
+    "after": "CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K",
+    "cause": "Space emitted at10.000s then9.992s was excluded by both adjacent commit windows."
+  }
+}

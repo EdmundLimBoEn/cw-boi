@@ -3,7 +3,7 @@
 import numpy as np
 
 from server import samples_from_bytes, settings
-from train import case, collate
+from train import case, collate, continuous_waveform, WINDOW
 from morseformer.core.tokenizer import encode, decode
 import torch
 
@@ -24,6 +24,15 @@ if __name__ == '__main__':
         assert features.shape == (3000, 1) and np.isfinite(features).all()
         assert decode(encode(text)) == text
         assert bool(text) == (family != 'noise')
+        dense, dense_text = case(58319, family, continuous=True)
+        assert dense.shape == (3000, 1) and np.isfinite(dense).all()
+        assert decode(encode(dense_text)) == dense_text
+    for seed in range(20):
+        wave, text, spans = continuous_waveform(np.random.default_rng(seed), clean=False)
+        assert len(wave) == WINDOW and np.isfinite(wave).all()
+        assert text == ''.join(char for char, _, _ in spans).strip()
+        assert all(0 <= start < end <= WINDOW for _, start, end in spans)
+        assert any(end > WINDOW / 2 for _, _, end in spans), 'Continuous examples must include late characters.'
     batch, targets, lengths = collate([(torch.zeros(3000, 1), torch.tensor([], dtype=torch.long)),
                                       (torch.zeros(3000, 1), torch.tensor(encode('CQ')))])
     assert batch.shape == (2, 3000, 1) and lengths.tolist() == [0, 2]

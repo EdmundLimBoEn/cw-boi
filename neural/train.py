@@ -13,6 +13,7 @@ import torch
 import torchaudio
 import torchaudio.functional as AF
 from scipy.signal import hilbert, lfilter
+from scipy.io import wavfile
 from torch.utils.data import DataLoader, Dataset
 
 from morse_synth.keying import KeyingConfig, render_events
@@ -27,13 +28,73 @@ ALPHABET = np.array(list('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'))
 WORDS = ['CQ', 'DE', 'UR', 'RST', 'QTH', 'NAME', 'RIG', 'PWR', 'ANT', 'TNX', 'FER', 'CALL', 'QSL', 'AGN', 'TEST', '73', '599', '559', '589', 'HR', 'WX', 'ES', 'BK', 'K']
 
 
-def case(seed, family, punctuation=False):
+def continuous_waveform(rng, clean):
+    words = []
+    for _ in range(10):
+        if rng.random() < 0.45:
+            words.append(str(rng.choice(WORDS)))
+        else:
+            words.append(''.join(rng.choice(list('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789?/='), size=int(rng.integers(2, 9)))))
+    source = ' '.join(words)
+    wpm = rng.uniform(12, 40)
+    unit = 1.2 / wpm
+    dash = 3 if clean else rng.uniform(2.4, 4.8)
+    mark_jitter = rng.uniform(0, 0.035 if clean else 0.35)
+    gap_jitter = rng.uniform(0, 0.04 if clean else 0.4)
+    intra = 1 if clean else rng.uniform(0.85, 1.3)
+    char_gap = 3 if clean else rng.uniform(2.6, 3.8)
+    word_gap = 7 if clean else rng.uniform(6, 10)
+    swing = 0 if clean else rng.uniform(0, 0.3)
+    phase = rng.uniform(0, 2 * math.pi)
+    step = 0 if clean else rng.uniform(-0.3, 0.35)
+    events, spans = [], []
+    cursor = 0
+
+    def add(on, duration):
+        nonlocal cursor
+        speed = (1 + swing * math.sin(cursor / SAMPLE_RATE / 2 + phase)) * (1 + step if cursor > SAMPLE_RATE * 8 else 1)
+        duration *= speed * (1 + rng.uniform(-1, 1) * (mark_jitter if on else gap_jitter))
+        if on and not clean and rng.random() < 0.12 and duration > 0.03:
+            parts = [(True, 0.008), (False, 0.002), (True, duration - 0.01)]
+        else:
+            parts = [(on, duration)]
+        events.extend(parts)
+        cursor += sum(round(seconds * SAMPLE_RATE) for _, seconds in parts)
+
+    for index, char in enumerate(source):
+        if char == ' ':
+            duration = word_gap * unit
+            if not clean and rng.random() < 0.2:
+                duration *= rng.uniform(1.4, 3)
+            start = cursor
+            add(False, duration)
+            spans.append((char, start, cursor))
+            continue
+        if index and source[index - 1] != ' ':
+            add(False, char_gap * unit)
+        start = cursor
+        for on, duration in build_events(char, OperatorConfig(wpm=wpm, dash_dot_ratio=dash)):
+            add(on, duration if on else duration * intra)
+        spans.append((char, start, cursor))
+
+    rendered = render_events(events, freq=600 + (0 if clean else rng.uniform(-12, 12)), sample_rate=SAMPLE_RATE,
+                             amplitude=0.4, tail_ms=0, keying=KeyingConfig(rise_ms=rng.uniform(2, 7)))
+    offset = int(rng.integers(0, len(rendered) - WINDOW + 1))
+    contained = [(char, start - offset, end - offset) for char, start, end in spans if start >= offset and end <= offset + WINDOW]
+    # Partial edge characters are context, never labelled as complete characters.
+    label = ''.join(char for char, _, _ in contained).strip()
+    return rendered[offset:offset + WINDOW].copy(), label, contained
+
+
+def case(seed, family, punctuation=False, continuous=False, background=None, return_audio=False):
     rng = np.random.default_rng(seed)
     clean = family == 'clean'
     chaotic = family == 'chaos'
     label = ''
     waveform = np.zeros(WINDOW, np.float32)
-    if family != 'noise':
+    if family != 'noise' and continuous:
+        waveform, label, _ = continuous_waveform(rng, clean)
+    elif family != 'noise':
         for attempt in range(80):
             length = int(rng.integers(2, 13 if attempt < 30 else 6))
             if rng.random() < 0.55:
@@ -82,6 +143,8 @@ def case(seed, family, punctuation=False):
             waveform *= 1 - rng.uniform(0, 0.35) * (0.5 + 0.5 * np.sin(time_axis * rng.uniform(20, 45)))
     snr = rng.uniform(18, 35) if clean else rng.uniform(-8, 3) if chaotic else rng.uniform(5, 20)
     noise = rng.normal(0, 0.4 / math.sqrt(2) / 10 ** (snr / 20), WINDOW).astype(np.float32)
+    if background is not None and family != 'noise':
+        noise = background * (0.4 / math.sqrt(2) / 10 ** (snr / 20)) / max(1e-8, np.sqrt(np.mean(background ** 2)))
     if family == 'noise':
         noise *= rng.uniform(0.1, 4)
     waveform += noise
@@ -99,13 +162,26 @@ def case(seed, family, punctuation=False):
                                 sample_rate=SAMPLE_RATE, amplitude=rng.uniform(0.15, 0.5))
             count = min(len(qrm), WINDOW)
             waveform[:count] += qrm[:count]
+    if return_audio:
+        return waveform, label
     features = extract_features(waveform, SAMPLE_RATE, FrontendConfig(tone_freq=600, bandwidth=100))
     return features, label
 
 
 class TrainingData(Dataset):
-    def __init__(self, length, seed, hard_fraction=0.25):
+    def __init__(self, length, seed, hard_fraction=0.25, continuous_fraction=0, noise_recordings=()):
         self.length, self.seed, self.hard_fraction = length, seed, hard_fraction
+        self.continuous_fraction = continuous_fraction
+        self.backgrounds = []
+        for path in noise_recordings:
+            rate, samples = wavfile.read(path)
+            if rate != SAMPLE_RATE or samples.ndim != 1 or len(samples) < WINDOW:
+                raise ValueError(f'{path}: background must be mono 8 kHz and at least six seconds.')
+            samples = samples.astype(np.float32)
+            samples /= max(1, np.max(np.abs(samples)))
+            if not np.isfinite(samples).all():
+                raise ValueError(f'{path}: invalid background samples.')
+            self.backgrounds.append(samples)
 
     def __len__(self):
         return self.length
@@ -113,7 +189,14 @@ class TrainingData(Dataset):
     def __getitem__(self, index):
         choice = np.random.default_rng(self.seed + index).random()
         family = 'noise' if choice < 0.15 else 'clean' if choice < 0.4 else 'rough' if choice < 1 - self.hard_fraction else 'chaos'
-        features, text = case(self.seed + index, family, punctuation=True)
+        continuous = np.random.default_rng(self.seed + index + 900000000).random() < self.continuous_fraction
+        background = None
+        rng = np.random.default_rng(self.seed + index + 800000000)
+        if self.backgrounds and family in ('rough', 'chaos') and rng.random() < 0.5:
+            recording = self.backgrounds[int(rng.integers(len(self.backgrounds)))]
+            start = int(rng.integers(len(recording) - WINDOW + 1))
+            background = recording[start:start + WINDOW]
+        features, text = case(self.seed + index, family, punctuation=True, continuous=continuous, background=background)
         return torch.from_numpy(features), torch.tensor(encode(text), dtype=torch.long)
 
 
@@ -182,17 +265,23 @@ def main():
     parser.add_argument('--output', type=Path, default=Path('models/rough-fist-v1'))
     parser.add_argument('--checkpoint')
     parser.add_argument('--hard-fraction', type=float, default=0.25, help='Fraction of training examples with combined radio distortions (0–0.6).')
+    parser.add_argument('--continuous-fraction', type=float, default=0, help='Fraction of nonempty examples cropped from ongoing transmissions.')
+    parser.add_argument('--save-checkpoints', action='store_true', help='Retain each evaluation checkpoint for independent continuous-audio comparison.')
+    parser.add_argument('--noise-recordings', nargs='*', default=[], help='Training-only HF recordings mixed under labelled CW; never used as empty targets.')
     args = parser.parse_args()
     if args.steps < 1 or args.batch_size < 1 or args.eval_every < 1 or args.eval_count < 4:
         parser.error('Use positive step, batch, and evaluation counts (at least 4 evaluation clips).')
     if not 0 <= args.hard_fraction <= 0.6:
         parser.error('Hard fraction must be between 0 and 0.6.')
+    if not 0 <= args.continuous_fraction <= 1:
+        parser.error('Continuous fraction must be between 0 and 1.')
     args.output.mkdir(parents=True, exist_ok=True)
     torch.manual_seed(args.seed)
     torch.set_num_threads(4)
     model = load_model(args.checkpoint).to(args.device)
     metadata = {'arguments': vars(args) | {'output': str(args.output)}, 'torch': str(torch.__version__),
                 'torchaudio': str(torchaudio.__version__), 'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                'noise_recordings': [{'path': path, 'sha256': hashlib.sha256(Path(path).read_bytes()).hexdigest()} for path in args.noise_recordings],
                 'hardware': torch.cuda.get_device_name(0) if args.device == 'cuda' else 'CPU'}
     (args.output / 'run.json').write_text(json.dumps(metadata, indent=2))
     baseline = evaluate(model, args.device, args.eval_count, args.eval_seed)
@@ -202,7 +291,7 @@ def main():
         return
     optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5, weight_decay=0.01)
     ctc_loss = torch.nn.CTCLoss(blank=0, zero_infinity=True)
-    data = DataLoader(TrainingData(args.steps * args.batch_size, args.seed, args.hard_fraction), batch_size=args.batch_size,
+    data = DataLoader(TrainingData(args.steps * args.batch_size, args.seed, args.hard_fraction, args.continuous_fraction, args.noise_recordings), batch_size=args.batch_size,
                       num_workers=args.workers, collate_fn=collate, pin_memory=args.device == 'cuda')
     started = time.monotonic()
     best = baseline
@@ -240,6 +329,8 @@ def main():
             (args.output / f'eval-{step}.json').write_text(json.dumps(report, indent=2))
             state = {key: value.detach().cpu() for key, value in model.state_dict().items()}
             torch.save({'model': state, 'step': step, 'config': vars(args) | {'output': str(args.output)}, 'metrics': candidate['metrics']}, args.output / 'last.pt')
+            if args.save_checkpoints:
+                torch.save({'model': state, 'step': step, 'metrics': candidate['metrics']}, args.output / f'step-{step}.pt')
             if report['accepted'] and candidate['metrics']['chaos']['cer'] < best['metrics']['chaos']['cer']:
                 torch.save({'model': state, 'step': step, 'metrics': candidate['metrics']}, args.output / 'best.pt')
                 best = copy.deepcopy(candidate)

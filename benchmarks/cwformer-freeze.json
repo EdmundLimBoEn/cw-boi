@@ -1,0 +1,78 @@
+{
+  "frozenAt": "2026-10-02T06:58:15.057144+00:00",
+  "model": "models/cwformer-adapt-v4/cwformer_streaming_fp32.onnx",
+  "modelSHA256": "c1a956b35cc184a8fac7641b586d500514c18a99254aff2ed933697775e808a3",
+  "selectedStep": 2000,
+  "selection": "v4 step2000 selected over v3 step600 solely from development recordings. No final holdout read or used for tuning.",
+  "settings": {
+    "inputSampleRate": 8000,
+    "bandwidthHz": 150,
+    "carrier": "provided by manifest / user tuning",
+    "normalizedCarrierHz": 650,
+    "chunkSeconds": 0.5,
+    "pastSilenceWarmupSeconds": 1,
+    "agcDecaySeconds": 2,
+    "flushPaddingSeconds": 0.5,
+    "cacheFrames": 250,
+    "provider": "CPUExecutionProvider"
+  },
+  "runtimeChecks": "neural/check_cwformer.py passed v4: chunking, finalization, finite input, 60s synthetic noise, bounded state",
+  "implementation": {
+    "neural/cwformer_engine.py": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+    "neural/benchmark_cwformer.py": "ff217705f86a8338b094bda6d26e773bfcbbc49da9ad30ddc230b6b318f68f68",
+    "neural/check_cwformer.py": "bb6ed9ffab8cad96877b301676be06dcfb9da5558364f89781c8f8aa34ca8aa3"
+  },
+  "development": {
+    "continuous-dev-cwformer-v4-runtime.json": {
+      "sha256": "f04222172b10cef342d577ee0afbad86b031023926d81079749a2a483b35fc2b",
+      "aggregate": {
+        "cases": 24,
+        "speechCases": 18,
+        "characters": 556,
+        "errors": 50,
+        "cer": 0.08992805755395683,
+        "exact": 12,
+        "noiseCases": 6,
+        "noiseSeconds": 120.0,
+        "falseCharacters": 1,
+        "falseCharactersPerMinute": 0.5,
+        "audioSeconds": 504.764875,
+        "inferenceSeconds": 7.11764425097499
+      }
+    },
+    "real-dev-cwformer-v4-runtime.json": {
+      "sha256": "2044b449736a05e2a3ff55780aa5ea507f1b2ded4defaaf6b2448d81bf71b98d",
+      "aggregate": {
+        "cases": 2,
+        "speechCases": 2,
+        "characters": 50,
+        "errors": 6,
+        "cer": 0.12,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 38.95,
+        "inferenceSeconds": 0.556605749996379
+      }
+    },
+    "supplementary-dev-cwformer-v4-runtime.json": {
+      "sha256": "85cea8da99bcf0cfce94d99b18242889e80f644f4ea9b1f777210bac3fb467a6",
+      "aggregate": {
+        "cases": 60,
+        "speechCases": 60,
+        "characters": 1284,
+        "errors": 144,
+        "cer": 0.11214953271028037,
+        "exact": 41,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 1041.833,
+        "inferenceSeconds": 14.862328461778816
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "checkpoint": "models\\adapt-v2\\step-600.pt",
+  "output": "models\\adapt-v3",
+  "steps": 600,
+  "batch": 4,
+  "seed": 67201911,
+  "device": "cuda",
+  "workers": 2,
+  "lr": 1e-05,
+  "noise_recording": [
+    "noise\\noise_20m_day.wav",
+    "noise\\noise_20m_night.wav"
+  ],
+  "upstreamRevision": "ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70",
+  "torch": "2.8.0+cu128",
+  "sourceSHA256": "382f308d27cfed78a81f546b4502a4d7e231158cf7e6d1c56b3d5faa517caa1f",
+  "generatorSHA256": "4b3a633683b3e8c5ce2921bd78be016c6603297cbb69aa2307af7ca6448f6772",
+  "initialCheckpointSHA256": "6a48b2cf99397eb10f91a95a18ff6fa172c186dd81867328d399323b2f9d5c0d"
+}

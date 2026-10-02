@@ -9,7 +9,8 @@
     "preview": "vite preview --host 0.0.0.0",
     "test": "bun test",
     "benchmark": "bun run scripts/benchmark.ts",
-    "neural": ".venv/bin/python neural/server.py"
+    "neural": ".venv/bin/python neural/server.py",
+    "listen": ".venv/bin/python neural/listen.py"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.2.7",

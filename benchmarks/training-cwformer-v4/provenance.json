@@ -1,0 +1,48 @@
+{
+  "upstream": "https://github.com/parsimo2010/CWformer",
+  "release": "v0.2.0",
+  "sourceRevision": "ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70",
+  "license": "MIT",
+  "selectedStep": 2000,
+  "seed": 67205911,
+  "batch": 4,
+  "steps": 2400,
+  "trainingDevice": "NVIDIA GeForce RTX 3080 10GB",
+  "trainingTorch": "2.8.0+cu128",
+  "negativeTargets": "Synthetic Gaussian/impulsive noise only. Recorded 20 m day/night backgrounds are additive interference for speech. The 40 m day recording was excluded from this adaptation but may have been used by the upstream pretrained model.",
+  "selection": "Selected on continuous development, SAQ development and supplementary development recordings before final holdouts were opened. Runtime uses causal AGC and resampling; accuracy differs from the global peak normalization used during training.",
+  "onnxExportMaxLogProbabilityDifference": 2.1e-05,
+  "onnxExportPositionOffsetSensitivity": 1.453291,
+  "files": {
+    "step-2000.pt": {
+      "bytes": 78680779,
+      "sha256": "41d6658634c93539c81064bc00f0b5c23ec0c2be980370c011e8df4dc7293ebf"
+    },
+    "cwformer_streaming_fp32.onnx": {
+      "bytes": 83222226,
+      "sha256": "c1a956b35cc184a8fac7641b586d500514c18a99254aff2ed933697775e808a3"
+    },
+    "cwformer_streaming_int8.onnx": {
+      "bytes": 24953338,
+      "sha256": "2dc3957bf5912d37bc2b8140f9ba61f165cb0de2063d81191c83076d746bff79"
+    },
+    "mel_config.json": {
+      "bytes": 293,
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    "mel_basis.npy": {
+      "bytes": 32288,
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    "mel_window.npy": {
+      "bytes": 1728,
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    }
+  },
+  "trainingParent": "cwformer-adapt-v3/step-600.pt",
+  "trainingCorrections": [
+    "Complete utterances replace partial dense crops; distinct utterances separated by a full second.",
+    "Nonempty CTC targets include boundary spaces, matching pretrained vocabulary training.",
+    "Empty-target CTC loss normalized by output frame count rather than target-length clamp of one."
+  ]
+}

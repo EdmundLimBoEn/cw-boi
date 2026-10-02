@@ -1,0 +1,42 @@
+{
+  "upstream": "https://github.com/parsimo2010/CWformer",
+  "release": "v0.2.0",
+  "sourceRevision": "ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70",
+  "license": "MIT",
+  "selectedStep": 600,
+  "seed": 67193811,
+  "batch": 4,
+  "steps": 600,
+  "trainingDevice": "NVIDIA GeForce RTX 3080 10GB",
+  "trainingTorch": "2.8.0+cu128",
+  "negativeTargets": "Synthetic Gaussian/impulsive noise only. Real20mday/night backgrounds are additive interference for speech;40mday excluded from adaptation but potentially used by upstream pretrainedmodel.",
+  "selection": "Continuous development24cases;notfinalholdout. Runtime usescausalAGCandresampling, so runtime accuracy differsfromglobalpeak-normalizedtrainingeval.",
+  "onnxExportMaxLogProbabilityDifference": 1.3e-05,
+  "onnxExportPositionOffsetSensitivity": 1.410463,
+  "files": {
+    "step-600.pt": {
+      "bytes": 78680405,
+      "sha256": "6a48b2cf99397eb10f91a95a18ff6fa172c186dd81867328d399323b2f9d5c0d"
+    },
+    "cwformer_streaming_fp32.onnx": {
+      "bytes": 83222226,
+      "sha256": "573979e46b4cc94321128d9e8567deff5c92eb82e17ff6fa32bf1ada025267c6"
+    },
+    "cwformer_streaming_int8.onnx": {
+      "bytes": 24953338,
+      "sha256": "07f71d5542f3df1c24fac866a0434c91327b8d765f0e6f0bb1fcfd81755a877a"
+    },
+    "mel_config.json": {
+      "bytes": 293,
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    "mel_basis.npy": {
+      "bytes": 32288,
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    "mel_window.npy": {
+      "bytes": 1728,
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "arguments": {
+    "steps": 4000,
+    "batch_size": 8,
+    "workers": 2,
+    "device": "cuda",
+    "eval_every": 1000,
+    "eval_count": 48,
+    "eval_seed": 2000000,
+    "evaluate_only": false,
+    "seed": 440001,
+    "output": "models\\continuous-gpu-v3",
+    "checkpoint": "models\\rough-fist-gpu-v2\\best.pt",
+    "hard_fraction": 0.45,
+    "continuous_fraction": 0.8,
+    "save_checkpoints": true
+  },
+  "torch": "2.8.0+cu128",
+  "torchaudio": "2.8.0+cu128",
+  "script_sha256": "bfc90686e07103891c618de1859a1197b33ed3e4e0393891359e358476e5c610",
+  "hardware": "NVIDIA GeForce RTX 3080"
+}

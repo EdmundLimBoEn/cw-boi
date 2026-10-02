@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "split": "real-holdout",
+  "seed": null,
+  "manifest": ".research/real-final/manifest.json",
+  "manifestSHA256": "87a9dba85b642a46ea366ebe42db52ca6a9789f03c7f137446198bd1a47ecb0c",
+  "checkpoint": "models/radio-noise-gpu-v4-blends/candidate-0.75.pt",
+  "checkpointSHA256": "421ec784604b6d238aa2641d94160a4e6659b66206c3ac363f1d695173a06495",
+  "mode": "stream",
+  "decoder": "app",
+  "chunkSeconds": 1.0,
+  "device": "cpu",
+  "torchVersion": "2.14.1",
+  "morseformerVersion": "0.6.4",
+  "decoderSHA256": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e",
+  "serverSHA256": "e72ed300de21da9f2443d5d423446877e3118e7ed63da35c2a6a622ec79c58e3",
+  "benchmarkSHA256": "94bf37693311363eb46157d24c7c723fb94f1b13b6034f9d4853b1c1fd9b6381",
+  "knownCarrier": true,
+  "complete": true,
+  "results": [
+    {
+      "id": "marine-electric-nmf-callsign",
+      "condition": "real-hand-keyed",
+      "expected": "DE NMF NMF ? K",
+      "actual": "NMMF NMF SZK",
+      "errors": 6,
+      "cer": 0.42857142857142855,
+      "errorsWithoutSpaces": 5,
+      "durationSeconds": 9.65,
+      "inferenceSeconds": 0.192375999991782,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 708.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "NMMF"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " NMF"
+        },
+        {
+          "atSeconds": 9.65,
+          "text": " SZK",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "marine-electric-wooh-distress",
+      "condition": "real-hand-keyed",
+      "expected": "DOWN BY HEAD AT 0800GMT",
+      "actual": "DOWN BY HEAD AT 0800GMT",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 20.75,
+      "inferenceSeconds": 0.5573898750008084,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 790.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "DOWN"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " BY"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " HEA"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "D A"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "T 0"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "8"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "0"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "0G"
+        },
+        {
+          "atSeconds": 20.75,
+          "text": "MT",
+          "final": true
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "cases": 2,
+    "speechCases": 2,
+    "characters": 37,
+    "errors": 6,
+    "cer": 0.16216216216216217,
+    "exact": 1,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 30.4,
+    "inferenceSeconds": 0.7497658749925904
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 37,
+      "errors": 6,
+      "cer": 0.16216216216216217,
+      "exact": 1,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 30.4,
+      "inferenceSeconds": 0.7497658749925904
+    }
+  }
+}

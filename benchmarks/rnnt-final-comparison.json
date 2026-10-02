@@ -1,0 +1,551 @@
+{
+  "status": "final-evaluation-complete",
+  "promotionEligible": true,
+  "criteria": "benchmarks/release-criteria.json",
+  "criteriaSHA256": "ea6272ddae112928f513cc079a88115a9f3c2d7431911288de35aae783f69d3d",
+  "selection": "benchmarks/rnnt-selection.json",
+  "selectionSHA256": "08d5be9756377fec4c0e43f9857565cc3a925cca1834128340cad400d9f2eb20",
+  "frozenCheckpointSHA256": "421ec784604b6d238aa2641d94160a4e6659b66206c3ac363f1d695173a06495",
+  "frozenDecoderSHA256": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e",
+  "guards": [
+    {
+      "name": "synthetic aggregate speech CER strictly improves",
+      "pass": true,
+      "baseline": 0.18121252498334445,
+      "candidate": 0.15123251165889406
+    },
+    {
+      "name": "clean CER regression bounded",
+      "pass": true,
+      "maximumAbsoluteIncrease": 0.02,
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "absoluteIncrease": 0.0
+    },
+    {
+      "name": "fading CER regression bounded",
+      "pass": true,
+      "maximumAbsoluteIncrease": 0.02,
+      "baseline": 0.007575757575757576,
+      "candidate": 0.00946969696969697,
+      "absoluteIncrease": 0.001893939393939394
+    },
+    {
+      "name": "crowded CER regression bounded",
+      "pass": true,
+      "maximumAbsoluteIncrease": 0.02,
+      "baseline": 0.0,
+      "candidate": 0.003795066413662239,
+      "absoluteIncrease": 0.003795066413662239
+    },
+    {
+      "name": "noise false characters per minute do not increase",
+      "pass": true,
+      "baseline": 9.625,
+      "candidate": 2.375
+    },
+    {
+      "name": "Marine Electric total errors no more than baseline plus one",
+      "pass": true,
+      "maximumAdditionalErrors": 1,
+      "baselineErrors": 9,
+      "candidateErrors": 6
+    }
+  ],
+  "corpora": {
+    "synthetic": {
+      "manifest": ".research/continuous-final/manifest.json",
+      "manifestSHA256": "8dcd1a89d018fe5d82fdcd920b91c523e5f1d65d7c8de06d451ed8dccedc0a99",
+      "reports": {
+        "original": "benchmarks/rnnt-final-synthetic-original.json",
+        "selected": "benchmarks/rnnt-final-synthetic-selected.json"
+      },
+      "baseline": {
+        "aggregate": {
+          "cases": 120,
+          "speechCases": 96,
+          "characters": 3002,
+          "errors": 544,
+          "cer": 0.18121252498334445,
+          "exact": 56,
+          "noiseCases": 24,
+          "noiseSeconds": 480.0,
+          "falseCharacters": 77,
+          "falseCharactersPerMinute": 9.625,
+          "audioSeconds": 2537.7198750000002,
+          "inferenceSeconds": 68.51677841279889
+        },
+        "conditions": {
+          "chaos": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 519,
+            "errors": 418,
+            "cer": 0.8053949903660886,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 325.82975,
+            "inferenceSeconds": 8.672211459896062
+          },
+          "clean": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 535,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 16,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 334.55525,
+            "inferenceSeconds": 8.88562125194585
+          },
+          "crowded": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 527,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 16,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 276.543875,
+            "inferenceSeconds": 7.479906250839122
+          },
+          "fading": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 528,
+            "errors": 4,
+            "cer": 0.007575757575757576,
+            "exact": 13,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 297.4745,
+            "inferenceSeconds": 7.737016707076691
+          },
+          "human": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 516,
+            "errors": 6,
+            "cer": 0.011627906976744186,
+            "exact": 11,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 402.94025,
+            "inferenceSeconds": 11.011799037922174
+          },
+          "noise": {
+            "cases": 24,
+            "speechCases": 0,
+            "characters": 0,
+            "errors": 0,
+            "cer": null,
+            "exact": 0,
+            "noiseCases": 24,
+            "noiseSeconds": 480.0,
+            "falseCharacters": 77,
+            "falseCharactersPerMinute": 9.625,
+            "audioSeconds": 480.0,
+            "inferenceSeconds": 12.946860665164422
+          },
+          "rough": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 377,
+            "errors": 116,
+            "cer": 0.3076923076923077,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 420.37625,
+            "inferenceSeconds": 11.783363039954565
+          }
+        }
+      },
+      "candidate": {
+        "aggregate": {
+          "cases": 120,
+          "speechCases": 96,
+          "characters": 3002,
+          "errors": 454,
+          "cer": 0.15123251165889406,
+          "exact": 56,
+          "noiseCases": 24,
+          "noiseSeconds": 480.0,
+          "falseCharacters": 19,
+          "falseCharactersPerMinute": 2.375,
+          "audioSeconds": 2537.7198750000002,
+          "inferenceSeconds": 63.731524211063515
+        },
+        "conditions": {
+          "chaos": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 519,
+            "errors": 374,
+            "cer": 0.720616570327553,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 325.82975,
+            "inferenceSeconds": 8.267239665961824
+          },
+          "clean": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 535,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 16,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 334.55525,
+            "inferenceSeconds": 8.641205208201427
+          },
+          "crowded": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 527,
+            "errors": 2,
+            "cer": 0.003795066413662239,
+            "exact": 14,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 276.543875,
+            "inferenceSeconds": 6.924742500996217
+          },
+          "fading": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 528,
+            "errors": 5,
+            "cer": 0.00946969696969697,
+            "exact": 13,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 297.4745,
+            "inferenceSeconds": 7.245794335030951
+          },
+          "human": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 516,
+            "errors": 4,
+            "cer": 0.007751937984496124,
+            "exact": 13,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 402.94025,
+            "inferenceSeconds": 10.439584500039928
+          },
+          "noise": {
+            "cases": 24,
+            "speechCases": 0,
+            "characters": 0,
+            "errors": 0,
+            "cer": null,
+            "exact": 0,
+            "noiseCases": 24,
+            "noiseSeconds": 480.0,
+            "falseCharacters": 19,
+            "falseCharactersPerMinute": 2.375,
+            "audioSeconds": 480.0,
+            "inferenceSeconds": 10.928231291065458
+          },
+          "rough": {
+            "cases": 16,
+            "speechCases": 16,
+            "characters": 377,
+            "errors": 69,
+            "cer": 0.1830238726790451,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 420.37625,
+            "inferenceSeconds": 11.28472670976771
+          }
+        }
+      }
+    },
+    "real": {
+      "manifest": ".research/real-final/manifest.json",
+      "manifestSHA256": "87a9dba85b642a46ea366ebe42db52ca6a9789f03c7f137446198bd1a47ecb0c",
+      "reports": {
+        "original": "benchmarks/rnnt-final-real-original.json",
+        "selected": "benchmarks/rnnt-final-real-selected.json"
+      },
+      "baseline": {
+        "aggregate": {
+          "cases": 2,
+          "speechCases": 2,
+          "characters": 37,
+          "errors": 9,
+          "cer": 0.24324324324324326,
+          "exact": 0,
+          "noiseCases": 0,
+          "noiseSeconds": 0,
+          "falseCharacters": 0,
+          "falseCharactersPerMinute": null,
+          "audioSeconds": 30.4,
+          "inferenceSeconds": 0.747315458022058
+        },
+        "conditions": {
+          "real-hand-keyed": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 37,
+            "errors": 9,
+            "cer": 0.24324324324324326,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 30.4,
+            "inferenceSeconds": 0.747315458022058
+          }
+        }
+      },
+      "candidate": {
+        "aggregate": {
+          "cases": 2,
+          "speechCases": 2,
+          "characters": 37,
+          "errors": 6,
+          "cer": 0.16216216216216217,
+          "exact": 1,
+          "noiseCases": 0,
+          "noiseSeconds": 0,
+          "falseCharacters": 0,
+          "falseCharactersPerMinute": null,
+          "audioSeconds": 30.4,
+          "inferenceSeconds": 0.7497658749925904
+        },
+        "conditions": {
+          "real-hand-keyed": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 37,
+            "errors": 6,
+            "cer": 0.16216216216216217,
+            "exact": 1,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 30.4,
+            "inferenceSeconds": 0.7497658749925904
+          }
+        }
+      },
+      "predictions": [
+        {
+          "id": "marine-electric-nmf-callsign",
+          "expected": "DE NMF NMF ? K",
+          "baseline": "CINMF SME?K",
+          "candidate": "NMMF NMF SZK",
+          "baselineErrors": 7,
+          "candidateErrors": 6
+        },
+        {
+          "id": "marine-electric-wooh-distress",
+          "expected": "DOWN BY HEAD AT 0800GMT",
+          "baseline": "DOWN BY HEAB AT 080GMT",
+          "candidate": "DOWN BY HEAD AT 0800GMT",
+          "baselineErrors": 2,
+          "candidateErrors": 0
+        }
+      ]
+    },
+    "mixed": {
+      "manifest": ".research/receiver-noise-final/manifest.json",
+      "manifestSHA256": "8d7ca6e5f34f525732ff6ab2b5b187b5f04da1e5ee133ebc22ef156eae7df7aa",
+      "reports": {
+        "original": "benchmarks/rnnt-final-mixed-original.json",
+        "selected": "benchmarks/rnnt-final-mixed-selected.json"
+      },
+      "baseline": {
+        "aggregate": {
+          "cases": 24,
+          "speechCases": 24,
+          "characters": 684,
+          "errors": 101,
+          "cer": 0.1476608187134503,
+          "exact": 12,
+          "noiseCases": 0,
+          "noiseSeconds": 0,
+          "falseCharacters": 0,
+          "falseCharactersPerMinute": null,
+          "audioSeconds": 549.75825,
+          "inferenceSeconds": 14.481757627101615
+        },
+        "conditions": {
+          "mixed-real-receiver-noise-clean-0db": {
+            "cases": 6,
+            "speechCases": 6,
+            "characters": 200,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 6,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 117.84812500000001,
+            "inferenceSeconds": 3.1591553749749437
+          },
+          "mixed-real-receiver-noise-clean-10db": {
+            "cases": 6,
+            "speechCases": 6,
+            "characters": 200,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 6,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 117.84812500000001,
+            "inferenceSeconds": 3.065427042020019
+          },
+          "mixed-real-receiver-noise-rough-0db": {
+            "cases": 6,
+            "speechCases": 6,
+            "characters": 142,
+            "errors": 54,
+            "cer": 0.38028169014084506,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 157.031,
+            "inferenceSeconds": 4.084783959086053
+          },
+          "mixed-real-receiver-noise-rough-10db": {
+            "cases": 6,
+            "speechCases": 6,
+            "characters": 142,
+            "errors": 47,
+            "cer": 0.33098591549295775,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 157.031,
+            "inferenceSeconds": 4.172391251020599
+          }
+        }
+      },
+      "candidate": {
+        "aggregate": {
+          "cases": 24,
+          "speechCases": 24,
+          "characters": 684,
+          "errors": 47,
+          "cer": 0.06871345029239766,
+          "exact": 12,
+          "noiseCases": 0,
+          "noiseSeconds": 0,
+          "falseCharacters": 0,
+          "falseCharactersPerMinute": null,
+          "audioSeconds": 549.75825,
+          "inferenceSeconds": 14.87221778993262
+        },
+        "conditions": {
+          "mixed-real-receiver-noise-clean-0db": {
+            "cases": 6,
+            "speechCases": 6,
+            "characters": 200,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 6,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 117.84812500000001,
+            "inferenceSeconds": 2.943684874975588
+          },
+          "mixed-real-receiver-noise-clean-10db": {
+            "cases": 6,
+            "speechCases": 6,
+            "characters": 200,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 6,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 117.84812500000001,
+            "inferenceSeconds": 3.1108490418992005
+          },
+          "mixed-real-receiver-noise-rough-0db": {
+            "cases": 6,
+            "speechCases": 6,
+            "characters": 142,
+            "errors": 22,
+            "cer": 0.15492957746478872,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 157.031,
+            "inferenceSeconds": 4.342069957056083
+          },
+          "mixed-real-receiver-noise-rough-10db": {
+            "cases": 6,
+            "speechCases": 6,
+            "characters": 142,
+            "errors": 25,
+            "cer": 0.176056338028169,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 157.031,
+            "inferenceSeconds": 4.475613916001748
+          }
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Known target carrier and100Hz bandwidth; automatic carrier acquisition excluded.",
+    "Synthetic timing/noise conditions are controlled simulations.",
+    "Mixed receiver-noise cases contain synthetic CW plus a held-out real40-metre-band recording; not real human CW.",
+    "Marine holdout is two reviewed operator clips,37characters and30.4seconds; insufficient for broad real-world superiority claims."
+  ],
+  "tuningAfterFinalEvaluation": false,
+  "mixedStressSuiteAffectsPromotionGuards": false
+}

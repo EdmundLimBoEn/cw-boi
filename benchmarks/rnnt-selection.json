@@ -1,0 +1,31 @@
+{
+  "status": "frozen-before-final-evaluation",
+  "frozenAtUTC": "2026-10-02T06:45:52.934523+00:00",
+  "engine": "Morseformer0.6.4 RNN-T",
+  "checkpoint": "models/radio-noise-gpu-v4-blends/candidate-0.75.pt",
+  "checkpointSHA256": "421ec784604b6d238aa2641d94160a4e6659b66206c3ac363f1d695173a06495",
+  "blend": {
+    "candidateFraction": 0.75,
+    "base": "/Users/limboenedmund/.cache/huggingface/hub/models--sderhy--morseformer/snapshots/9eab86a3ad7482f8c5801eabf26ec46f9493b919/rnnt_phase11b.pt",
+    "candidate": "models/radio-noise-gpu-v4/step-4000.pt",
+    "baseSHA256": "d9dba3f279090dc674800054a956bc0ddd7fd4c1d67205d6d101877da3f51d18",
+    "candidateSHA256": "9c05d5cf63ee98b74ad4913940dcd15ce3b3340792f0ebc0ff7e5f0981dca2b5",
+    "effectiveEMA": true,
+    "checkpointSHA256": "421ec784604b6d238aa2641d94160a4e6659b66206c3ac363f1d695173a06495"
+  },
+  "decoder": "app",
+  "decoderSource": "neural/streaming.py",
+  "decoderSHA256": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e",
+  "confidenceThreshold": 0.6,
+  "digitThreshold": 0.9,
+  "sampleRate": 8000,
+  "bandwidthHz": 100,
+  "knownCarrier": true,
+  "selectionReports": [
+    "benchmarks/continuous-dev-v4-blend0.75-default.json",
+    "benchmarks/real-dev-v4-blend0.75-default.json"
+  ],
+  "supplementaryReportAfterFreeze": "benchmarks/supplementary-dev-v4-blend0.75-default.json",
+  "promotionCriteria": "benchmarks/release-criteria.json",
+  "note": "Supplementary60 is reporting-only after this freeze. Final synthetic and Marine Electric holdouts have not been evaluated. A final guard failure must not trigger tuning on those data."
+}

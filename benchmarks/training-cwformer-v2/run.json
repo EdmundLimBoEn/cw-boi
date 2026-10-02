@@ -1,0 +1,14 @@
+{
+  "checkpoint": "..\\model_weights.pt",
+  "output": "models\\adapt-v2",
+  "steps": 600,
+  "batch": 4,
+  "seed": 67193811,
+  "device": "cuda",
+  "workers": 2,
+  "lr": 1e-05,
+  "noise_recording": [
+    "noise\\noise_20m_day.wav",
+    "noise\\noise_20m_night.wav"
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "download_root": ".research/data",
+  "files": [
+    {
+      "id": "noise_20m_day",
+      "path": "cwformer/noise_20m_day.wav",
+      "url": "https://raw.githubusercontent.com/parsimo2010/CWformer/ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70/recordings/noise_20m_day.wav",
+      "sha256": "5a66a1107a3b1c6948dc455f3895d922b6cb246686bce0f435928252ab7ab5fe",
+      "bytes": 11715116,
+      "license": "MIT",
+      "source": "https://github.com/parsimo2010/CWformer/tree/ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70/recordings",
+      "kind": "real_receiver_noise",
+      "split": "train",
+      "notes": "Use as additive receiver interference. Source labels this band noise; not independently verified to contain zero weak CW."
+    },
+    {
+      "id": "noise_20m_night",
+      "path": "cwformer/noise_20m_night.wav",
+      "url": "https://raw.githubusercontent.com/parsimo2010/CWformer/ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70/recordings/noise_20m_night.wav",
+      "sha256": "4d52568e9db5073bfad1b94b420495d9d880fdd27bcc789d0ecec73bc35b16ad",
+      "bytes": 10669100,
+      "license": "MIT",
+      "source": "https://github.com/parsimo2010/CWformer/tree/ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70/recordings",
+      "kind": "real_receiver_noise",
+      "split": "train",
+      "notes": "Use as additive receiver interference. Source labels this band noise; not independently verified to contain zero weak CW."
+    },
+    {
+      "id": "noise_40m_day",
+      "path": "cwformer/noise_40m_day.wav",
+      "url": "https://raw.githubusercontent.com/parsimo2010/CWformer/ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70/recordings/noise_40m_day.wav",
+      "sha256": "bfd8517f50d2e125b53e6ceeb01a75e668624a1d62b05c90ab49a47dba2c85ad",
+      "bytes": 10398764,
+      "license": "MIT",
+      "source": "https://github.com/parsimo2010/CWformer/tree/ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70/recordings",
+      "kind": "real_receiver_noise",
+      "split": "holdout",
+      "notes": "Use as additive receiver interference. Source labels this band noise; not independently verified to contain zero weak CW."
+    },
+    {
+      "id": "cwformer_license",
+      "path": "cwformer/LICENSE",
+      "url": "https://raw.githubusercontent.com/parsimo2010/CWformer/ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70/LICENSE",
+      "sha256": "738e65f4bf38b8b2a51fc183bb3379f90e3224edf841494c97772e2a25726b48",
+      "bytes": 1068,
+      "license": "MIT",
+      "kind": "license",
+      "split": "metadata"
+    },
+    {
+      "id": "marine_electric_transcript",
+      "path": "marine-electric/Transcript_SOS_WOOH.txt",
+      "url": "https://archive.org/download/SsMarineElectricWoohSos/Transcript_SOS_WOOH.txt",
+      "sha256": "ca15e4dce7f3f86f8363856b6878a77b4a73462f903847aeacaed63eb3a2c663",
+      "bytes": 7264,
+      "license": "CC0-1.0 (archive uploader declaration)",
+      "source": "https://archive.org/details/SsMarineElectricWoohSos",
+      "license_source": "https://archive.org/metadata/SsMarineElectricWoohSos",
+      "kind": "publisher_transcript",
+      "split": "evaluation",
+      "notes": "USCG recording digitized by N1EA. Transcript includes explanatory prose and uncertain passages; use reviewed time crops only for CER."
+    },
+    {
+      "id": "saq_real_hand_keyed_audio",
+      "path": "saq/grimeton-clip.wav",
+      "url": "https://privat.bahnhof.se/wb748077/alexanderson-day/grimeton-clip.wav",
+      "sha256": "5316f48ab8967ef1221924ffff7c5be116b8de19232ef2cadf4d7d980647f133",
+      "bytes": 16675684,
+      "license": "Unspecified; public evaluation recording, not included in training or distribution",
+      "source": "https://github.com/fowlay/gerke-decoder#test-data",
+      "kind": "real_hand_keyed_audio",
+      "split": "evaluation"
+    },
+    {
+      "id": "saq_publisher_transcript",
+      "path": "saq/transcript-newsletter.pdf",
+      "url": "https://radiomuseet.se/medlem/nyhetsbrev/nyhetsbrev_127.pdf",
+      "sha256": "c534810cfa56d74811e61a8411671b88771acabc42d86b94d1b7f333537444e1",
+      "bytes": 1098076,
+      "license": "Unspecified; public evaluation recording, not included in training or distribution",
+      "source": "https://github.com/fowlay/gerke-decoder#test-data",
+      "kind": "publisher_transcript",
+      "split": "evaluation"
+    },
+    {
+      "id": "marine_electric_audio_prefix",
+      "path": "marine-electric/Marine_Electric_SOS-prefix.mp3",
+      "url": "https://archive.org/download/SsMarineElectricWoohSos/Marine_Electric_SOS.mp3",
+      "range": "bytes=0-1048575",
+      "sha256": "93a2e702c38f9c7958ef52732c15eede66ab8874f93182925d11fe9b87a8985a",
+      "bytes": 1048576,
+      "license": "CC0-1.0 (archive uploader declaration)",
+      "source": "https://archive.org/details/SsMarineElectricWoohSos",
+      "license_source": "https://archive.org/metadata/SsMarineElectricWoohSos",
+      "kind": "real_hand_keyed_audio",
+      "split": "final-holdout",
+      "notes": "Intentional first 1 MiB of the MP3, 222.306 s, enough for both reviewed crops. Verified identical bytes across two independent downloads. Full 91 min recording not acquired. Full upstream SHA-1: e916df137b6f7f19908a51b7701bbecf2e65650e"
+    }
+  ],
+  "clips": [
+    {
+      "id": "saq-2019-website",
+      "audio": "saq/grimeton-clip.wav",
+      "startSeconds": 1.1,
+      "endSeconds": 25.2,
+      "expected": "OUR WEBSITE : WWW.ALEXANDER.N.SE",
+      "frequency": 634,
+      "bandwidth": 100,
+      "condition": "real-hand-keyed",
+      "operator": "SAQ 2019-06-30 morning broadcast",
+      "license": "Unspecified; local evaluation only",
+      "source": "https://github.com/fowlay/gerke-decoder#test-data",
+      "provenance": "Text corroborated by Radiomuseet newsletter 127 p8. Reviewed actual mark/gap sequence with independent 580\u2013685Hz envelope extraction at thresholds 0.085,0.095,0.105. All agree letters, colon and word gaps. Crop includes first complete OUR through SE and stops before operator repeat indicator.",
+      "transcriptSource": "https://radiomuseet.se/medlem/nyhetsbrev/nyhetsbrev_127.pdf#page=8",
+      "keyingEvidence": "2019 SAQ official reception report describes sender corrections and CW handwriting; the transmitter operator authored the event report. Specific hand key model and operator identity are not independently verified for this crop."
+    },
+    {
+      "id": "saq-2019-website-repeat",
+      "audio": "saq/grimeton-clip.wav",
+      "startSeconds": 26.65,
+      "endSeconds": 41.5,
+      "expected": "WWW.ALEXANDER.N.SE",
+      "frequency": 634,
+      "bandwidth": 100,
+      "condition": "real-hand-keyed",
+      "operator": "SAQ 2019-06-30 morning broadcast",
+      "license": "Unspecified; local evaluation only",
+      "source": "https://github.com/fowlay/gerke-decoder#test-data",
+      "provenance": "Repeated URL in same recording and operator. All 18 characters and bounds independently checked using envelope timings against publisher website text. Correlated repeat, not an independent operator.",
+      "transcriptSource": "https://radiomuseet.se/medlem/nyhetsbrev/nyhetsbrev_127.pdf#page=8",
+      "keyingEvidence": "2019 SAQ official reception report describes sender corrections and CW handwriting; the transmitter operator authored the event report. Specific hand key model and operator identity are not independently verified for this crop."
+    }
+  ],
+  "split": "real-dev"
+}

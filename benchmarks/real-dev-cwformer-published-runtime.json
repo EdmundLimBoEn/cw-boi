@@ -1,0 +1,56 @@
+{
+  "model": ".research/cwformer-release/cwformer_streaming_fp32.onnx",
+  "modelSHA256": "cbc241311f55074f3bb522ddf2823f0bc97f26b30cfb28203d042031c7187279",
+  "manifestSHA256": "a946b87ba2badc30183e9347bc3c2d4d6c6eb412b8cea12262975e7c19eb06b1",
+  "bandwidth": 150,
+  "results": [
+    {
+      "id": "saq-2019-website",
+      "condition": "real-hand-keyed",
+      "expected": "OUR WEBSITE : WWW.ALEXANDER.N.SE",
+      "actual": "OUR WEBSITE 87 WWW. ALEXANDER. NARSE",
+      "errors": 6,
+      "durationSeconds": 24.1,
+      "inferenceSeconds": 0.3830674160271883
+    },
+    {
+      "id": "saq-2019-website-repeat",
+      "condition": "real-hand-keyed",
+      "expected": "WWW.ALEXANDER.N.SE",
+      "actual": "W.AR XANDER. N.SE",
+      "errors": 5,
+      "durationSeconds": 14.85,
+      "inferenceSeconds": 0.25044099998194724
+    }
+  ],
+  "aggregate": {
+    "cases": 2,
+    "speechCases": 2,
+    "characters": 50,
+    "errors": 11,
+    "cer": 0.22,
+    "exact": 0,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 38.95,
+    "inferenceSeconds": 0.6335084160091355
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 50,
+      "errors": 11,
+      "cer": 0.22,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 38.95,
+      "inferenceSeconds": 0.6335084160091355
+    }
+  }
+}

@@ -28,6 +28,28 @@ export function inferDit(runs: Run[], initial: number) {
   return best
 }
 
+// Receiver hiss and static are colored; a whole-band median underestimates their louder end.
+function localNoise(power: Float32Array, bin: number, narrow = true) {
+  const neighbors: number[] = [], nearby: number[] = []
+  for (let i = Math.max(1, bin - 20); i <= Math.min(power.length - 1, bin + 20); i++) {
+    if (Math.abs(i - bin) > 3) {
+      neighbors.push(power[i])
+      if (Math.abs(i - bin) <= 8) nearby.push(power[i])
+    }
+  }
+  return Math.max(1e-12, median(neighbors), narrow ? median(nearby) : 0)
+}
+
+function strongestCarrier(power: Float32Array, low: number, high: number) {
+  let best = low, prominence = 0
+  for (let bin = low; bin <= high; bin++) {
+    if (power[bin] < power[bin - 1] || power[bin] < power[bin + 1]) continue
+    const ratio = power[bin] / localNoise(power, bin)
+    if (ratio > prominence) { best = bin; prominence = ratio }
+  }
+  return best
+}
+
 // Radix-2 FFT shared by live reception, file decoding, and the reproducible benchmark.
 export function spectrumPower(samples: Float32Array): Float32Array {
   const n = samples.length, real = new Float32Array(n), imag = new Float32Array(n)
@@ -68,6 +90,7 @@ export class CWDecoder {
   private i2 = 0
   private q2 = 0
   private noise = 0.000001
+  private carrierNoise = 0.000001
   private peak = 0.00001
   private keyed = false
   private candidate = false
@@ -86,6 +109,8 @@ export class CWDecoder {
   private markI = 0
   private markQ = 0
   private markSamples = 0
+  private markEnergy = 0
+  private markPeak = 0
   private carrierUntil = 0
   private power = 0
   private bootstrap: number[] = []
@@ -132,6 +157,7 @@ export class CWDecoder {
         this.markI += sample * Math.cos(this.phase)
         this.markQ += sample * Math.sin(this.phase)
         this.markSamples++
+        this.markEnergy += sample * sample
       }
       this.sampleCount++
       if (++this.hopCount >= hop) {
@@ -154,19 +180,30 @@ export class CWDecoder {
 
   private detect(power: number, time: number) {
     this.power = power
+    // A sudden real carrier must not inherit an unconfirmed noise pulse after silence.
+    if (this.keyed && time > this.carrierUntil && power > this.markPeak * 16) {
+      const gap = this.runs.at(-1)
+      if (gap && !gap.on) gap.duration += time - this.lastEdge
+      this.lastEdge = time
+      this.markI = 0; this.markQ = 0; this.markSamples = 0; this.markEnergy = 0; this.markPeak = power
+    }
     this.peak = Math.max(power, this.peak * 0.982)
     // A Schmitt gate follows the signal envelope; the noise estimate only learns below the gate.
-    const floor = Math.max(1e-9, this.noise * 10 ** (this.settings.threshold / 10))
-    const threshold = Math.max(floor, this.peak * (this.keyed ? 0.14 : 0.27))
+    const floor = Math.max(1e-9, (time > this.carrierUntil ? Math.max(this.noise, this.carrierNoise) : this.noise) * 10 ** (this.settings.threshold / 10))
+    const threshold = Math.max(floor * (this.keyed ? 0.5 : 1), this.peak * (this.keyed ? 0.14 : 0.27))
     const on = power > threshold
     if (!on && power < this.peak * 0.1) this.noise += 0.003 * (power - this.noise)
     if (on !== this.candidate) { this.candidate = on; this.candidateSince = time }
     if (on !== this.keyed && time - this.candidateSince >= Math.min(0.009, this.dit * 0.18)) {
       const edge = this.candidateSince
       const alpha = 1 - Math.exp(-Math.PI * this.settings.bandwidth / this.sampleRate)
-      const coherence = (this.markI ** 2 + this.markQ ** 2) * alpha / Math.max(1e-12, this.noise * this.markSamples)
-      if (this.keyed && coherence >= 10 ** ((this.settings.threshold + 4) / 10)) this.carrierUntil = time + 1.2
-      if (this.keyed && time > this.carrierUntil) {
+      // Instantaneous input energy prevents a static crash from exploiting the slower noise estimate.
+      const wideCoherence = (this.markI ** 2 + this.markQ ** 2) * alpha / Math.max(1e-12, this.noise * this.markSamples, this.markEnergy * alpha)
+      const coherence = (this.markI ** 2 + this.markQ ** 2) * alpha / Math.max(1e-12, this.carrierNoise * this.markSamples, this.markEnergy * alpha)
+      // A mistuned dah can cancel its own I/Q sum; its narrow spectral peak still confirms it.
+      const coherent = coherence >= 10 ** ((this.settings.threshold + 4) / 10) || (edge - this.lastEdge > this.dit * 1.5 && this.lastSnr > this.settings.threshold + 7)
+      if (this.keyed && coherent) this.carrierUntil = time + 1.2
+      if (this.keyed && (edge - this.lastEdge > 2 || time > this.carrierUntil || (wideCoherence < 10 ** ((this.settings.threshold + 4) / 10) && edge - this.lastEdge < this.dit * 0.6))) {
         // Carrier hysteresis preserves faded elements while rejecting noise-only excursions.
         const gap = this.runs.at(-1)
         if (gap && !gap.on) { this.lastEdge -= gap.duration; this.runs.pop() }
@@ -176,7 +213,7 @@ export class CWDecoder {
       if (this.lastEdge || this.keyed) this.runs.push({ on: this.keyed, duration: edge - this.lastEdge })
       if (this.keyed) this.lastMark = edge
       this.keyed = on
-      if (on) { this.markI = 0; this.markQ = 0; this.markSamples = 0 }
+      if (on) { this.markI = 0; this.markQ = 0; this.markSamples = 0; this.markEnergy = 0; this.markPeak = power }
       this.lastEdge = edge
       if (!on && this.settings.autoSpeed) this.dit = inferDit(this.runs, 1.2 / this.settings.wpm)
     }
@@ -188,20 +225,22 @@ export class CWDecoder {
     const power = spectrumPower(frame)
     const hz = this.sampleRate / frame.length
     const low = Math.ceil(250 / hz), high = Math.min(power.length - 2, Math.floor(1400 / hz))
-    const band = Array.from(power.slice(low, high + 1))
-    const background = Math.max(1e-12, median(band))
+    const background = localNoise(power, Math.round(this.frequency / hz))
     const alpha = 1 - Math.exp(-Math.PI * this.settings.bandwidth / this.sampleRate)
     const estimate = background * this.frame.length / (6 * Math.LN2) * alpha
-    this.noise = Math.max(1e-10, this.noise * 0.85 + estimate * 0.15)
-    let peakBin = low
-    for (let i = low + 1; i <= high; i++) if (power[i] > power[peakBin]) peakBin = i
-    const prominence = 10 * Math.log10(Math.max(1e-12, power[peakBin]) / background)
+    this.carrierNoise = Math.max(1e-10, this.carrierNoise * 0.85 + estimate * 0.15)
+    const wide = localNoise(power, Math.round(this.frequency / hz), false) * this.frame.length / (6 * Math.LN2) * alpha
+    this.noise = Math.max(1e-10, this.noise * 0.85 + wide * 0.15)
+    const peakBin = strongestCarrier(power, low, high)
+    const prominence = 10 * Math.log10(Math.max(1e-12, power[peakBin]) / localNoise(power, peakBin))
     this.spectrum = Array.from({ length: 160 }, (_, i) => {
       const bin = Math.round((200 + i * 1300 / 159) / hz)
       return 10 * Math.log10(Math.max(1e-12, power[bin] ?? 0))
     })
     const targetBin = Math.round(this.frequency / hz)
-    this.lastSnr = clamp(10 * Math.log10(Math.max(1e-12, power[targetBin]) / background), 0, 60)
+    const radius = Math.max(1, Math.floor(this.settings.bandwidth / (2 * hz)))
+    const localPower = Math.max(...power.slice(Math.max(1, targetBin - radius), targetBin + radius + 1))
+    this.lastSnr = clamp(10 * Math.log10(Math.max(1e-12, localPower) / background), 0, 60)
     if (!this.settings.autoTune || prominence < this.settings.threshold + 7 || power[peakBin] < 1e-8) return
     const l = Math.log(Math.max(power[peakBin - 1], 1e-15)), m = Math.log(Math.max(power[peakBin], 1e-15)), r = Math.log(Math.max(power[peakBin + 1], 1e-15))
     const delta = clamp(0.5 * (l - r) / (l - 2 * m + r || 1), -0.5, 0.5)
@@ -216,23 +255,22 @@ export class CWDecoder {
 
   private prime(samples: Float32Array) {
     let strongest = 0, carrier = this.frequency
-    const floors: number[] = []
+    const frames: Float32Array[] = []
     const n = this.frame.length, hz = this.sampleRate / n
     for (let offset = 0; offset + n <= samples.length; offset += n / 2) {
       const power = spectrumPower(samples.slice(offset, offset + n))
       const low = Math.ceil(250 / hz), high = Math.floor(1400 / hz)
-      const background = Math.max(1e-12, median(Array.from(power.slice(low, high))))
-      floors.push(background)
-      let peakBin = low
-      for (let i = low + 1; i <= high; i++) if (power[i] > power[peakBin]) peakBin = i
-      if (power[peakBin] > strongest && power[peakBin] / background > 10 ** ((this.settings.threshold + 7) / 10)) {
+      frames.push(power)
+      const peakBin = strongestCarrier(power, low, high)
+      if (power[peakBin] > strongest && power[peakBin] / localNoise(power, peakBin) > 10 ** ((this.settings.threshold + 7) / 10)) {
         strongest = power[peakBin]
         const l = Math.log(Math.max(power[peakBin - 1], 1e-15)), m = Math.log(Math.max(power[peakBin], 1e-15)), r = Math.log(Math.max(power[peakBin + 1], 1e-15))
         carrier = (peakBin + clamp(0.5 * (l - r) / (l - 2 * m + r || 1), -0.5, 0.5)) * hz
       }
     }
     if (this.settings.autoTune && strongest > 1e-8) this.frequency = carrier
-    this.noise = Math.max(1e-10, median(floors) * n / (6 * Math.LN2) * (1 - Math.exp(-Math.PI * this.settings.bandwidth / this.sampleRate)))
+    this.carrierNoise = Math.max(1e-10, median(frames.map(power => localNoise(power, Math.round(this.frequency / hz)))) * n / (6 * Math.LN2) * (1 - Math.exp(-Math.PI * this.settings.bandwidth / this.sampleRate)))
+    this.noise = Math.max(1e-10, median(frames.map(power => localNoise(power, Math.round(this.frequency / hz), false))) * n / (6 * Math.LN2) * (1 - Math.exp(-Math.PI * this.settings.bandwidth / this.sampleRate)))
   }
 
   private updateText(time: number, final = false) {
@@ -247,7 +285,7 @@ export class CWDecoder {
       else this.committed += decodeTiming(this.runs.splice(0, boundary + 1), this.dit, gapUnit, this.settings.autoSpeed, true).text
     }
     const runs = this.runs.slice()
-    if (this.lastEdge) runs.push({ on: this.keyed, duration: time - this.lastEdge })
+    if (this.lastEdge && (!this.keyed || time - this.lastEdge <= 2)) runs.push({ on: this.keyed, duration: time - this.lastEdge })
     const decoded = decodeTiming(runs, this.dit, gapUnit, this.settings.autoSpeed, final)
     this.lastReading = { ...decoded, text: this.committed + decoded.text, frequency: Math.round(this.frequency), wpm: Math.round(1.2 / this.dit), snr: Math.round(this.lastSnr), level: Math.round(10 * Math.log10(Math.max(this.power, 1e-10))), keyed: this.keyed, spectrum: this.spectrum }
   }

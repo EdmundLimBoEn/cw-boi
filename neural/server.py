@@ -1,6 +1,7 @@
 """Local-only acoustic inference. Audio is kept in memory, never saved or logged."""
 
 import argparse
+import hashlib
 import json
 import math
 import threading
@@ -13,12 +14,18 @@ from urllib.parse import parse_qs, urlsplit
 import numpy as np
 import torch
 from huggingface_hub import hf_hub_download
-from morseformer.decoding.streaming import StreamingConfig, StreamingDecoder, decode_offline
+from morseformer.decoding.streaming import StreamingConfig
+from streaming import StreamingDecoder, decode_offline
 from morseformer.models.rnnt import RnntModel
 from scripts.decode_audio import _rnnt_cfg_from_state
 
 MODEL = 'rnnt_phase11b.pt'
 active_checkpoint = MODEL
+model_name = 'Morseformer 0.6.4'
+engine_name = 'rnnt'
+confidence_threshold = 0.6
+digit_threshold = 0.9
+RELEASE_CHECKPOINT = Path(__file__).resolve().parents[1] / 'models/cw-boi-rnnt-v1.pt'
 REVISION = '9eab86a3ad7482f8c5801eabf26ec46f9493b919'
 MAX_SAMPLES = 8000 * 600
 model = None
@@ -46,7 +53,7 @@ def settings(query):
     if not math.isfinite(bandwidth) or not 40 <= bandwidth <= 500:
         raise ValueError('Bandwidth must be 40–500 Hz.')
     return StreamingConfig(carrier_hz=carrier, bandwidth_hz=bandwidth,
-                           confidence_threshold=0.6, digit_threshold=0.9)
+                           confidence_threshold=confidence_threshold, digit_threshold=digit_threshold)
 
 
 def samples_from_bytes(body):
@@ -75,15 +82,22 @@ class Handler(BaseHTTPRequestHandler):
             pass
 
     def local_request(self):
-        host = urlsplit('http://' + self.headers.get('Host', '')).hostname
-        origin = self.headers.get('Origin')
-        return host in {'localhost', '127.0.0.1', '::1'} and (not origin or urlsplit(origin).hostname in {'localhost', '127.0.0.1', '::1'})
+        try:
+            local = {'localhost', '127.0.0.1', '::1'}
+            host = urlsplit('http://' + self.headers.get('Host', '')).hostname
+            origin = self.headers.get('Origin')
+            parsed = urlsplit(origin) if origin else None
+            return host in local and (parsed is None or parsed.scheme in {'http', 'https'} and parsed.hostname in local)
+        except ValueError:
+            return False
 
     def do_GET(self):
         if not self.local_request():
             self.respond(403, {'error': 'This engine accepts local requests only.'})
         elif self.path == '/api/health':
-            self.respond(200, {'ready': True, 'model': 'Morseformer 0.6.4', 'checkpoint': active_checkpoint, 'device': device, 'base_revision': REVISION})
+            self.respond(200, {'ready': True, 'model': model_name, 'engine': engine_name, 'checkpoint': active_checkpoint, 'device': device, 'base_revision': REVISION if engine_name == 'rnnt' else None,
+                               'confidence_threshold': confidence_threshold if engine_name == 'rnnt' else None,
+                               'digit_threshold': digit_threshold if engine_name == 'rnnt' else None})
         else:
             self.respond(404, {'error': 'Unknown endpoint.'})
 
@@ -126,13 +140,15 @@ class Handler(BaseHTTPRequestHandler):
                 session['touched'] = now
                 if parsed.path == '/api/stream/feed':
                     tuned = settings(query)
-                    session['decoder'].cfg.carrier_hz = tuned.carrier_hz
-                    session['decoder']._fcfg.tone_freq = tuned.carrier_hz
-                    session['decoder']._fcfg.bandwidth = tuned.bandwidth_hz
                     audio = samples_from_bytes(body)
                     if session['samples'] + len(audio) > MAX_SAMPLES:
                         del sessions[key]
                         return self.respond(413, {'error': 'Neural sessions are limited to 10 minutes. Start a new session.'})
+                    session['decoder'].cfg.carrier_hz = tuned.carrier_hz
+                    session['decoder'].cfg.bandwidth_hz = tuned.bandwidth_hz
+                    if engine_name == 'rnnt':
+                        session['decoder']._fcfg.tone_freq = tuned.carrier_hz
+                        session['decoder']._fcfg.bandwidth = tuned.bandwidth_hz
                     session['samples'] += len(audio)
                     session['text'] += ''.join(session['decoder'].feed(audio))
                 elif parsed.path == '/api/stream/finish':
@@ -155,13 +171,45 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=8787)
     parser.add_argument('--device', choices=['cpu', 'cuda', 'mps'], default='cpu')
-    parser.add_argument('--checkpoint', help='Local fine-tuned checkpoint; defaults to the pinned published model.')
+    parser.add_argument('--engine', choices=['rnnt', 'cwformer'], default='rnnt')
+    parser.add_argument('--checkpoint', help='Local checkpoint; uses the validated local release when available.')
+    parser.add_argument('--published', action='store_true', help='Use the original published RNN-T model.')
+    parser.add_argument('--confidence-threshold', type=float, help='RNN-T acoustic emission threshold, 0–1.')
+    parser.add_argument('--digit-threshold', type=float, help='RNN-T digit emission threshold, 0–1.')
     args = parser.parse_args()
     device = args.device
-    if args.checkpoint:
-        path = Path(args.checkpoint)
-        active_checkpoint = f'{path.parent.name}/{path.name}'
+    engine_name = args.engine
+    if args.published and (args.checkpoint or args.engine != 'rnnt'):
+        parser.error('--published cannot be combined with --checkpoint or --engine cwformer.')
+    checkpoint = args.checkpoint
+    if checkpoint and engine_name == 'rnnt':
+        model_name = 'RNN-T · custom checkpoint'
+    if engine_name == 'rnnt' and not checkpoint and not args.published and RELEASE_CHECKPOINT.exists():
+        checkpoint = str(RELEASE_CHECKPOINT)
+        release = json.loads(Path(__file__).with_name('release.json').read_text())
+        if hashlib.sha256(RELEASE_CHECKPOINT.read_bytes()).hexdigest() != release['sha256']:
+            parser.error('Local release checkpoint hash differs from neural/release.json; use --checkpoint for an explicit experiment.')
+        model_name = release['name']
+        confidence_threshold = release['confidence_threshold']
+        digit_threshold = release['digit_threshold']
+    if args.confidence_threshold is not None:
+        confidence_threshold = args.confidence_threshold
+    if args.digit_threshold is not None:
+        digit_threshold = args.digit_threshold
+    if not all(math.isfinite(value) and 0 <= value <= 1 for value in (confidence_threshold, digit_threshold)):
+        parser.error('Acoustic confidence thresholds must be between 0 and 1.')
     torch.set_num_threads(4)
-    model = load_model(args.checkpoint)
+    if engine_name == 'cwformer':
+        if args.device != 'cpu':
+            parser.error('The CWformer ONNX engine currently uses CPU inference.')
+        from cwformer_engine import Model as CwformerModel, StreamingDecoder, decode_offline
+        model = CwformerModel(checkpoint)
+        checkpoint = str(model.path)
+        model_name = 'CWformer · experimental'
+    else:
+        model = load_model(checkpoint)
+    if checkpoint:
+        path = Path(checkpoint)
+        active_checkpoint = f'{path.parent.name}/{path.name}'
     print(f'Neural CW engine ready on http://127.0.0.1:{args.port} ({device}, {active_checkpoint}).', flush=True)
     ThreadingHTTPServer(('127.0.0.1', args.port), Handler).serve_forever()

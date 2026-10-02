@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "name": "CW boi \u00b7 RNN-T v1",
+  "sha256": "421ec784604b6d238aa2641d94160a4e6659b66206c3ac363f1d695173a06495",
+  "confidence_threshold": 0.6,
+  "digit_threshold": 0.9,
+  "source_checkpoint": "models/radio-noise-gpu-v4-blends/candidate-0.75.pt",
+  "selection_report": "benchmarks/rnnt-selection.json",
+  "validation_report": "benchmarks/rnnt-final-comparison.json",
+  "license": "Apache-2.0",
+  "license_file": "neural/MORSEFORMER_LICENSE",
+  "note": "Local derivative weights are excluded from Git. Without this artifact, the service downloads the pinned published model."
+}

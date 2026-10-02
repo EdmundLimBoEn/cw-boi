@@ -1,0 +1,427 @@
+{
+  "suite": "synthetic-v1",
+  "sampleRate": 8000,
+  "autoTune": true,
+  "seed": 92017,
+  "disclaimer": "Synthetic regression tests only; no real-world accuracy or superiority claim.",
+  "total": 48,
+  "exact": 33,
+  "cer": 0.06428571428571428,
+  "results": [
+    {
+      "name": "hand-10wpm-0pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "Y8QH8 3GO2M 7Q129 G1IOK K46T5 VE7SP",
+      "actual": "Y8QH8 3GO2M 7Q129 G1IOK K46T5 VE7SP",
+      "milliseconds": 764
+    },
+    {
+      "name": "hand-10wpm-0pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "Q0S4T 6GONP 1E1CM AMDV9 TT801 A92XR",
+      "actual": "Q0S4T 6GONP 1E1CM AMDV9 TT801 A92XR",
+      "milliseconds": 783
+    },
+    {
+      "name": "hand-10wpm-0pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "VBE3H OHV0C T6FD1 EGADC FFCQX NIQAA",
+      "actual": "VBE3H OHV0C T6FD1 EGADC FFCQX NIQAA",
+      "milliseconds": 726
+    },
+    {
+      "name": "hand-10wpm-20pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "DOOGB GG98D HSOTN LU45M TLWN8 FHRFB",
+      "actual": "DOOGB GG98D HSOTN LU45M TLWN8 FHRFB",
+      "milliseconds": 586
+    },
+    {
+      "name": "hand-10wpm-20pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "XJXSG ZRBIW 97UXN 8LTY0 G4UOH TA77F",
+      "actual": "XJXSG ZRBIW 97UXN 8LTY0 G4UOH TA77F",
+      "milliseconds": 777
+    },
+    {
+      "name": "hand-10wpm-20pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "BVTOD V844A 0ZCDN 7FXES 96TV2 VSFI8",
+      "actual": "BVTOD V844A 0ZCDN 7FXES 96TV2 VSFI8",
+      "milliseconds": 788
+    },
+    {
+      "name": "hand-10wpm-35pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "52OG5 BT2RJ 1E0J9 XS502 4JK1N PXEQT",
+      "actual": "52OG5 BT2RJ 1E0J9 XS502 4JK1N PXEQT",
+      "milliseconds": 760
+    },
+    {
+      "name": "hand-10wpm-35pct-3.6dah",
+      "errors": 1,
+      "cer": 0.02857142857142857,
+      "expected": "N2QKS 566L9 86876 0T5GF WN4PD OR87Z",
+      "actual": "N2QKS 566L9 86876 0T5GF WN4PDOR87Z",
+      "milliseconds": 938
+    },
+    {
+      "name": "hand-10wpm-35pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "22A76 6D68C JAT3L APOHH 48BXC W2PM8",
+      "actual": "22A76 6D68C JAT3L APOHH 48BXC W2PM8",
+      "milliseconds": 1004
+    },
+    {
+      "name": "hand-18wpm-0pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "Y75HN ZYXH2 6EC1X HODP8 5SWBR XDHLL",
+      "actual": "Y75HN ZYXH2 6EC1X HODP8 5SWBR XDHLL",
+      "milliseconds": 414
+    },
+    {
+      "name": "hand-18wpm-0pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "XCZTZ CFQDY VNEPD 52VUJ 6NFJS IHKS7",
+      "actual": "XCZTZ CFQDY VNEPD 52VUJ 6NFJS IHKS7",
+      "milliseconds": 396
+    },
+    {
+      "name": "hand-18wpm-0pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "WMGUA MDF47 5YQXH TPS4G Y0A1S 5JN3W",
+      "actual": "WMGUA MDF47 5YQXH TPS4G Y0A1S 5JN3W",
+      "milliseconds": 466
+    },
+    {
+      "name": "hand-18wpm-20pct-2.6dah",
+      "errors": 1,
+      "cer": 0.02857142857142857,
+      "expected": "6LVZL EUZL5 ANJKA 4GH78 YRQFB P68CJ",
+      "actual": "6LVZL EUZL5 ANJKA 4GH78YRQFB P68CJ",
+      "milliseconds": 423
+    },
+    {
+      "name": "hand-18wpm-20pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "9H0X8 KM4UX AJ1QM AJ5Q4 8RD4S I204B",
+      "actual": "9H0X8 KM4UX AJ1QM AJ5Q4 8RD4S I204B",
+      "milliseconds": 516
+    },
+    {
+      "name": "hand-18wpm-20pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "TJVVN WG2BW RXUGP JFVCA X9RGT UIQYZ",
+      "actual": "TJVVN WG2BW RXUGP JFVCA X9RGT UIQYZ",
+      "milliseconds": 436
+    },
+    {
+      "name": "hand-18wpm-35pct-2.6dah",
+      "errors": 4,
+      "cer": 0.11428571428571428,
+      "expected": "A24YV UXV20 PI7HE 0MLTR JGWRA XECUZ",
+      "actual": "A24YV UXV20 LI7HE 0MLER PDWRA XECUZ",
+      "milliseconds": 373
+    },
+    {
+      "name": "hand-18wpm-35pct-3.6dah",
+      "errors": 1,
+      "cer": 0.02857142857142857,
+      "expected": "EKJ54 YM4RN 85YZH OS0ES AAPKZ FJMHX",
+      "actual": "EKJ54 YM4RN 85YZH OS0ES AAPKZFJMHX",
+      "milliseconds": 402
+    },
+    {
+      "name": "hand-18wpm-35pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "NRNMN HVGNG NAZ7D P86QD CBSIV 44X9I",
+      "actual": "NRNMN HVGNG NAZ7D P86QD CBSIV 44X9I",
+      "milliseconds": 403
+    },
+    {
+      "name": "hand-28wpm-0pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "IJGKT QQDLP RD4PW 0HDAZ A3LE5 EJYUM",
+      "actual": "IJGKT QQDLP RD4PW 0HDAZ A3LE5 EJYUM",
+      "milliseconds": 233
+    },
+    {
+      "name": "hand-28wpm-0pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "6RNUR TPS7O T81M4 YGLL0 KCTM4 NAATH",
+      "actual": "6RNUR TPS7O T81M4 YGLL0 KCTM4 NAATH",
+      "milliseconds": 253
+    },
+    {
+      "name": "hand-28wpm-0pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "1OO3H OIHYJ RRY9Y 56K77 XH73R RQ4IA",
+      "actual": "1OO3H OIHYJ RRY9Y 56K77 XH73R RQ4IA",
+      "milliseconds": 351
+    },
+    {
+      "name": "hand-28wpm-20pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "0YDOJ MWZ0Q S7UX0 IG7D7 Z34VM HH90H",
+      "actual": "0YDOJ MWZ0Q S7UX0 IG7D7 Z34VM HH90H",
+      "milliseconds": 314
+    },
+    {
+      "name": "hand-28wpm-20pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "6NV2K DNMKI 5H1FO LRD5W ZPG9B J6NFE",
+      "actual": "6NV2K DNMKI 5H1FO LRD5W ZPG9B J6NFE",
+      "milliseconds": 282
+    },
+    {
+      "name": "hand-28wpm-20pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "BSGKC 2GCEV G9VZE BH0GN UC7I1 AHO69",
+      "actual": "BSGKC 2GCEV G9VZE BH0GN UC7I1 AHO69",
+      "milliseconds": 319
+    },
+    {
+      "name": "hand-28wpm-35pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "3A2WL J18SC C2A8X K4NV3 A18RA 85V9H",
+      "actual": "3A2WL J18SC C2A8X K4NV3 A18RA 85V9H",
+      "milliseconds": 317
+    },
+    {
+      "name": "hand-28wpm-35pct-3.6dah",
+      "errors": 1,
+      "cer": 0.02857142857142857,
+      "expected": "IXEAU HKP0V 0IE8W WIL1R E70VJ K2H2J",
+      "actual": "IXEAU HKP0V 0IE8W WIL1R E70VJK2H2J",
+      "milliseconds": 305
+    },
+    {
+      "name": "hand-28wpm-35pct-4.4dah",
+      "errors": 1,
+      "cer": 0.02857142857142857,
+      "expected": "SI2IO 00FQ3 L78C6 6ZRA4 34OZK 7M32P",
+      "actual": "SI2IO 00FQ3 L78C66ZRA4 34OZK 7M32P",
+      "milliseconds": 417
+    },
+    {
+      "name": "hand-40wpm-0pct-2.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "UWLWS 6JTG3 8Q1FA 8AMA6 YCOSR J586F",
+      "actual": "UWLWS 6JTG3 8Q1FA 8AMA6 YCOSR J586F",
+      "milliseconds": 199
+    },
+    {
+      "name": "hand-40wpm-0pct-3.6dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "PT7A8 4R9QD AN897 JZNPU LLY38 J0HHB",
+      "actual": "PT7A8 4R9QD AN897 JZNPU LLY38 J0HHB",
+      "milliseconds": 246
+    },
+    {
+      "name": "hand-40wpm-0pct-4.4dah",
+      "errors": 0,
+      "cer": 0,
+      "expected": "W9F34 PQ8FJ QI641 T8N22 1QSG4 VS4UR",
+      "actual": "W9F34 PQ8FJ QI641 T8N22 1QSG4 VS4UR",
+      "milliseconds": 276
+    },
+    {
+      "name": "hand-40wpm-20pct-2.6dah",
+      "errors": 2,
+      "cer": 0.05714285714285714,
+      "expected": "AICIJ H78UZ FLDRQ SW9TH 8Z6GT NAKEP",
+      "actual": "AICIJ H78UZ FLDRQ SW9TH O Z6GT NAKEP",
+      "milliseconds": 171
+    },
+    {
+      "name": "hand-40wpm-20pct-3.6dah",
+      "errors": 2,
+      "cer": 0.05714285714285714,
+      "expected": "H1X4H 7C3U8 XBXES JYKIH PUJKE DKA6F",
+      "actual": "H1X4H 7C3U8 XBXES JYKIS GUJKE DKA6F",
+      "milliseconds": 213
+    },
+    {
+      "name": "hand-40wpm-20pct-4.4dah",
+      "errors": 6,
+      "cer": 0.17142857142857143,
+      "expected": "2GX9A FDLHB 3XF61 EGQSS CTEDP 2V42P",
+      "actual": "2GX9A FDLHB 3XF61 EGQEES CTETEP 2IT42P",
+      "milliseconds": 235
+    },
+    {
+      "name": "hand-40wpm-35pct-2.6dah",
+      "errors": 6,
+      "cer": 0.17142857142857143,
+      "expected": "HN6EK 9F2MA VG3ZX 0L64J X3RVV OROIN",
+      "actual": "HN5EK 9F2MA VG3ZX 0LNIIAOX3RVV OROIN",
+      "milliseconds": 207
+    },
+    {
+      "name": "hand-40wpm-35pct-3.6dah",
+      "errors": 11,
+      "cer": 0.3142857142857143,
+      "expected": "YKDR9 3F9JL 5YV8B Z6RI8 LZDGX KHMHC",
+      "actual": "YKDR9 3F9JL5YV\ufffdD ZNUI\ufffdAZDGNT KHMSC",
+      "milliseconds": 247
+    },
+    {
+      "name": "hand-40wpm-35pct-4.4dah",
+      "errors": 10,
+      "cer": 0.2857142857142857,
+      "expected": "ZHIFK SMEK9 DZ6P8 W0UWT WIURY Y8XHZ",
+      "actual": "ZHIFK SMEK9 DZ6P8 W0UWTWITRTM YO NTS Z",
+      "milliseconds": 219
+    },
+    {
+      "name": "radio-15db-400hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "R4KBI 714UH ZT0TQ F1052 0FK7M WSR5U",
+      "actual": "R4KBI 714UH ZT0TQ F1052 0FK7M WSR5U",
+      "milliseconds": 400
+    },
+    {
+      "name": "radio-15db-650hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "V33W1 0MXFG 9NHQF NZAKQ 847TJ 3H51L",
+      "actual": "V33W1 0MXFG 9NHQF NZAKQ 847TJ 3H51L",
+      "milliseconds": 402
+    },
+    {
+      "name": "radio-15db-1000hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "FGSUE 9NZ54 9V4PI 3DDE1 79XA6 4GU0S",
+      "actual": "FGSUE 9NZ54 9V4PI 3DDE1 79XA6 4GU0S",
+      "milliseconds": 383
+    },
+    {
+      "name": "radio-5db-400hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "2DT3Z 1I13Y BYO9T D5U69 RKG7P WGB8V",
+      "actual": "2DT3Z 1I13Y BYO9T D5U69 RKG7P WGB8V",
+      "milliseconds": 394
+    },
+    {
+      "name": "radio-5db-650hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "A3OEX 7DKQV 7UMA4 5WSUV XMJO8 1NP3N",
+      "actual": "A3OEX 7DKQV 7UMA4 5WSUV XMJO8 1NP3N",
+      "milliseconds": 349
+    },
+    {
+      "name": "radio-5db-1000hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "VP7T3 8A4CA OO3XQ GW8T2 MPKTL EZU61",
+      "actual": "VP7T3 8A4CA OO3XQ GW8T2 MPKTL EZU61",
+      "milliseconds": 372
+    },
+    {
+      "name": "radio-0db-400hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "UFMN7 UZLHO M6KXM F8XWA KN88L RVUNQ",
+      "actual": "UFMN7 UZLHO M6KXM F8XWA KN88L RVUNQ",
+      "milliseconds": 335
+    },
+    {
+      "name": "radio-0db-650hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "OHE01 A23A2 SDP0E TXWND ED9LB FAIBM",
+      "actual": "OHE01 A23A2 SDP0E TXWND ED9LB FAIBM",
+      "milliseconds": 302
+    },
+    {
+      "name": "radio-0db-1000hz",
+      "errors": 0,
+      "cer": 0,
+      "expected": "MZE3Y NF0KG LQUFK 2XWAO B8L7O AX29U",
+      "actual": "MZE3Y NF0KG LQUFK 2XWAO B8L7O AX29U",
+      "milliseconds": 373
+    },
+    {
+      "name": "radio--5db-400hz",
+      "errors": 21,
+      "cer": 0.6,
+      "expected": "GJ38A 4SJNP FJHU3 OPVRH VS2CU V5NC6",
+      "actual": "GIM EW8A 4SJI G F OHU3 O TNITRH VS2NNET EA5NC6",
+      "milliseconds": 357
+    },
+    {
+      "name": "radio--5db-650hz",
+      "errors": 22,
+      "cer": 0.6285714285714286,
+      "expected": "3N0X6 AY2LR ALP7H PDDUL 1X4VN IKWYS",
+      "actual": "DTE MMY6 AYFTESA ALP7H E EENUL 1XIA TT IKWYS",
+      "milliseconds": 343
+    },
+    {
+      "name": "radio--5db-1000hz",
+      "errors": 19,
+      "cer": 0.5428571428571428,
+      "expected": "AR5S5 MJU9M 6X5JA U3XM9 DB8FP P51EX",
+      "actual": "MJU9M TEEX HJA F3DEM9 DB8ETES G51EX",
+      "milliseconds": 262
+    }
+  ],
+  "sources": [
+    {
+      "file": "src/decoder.ts",
+      "sha256": "8326b1304e5cb93c6c522cd68950a7bcf0c5a87f40ab7fe1f2e07935da27c676"
+    },
+    {
+      "file": "src/timing.ts",
+      "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+    },
+    {
+      "file": "src/morse.ts",
+      "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+    },
+    {
+      "file": "src/signals.ts",
+      "sha256": "56b03d07848cc864c231535ec128c8a3c4d4137920d9e1f0299c89fb076d3269"
+    },
+    {
+      "file": "scripts/benchmark.ts",
+      "sha256": "c91a0c9c1129f1834473e16aed489f74fbf0b7b092eb9979cb37f5cbc56a0a67"
+    }
+  ],
+  "baseline": {
+    "commit": "2949031a9c23b3538771dbd34e00a35fa01367f6",
+    "report": "benchmarks/adaptive-synthetic-v1.json",
+    "reportSHA256": "b60737ef66685a0d377b812ae6fa4047fc7384ba804b49b1eca2eec7603c28c8",
+    "total": 48,
+    "exact": 32,
+    "cer": 0.09642857142857143,
+    "errors": 162
+  }
+}

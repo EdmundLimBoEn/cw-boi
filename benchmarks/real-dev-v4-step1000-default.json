@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "split": "real-dev",
+  "seed": null,
+  "manifest": ".research/real-curated/manifest.json",
+  "manifestSHA256": "a946b87ba2badc30183e9347bc3c2d4d6c6eb412b8cea12262975e7c19eb06b1",
+  "checkpoint": "models/radio-noise-gpu-v4/step-1000.pt",
+  "checkpointSHA256": "915ce665acf7eae3993cfb1f7360c71ffc2ebbdd1e0833497a68e5e34f14ea3b",
+  "mode": "stream",
+  "chunkSeconds": 1.0,
+  "device": "cpu",
+  "torchVersion": "2.14.1",
+  "morseformerVersion": "0.6.4",
+  "decoderSHA256": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e",
+  "serverSHA256": "b52df45aac75609f90fc09d2d925940daceaf53a30a5d4bb61251be616fef75f",
+  "benchmarkSHA256": "d6373857ca548515cb56ebbb873f9abc4de47e4d7a51165312a4a0e027e25d3a",
+  "knownCarrier": true,
+  "complete": true,
+  "results": [
+    {
+      "id": "saq-2019-website",
+      "condition": "real-hand-keyed",
+      "expected": "OUR WEBSITE : WWW.ALEXANDER.N.SE",
+      "actual": "OUR WEBSITE SWWW.ALEXANDE R..SE",
+      "errors": 4,
+      "cer": 0.125,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 24.1,
+      "inferenceSeconds": 0.633316499995999,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 634.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "OUR W"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "EBSI"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "TE "
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "SW"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "WW"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": ".A"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "LEX"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "AND"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "E R."
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "."
+        },
+        {
+          "atSeconds": 24.1,
+          "text": "SE",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "saq-2019-website-repeat",
+      "condition": "real-hand-keyed",
+      "expected": "WWW.ALEXANDER.N.SE",
+      "actual": "WW.ALLEXANDER.N.SE",
+      "errors": 2,
+      "cer": 0.1111111111111111,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 14.85,
+      "inferenceSeconds": 0.3399499169900082,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 634.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "WW."
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "ALLE"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "XAN"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "DER"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": ".N"
+        },
+        {
+          "atSeconds": 14.85,
+          "text": ".SE",
+          "final": true
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "cases": 2,
+    "speechCases": 2,
+    "characters": 50,
+    "errors": 6,
+    "cer": 0.12,
+    "exact": 0,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 38.95,
+    "inferenceSeconds": 0.9732664169860072
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 50,
+      "errors": 6,
+      "cer": 0.12,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 38.95,
+      "inferenceSeconds": 0.9732664169860072
+    }
+  }
+}

@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "tsc -b && vite build",
+    "build": "bun run assets:prepare && tsc -b && vite build",
+    "assets:prepare": "bun run scripts/prepare-browser-assets.ts",
+    "deploy": "node node_modules/cf/bin/cf deploy --prebuilt --mode production",
     "preview": "vite preview --host 0.0.0.0",
     "test": "bun test",
     "benchmark": "bun run scripts/benchmark.ts",
@@ -16,13 +18,16 @@
     "@fontsource/ibm-plex-mono": "^5.2.7",
     "@fontsource/space-grotesk": "^5.2.10",
     "lucide-react": "^0.468.0",
+    "onnxruntime-web": "1.30.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "2.0.0-beta.sha-52b0dc0e9",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
+    "cf": "1.0.0-beta.12",
     "typescript": "~5.9.3",
     "vite": "^7.1.9"
   }

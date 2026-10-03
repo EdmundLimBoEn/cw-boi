@@ -1,0 +1,111 @@
+{
+  "recordedAt": "2026-10-03T03:01:54.217Z",
+  "url": "https://cw-boi.sillyapps.co/",
+  "network": {
+    "requests": [
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/assets/index-DPBqXNk9.js"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/assets/index-DZBcQ09t.css"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/assets/space-grotesk-latin-400-normal-CJ-V5oYT.woff2"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/assets/space-grotesk-latin-700-normal-RjhwGPKo.woff2"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/assets/space-grotesk-latin-600-normal-DjKNqYRj.woff2"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/assets/space-grotesk-latin-500-normal-lFbtlQH6.woff2"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/assets/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/assets/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/favicon.svg"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/assets/worker-KDxYxdwP.js"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/models/cwformer-v6/manifest.json"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/models/cwformer-v6/model-0-610c03746df8924d.bin"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/models/cwformer-v6/model-1-361670e88939626e.bin"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/models/cwformer-v6/model-2-62aa2ddb5d4d54b3.bin"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/models/cwformer-v6/model-3-b96b0bb6f61a38aa.bin"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/models/cwformer-v6/mel_window.f32"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/models/cwformer-v6/mel_basis.f32"
+      },
+      {
+        "method": "GET",
+        "url": "https://cw-boi.sillyapps.co/ort/ort-wasm-simd-threaded.wasm"
+      }
+    ],
+    "onlySameOriginGets": true
+  },
+  "passed": true,
+  "workerPath": "/assets/worker-KDxYxdwP.js",
+  "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "results": [
+    {
+      "check": "built-worker-live-stream",
+      "text": "CQ DE JA2NO UR RST 339 NAME PETER K",
+      "loadMilliseconds": 2676.5999999996275,
+      "decodeMilliseconds": 2492.7000000011176,
+      "audioSeconds": 19.3635,
+      "realTimeFactor": 0.12873189247817377,
+      "exactPythonEmissionParity": true
+    },
+    {
+      "check": "built-worker-file",
+      "text": "CQ DE JA2NO UR RST 339 NAME PETER K",
+      "decodeMilliseconds": 2389,
+      "sourceSamplesPreserved": true
+    },
+    {
+      "check": "built-worker-cancel-during-inference",
+      "firstDecodeProgressObserved": true,
+      "lateResult": false
+    }
+  ]
+}

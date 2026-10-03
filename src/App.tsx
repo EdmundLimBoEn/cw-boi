@@ -5,7 +5,7 @@ import { DEFAULT_RECEIVER, type DecoderReading, type ReceiverSettings } from './
 import { ALPHABET, DEFAULT_SENDER, MORSE, decodeText, synthesize, transmission, wavBytes, type SenderSettings } from './morse'
 import { CHALLENGES, characterErrors, makeSignal, type Challenge } from './signals'
 import { Spectrum } from './Spectrum'
-import { NeuralStream, neuralDecode, type NeuralEngine, type NeuralEngineInfo } from './neural'
+import { NEURAL_ENGINE, NeuralStream, cancelNeural, loadNeural, neuralDecode, subscribeModel, type ModelState, type NeuralEngine } from './browser-neural'
 
 const EMPTY: DecoderReading = { text: '', pending: '', frequency: 650, wpm: 20, snr: 0, level: -100, keyed: false, confidence: 0, spectrum: [] }
 const DEMO_TEXT = 'CQ CQ DE CWBOI 73'
@@ -34,7 +34,7 @@ function Toggle({ checked, onChange, children, disabled = false }: { checked: bo
 
 function App() {
   const [view, setView] = useState<'station' | 'lab'>('station')
-  const [rx, setRx] = useState<ReceiverSettings>(DEFAULT_RECEIVER)
+  const [rx, setRx] = useState<ReceiverSettings>({ ...DEFAULT_RECEIVER, bandwidth: NEURAL_ENGINE.bandwidth })
   const [tx, setTx] = useState<SenderSettings>(DEFAULT_SENDER)
   const [message, setMessage] = useState('CQ CQ DE CWBOI K')
   const [reading, setReading] = useState<DecoderReading>(EMPTY)
@@ -58,8 +58,8 @@ function App() {
   const [deviceId, setDeviceId] = useState('')
   const [results, setResults] = useState<Record<string, LabResult>>({})
   const [labRunning, setLabRunning] = useState<string | null>(null)
-  const [neuralEngines, setNeuralEngines] = useState<NeuralEngineInfo[]>([])
-  const [engine, setEngine] = useState<'adaptive' | NeuralEngine>('adaptive')
+  const [modelState, setModelState] = useState<ModelState>({ phase: 'idle' })
+  const [engine, setEngine] = useState<'adaptive' | NeuralEngine>('cwformer')
   const [neuralText, setNeuralText] = useState('')
   const [neuralBusy, setNeuralBusy] = useState(false)
   const neuralStream = useRef<NeuralStream | null>(null)
@@ -97,8 +97,8 @@ function App() {
       }
     }
     audio.onReceiverEnded = () => { finishNeural(); setSource('idle'); setNotice('Audio input disconnected.') }
-    void fetch('/api/health').then(response => response.ok ? response.json() : null).then(data => { if (data?.ready) setNeuralEngines((data.engines ?? [data]).filter((entry: NeuralEngineInfo) => entry.engine === 'rnnt' || entry.engine === 'cwformer')) }).catch(() => {})
-    return () => { worker.current?.terminate(); neuralStream.current?.cancel(); neuralRequest.current?.abort(); audio.dispose() }
+    const unsubscribe = subscribeModel(setModelState)
+    return () => { unsubscribe(); worker.current?.terminate(); neuralStream.current?.cancel(); neuralRequest.current?.abort(); cancelNeural(); audio.dispose() }
   }, [])
   useEffect(() => { station.current?.configure(rx) }, [rx])
   useEffect(() => { station.current?.setVolume(tx.volume) }, [tx.volume])
@@ -121,8 +121,9 @@ function App() {
     const stream = neuralStream.current
     if (!stream) return
     setNeuralBusy(true)
-    await stream.finish()
-    if (neuralStream.current === stream) { neuralStream.current = null; setNeuralBusy(false) }
+    try { await stream.finish() }
+    catch (error) { if (neuralStream.current === stream) { stream.cancel(); setError(audioError(error)) } }
+    finally { if (neuralStream.current === stream) { neuralStream.current = null; setNeuralBusy(false) } }
   }
 
   const finishReception = async () => {
@@ -136,9 +137,10 @@ function App() {
     if (engine === 'adaptive') return
     const stream = new NeuralStream(engine)
     neuralStream.current = stream
-    stream.onText = setNeuralText
-    stream.onError = error => { setError(audioError(error)); setNeuralBusy(false) }
-    await stream.start(settings)
+    stream.onText = text => { if (neuralStream.current === stream) setNeuralText(text) }
+    stream.onError = error => { if (neuralStream.current === stream) { stop(); setError(audioError(error)) } }
+    try { await stream.start(settings) }
+    catch (error) { stream.cancel(); if (neuralStream.current === stream) neuralStream.current = null; throw error }
     if (neuralStream.current !== stream) return
     getAudio().onSamples = samples => stream.feed(samples)
   }
@@ -146,15 +148,17 @@ function App() {
   const changeEngine = (next: 'adaptive' | NeuralEngine) => {
     if (next === engine) return
     stop(); setEngine(next); setReading(EMPTY); setNeuralText(''); setResults({}); setSourceName(''); setError(''); setNotice('')
-    changeRx({ bandwidth: next === 'adaptive' ? DEFAULT_RECEIVER.bandwidth : neuralEngines.find(entry => entry.engine === next)?.bandwidth ?? (next === 'cwformer' ? 150 : 100) })
+    if (next === 'adaptive') cancelNeural()
+    changeRx({ bandwidth: next === 'adaptive' ? DEFAULT_RECEIVER.bandwidth : NEURAL_ENGINE.bandwidth })
   }
 
   const stop = (finish = false) => {
     operation.current++
     setNeuralBusy(false)
-    if (finish) void finishReception()
+    if (finish && !busy && !neuralBusy) void finishReception()
     else { neuralStream.current?.cancel(); neuralStream.current = null; setNeuralBusy(false); station.current?.stopReceiver() }
-    neuralRequest.current?.abort()
+    neuralRequest.current?.abort(); neuralRequest.current = null
+    if (modelState.phase === 'loading') cancelNeural()
     worker.current?.terminate(); worker.current = null
     station.current?.stopSender(); station.current?.stopKey()
     keyIsDown.current = false
@@ -176,12 +180,14 @@ function App() {
     const hidden = () => { if (document.hidden) up() }
     window.addEventListener('keydown', down); window.addEventListener('keyup', release); window.addEventListener('blur', up); document.addEventListener('visibilitychange', hidden)
     return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', release); window.removeEventListener('blur', up); document.removeEventListener('visibilitychange', hidden) }
-  }, [armed, help])
+  }, [armed, help, busy, neuralBusy, modelState.phase])
 
   async function listen() {
     stop(); setError(''); setBusy(true); setReceiverTab('audio'); setReading(EMPTY); setNeuralText('')
     const ticket = operation.current
     try {
+      await getAudio().ready()
+      if (ticket !== operation.current) return
       await startNeural(rx)
       if (ticket !== operation.current) return
       const started = await getAudio().listen(rx, deviceId)
@@ -189,7 +195,7 @@ function App() {
       setSource('mic'); setSourceName('Microphone')
       const inputs = await navigator.mediaDevices.enumerateDevices()
       setDevices(inputs.filter(device => device.kind === 'audioinput'))
-    } catch (error) { if (ticket === operation.current) setError(audioError(error)) }
+    } catch (error) { if (ticket === operation.current) { stop(); setError(audioError(error)) } }
     finally { if (ticket === operation.current) setBusy(false) }
   }
 
@@ -202,6 +208,8 @@ function App() {
     setBusy(true)
     try {
       if (loopback) {
+        await audio.ready()
+        if (ticket !== operation.current) return
         setReading(EMPTY); setNeuralText(''); setReceiverTab('audio')
         await startNeural({ ...rx, frequency: tx.frequency })
         if (ticket !== operation.current) return
@@ -224,6 +232,8 @@ function App() {
     const ticket = operation.current
     try {
       const audio = getAudio()
+      await audio.ready()
+      if (ticket !== operation.current) return
       await startNeural({ ...rx, frequency: challenge.frequency })
       if (ticket !== operation.current) return
       if (!await audio.loopback({ ...rx, frequency: challenge.frequency, autoTune: true })) return
@@ -262,11 +272,11 @@ function App() {
       const neuralSamples = engine !== 'adaptive' ? samples.slice() : null
       analyze(samples, rx, result => {
         if (!neuralSamples || selectedEngine === 'adaptive') { setNotice(result.text.trim() ? 'Recording decoded. Your audio stayed on this device.' : 'No Morse found. Try tuning the carrier or lowering the signal gate.'); return }
-        const controller = new AbortController(); neuralRequest.current = controller; setNeuralBusy(true)
-        void neuralDecode(neuralSamples, { ...rx, frequency: rx.autoTune ? result.frequency : rx.frequency }, selectedEngine, controller.signal)
-          .then(text => { if (ticket === operation.current) { setNeuralText(text); setNotice(text ? 'Recording decoded by the connected neural engine.' : 'No Morse found. Try tuning the carrier.') } })
+        const controller = new AbortController(); neuralRequest.current = controller; setNeuralBusy(true); setBusy(true); setSource('file'); setProgress(0)
+        void neuralDecode(neuralSamples, { ...rx, frequency: rx.autoTune ? result.frequency : rx.frequency }, selectedEngine, controller.signal, value => { if (ticket === operation.current) setProgress(value) })
+          .then(text => { if (ticket === operation.current) { setNeuralText(text); setNotice(text ? 'Recording decoded on this device. Your audio was not uploaded.' : 'No Morse found. Try tuning the carrier.') } })
           .catch(error => { if (!controller.signal.aborted) setError(audioError(error)) })
-          .finally(() => { if (ticket === operation.current) setNeuralBusy(false) })
+          .finally(() => { if (ticket === operation.current) { setNeuralBusy(false); setBusy(false); setSource('idle'); neuralRequest.current = null } })
       })
     } catch (error) { if (ticket === operation.current) { setError(audioError(error)); setBusy(false) } }
   }
@@ -277,6 +287,8 @@ function App() {
     const ticket = operation.current
     try {
       const audio = getAudio()
+      await audio.ready()
+      if (ticket !== operation.current) return
       await startNeural({ ...rx, frequency: tx.frequency })
       if (ticket !== operation.current) return
       if (!await audio.loopback({ ...rx, frequency: tx.frequency, autoTune: false, wpm: tx.wpm, spacing: tx.spacing })) return
@@ -289,19 +301,19 @@ function App() {
   }
 
   async function runChallenge(challenge: Challenge) {
-    stop(); setBusy(true); setProgress(0); setLabRunning(challenge.id); setSourceName(challenge.name); setReading(EMPTY)
+    stop(); setError(''); setNeuralText(''); setBusy(true); setProgress(0); setLabRunning(challenge.id); setSourceName(challenge.name); setReading(EMPTY)
     const started = performance.now()
     const samples = makeSignal(LAB_TEXT, challenge, 947)
     if (engine !== 'adaptive') {
       const controller = new AbortController(); neuralRequest.current = controller
       try {
-        const text = await neuralDecode(samples, { ...rx, frequency: challenge.frequency }, engine, controller.signal)
+        const text = await neuralDecode(samples, { ...rx, frequency: challenge.frequency }, engine, controller.signal, value => { if (!controller.signal.aborted) setProgress(value) })
         if (!controller.signal.aborted) {
           setNeuralText(text)
           setResults(previous => ({ ...previous, [challenge.id]: { text, ...characterErrors(LAB_TEXT, text), milliseconds: Math.round(performance.now() - started) } }))
         }
       } catch (error) { if (!controller.signal.aborted) setError(audioError(error)) }
-      finally { if (!controller.signal.aborted) { setBusy(false); setLabRunning(null) } }
+      finally { if (!controller.signal.aborted) { setBusy(false); setLabRunning(null); neuralRequest.current = null } }
       return
     }
     analyze(samples, { ...rx, frequency: challenge.frequency, autoTune: false }, decoded => {
@@ -315,8 +327,15 @@ function App() {
   }
 
   const clearTranscript = () => { stop(); setReading(EMPTY); setMorseInput(''); setNeuralText('') }
+  const modelLoading = modelState.phase === 'loading'
+  const modelLabel = modelLoading ? modelState.stage === 'initialize' ? 'Preparing CWformer on this device…' : `Downloading CWformer${modelState.total ? ` · ${Math.round((modelState.loaded ?? 0) / modelState.total * 100)}%` : '…'}` : modelState.phase === 'ready' ? 'CWformer ready on this device' : modelState.phase === 'error' ? 'CWformer could not load' : 'CWformer runs on your device'
+  const prepareModel = async () => {
+    setError('')
+    try { await loadNeural() }
+    catch (error) { if (!(error instanceof DOMException && error.name === 'AbortError')) setError(audioError(error)) }
+  }
   const buttonBusy = busy || playing || source === 'demo' || armed
-  const statusLabel = busy ? source === 'file' || labRunning ? `Decoding ${Math.round(progress * 100)}%` : 'Connecting' : source === 'mic' ? 'Listening' : source === 'demo' ? 'Sample playing' : source === 'loopback' ? 'Loopback' : source === 'key' ? 'Key ready' : 'Standby'
+  const statusLabel = modelLoading ? 'Loading model' : busy ? source === 'file' || labRunning ? `Decoding ${Math.round(progress * 100)}%` : 'Connecting' : source === 'mic' ? 'Listening' : source === 'demo' ? 'Sample playing' : source === 'loopback' ? 'Loopback' : source === 'key' ? 'Key ready' : 'Standby'
 
   return <div className="app-shell">
     <header className="site-header">
@@ -330,6 +349,11 @@ function App() {
 
       {error && <div className="error-banner" role="alert"><CircleHelp size={19} /><span>{error}</span><button aria-label="Dismiss error" onClick={() => setError('')}><X size={16} /></button></div>}
 
+      {engine === 'cwformer' && <div className="model-status" aria-live="polite">
+        <div><strong>{modelLabel}</strong><span>{modelLoading ? modelState.stage === 'download' ? `${((modelState.loaded ?? 0) / 1024 / 1024).toFixed(1)} MB downloaded. You can cancel at any time.` : 'Initializing the decoder. Audio capture starts when it is ready.' : modelState.phase === 'ready' ? 'Runs in your browser. Switch to Adaptive for lower CPU use.' : 'First use downloads about 100 MB. Audio stays here; a modern desktop works best.'}</span>{modelLoading && <progress aria-label="CWformer model download" value={modelState.stage === 'download' && modelState.total ? modelState.loaded : undefined} max={modelState.total || 1} />}</div>
+        {modelLoading ? <button className="button secondary" onClick={() => { stop(); cancelNeural() }}>Cancel loading</button> : modelState.phase !== 'ready' ? <button className="button secondary" onClick={() => void prepareModel()}>{modelState.phase === 'error' ? 'Retry model' : 'Load CWformer'}</button> : <button className="button secondary" onClick={() => changeEngine('adaptive')}>Use Adaptive</button>}
+      </div>}
+
       {view === 'station' ? <div className="station-grid">
         <section className="panel receiver-panel" aria-labelledby="receiver-heading">
           <div className="panel-header"><div className="panel-title"><span className="channel-icon rx-icon"><AudioLines size={19} /></span><h2 id="receiver-heading">Receiver</h2><span className="channel-code">RX</span></div><span className={`status-pill ${active ? 'is-live' : ''}`}><span />{statusLabel}</span></div>
@@ -342,13 +366,13 @@ function App() {
           </div>
 
           <div className="receiver-controls"><div className="receiver-tuning"><Slider label="Target tone" value={rx.frequency} min={250} max={1400} step={5} suffix="Hz" onChange={frequency => changeRx({ frequency, autoTune: false })} /><Toggle checked={rx.autoTune} onChange={autoTune => changeRx({ autoTune })}>Auto tune</Toggle></div>
-            <div className="receive-actions"><button className={`button primary ${source === 'mic' ? 'stop-button' : ''}`} disabled={busy} onClick={() => source === 'mic' ? stop(true) : void listen()}>{source === 'mic' ? <Square size={16} fill="currentColor" /> : <Mic size={17} />}{source === 'mic' ? 'Stop listening' : 'Start listening'}</button><button className="button secondary" disabled={busy} onClick={() => fileInput.current?.click()}><Upload size={16} /> Audio file</button><button className="icon-button advanced-button" aria-label="Receiver settings" aria-expanded={advanced} onClick={() => setAdvanced(!advanced)}><SlidersHorizontal size={18} /></button><input ref={fileInput} type="file" accept="audio/*,.wav,.mp3,.ogg,.m4a,.flac" className="visually-hidden" aria-label="Import audio recording" onChange={event => { const file = event.target.files?.[0]; if (file) void importAudio(file); event.target.value = '' }} /></div>
+            <div className="receive-actions"><button className={`button primary ${source === 'mic' ? 'stop-button' : ''}`} disabled={busy || modelLoading} onClick={() => source === 'mic' ? stop(true) : void listen()}>{source === 'mic' ? <Square size={16} fill="currentColor" /> : <Mic size={17} />}{source === 'mic' ? 'Stop listening' : 'Start listening'}</button><button className="button secondary" disabled={busy || modelLoading} onClick={() => fileInput.current?.click()}><Upload size={16} /> Audio file</button><button className="icon-button advanced-button" aria-label="Receiver settings" aria-expanded={advanced} onClick={() => setAdvanced(!advanced)}><SlidersHorizontal size={18} /></button><input ref={fileInput} type="file" accept="audio/*,.wav,.mp3,.ogg,.m4a,.flac" className="visually-hidden" aria-label="Import audio recording" onChange={event => { const file = event.target.files?.[0]; if (file) void importAudio(file); event.target.value = '' }} /></div>
             {advanced && <div className="advanced-controls"><div className="controls-grid"><Slider label="Filter width" value={rx.bandwidth} min={40} max={300} step={10} suffix="Hz" onChange={bandwidth => changeRx({ bandwidth })} /><Slider disabled={engine !== 'adaptive'} label="Signal gate" value={rx.threshold} min={3} max={18} suffix="dB" onChange={threshold => changeRx({ threshold })} /><Slider disabled={engine !== 'adaptive'} label="Expected speed" value={rx.wpm} min={5} max={60} suffix="WPM" onChange={wpm => changeRx({ wpm, spacing: Math.min(rx.spacing, wpm) })} /><Slider disabled={engine !== 'adaptive'} label="Spacing speed" value={rx.spacing} min={5} max={rx.wpm} suffix="WPM" onChange={spacing => changeRx({ spacing })} /></div><Toggle disabled={engine !== 'adaptive'} checked={rx.autoSpeed} onChange={autoSpeed => changeRx({ autoSpeed })}>Learn the sender’s timing</Toggle><label className="device-picker">Audio input<select value={deviceId} disabled={source === 'mic'} onChange={event => setDeviceId(event.target.value)}><option value="">System default</option>{devices.map(device => <option key={device.deviceId} value={device.deviceId}>{device.label || 'Audio input'}</option>)}</select></label><p>{engine === 'cwformer' ? 'Start with a 150 Hz filter for CWformer; narrower filters can distort the elements. ' : 'Adjust the filter width to reduce nearby interference. '}Turn off auto tune to stay with one station in a crowded band.{engine !== 'adaptive' && ' The acoustic model learns timing itself; gate and speed controls apply to the adaptive decoder.'}</p></div>}
           </div>
 
-          <div className="transcript-section"><div className="engine-row"><span><Activity size={13} /> Decoder</span><select aria-label="Decoder engine" value={engine} onChange={event => changeEngine(event.target.value as 'adaptive' | NeuralEngine)}><option value="adaptive">Adaptive signal decoder</option>{neuralEngines.map(entry => <option key={entry.engine} value={entry.engine}>{entry.model}</option>)}</select>{engine !== 'adaptive' && <small>{neuralBusy ? 'Finishing copy…' : 'Local acoustic decoding'}</small>}</div><div className="section-toolbar"><div className="transcript-tabs"><button className={receiverTab === 'audio' ? 'active' : ''} onClick={() => setReceiverTab('audio')}>Live copy</button><button className={receiverTab === 'text' ? 'active' : ''} onClick={() => setReceiverTab('text')}>Morse text</button></div><div className="toolbar-actions"><button className="icon-button" aria-label="Copy transcript" disabled={!displayedText} onClick={() => void copy(displayedText)}><Copy size={14} /></button><button className="icon-button" aria-label="Save transcript" disabled={!displayedText} onClick={() => download(displayedText, 'text/plain', 'cw-boi-transcript.txt')}><ArrowDownToLine size={15} /></button><button className="icon-button" aria-label="Clear transcript" disabled={!displayedText && !reading.pending} onClick={clearTranscript}><RotateCcw size={14} /></button></div></div>
+          <div className="transcript-section"><div className="engine-row"><span><Activity size={13} /> Decoder</span><select aria-label="Decoder engine" value={engine} onChange={event => changeEngine(event.target.value as 'adaptive' | NeuralEngine)}><option value="adaptive">Adaptive signal decoder</option><option value={NEURAL_ENGINE.engine}>{NEURAL_ENGINE.model}</option></select>{engine !== 'adaptive' && <small>{neuralBusy ? 'Decoding…' : modelState.phase === 'ready' ? 'On device' : 'Loads on first use'}</small>}</div><div className="section-toolbar"><div className="transcript-tabs"><button className={receiverTab === 'audio' ? 'active' : ''} onClick={() => setReceiverTab('audio')}>Live copy</button><button className={receiverTab === 'text' ? 'active' : ''} onClick={() => setReceiverTab('text')}>Morse text</button></div><div className="toolbar-actions"><button className="icon-button" aria-label="Copy transcript" disabled={!displayedText} onClick={() => void copy(displayedText)}><Copy size={14} /></button><button className="icon-button" aria-label="Save transcript" disabled={!displayedText} onClick={() => download(displayedText, 'text/plain', 'cw-boi-transcript.txt')}><ArrowDownToLine size={15} /></button><button className="icon-button" aria-label="Clear transcript" disabled={!displayedText && !reading.pending} onClick={clearTranscript}><RotateCcw size={14} /></button></div></div>
             {receiverTab === 'text' && <textarea className="morse-input" aria-label="Morse code to decode" value={morseInput} onChange={event => setMorseInput(event.target.value)} placeholder="... --- ... / .- -...   · Separate letters with spaces and words with /" spellCheck={false} maxLength={10000} />}
-            <div className={`transcript ${displayedText ? 'has-copy' : ''}`} role="log" aria-live="polite" aria-label="Decoded transcript">{displayedText ? <>{displayedText}<span className={active ? 'text-cursor live' : 'text-cursor'} /></> : <div className="empty-transcript"><Waves size={27} strokeWidth={1.3} /><span>{busy ? 'Finding the signal…' : active ? 'Listening for the first dits and dahs…' : 'There’s a conversation in the static.'}</span><small>{active ? engine !== 'adaptive' ? 'Neural decoding uses a few seconds of context.' : 'Decoded characters will appear here.' : 'Connect your audio, or take a sample for a spin.'}</small>{!active && !busy && receiverTab === 'audio' && <button onClick={() => void playDemo()}><Play size={11} fill="currentColor" /> Try a sample signal <ChevronRight size={13} /></button>}</div>}</div>
+            <div className={`transcript ${displayedText ? 'has-copy' : ''}`} role="log" aria-live="polite" aria-label="Decoded transcript">{displayedText ? <>{displayedText}<span className={active ? 'text-cursor live' : 'text-cursor'} /></> : <div className="empty-transcript"><Waves size={27} strokeWidth={1.3} /><span>{busy ? 'Finding the signal…' : active ? 'Listening for the first dits and dahs…' : 'There’s a conversation in the static.'}</span><small>{active ? engine !== 'adaptive' ? 'Neural decoding uses a few seconds of context.' : 'Decoded characters will appear here.' : 'Connect your audio, or take a sample for a spin.'}</small>{!active && !busy && receiverTab === 'audio' && <button disabled={modelLoading} onClick={() => void playDemo()}><Play size={11} fill="currentColor" /> Try a sample signal <ChevronRight size={13} /></button>}</div>}</div>
             {engine === 'adaptive' && !!reading.alternatives?.length && <details className="copy-alternatives"><summary>Ambiguous timing · other possible copy</summary>{reading.alternatives.map((text, index) => <code key={index}>{text}</code>)}</details>}<div className="transcript-footer"><span className="pending-code">{reading.pending ? reading.pending.replace(/\./g, '·').replace(/-/g, '−') : '· · ·'}<span>{active ? 'Decoding signal' : sourceName ? `Last source: ${sourceName}` : 'Waiting for a signal'}</span></span><span>{displayedText.trim().length} characters</span></div>
           </div>
         </section>
@@ -363,25 +387,25 @@ function App() {
 
             <div className="sender-settings"><div className="controls-grid"><Slider label="Character speed" value={tx.wpm} min={5} max={60} suffix="WPM" disabled={buttonBusy} onChange={wpm => changeTx({ wpm, spacing: tx.spacing === tx.wpm ? wpm : Math.min(tx.spacing, wpm) })} /><Slider label="Farnsworth spacing" value={tx.spacing} min={5} max={tx.wpm} suffix="WPM" disabled={buttonBusy} onChange={spacing => changeTx({ spacing })} /><Slider label="Sidetone" value={tx.frequency} min={250} max={1400} step={5} suffix="Hz" disabled={buttonBusy} onChange={frequency => changeTx({ frequency })} /><Slider label="Volume" value={Math.round(tx.volume * 100)} min={0} max={100} suffix="%" onChange={volume => changeTx({ volume: volume / 100 })} /></div></div>
             <div className="loopback-row"><div><Link2 size={16} /><span>Listen to yourself<small>Route your sender into the decoder</small></span></div><Toggle checked={loopback} disabled={playing || armed} onChange={setLoopback}><span className="visually-hidden">Sender loopback</span></Toggle></div>
-            <div className="send-actions">{mode === 'compose' ? <><button className={`button send-button ${playing ? 'sending' : ''}`} disabled={busy || !plan?.tones.length || !!plan.unsupported.length} onClick={() => playing ? stop(true) : void send()}>{playing ? <Square size={15} fill="currentColor" /> : <Play size={16} fill="currentColor" />}{playing ? 'Stop sending' : 'Send message'}<span>{playing ? `${Math.floor(elapsed)}s / ` : ''}{plan ? `${Math.ceil(plan.duration)}s` : '0s'}</span></button><button className="button secondary export-button" disabled={!plan?.tones.length || !!plan.unsupported.length || busy} onClick={() => { if (plan) { try { download(wavBytes(synthesize(plan, tx.frequency, 22050, tx.volume * 0.6)), 'audio/wav', 'cw-boi-message.wav'); setNotice('WAV downloaded.') } catch (error) { setError(audioError(error)) } } }}><ArrowDownToLine size={16} /> WAV</button></> : <button className={`button send-button ${armed ? 'sending' : ''}`} disabled={busy} onClick={() => void armKey()}>{armed ? <Square size={15} /> : <Keyboard size={17} />}{armed ? 'Disable straight key' : 'Enable straight key'}</button>}</div>
+            <div className="send-actions">{mode === 'compose' ? <><button className={`button send-button ${playing ? 'sending' : ''}`} disabled={busy || modelLoading || !plan?.tones.length || !!plan.unsupported.length} onClick={() => playing ? stop(true) : void send()}>{playing ? <Square size={15} fill="currentColor" /> : <Play size={16} fill="currentColor" />}{playing ? 'Stop sending' : 'Send message'}<span>{playing ? `${Math.floor(elapsed)}s / ` : ''}{plan ? `${Math.ceil(plan.duration)}s` : '0s'}</span></button><button className="button secondary export-button" disabled={!plan?.tones.length || !!plan.unsupported.length || busy || modelLoading} onClick={() => { if (plan) { try { download(wavBytes(synthesize(plan, tx.frequency, 22050, tx.volume * 0.6)), 'audio/wav', 'cw-boi-message.wav'); setNotice('WAV downloaded.') } catch (error) { setError(audioError(error)) } } }}><ArrowDownToLine size={16} /> WAV</button></> : <button className={`button send-button ${armed ? 'sending' : ''}`} disabled={busy || modelLoading} onClick={() => void armKey()}>{armed ? <Square size={15} /> : <Keyboard size={17} />}{armed ? 'Disable straight key' : 'Enable straight key'}</button>}</div>
             <p className="sender-footnote"><Volume2 size={12} /> Sends audio through your selected system output.</p>
           </div>
         </section>
       </div> : <section className="lab-panel">
         <div className="lab-intro"><div className="lab-icon"><FlaskConical size={26} /></div><div><h2>Less guessing. More testing.</h2><p>Six repeatable synthetic conditions, including deliberately brutal ones. Each goes through the same decoder as your microphone. Character error rate counts substitutions, insertions, and deletions.</p></div></div>
-        <div className="lab-engine"><label htmlFor="lab-engine">Test decoder</label><select id="lab-engine" value={engine} onChange={event => changeEngine(event.target.value as 'adaptive' | NeuralEngine)}><option value="adaptive">Adaptive signal decoder</option>{neuralEngines.map(entry => <option key={entry.engine} value={entry.engine}>{entry.model}</option>)}</select></div><div className="lab-target"><span>Expected copy</span><code>{LAB_TEXT}</code><small>Fixed seed 947 · 8 kHz audio · Known carrier · SNR measured against broadband noise</small></div>
-        <div className="challenge-grid">{CHALLENGES.map((challenge, index) => <article className="challenge" key={challenge.id}><div className="challenge-top"><span className="challenge-wave">{index === 0 ? <Waves /> : index === 1 ? <Activity /> : index === 2 ? <AudioLines /> : <Radio />}</span><span className="challenge-tag">{challenge.wpm} WPM / {challenge.snr > 0 ? '+' : ''}{challenge.snr} dB</span></div><h3>{challenge.name}</h3><p>{challenge.description}</p>{results[challenge.id] ? <div className="lab-result"><strong className={results[challenge.id].cer === 0 ? 'perfect' : ''}>{(results[challenge.id].cer * 100).toFixed(1)}% <span>character error</span></strong><code>{results[challenge.id].text || '(No copy)'}</code><small>{results[challenge.id].errors} edits / {LAB_TEXT.length} characters · {results[challenge.id].milliseconds} ms</small></div> : <div className="lab-result untested"><span>Ready for a fair test.</span><small>No result until you run the decoder.</small></div>}<div className="challenge-actions"><button className="button secondary" disabled={busy || active || playing} onClick={() => runChallenge(challenge)}>{labRunning === challenge.id ? <span className="spinner" /> : <FlaskConical size={14} />}{labRunning === challenge.id ? 'Running…' : 'Run test'}</button><button className="icon-button" disabled={busy || active || playing} aria-label={`Listen to ${challenge.name}`} onClick={() => { void playDemo(challenge, LAB_TEXT); setView('station') }}><Play size={15} /></button></div></article>)}</div>
+        <div className="lab-engine"><label htmlFor="lab-engine">Test decoder</label><select id="lab-engine" value={engine} onChange={event => changeEngine(event.target.value as 'adaptive' | NeuralEngine)}><option value="adaptive">Adaptive signal decoder</option><option value={NEURAL_ENGINE.engine}>{NEURAL_ENGINE.model}</option></select></div><div className="lab-target"><span>Expected copy</span><code>{LAB_TEXT}</code><small>Fixed seed 947 · 8 kHz audio · Known carrier · SNR measured against broadband noise</small></div>
+        <div className="challenge-grid">{CHALLENGES.map((challenge, index) => <article className="challenge" key={challenge.id}><div className="challenge-top"><span className="challenge-wave">{index === 0 ? <Waves /> : index === 1 ? <Activity /> : index === 2 ? <AudioLines /> : <Radio />}</span><span className="challenge-tag">{challenge.wpm} WPM / {challenge.snr > 0 ? '+' : ''}{challenge.snr} dB</span></div><h3>{challenge.name}</h3><p>{challenge.description}</p>{results[challenge.id] ? <div className="lab-result"><strong className={results[challenge.id].cer === 0 ? 'perfect' : ''}>{(results[challenge.id].cer * 100).toFixed(1)}% <span>character error</span></strong><code>{results[challenge.id].text || '(No copy)'}</code><small>{results[challenge.id].errors} edits / {LAB_TEXT.length} characters · {results[challenge.id].milliseconds} ms</small></div> : <div className="lab-result untested"><span>Ready for a fair test.</span><small>No result until you run the decoder.</small></div>}<div className="challenge-actions"><button className="button secondary" disabled={busy || modelLoading || active || playing} onClick={() => runChallenge(challenge)}>{labRunning === challenge.id ? <span className="spinner" /> : <FlaskConical size={14} />}{labRunning === challenge.id ? 'Running…' : 'Run test'}</button><button className="icon-button" disabled={busy || modelLoading || active || playing} aria-label={`Listen to ${challenge.name}`} onClick={() => { void playDemo(challenge, LAB_TEXT); setView('station') }}><Play size={15} /></button></div></article>)}</div>
         <div className="lab-caveat"><ShieldCheck size={18} /><p>Synthetic results are a regression check, not a claim of real-world accuracy. Real radio comparisons and failure cases are recorded alongside the benchmarks. Unknown symbols appear as <code>�</code>; callsigns are never autocorrected.</p></div>
       </section>}
 
-      <div className="station-bottom"><div className="privacy-note"><ShieldCheck size={15} /><span>Your audio is processed by your browser or connected decoder.</span></div><button className="text-button" onClick={() => setHelp(true)}>New to CW? <span>Get your bearings</span><ArrowUpRight size={13} /></button></div>
-      {(source === 'demo' || busy || source === 'key') && <div className="session-bar"><span><span className="status-dot" />{busy ? `Working${source === 'file' || labRunning ? ` · ${Math.round(progress * 100)}%` : '…'}` : source === 'key' ? 'Straight key is enabled' : `Playing ${sourceName.toLowerCase()}`}</span><button onClick={() => stop(true)}><Square size={12} /> Stop</button></div>}
+      <div className="station-bottom"><div className="privacy-note"><ShieldCheck size={15} /><span>Your audio stays on this device. No account or audio upload.</span></div><button className="text-button" onClick={() => setHelp(true)}>New to CW? <span>Get your bearings</span><ArrowUpRight size={13} /></button></div>
+      {(source === 'demo' || busy || source === 'key' || neuralBusy) && <div className="session-bar"><span><span className="status-dot" />{busy ? `Working${source === 'file' || labRunning ? ` · ${Math.round(progress * 100)}%` : '…'}` : neuralBusy ? 'Finishing copy…' : source === 'key' ? 'Straight key is enabled' : `Playing ${sourceName.toLowerCase()}`}</span><button onClick={() => stop(true)}><Square size={12} /> Stop</button></div>}
     </main>
 
     <footer className="site-footer"><span>Made for the space between the dits.</span><span className="footer-73">73 <span>—</span> good signals, always.</span><span>cw/boi <span className="version">v1.0</span></span></footer>
     {notice && <div className="toast" role="status"><Check size={16} />{notice}</div>}
 
-    <dialog ref={helpDialog} className="guide-dialog" onCancel={() => setHelp(false)} onClick={event => { if (event.target === event.currentTarget) setHelp(false) }}><div className="guide-content"><div className="guide-header"><div><span className="guide-kicker">A pocket companion</span><h2>The field guide.</h2></div><button className="icon-button" aria-label="Close field guide" onClick={() => setHelp(false)}><X size={22} /></button></div><div className="guide-steps"><div><Mic size={18} /><h3>Catch a signal</h3><p>Connect a radio’s audio output or use your microphone. Start listening, then click the carrier in the spectrum. Disable auto tune to stay on it.</p></div><div><Radio size={18} /><h3>Make a little noise</h3><p>Type a message and send it as audio. Slower Farnsworth spacing leaves more room between characters. Loopback lets you hear and decode your own signal.</p></div><div><Keyboard size={18} /><h3>Find your rhythm</h3><p>Enable the straight key and hold Space or the paddle. Release for the gaps. Escape stops the station. Keep a little extra space between words.</p></div></div><div className="guide-reference-title"><h3>The alphabet, at a glance.</h3><span>Dit · Dah −</span></div><div className="alphabet-grid">{ALPHABET.map(char => <div key={char}><strong>{char}</strong><code>{MORSE[char].replace(/\./g, '·').replace(/-/g, '−')}</code></div>)}</div><div className="guide-notes"><p><strong>Prosigns:</strong> Write <code>&lt;AR&gt;</code>, <code>&lt;AS&gt;</code>, <code>&lt;SK&gt;</code>, <code>&lt;BT&gt;</code>, <code>&lt;KN&gt;</code>, or <code>&lt;SOS&gt;</code> to send the letters as a single joined signal.</p><p><strong>Honest copy:</strong> The decoder learns timing from the signal. Badly overlapping marks and gaps can be ambiguous. <code>�</code> means an unrecognized pattern. Use manual tuning and speed when reception is difficult.</p><p><strong>Audio, not RF:</strong> This station produces an audio tone. Radio keying and transmitter control require a separate interface.</p><p><strong>Neural engine:</strong> When the neural service is running, select its acoustic model in the Decoder menu. It uses surrounding audio to interpret uncertain timing. Its output is still a hypothesis. Compare it with the adaptive decoder, especially for callsigns.</p><a href="https://github.com/sderhy/morseformer" target="_blank" rel="noreferrer">Morseformer · Sébastien Derhy · Apache 2.0 <ArrowUpRight size={12} /></a><br /><a href="https://www.itu.int/rec/R-REC-M.1677-1-200910-I/" target="_blank" rel="noreferrer">International Morse timing · ITU-R M.1677 <ArrowUpRight size={12} /></a></div></div></dialog>
+    <dialog ref={helpDialog} className="guide-dialog" onCancel={() => setHelp(false)} onClick={event => { if (event.target === event.currentTarget) setHelp(false) }}><div className="guide-content"><div className="guide-header"><div><span className="guide-kicker">A pocket companion</span><h2>The field guide.</h2></div><button className="icon-button" aria-label="Close field guide" onClick={() => setHelp(false)}><X size={22} /></button></div><div className="guide-steps"><div><Mic size={18} /><h3>Catch a signal</h3><p>Connect a radio’s audio output or use your microphone. Start listening, then click the carrier in the spectrum. Disable auto tune to stay on it.</p></div><div><Radio size={18} /><h3>Make a little noise</h3><p>Type a message and send it as audio. Slower Farnsworth spacing leaves more room between characters. Loopback lets you hear and decode your own signal.</p></div><div><Keyboard size={18} /><h3>Find your rhythm</h3><p>Enable the straight key and hold Space or the paddle. Release for the gaps. Escape stops the station. Keep a little extra space between words.</p></div></div><div className="guide-reference-title"><h3>The alphabet, at a glance.</h3><span>Dit · Dah −</span></div><div className="alphabet-grid">{ALPHABET.map(char => <div key={char}><strong>{char}</strong><code>{MORSE[char].replace(/\./g, '·').replace(/-/g, '−')}</code></div>)}</div><div className="guide-notes"><p><strong>Prosigns:</strong> Write <code>&lt;AR&gt;</code>, <code>&lt;AS&gt;</code>, <code>&lt;SK&gt;</code>, <code>&lt;BT&gt;</code>, <code>&lt;KN&gt;</code>, or <code>&lt;SOS&gt;</code> to send the letters as a single joined signal.</p><p><strong>Honest copy:</strong> The decoder learns timing from the signal. Badly overlapping marks and gaps can be ambiguous. <code>�</code> means an unrecognized pattern. Use manual tuning and speed when reception is difficult.</p><p><strong>Audio, not RF:</strong> This station produces an audio tone. Radio keying and transmitter control require a separate interface.</p><p><strong>Neural engine:</strong> CWformer downloads on first use and runs on your device. It uses surrounding audio to interpret uncertain timing; its output is still a hypothesis. Use the adaptive decoder for a lighter option, and compare uncertain callsigns.</p><a href="https://github.com/parsimo2010/CWformer" target="_blank" rel="noreferrer">CWformer · parsimo2010 · MIT <ArrowUpRight size={12} /></a><br /><a href="/third-party-notices.txt" target="_blank" rel="noreferrer">Third-party notices and licenses <ArrowUpRight size={12} /></a><br /><a href="https://www.itu.int/rec/R-REC-M.1677-1-200910-I/" target="_blank" rel="noreferrer">International Morse timing · ITU-R M.1677 <ArrowUpRight size={12} /></a></div></div></dialog>
   </div>
 }
 

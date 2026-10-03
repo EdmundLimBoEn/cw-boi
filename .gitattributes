@@ -3,3 +3,4 @@
 # Frozen evaluation hashes require the original report bytes, including Windows line endings.
 benchmarks/round3-*.json -text whitespace=cr-at-eol
 benchmarks/training-cwformer-noise-round3/*.json -text whitespace=cr-at-eol
+benchmarks/browser-*.json -text whitespace=cr-at-eol

@@ -1,0 +1,56 @@
+{
+  "recordedAt": "2026-10-03T03:02:38.710334+00:00",
+  "url": "https://cw-boi.sillyapps.co/",
+  "worker": "cw-boi",
+  "version": "a47561e0-4382-4b16-a3b8-e95e091a21ed",
+  "cli": "cf 1.0.0-beta.12",
+  "command": "node node_modules/cf/bin/cf deploy --prebuilt --mode production",
+  "baseBuildZipSHA256": "c038498cfcf1a96221eb186a15139a9ace7b376aecca2beb6b2c9c0a7d42fac4",
+  "postBuildChanges": [
+    {
+      "file": "workers/default/assets/_headers",
+      "sha256": "c04e92ccbd94e12be2b9169968c53ac5e50c91f9bb983542b2671bee9cb5eee6",
+      "source": "public/_headers",
+      "reason": "HTML-only no-transform disables injected Cloudflare analytics; code, model and other assets unchanged."
+    }
+  ],
+  "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+  "sourceMatchesVerifiedBuild": true,
+  "checks": {
+    "httpsRootStatus": 200,
+    "wasmStatus": 200,
+    "wasmContentType": "application/wasm",
+    "modelPartsImmutable": true,
+    "browserSecureContext": true,
+    "modelLoadedOnPageMount": false,
+    "analyticsAfterHeaderFix": false,
+    "desktopViewport": [
+      1280,
+      800
+    ],
+    "mobileViewport": [
+      390,
+      844
+    ],
+    "mobileHorizontalOverflow": false,
+    "textDecoderExample": {
+      "input": "... --- ... / --... ...--",
+      "output": "SOS 73"
+    },
+    "hostedWorker": {
+      "passed": true,
+      "checks": 3,
+      "onlySameOriginGets": true,
+      "requestCount": 19,
+      "report": "browser-cwformer-hosted.json"
+    }
+  },
+  "evidence": [
+    "browser-hosting-build.json",
+    "browser-cwformer-parity.json",
+    "browser-cwformer-production.json",
+    "browser-cwformer-hosted.json"
+  ],
+  "thermalPolicy": "Build and all model inference ran on Chonkus. Mac checks were read-only metadata, artifact transfer/deployment, and idle UI/text interaction.",
+  "gitRemoteConfigured": false
+}

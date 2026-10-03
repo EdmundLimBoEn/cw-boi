@@ -9,3 +9,5 @@ dist/
 __pycache__/
 models/
 benchmarks/audio/
+public/ort/
+.cloudflare/

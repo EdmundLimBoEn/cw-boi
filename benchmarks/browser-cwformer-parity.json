@@ -1,0 +1,408 @@
+{
+  "recordedAt": "2026-10-03T02:56:01.870Z",
+  "url": "http://127.0.0.1:5179/scripts/check-browser-cwformer.html",
+  "network": {
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/scripts/check-browser-cwformer.html"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/scripts/check-browser-cwformer"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/@vite/client"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/scripts/check-browser-cwformer.ts"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/@react-refresh"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/node_modules/vite/dist/client/env.mjs"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/node_modules/.vite/deps/onnxruntime-web_wasm.js?v=efa874b4"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/src/cwformer/frontend.ts"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/src/cwformer/runtime.ts"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/node_modules/.vite/deps/chunk-ZPWHCABL.js?v=0fdd6ae6"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/reference.json"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/favicon.ico"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/models/cwformer-v6/manifest.json"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/models/cwformer-v6/model-0-610c03746df8924d.bin"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/models/cwformer-v6/model-1-361670e88939626e.bin"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/models/cwformer-v6/model-2-62aa2ddb5d4d54b3.bin"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/models/cwformer-v6/model-3-b96b0bb6f61a38aa.bin"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/models/cwformer-v6/mel_window.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/models/cwformer-v6/mel_basis.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/clean-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/frontend-80-0.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/mel-80-0.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/frontend-80-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/mel-80-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/frontend-80-2.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/mel-80-2.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/frontend-100-0.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/mel-100-0.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/frontend-100-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/mel-100-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/frontend-100-2.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/mel-100-2.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/frontend-150-0.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/mel-150-0.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/frontend-150-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/mel-150-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/frontend-150-2.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/mel-150-2.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/ort/ort-wasm-simd-threaded.wasm"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/clean-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/human-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/rough-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/chaos-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/noise-1-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/noise-3-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5179/.research/browser-reference/clean-paused-1.f32"
+      }
+    ],
+    "onlySameOriginGets": true
+  },
+  "passed": true,
+  "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+  "pythonRuntimeSHA256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "wasmThreads": 1,
+  "elapsedMilliseconds": 35942.59999999963,
+  "results": [
+    {
+      "check": "frontend/80/0",
+      "samples": 8000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.000002
+    },
+    {
+      "check": "mel/80/0",
+      "samples": 2000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.00003
+    },
+    {
+      "check": "frontend/80/1",
+      "samples": 8000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.000002
+    },
+    {
+      "check": "mel/80/1",
+      "samples": 2000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.00003
+    },
+    {
+      "check": "frontend/80/2",
+      "samples": 8000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.000002
+    },
+    {
+      "check": "mel/80/2",
+      "samples": 2000,
+      "maxAbsoluteError": 9.5367431640625e-7,
+      "rmsError": 1.827962514440545e-7,
+      "tolerance": 0.00003
+    },
+    {
+      "check": "frontend/100/0",
+      "samples": 8000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.000002
+    },
+    {
+      "check": "mel/100/0",
+      "samples": 2000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.00003
+    },
+    {
+      "check": "frontend/100/1",
+      "samples": 8000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.000002
+    },
+    {
+      "check": "mel/100/1",
+      "samples": 2000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.00003
+    },
+    {
+      "check": "frontend/100/2",
+      "samples": 8000,
+      "maxAbsoluteError": 7.275957614183426e-12,
+      "rmsError": 8.134767913360664e-14,
+      "tolerance": 0.000002
+    },
+    {
+      "check": "mel/100/2",
+      "samples": 2000,
+      "maxAbsoluteError": 9.5367431640625e-7,
+      "rmsError": 1.7038180358310775e-7,
+      "tolerance": 0.00003
+    },
+    {
+      "check": "frontend/150/0",
+      "samples": 8000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.000002
+    },
+    {
+      "check": "mel/150/0",
+      "samples": 2000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.00003
+    },
+    {
+      "check": "frontend/150/1",
+      "samples": 8000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.000002
+    },
+    {
+      "check": "mel/150/1",
+      "samples": 2000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.00003
+    },
+    {
+      "check": "frontend/150/2",
+      "samples": 8000,
+      "maxAbsoluteError": 0,
+      "rmsError": 0,
+      "tolerance": 0.000002
+    },
+    {
+      "check": "mel/150/2",
+      "samples": 2000,
+      "maxAbsoluteError": 9.5367431640625e-7,
+      "rmsError": 1.6877569563706484e-7,
+      "tolerance": 0.00003
+    },
+    {
+      "check": "clean-1/4000",
+      "text": "CQ DE JA2NO UR RST 339 NAME PETER K",
+      "chunks": 39,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 2501.9000000003725
+    },
+    {
+      "check": "clean-1/137",
+      "text": "CQ DE JA2NO UR RST 339 NAME PETER K",
+      "chunks": 1131,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 2371.5
+    },
+    {
+      "check": "clean-1/8011",
+      "text": "CQ DE JA2NO UR RST 339 NAME PETER K",
+      "chunks": 20,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 2380.7999999988824
+    },
+    {
+      "check": "clean-1/154908",
+      "text": "CQ DE JA2NO UR RST 339 NAME PETER K",
+      "chunks": 1,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 2376.7999999988824
+    },
+    {
+      "check": "clean-1/137/retune",
+      "text": "",
+      "chunks": 1131,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 2505.199999999255
+    },
+    {
+      "check": "human-1/4000",
+      "text": "CQ DE JA5NZ UR RST 599 NAME JOHN K",
+      "chunks": 50,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 2999
+    },
+    {
+      "check": "rough-1/4000",
+      "text": "CQ DE M8YXR UR RST 599 NAME PETER",
+      "chunks": 56,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 3308.60000000149
+    },
+    {
+      "check": "chaos-1/4000",
+      "text": "CLX LE R2J UR RST 9NAME JOHN K",
+      "chunks": 38,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 2286.2000000011176
+    },
+    {
+      "check": "noise-1-1/4000",
+      "text": "",
+      "chunks": 40,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 2385.300000000745
+    },
+    {
+      "check": "noise-3-1/4000",
+      "text": "",
+      "chunks": 40,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 2402.9000000003725
+    },
+    {
+      "check": "clean-paused-1/4000",
+      "text": "CQ DE N261N X UR RST 579 B3 DE F3EQQ K",
+      "chunks": 161,
+      "exactPythonEmissionParity": true,
+      "elapsedMilliseconds": 8900.800000000745
+    },
+    {
+      "check": "finite-input-validation",
+      "passed": true
+    }
+  ]
+}

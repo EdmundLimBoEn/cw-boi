@@ -1,0 +1,82 @@
+{
+  "recordedAt": "2026-10-03T02:52:56.172Z",
+  "url": "http://127.0.0.1:5180/__checks__/check-browser-cwformer-production.html?worker=/assets/worker-KDxYxdwP.js",
+  "network": {
+    "requests": [
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/__checks__/check-browser-cwformer-production.html?worker=/assets/worker-KDxYxdwP.js"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/__fixtures__/reference.json"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/__fixtures__/clean-1.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/assets/worker-KDxYxdwP.js"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/favicon.ico"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/models/cwformer-v6/manifest.json"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/models/cwformer-v6/model-0-610c03746df8924d.bin"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/models/cwformer-v6/model-1-361670e88939626e.bin"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/models/cwformer-v6/model-2-62aa2ddb5d4d54b3.bin"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/models/cwformer-v6/model-3-b96b0bb6f61a38aa.bin"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/models/cwformer-v6/mel_window.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/models/cwformer-v6/mel_basis.f32"
+      },
+      {
+        "method": "GET",
+        "url": "http://127.0.0.1:5180/ort/ort-wasm-simd-threaded.wasm"
+      }
+    ],
+    "onlySameOriginGets": true
+  },
+  "passed": true,
+  "workerPath": "/assets/worker-KDxYxdwP.js",
+  "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "results": [
+    {
+      "check": "built-worker-live-stream",
+      "text": "CQ DE JA2NO UR RST 339 NAME PETER K",
+      "loadMilliseconds": 1194.5,
+      "decodeMilliseconds": 2604.9000000003725,
+      "audioSeconds": 19.3635,
+      "realTimeFactor": 0.1345262994810015,
+      "exactPythonEmissionParity": true
+    },
+    {
+      "check": "built-worker-file",
+      "text": "CQ DE JA2NO UR RST 339 NAME PETER K",
+      "decodeMilliseconds": 2397.2999999988824,
+      "sourceSamplesPreserved": true
+    }
+  ]
+}

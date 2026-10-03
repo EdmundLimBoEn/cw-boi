@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Production CWformer worker check</title></head>
+<body>Testing the deployed worker bundle…
+<script type="module">
+const query = new URLSearchParams(location.search)
+const workerPath = window.__cwWorker || query.get('worker')
+const results = []
+const assert = (condition, message) => { if (!condition) throw new Error(message) }
+let worker
+async function run() {
+  assert(workerPath?.startsWith('/assets/worker-'), 'Expected a built worker asset path')
+  const reference = window.__cwReference || await (await fetch('/__fixtures__/reference.json')).json()
+  const item = reference.cases.find(item => item.id === 'clean-1')
+  const audio = new Float32Array(window.__cwAudioBase64
+    ? Uint8Array.from(atob(window.__cwAudioBase64), character => character.charCodeAt(0)).buffer
+    : await (await fetch(`/__fixtures__/${item.file}`)).arrayBuffer())
+  const progress = []
+  let onProgress
+  worker = new Worker(workerPath, { type: 'module' })
+  const pending = new Map()
+  let nextId = 1
+  worker.onmessage = ({ data }) => {
+    if (data.type === 'progress') { progress.push(data); onProgress?.(data); return }
+    const task = pending.get(data.id)
+    if (!task) return
+    pending.delete(data.id)
+    if (data.type === 'error') task.reject(new Error(data.message))
+    else task.resolve(data.text)
+  }
+  worker.onerror = event => { for (const task of pending.values()) task.reject(new Error(event.message)); pending.clear() }
+  function request(type, samples) {
+    const id = nextId++
+    return new Promise((resolve, reject) => {
+      pending.set(id, { resolve, reject })
+      const copy = samples?.slice()
+      worker.postMessage({ id, type, frequency: item.frequency, bandwidth: 150, ...(copy ? { samples: copy } : {}) }, copy ? [copy.buffer] : [])
+    })
+  }
+  let started = performance.now()
+  await request('load')
+  const loadMilliseconds = performance.now() - started
+  assert(progress.some(item => item.stage === 'download' && item.loaded > 0), 'No model download progress')
+  assert(progress.some(item => item.stage === 'initialize'), 'No model initialization status')
+  started = performance.now()
+  await request('start')
+  const fragments = []
+  for (let at = 0; at < audio.length; at += 4000) fragments.push(await request('feed', audio.subarray(at, at + 4000)))
+  const tail = await request('finish')
+  const streamMilliseconds = performance.now() - started
+  assert(fragments.join('') + tail === item.reference.text, 'Production stream text differs from Python')
+  assert(JSON.stringify(fragments) === JSON.stringify(item.reference.fragments), 'Production stream emission boundaries differ')
+  assert(await request('finish') === '', 'Second finish emitted text')
+  results.push({ check: 'built-worker-live-stream', text: fragments.join('') + tail, loadMilliseconds, decodeMilliseconds: streamMilliseconds,
+    audioSeconds: audio.length / 8000, realTimeFactor: streamMilliseconds / (audio.length / 8), exactPythonEmissionParity: true })
+  started = performance.now()
+  await request('start')
+  const fileText = await request('feed', audio) + await request('finish')
+  assert(fileText === item.reference.text, 'Production file text differs from Python')
+  assert(progress.some(item => item.stage === 'decode'), 'No file decode progress')
+  results.push({ check: 'built-worker-file', text: fileText, decodeMilliseconds: performance.now() - started, sourceSamplesPreserved: audio.length === item.samples })
+  await request('start')
+  let lateResult = false
+  const advancing = new Promise(resolve => { onProgress = value => { if (value.stage === 'decode' && value.loaded > 0) resolve() } })
+  request('feed', audio).then(() => { lateResult = true }, () => { lateResult = true })
+  await advancing
+  worker.terminate()
+  await new Promise(resolve => setTimeout(resolve, Math.max(streamMilliseconds, 1000) + 500))
+  assert(!lateResult, 'Terminated decoder published a late result')
+  results.push({ check: 'built-worker-cancel-during-inference', firstDecodeProgressObserved: true, lateResult: false })
+  return { passed: true, workerPath, modelSHA256: reference.modelSHA256, browser: navigator.userAgent, results }
+}
+run().then(result => { window.parityResult = result }).catch(error => {
+  window.parityResult = { passed: false, error: error.stack || String(error), results }
+}).finally(() => { worker?.terminate(); window.parityFinished = true; document.body.textContent = JSON.stringify(window.parityResult, null, 2) })
+</script>
+</body>
+</html>

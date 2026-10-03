@@ -10,6 +10,8 @@ Open **[cw-boi.sillyapps.co](https://cw-boi.sillyapps.co)** in a browser with We
 
 Choose **Adaptive signal decoder** for the lighter option: it requires no model download and releases the neural worker. Both decoders, the sender and local recording imports work without sending audio to a server. Processing still uses your device's CPU; Stop halts an active session. Use manual carrier tuning to stay on one station in a crowded band. CWformer starts with a 150 Hz filter; narrower filters are not automatically better.
 
+The home-page sample player offers all six Signal lab conditions, from a clear channel to heavy interference. Choose a signal and select **Play sample** to hear and decode it, adjust listening volume, compare the expected message, or download the same audio as an 8 kHz WAV. Samples require no microphone permission. Select **Use the lightweight Adaptive decoder** to try them without downloading CWformer. **Stop sample** or Escape ends playback; the station’s Stop control stays visible during active sessions.
+
 ## Develop locally
 
 ```sh

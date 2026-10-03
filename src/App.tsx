@@ -8,8 +8,10 @@ import { Spectrum } from './Spectrum'
 import { NEURAL_ENGINE, NeuralStream, cancelNeural, loadNeural, neuralDecode, subscribeModel, type ModelState, type NeuralEngine } from './browser-neural'
 
 const EMPTY: DecoderReading = { text: '', pending: '', frequency: 650, wpm: 20, snr: 0, level: -100, keyed: false, confidence: 0, spectrum: [] }
-const DEMO_TEXT = 'CQ CQ DE CWBOI 73'
 const LAB_TEXT = 'CQ DE 9V1ABC UR RST 579 QTH SINGAPORE K'
+const SAMPLE_RATE = 8000
+const SAMPLE_SEED = 947
+const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`
 type Source = 'idle' | 'mic' | 'loopback' | 'demo' | 'file' | 'key'
 type LabResult = { text: string; cer: number; errors: number; milliseconds: number }
 
@@ -44,6 +46,11 @@ function App() {
   const [playing, setPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
   const [elapsed, setElapsed] = useState(0)
+  const [sampleId, setSampleId] = useState(CHALLENGES[0].id)
+  const [sampleDuration, setSampleDuration] = useState(0)
+  const [sampleElapsed, setSampleElapsed] = useState(0)
+  const sample = CHALLENGES.find(challenge => challenge.id === sampleId) ?? CHALLENGES[0]
+  const sampleAudio = useMemo(() => makeSignal(LAB_TEXT, sample, SAMPLE_SEED, SAMPLE_RATE), [sample])
   const [loopback, setLoopback] = useState(true)
   const [mode, setMode] = useState<'compose' | 'key'>('compose')
   const [armed, setArmed] = useState(false)
@@ -116,6 +123,11 @@ function App() {
     const timer = setInterval(() => setElapsed(Math.max(0, (station.current?.context?.currentTime ?? 0) - startTime.current)), 35)
     return () => clearInterval(timer)
   }, [playing])
+  useEffect(() => {
+    if (source !== 'demo') return
+    const timer = setInterval(() => setSampleElapsed(Math.min(sampleDuration, Math.max(0, (station.current?.context?.currentTime ?? 0) - startTime.current))), 100)
+    return () => clearInterval(timer)
+  }, [source, sampleDuration])
 
   const finishNeural = async () => {
     const stream = neuralStream.current
@@ -203,7 +215,7 @@ function App() {
     if (!plan?.tones.length || plan.unsupported.length) return
     setError(''); setElapsed(0)
     const audio = getAudio()
-    if (armed || loopback) stop()
+    if (armed || loopback || source === 'demo') stop()
     const ticket = operation.current
     setBusy(true)
     try {
@@ -227,19 +239,27 @@ function App() {
     finally { if (ticket === operation.current) setBusy(false) }
   }
 
-  async function playDemo(challenge = CHALLENGES[0], text = DEMO_TEXT) {
+  async function playDemo(challenge = sample) {
     stop(); setError(''); setBusy(true); setReading(EMPTY); setNeuralText(''); setReceiverTab('audio')
+    setSampleId(challenge.id); setSampleElapsed(0)
+    const settings = { ...rx, frequency: challenge.frequency, autoTune: true }
+    changeRx(settings)
     const ticket = operation.current
     try {
       const audio = getAudio()
       await audio.ready()
       if (ticket !== operation.current) return
-      await startNeural({ ...rx, frequency: challenge.frequency })
+      await startNeural(settings)
       if (ticket !== operation.current) return
-      if (!await audio.loopback({ ...rx, frequency: challenge.frequency, autoTune: true })) return
+      if (!await audio.loopback(settings)) return
       if (ticket !== operation.current) return
-      setSource('demo'); setSourceName(challenge.name)
-      await audio.playSamples(makeSignal(text, challenge), 8000, tx.volume, () => { void finishReception(); setSource('idle') })
+      const samples = makeSignal(LAB_TEXT, challenge, SAMPLE_SEED, SAMPLE_RATE)
+      const duration = samples.length / SAMPLE_RATE
+      setSampleDuration(duration); setSourceName(challenge.name)
+      await audio.playSamples(samples, SAMPLE_RATE, tx.volume, () => { setSampleElapsed(duration); void finishReception(); setSource('idle') })
+      if (ticket !== operation.current) { audio.stopSender(); return }
+      startTime.current = audio.context!.currentTime
+      setSource('demo')
     } catch (error) { if (ticket === operation.current) { stop(); setError(audioError(error)) } }
     finally { if (ticket === operation.current) setBusy(false) }
   }
@@ -303,7 +323,7 @@ function App() {
   async function runChallenge(challenge: Challenge) {
     stop(); setError(''); setNeuralText(''); setBusy(true); setProgress(0); setLabRunning(challenge.id); setSourceName(challenge.name); setReading(EMPTY)
     const started = performance.now()
-    const samples = makeSignal(LAB_TEXT, challenge, 947)
+    const samples = makeSignal(LAB_TEXT, challenge, SAMPLE_SEED, SAMPLE_RATE)
     if (engine !== 'adaptive') {
       const controller = new AbortController(); neuralRequest.current = controller
       try {
@@ -345,7 +365,7 @@ function App() {
     </header>
 
     <main>
-      <section className="page-intro"><div><div className="intro-kicker"><span className="status-dot" /> Your personal signal station</div><h1>{view === 'station' ? 'Less noise. More connection.' : 'Good copy is earned.'}</h1><p>{view === 'station' ? 'From a whisper in the static to a perfectly timed reply.' : 'Put the decoder through its paces. See exactly what it gets right.'}</p></div><div className="intro-note"><span className="morse-greeting" aria-hidden="true">−·−·  −−·−</span><span>A little wave goes a long way.</span></div></section>
+      <section className="page-intro"><div><div className="intro-kicker"><span className="status-dot" /> Your personal signal station</div><h1>{view === 'station' ? 'Hear Morse. Read the signal.' : 'Good copy is earned.'}</h1><p>{view === 'station' ? 'Try a sample, decode a recording, or connect your radio. All on your device.' : 'Put the decoder through its paces. See exactly what it gets right.'}</p></div><div className="intro-note"><span className="morse-greeting" aria-hidden="true">−·−·  −−·−</span><span>A little wave goes a long way.</span></div></section>
 
       {error && <div className="error-banner" role="alert"><CircleHelp size={19} /><span>{error}</span><button aria-label="Dismiss error" onClick={() => setError('')}><X size={16} /></button></div>}
 
@@ -353,6 +373,17 @@ function App() {
         <div><strong>{modelLabel}</strong><span>{modelLoading ? modelState.stage === 'download' ? `${((modelState.loaded ?? 0) / 1024 / 1024).toFixed(1)} MB downloaded. You can cancel at any time.` : 'Initializing the decoder. Audio capture starts when it is ready.' : modelState.phase === 'ready' ? 'Runs in your browser. Switch to Adaptive for lower CPU use.' : 'First use downloads about 100 MB. Audio stays here; a modern desktop works best.'}</span>{modelLoading && <progress aria-label="CWformer model download" value={modelState.stage === 'download' && modelState.total ? modelState.loaded : undefined} max={modelState.total || 1} />}</div>
         {modelLoading ? <button className="button secondary" onClick={() => { stop(); cancelNeural() }}>Cancel loading</button> : modelState.phase !== 'ready' ? <button className="button secondary" onClick={() => void prepareModel()}>{modelState.phase === 'error' ? 'Retry model' : 'Load CWformer'}</button> : <button className="button secondary" onClick={() => changeEngine('adaptive')}>Use Adaptive</button>}
       </div>}
+
+      {view === 'station' && <section className="sample-player" aria-labelledby="sample-heading">
+        <div className="sample-intro"><span className="channel-icon rx-icon"><Headphones size={20} /></span><div><h2 id="sample-heading">Take a signal for a spin</h2><p>No microphone needed. Hear a test signal and watch the receiver decode it.</p></div></div>
+        <div className="sample-controls"><div className="sample-choice"><label htmlFor="sample-condition">Sample signal</label><select id="sample-condition" value={sampleId} disabled={busy || modelLoading || source === 'demo'} onChange={event => { setSampleId(event.target.value); setSampleElapsed(0) }}>{CHALLENGES.map(challenge => <option key={challenge.id} value={challenge.id}>{challenge.name}</option>)}</select><p>{sample.description}</p></div>
+          <div className="sample-actions"><button className={`button primary ${source === 'demo' ? 'stop-button' : ''}`} disabled={source !== 'demo' && (busy || modelLoading || neuralBusy)} onClick={() => source === 'demo' ? stop(true) : void playDemo()}>{source === 'demo' ? <Square size={15} fill="currentColor" /> : <Play size={15} fill="currentColor" />}{source === 'demo' ? 'Stop sample' : 'Play sample'}</button><button className="button secondary" title="Download the selected sample as a WAV recording" onClick={() => { download(wavBytes(sampleAudio, SAMPLE_RATE), 'audio/wav', `cw-boi-${sample.id}.wav`); setNotice('Sample WAV downloaded.') }}><ArrowDownToLine size={15} /> WAV</button></div>
+          <div className="sample-volume"><Slider label="Listening volume" value={Math.round(tx.volume * 100)} min={0} max={100} suffix="%" onChange={volume => changeTx({ volume: volume / 100 })} /></div>
+        </div>
+        <div className="sample-track"><progress aria-label="Sample playback" value={sampleElapsed} max={sampleAudio.length / SAMPLE_RATE} /><span>{clock(sampleElapsed)} / {clock(sampleAudio.length / SAMPLE_RATE)}</span><span>{sample.wpm} WPM · {sample.frequency} Hz</span></div>
+        <details className="sample-reference"><summary>Expected message <span>Compare with the receiver’s live copy</span></summary><code>{LAB_TEXT}</code><p>Synthetic audio shared with Signal lab. Difficult conditions may produce incomplete or incorrect copy.</p></details>
+        {engine === 'cwformer' && modelState.phase !== 'ready' && !modelLoading && <p className="sample-hint">Want to try it immediately? <button onClick={() => changeEngine('adaptive')}>Use the lightweight Adaptive decoder</button> to skip the model download.</p>}
+      </section>}
 
       {view === 'station' ? <div className="station-grid">
         <section className="panel receiver-panel" aria-labelledby="receiver-heading">
@@ -370,9 +401,9 @@ function App() {
             {advanced && <div className="advanced-controls"><div className="controls-grid"><Slider label="Filter width" value={rx.bandwidth} min={40} max={300} step={10} suffix="Hz" onChange={bandwidth => changeRx({ bandwidth })} /><Slider disabled={engine !== 'adaptive'} label="Signal gate" value={rx.threshold} min={3} max={18} suffix="dB" onChange={threshold => changeRx({ threshold })} /><Slider disabled={engine !== 'adaptive'} label="Expected speed" value={rx.wpm} min={5} max={60} suffix="WPM" onChange={wpm => changeRx({ wpm, spacing: Math.min(rx.spacing, wpm) })} /><Slider disabled={engine !== 'adaptive'} label="Spacing speed" value={rx.spacing} min={5} max={rx.wpm} suffix="WPM" onChange={spacing => changeRx({ spacing })} /></div><Toggle disabled={engine !== 'adaptive'} checked={rx.autoSpeed} onChange={autoSpeed => changeRx({ autoSpeed })}>Learn the sender’s timing</Toggle><label className="device-picker">Audio input<select value={deviceId} disabled={source === 'mic'} onChange={event => setDeviceId(event.target.value)}><option value="">System default</option>{devices.map(device => <option key={device.deviceId} value={device.deviceId}>{device.label || 'Audio input'}</option>)}</select></label><p>{engine === 'cwformer' ? 'Start with a 150 Hz filter for CWformer; narrower filters can distort the elements. ' : 'Adjust the filter width to reduce nearby interference. '}Turn off auto tune to stay with one station in a crowded band.{engine !== 'adaptive' && ' The acoustic model learns timing itself; gate and speed controls apply to the adaptive decoder.'}</p></div>}
           </div>
 
-          <div className="transcript-section"><div className="engine-row"><span><Activity size={13} /> Decoder</span><select aria-label="Decoder engine" value={engine} onChange={event => changeEngine(event.target.value as 'adaptive' | NeuralEngine)}><option value="adaptive">Adaptive signal decoder</option><option value={NEURAL_ENGINE.engine}>{NEURAL_ENGINE.model}</option></select>{engine !== 'adaptive' && <small>{neuralBusy ? 'Decoding…' : modelState.phase === 'ready' ? 'On device' : 'Loads on first use'}</small>}</div><div className="section-toolbar"><div className="transcript-tabs"><button className={receiverTab === 'audio' ? 'active' : ''} onClick={() => setReceiverTab('audio')}>Live copy</button><button className={receiverTab === 'text' ? 'active' : ''} onClick={() => setReceiverTab('text')}>Morse text</button></div><div className="toolbar-actions"><button className="icon-button" aria-label="Copy transcript" disabled={!displayedText} onClick={() => void copy(displayedText)}><Copy size={14} /></button><button className="icon-button" aria-label="Save transcript" disabled={!displayedText} onClick={() => download(displayedText, 'text/plain', 'cw-boi-transcript.txt')}><ArrowDownToLine size={15} /></button><button className="icon-button" aria-label="Clear transcript" disabled={!displayedText && !reading.pending} onClick={clearTranscript}><RotateCcw size={14} /></button></div></div>
+          <div className="transcript-section"><div className="engine-row"><span><Activity size={13} /> Decoder</span><select aria-label="Decoder engine" value={engine} onChange={event => changeEngine(event.target.value as 'adaptive' | NeuralEngine)}><option value="adaptive">Adaptive signal decoder</option><option value={NEURAL_ENGINE.engine}>{NEURAL_ENGINE.model}</option></select>{engine !== 'adaptive' && <small>{neuralBusy ? 'Decoding…' : modelState.phase === 'ready' ? 'On device' : 'Loads on first use'}</small>}</div><div className="section-toolbar"><div className="transcript-tabs"><button className={receiverTab === 'audio' ? 'active' : ''} onClick={() => setReceiverTab('audio')}>Live copy</button><button className={receiverTab === 'text' ? 'active' : ''} onClick={() => setReceiverTab('text')}>Morse text</button></div><div className="toolbar-actions"><button className="icon-button" title="Copy transcript" aria-label="Copy transcript" disabled={!displayedText} onClick={() => void copy(displayedText)}><Copy size={14} /></button><button className="icon-button" title="Save transcript as text" aria-label="Save transcript" disabled={!displayedText} onClick={() => download(displayedText, 'text/plain', 'cw-boi-transcript.txt')}><ArrowDownToLine size={15} /></button><button className="icon-button" title="Clear transcript and stop reception" aria-label="Clear transcript" disabled={!displayedText && !reading.pending} onClick={clearTranscript}><RotateCcw size={14} /></button></div></div>
             {receiverTab === 'text' && <textarea className="morse-input" aria-label="Morse code to decode" value={morseInput} onChange={event => setMorseInput(event.target.value)} placeholder="... --- ... / .- -...   · Separate letters with spaces and words with /" spellCheck={false} maxLength={10000} />}
-            <div className={`transcript ${displayedText ? 'has-copy' : ''}`} role="log" aria-live="polite" aria-label="Decoded transcript">{displayedText ? <>{displayedText}<span className={active ? 'text-cursor live' : 'text-cursor'} /></> : <div className="empty-transcript"><Waves size={27} strokeWidth={1.3} /><span>{busy ? 'Finding the signal…' : active ? 'Listening for the first dits and dahs…' : 'There’s a conversation in the static.'}</span><small>{active ? engine !== 'adaptive' ? 'Neural decoding uses a few seconds of context.' : 'Decoded characters will appear here.' : 'Connect your audio, or take a sample for a spin.'}</small>{!active && !busy && receiverTab === 'audio' && <button disabled={modelLoading} onClick={() => void playDemo()}><Play size={11} fill="currentColor" /> Try a sample signal <ChevronRight size={13} /></button>}</div>}</div>
+            <div className={`transcript ${displayedText ? 'has-copy' : ''}`} role="log" aria-live="polite" aria-label="Decoded transcript">{displayedText ? <>{displayedText}<span className={active ? 'text-cursor live' : 'text-cursor'} /></> : <div className="empty-transcript"><Waves size={27} strokeWidth={1.3} /><span>{busy ? 'Finding the signal…' : active ? 'Listening for the first dits and dahs…' : 'Your decoded message appears here.'}</span><small>{active ? engine !== 'adaptive' ? 'Neural decoding uses a few seconds of context.' : 'Decoded characters will appear here.' : 'Play a sample above, start listening, or import an audio file.'}</small>{!active && !busy && receiverTab === 'audio' && <button disabled={modelLoading} onClick={() => void playDemo()}><Play size={11} fill="currentColor" /> Try a sample signal <ChevronRight size={13} /></button>}</div>}</div>
             {engine === 'adaptive' && !!reading.alternatives?.length && <details className="copy-alternatives"><summary>Ambiguous timing · other possible copy</summary>{reading.alternatives.map((text, index) => <code key={index}>{text}</code>)}</details>}<div className="transcript-footer"><span className="pending-code">{reading.pending ? reading.pending.replace(/\./g, '·').replace(/-/g, '−') : '· · ·'}<span>{active ? 'Decoding signal' : sourceName ? `Last source: ${sourceName}` : 'Waiting for a signal'}</span></span><span>{displayedText.trim().length} characters</span></div>
           </div>
         </section>
@@ -394,12 +425,12 @@ function App() {
       </div> : <section className="lab-panel">
         <div className="lab-intro"><div className="lab-icon"><FlaskConical size={26} /></div><div><h2>Less guessing. More testing.</h2><p>Six repeatable synthetic conditions, including deliberately brutal ones. Each goes through the same decoder as your microphone. Character error rate counts substitutions, insertions, and deletions.</p></div></div>
         <div className="lab-engine"><label htmlFor="lab-engine">Test decoder</label><select id="lab-engine" value={engine} onChange={event => changeEngine(event.target.value as 'adaptive' | NeuralEngine)}><option value="adaptive">Adaptive signal decoder</option><option value={NEURAL_ENGINE.engine}>{NEURAL_ENGINE.model}</option></select></div><div className="lab-target"><span>Expected copy</span><code>{LAB_TEXT}</code><small>Fixed seed 947 · 8 kHz audio · Known carrier · SNR measured against broadband noise</small></div>
-        <div className="challenge-grid">{CHALLENGES.map((challenge, index) => <article className="challenge" key={challenge.id}><div className="challenge-top"><span className="challenge-wave">{index === 0 ? <Waves /> : index === 1 ? <Activity /> : index === 2 ? <AudioLines /> : <Radio />}</span><span className="challenge-tag">{challenge.wpm} WPM / {challenge.snr > 0 ? '+' : ''}{challenge.snr} dB</span></div><h3>{challenge.name}</h3><p>{challenge.description}</p>{results[challenge.id] ? <div className="lab-result"><strong className={results[challenge.id].cer === 0 ? 'perfect' : ''}>{(results[challenge.id].cer * 100).toFixed(1)}% <span>character error</span></strong><code>{results[challenge.id].text || '(No copy)'}</code><small>{results[challenge.id].errors} edits / {LAB_TEXT.length} characters · {results[challenge.id].milliseconds} ms</small></div> : <div className="lab-result untested"><span>Ready for a fair test.</span><small>No result until you run the decoder.</small></div>}<div className="challenge-actions"><button className="button secondary" disabled={busy || modelLoading || active || playing} onClick={() => runChallenge(challenge)}>{labRunning === challenge.id ? <span className="spinner" /> : <FlaskConical size={14} />}{labRunning === challenge.id ? 'Running…' : 'Run test'}</button><button className="icon-button" disabled={busy || modelLoading || active || playing} aria-label={`Listen to ${challenge.name}`} onClick={() => { void playDemo(challenge, LAB_TEXT); setView('station') }}><Play size={15} /></button></div></article>)}</div>
+        <div className="challenge-grid">{CHALLENGES.map((challenge, index) => <article className="challenge" key={challenge.id}><div className="challenge-top"><span className="challenge-wave">{index === 0 ? <Waves /> : index === 1 ? <Activity /> : index === 2 ? <AudioLines /> : <Radio />}</span><span className="challenge-tag">{challenge.wpm} WPM / {challenge.snr > 0 ? '+' : ''}{challenge.snr} dB</span></div><h3>{challenge.name}</h3><p>{challenge.description}</p>{results[challenge.id] ? <div className="lab-result"><strong className={results[challenge.id].cer === 0 ? 'perfect' : ''}>{(results[challenge.id].cer * 100).toFixed(1)}% <span>character error</span></strong><code>{results[challenge.id].text || '(No copy)'}</code><small>{results[challenge.id].errors} edits / {LAB_TEXT.length} characters · {results[challenge.id].milliseconds} ms</small></div> : <div className="lab-result untested"><span>Ready for a fair test.</span><small>No result until you run the decoder.</small></div>}<div className="challenge-actions"><button className="button secondary" disabled={busy || modelLoading || active || playing} onClick={() => runChallenge(challenge)}>{labRunning === challenge.id ? <span className="spinner" /> : <FlaskConical size={14} />}{labRunning === challenge.id ? 'Running…' : 'Run test'}</button><button className="icon-button" disabled={busy || modelLoading || active || playing} aria-label={`Listen to ${challenge.name}`} onClick={() => { void playDemo(challenge); setView('station') }}><Play size={15} /></button></div></article>)}</div>
         <div className="lab-caveat"><ShieldCheck size={18} /><p>Synthetic results are a regression check, not a claim of real-world accuracy. Real radio comparisons and failure cases are recorded alongside the benchmarks. Unknown symbols appear as <code>�</code>; callsigns are never autocorrected.</p></div>
       </section>}
 
       <div className="station-bottom"><div className="privacy-note"><ShieldCheck size={15} /><span>Your audio stays on this device. No account or audio upload.</span></div><button className="text-button" onClick={() => setHelp(true)}>New to CW? <span>Get your bearings</span><ArrowUpRight size={13} /></button></div>
-      {(source === 'demo' || busy || source === 'key' || neuralBusy) && <div className="session-bar"><span><span className="status-dot" />{busy ? `Working${source === 'file' || labRunning ? ` · ${Math.round(progress * 100)}%` : '…'}` : neuralBusy ? 'Finishing copy…' : source === 'key' ? 'Straight key is enabled' : `Playing ${sourceName.toLowerCase()}`}</span><button onClick={() => stop(true)}><Square size={12} /> Stop</button></div>}
+      {(source !== 'idle' || playing || busy || neuralBusy) && <div className="session-bar"><span><span className="status-dot" />{busy ? `Working${source === 'file' || labRunning ? ` · ${Math.round(progress * 100)}%` : '…'}` : neuralBusy ? 'Finishing copy…' : source === 'key' ? 'Straight key is enabled' : source === 'mic' ? 'Listening to your audio input' : source === 'loopback' || playing ? 'Sending your message' : `Playing ${sourceName.toLowerCase()}`}</span><button onClick={() => stop(true)}><Square size={12} /> Stop</button></div>}
     </main>
 
     <footer className="site-footer"><span>Made for the space between the dits.</span><span className="footer-73">73 <span>—</span> good signals, always.</span><span>cw/boi <span className="version">v1.0</span></span></footer>

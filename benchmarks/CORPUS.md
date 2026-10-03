@@ -104,3 +104,9 @@ This is one transmitter/receiver session, with correlated crops and receiver noi
 ```
 
 The prepared 8 kHz corpus manifest has SHA-256 `89abd7407877fefd17651de4e80a1a7fcf8ac20b4655815bb20f5f5e53d28caf`. Its hash differs from the source annotation because it includes conversion metadata and references the derived float32 audio files. Actual evaluator commands, source and model hashes, original release guards, and all predictions are retained in [the round 2 plan](round2-plan.json), [commands](round2-final-commands.json), and comparison reports.
+
+## Round 3 reserved human session
+
+[Sealed metadata](../neural/corpus-final-v3-sealed.json) reserves five crops, 237 reference characters and 97.662 seconds from [NW6V's straight-key recording](https://archive.org/details/sending_morse_code_sound_recordings). Three fixed envelope thresholds agree on the selected marks and character boundaries; the sender's published text supplies word spacing. Ambiguous boundaries and a sender-error region were excluded before model evaluation. The private annotation has SHA-256 `0f52be1369e8b3777e4c0a80257bd0fca787dd8ce7808aa70a0c0bc7c262bd27`.
+
+This is one new operator/session, with relatively clean local sidetone. It tests human timing, not weak RF reception. The uploader declares CC BY-NC-ND 4.0; audio is kept local, with no redistribution or training use. The entire session remains reserved until a model candidate is frozen and admitted to final evaluation under the [round 3 plan](round3-plan.json).

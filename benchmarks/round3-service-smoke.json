@@ -1,0 +1,46 @@
+{
+  "protocol": "One existing synthetic development recording through Mac Vite proxy -> localhost-only SSH forward -> Chonkus production HTTP service, sequential requests; no local synthesis or model inference. Request timing is diagnostic only.",
+  "case": {
+    "id": "clean-2",
+    "condition": "clean",
+    "expected": "DJTW VTAJ P3QY AKO4 DMQ7",
+    "file": "clean-2.f32",
+    "sha256": "9161a4aa5e8aaa69041c7463ada79b8e47f262607021722fbdcc6edd7d620716",
+    "sampleRate": 8000,
+    "samples": 128061,
+    "durationSeconds": 16.007625,
+    "frequency": 493,
+    "bandwidth": 100,
+    "parameters": {
+      "seed": 1968973831,
+      "leadingSilenceSeconds": 1.240125,
+      "id": "clean",
+      "name": "A clear channel",
+      "description": "A clean, machine-keyed signal. Start here.",
+      "wpm": 23,
+      "frequency": 493,
+      "snr": 30.005206460133195,
+      "jitter": 0,
+      "drift": 0,
+      "fading": 0
+    }
+  },
+  "checks": [
+    {
+      "engine": "cwformer",
+      "bandwidthHz": 150,
+      "expected": "DJTW VTAJ P3QY AKO4 DMQ7",
+      "actual": "DJTW VTAJ P3QY AKO4 DMQ7",
+      "exact": true,
+      "requestSeconds": 0.763
+    },
+    {
+      "engine": "rnnt",
+      "bandwidthHz": 100,
+      "expected": "DJTW VTAJ P3QY AKO4 DMQ7",
+      "actual": "DJTW VTAJ P3QY AKO4 DMQ7",
+      "exact": true,
+      "requestSeconds": 1.112
+    }
+  ]
+}

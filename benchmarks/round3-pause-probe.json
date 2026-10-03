@@ -1,0 +1,209 @@
+{
+  "version": 1,
+  "purpose": "Development diagnosis of interrupted CW decoding; no fresh final data accessed.",
+  "decision": {
+    "status": "rejected",
+    "reason": "Removing repeated token-quiet cache resets reduced interrupted errors by 4.47%, below the preregistered 10% relative improvement target. Production unchanged.",
+    "gainHold": "Diagnostic only. Freezing gain can suppress later weaker stations and was never proposed for production.",
+    "incompleteChecks": "Standard development and consumed 34-case pause regressions were terminated before completion after the user reported excessive Mac heat. No claim of passing those checks."
+  },
+  "provenance": {
+    "model": "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+    "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+    "baselineRuntimeSHA256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5",
+    "noResetRuntimeSHA256": "fe433e3c322010f2154b57d650a9d0de65c7f78f8fce6215bb47d022240dc775",
+    "manifest": ".research/round3-interrupted-dev/manifest.json",
+    "manifestSHA256": "49bc6dd6de73f05c2660cee4a0e9fcb879534e76672ae006e1efa0546dd66b27",
+    "benchmarkSHA256": "b49a717c1e07e467d572bcfe4b842a0997e28dd92b1b47af38e00ae9ceafd520",
+    "onnxruntimeVersion": "1.30.0",
+    "provider": "CPUExecutionProvider",
+    "bandwidthHz": 150,
+    "sources": [
+      {
+        "file": ".research/round3-pause/diagnose.py",
+        "sha256": "051ac3791d749f1c01e4287e65d91873b5aacac15ada711044ca143e9fa175c5"
+      },
+      {
+        "file": ".research/round3-pause/diagnosis.json",
+        "sha256": "d468e8e71ac33edd8028f69dc709a34ea3332a84945f585491ee2231b90ab601"
+      },
+      {
+        "file": ".research/round3-pause/no-reset-interrupted.json",
+        "sha256": "49a0e68f5ed8e930e0c580ff06511869b986cad79a6cef09afc7a313443a243a"
+      }
+    ]
+  },
+  "rootCauses": {
+    "cacheReset": "The token-quiet counter can reach the reset threshold after physical marks have resumed but before any character is emitted. Three clean cases reset during the first marks of a new burst, discarding partial symbol context.",
+    "gain": "During long pauses, decaying peak normalization raises continuing receiver noise to substantial model-input amplitude. Holding gain isolates this effect, but is not suitable as a general fix."
+  },
+  "cleanDiagnosis": {
+    "cases": 6,
+    "variantErrors": {
+      "baseline": 12,
+      "no_reset": 3,
+      "hold_gain": 6,
+      "hold_no_reset": 0
+    },
+    "casesDetail": [
+      {
+        "id": "clean-paused-1",
+        "expected": "CQ DE N261N UR RST 579 73 DE F3EQQ K",
+        "variants": {
+          "baseline": {
+            "actual": "CQ DE N261N X UR RST 579 B3 DE F3EQQ K",
+            "errors": 3
+          },
+          "no_reset": {
+            "actual": "CQ DE N261N UR RST 579 73 DE F3EQQ K",
+            "errors": 0
+          },
+          "hold_gain": {
+            "actual": "CQ DE N261N UR RST 579 B3 DE F3EQQ K",
+            "errors": 1
+          },
+          "hold_no_reset": {
+            "actual": "CQ DE N261N UR RST 579 73 DE F3EQQ K",
+            "errors": 0
+          }
+        }
+      },
+      {
+        "id": "clean-paused-2",
+        "expected": "NHNY 8NXQ 6XSH F58O SGMC KWO6",
+        "variants": {
+          "baseline": {
+            "actual": "NHNY 8NXQ 6XSH F58O Q SGMC KWO6",
+            "errors": 2
+          },
+          "no_reset": {
+            "actual": "NHNY 8NXQ 6XSH F58O Q SGMC KWO6",
+            "errors": 2
+          },
+          "hold_gain": {
+            "actual": "NHNY 8NXQ 6XSH F58O SGMC KWO6",
+            "errors": 0
+          },
+          "hold_no_reset": {
+            "actual": "NHNY 8NXQ 6XSH F58O SGMC KWO6",
+            "errors": 0
+          }
+        }
+      },
+      {
+        "id": "clean-paused-3",
+        "expected": "RAIN WATER EARLY NORTH RAIN WIND",
+        "variants": {
+          "baseline": {
+            "actual": "RAIN WATER RLY NORTH D RAIN WIND",
+            "errors": 4
+          },
+          "no_reset": {
+            "actual": "RAIN WATER ARLY NORTH RAIN WIND",
+            "errors": 1
+          },
+          "hold_gain": {
+            "actual": "RAIN WATER RLY NORTH NAIN WIND",
+            "errors": 3
+          },
+          "hold_no_reset": {
+            "actual": "RAIN WATER EARLY NORTH RAIN WIND",
+            "errors": 0
+          }
+        }
+      },
+      {
+        "id": "clean-paused-4",
+        "expected": "CQ DE G0E4H UR RST 339 73 DE DL8526 K",
+        "variants": {
+          "baseline": {
+            "actual": "CQ DE G0E4H UR RST 339 73 DE DL8526 K",
+            "errors": 0
+          },
+          "no_reset": {
+            "actual": "CQ DE G0E4H UR RST 339 73 DE DL8526 K",
+            "errors": 0
+          },
+          "hold_gain": {
+            "actual": "CQ DE G0E4H UR RST 339 73 DE DL8526 K",
+            "errors": 0
+          },
+          "hold_no_reset": {
+            "actual": "CQ DE G0E4H UR RST 339 73 DE DL8526 K",
+            "errors": 0
+          }
+        }
+      },
+      {
+        "id": "clean-paused-5",
+        "expected": "9HFO DPB6 IW7L C32O CW3C 0E0I",
+        "variants": {
+          "baseline": {
+            "actual": "9HFO DPB6 IW7L C32O RW3C 0E0I",
+            "errors": 1
+          },
+          "no_reset": {
+            "actual": "9HFO DPB6 IW7L C32O CW3C 0E0I",
+            "errors": 0
+          },
+          "hold_gain": {
+            "actual": "9HFO DPB6 IW7L C32O RW3C 0E0I",
+            "errors": 1
+          },
+          "hold_no_reset": {
+            "actual": "9HFO DPB6 IW7L C32O CW3C 0E0I",
+            "errors": 0
+          }
+        }
+      },
+      {
+        "id": "clean-paused-6",
+        "expected": "WIND WATER RIVER RAIN NIGHT NIGHT",
+        "variants": {
+          "baseline": {
+            "actual": "WIND WATER K RIVER RAIN NIGHT NIGHT",
+            "errors": 2
+          },
+          "no_reset": {
+            "actual": "WIND WATER RIVER RAIN NIGHT NIGHT",
+            "errors": 0
+          },
+          "hold_gain": {
+            "actual": "WIND WATER IVER RAIN NIGHT NIGHT",
+            "errors": 1
+          },
+          "hold_no_reset": {
+            "actual": "WIND WATER RIVER RAIN NIGHT NIGHT",
+            "errors": 0
+          }
+        }
+      }
+    ]
+  },
+  "interruptedNoReset": {
+    "characters": 596,
+    "baselineErrors": 246,
+    "candidateErrors": 235,
+    "relativeErrorReduction": 0.04471544715447151,
+    "baselinePauseFalseCharacters": 18,
+    "candidatePauseFalseCharacters": 2,
+    "pauseScoredSeconds": 613.0,
+    "conditions": {
+      "clean-paused": {
+        "characters": 196,
+        "baselineErrors": 12,
+        "candidateErrors": 3
+      },
+      "crowded-paused": {
+        "characters": 200,
+        "baselineErrors": 112,
+        "candidateErrors": 114
+      },
+      "weak-paused": {
+        "characters": 200,
+        "baselineErrors": 122,
+        "candidateErrors": 118
+      }
+    }
+  }
+}

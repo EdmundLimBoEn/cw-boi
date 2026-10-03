@@ -1,0 +1,46 @@
+{
+  "method": "Preregistered descriptive 10000 paired whole-clip bootstrap resamples stratified by condition; seed7341;95percentile interval. Fixed messages, fresh waveform parameters. Does not alter the frozen gates.",
+  "paths": {
+    "file": {
+      "cases": 32,
+      "characters": 696,
+      "baselineErrors": 452,
+      "candidateErrors": 0,
+      "baselineCER": 0.6494252873563219,
+      "candidateCER": 0.0,
+      "deltaCER": -0.6494252873563219,
+      "absoluteReduction": 0.6494252873563219,
+      "relativeReduction": 1.0,
+      "pairedDeltaCER95PercentileInterval": [
+        -0.6925287356321839,
+        -0.5876436781609196
+      ]
+    },
+    "live": {
+      "cases": 36,
+      "characters": 760,
+      "baselineErrors": 430,
+      "candidateErrors": 2,
+      "baselineCER": 0.5657894736842105,
+      "candidateCER": 0.002631578947368421,
+      "deltaCER": -0.5631578947368421,
+      "absoluteReduction": 0.5631578947368421,
+      "relativeReduction": 0.9953488372093023,
+      "pairedDeltaCER95PercentileInterval": [
+        -0.6013157894736842,
+        -0.506578947368421
+      ]
+    }
+  },
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "torch": "2.8.0+cu128",
+    "onnxruntime": "1.30.0",
+    "morseformer": "0.6.4"
+  },
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "limitedWrapperSHA256": "d1e4d826597f3fa419de30e6271ac5fc33e60d56e84b472efeb02e3704eac154",
+  "comparisonScriptSHA256": "395be264b1ee23ad6f19bc1748e9f98eba4c4f2cac1947c20c6a80516d275557"
+}

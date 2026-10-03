@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "split": "real-holdout",
+  "manifest": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-noise\\data\\real-final\\manifest.json",
+  "manifestSHA256": "87a9dba85b642a46ea366ebe42db52ca6a9789f03c7f137446198bd1a47ecb0c",
+  "model": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-noise\\models\\control\\step-1000\\cwformer_streaming_fp32.onnx",
+  "modelSHA256": "19940783f9e2cb47125d3ea07bde768aeb9639f40f7534c479efe424c219d073",
+  "decoderSHA256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5",
+  "benchmarkSHA256": "b49a717c1e07e467d572bcfe4b842a0997e28dd92b1b47af38e00ae9ceafd520",
+  "onnxruntimeVersion": "1.30.0",
+  "provider": "CPUExecutionProvider",
+  "knownCarrier": true,
+  "bandwidth": 150.0,
+  "complete": true,
+  "results": [
+    {
+      "id": "marine-electric-nmf-callsign",
+      "condition": "real-hand-keyed",
+      "expected": "DE NMF NMF ? K",
+      "actual": "QMFGPA2K",
+      "errors": 11,
+      "durationSeconds": 9.65,
+      "inferenceSeconds": 0.4700236999997287
+    },
+    {
+      "id": "marine-electric-wooh-distress",
+      "condition": "real-hand-keyed",
+      "expected": "DOWN BY HEAD AT 0800GMT",
+      "actual": "DOWN BY HEAD AT 0800GMT",
+      "errors": 0,
+      "durationSeconds": 20.75,
+      "inferenceSeconds": 1.0071514000001116
+    }
+  ],
+  "aggregate": {
+    "cases": 2,
+    "speechCases": 2,
+    "characters": 37,
+    "errors": 11,
+    "cer": 0.2972972972972973,
+    "exact": 1,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 30.4,
+    "inferenceSeconds": 1.4771750999998403
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 37,
+      "errors": 11,
+      "cer": 0.2972972972972973,
+      "exact": 1,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 30.4,
+      "inferenceSeconds": 1.4771750999998403
+    }
+  }
+}

@@ -241,14 +241,14 @@ export class CWDecoder {
     const radius = Math.max(1, Math.floor(this.settings.bandwidth / (2 * hz)))
     const localPower = Math.max(...power.slice(Math.max(1, targetBin - radius), targetBin + radius + 1))
     this.lastSnr = clamp(10 * Math.log10(Math.max(1e-12, localPower) / background), 0, 60)
-    if (!this.settings.autoTune || prominence < this.settings.threshold + 7 || power[peakBin] < 1e-8) return
+    if (!this.settings.autoTune || prominence < this.settings.threshold + 7) return
     const l = Math.log(Math.max(power[peakBin - 1], 1e-15)), m = Math.log(Math.max(power[peakBin], 1e-15)), r = Math.log(Math.max(power[peakBin + 1], 1e-15))
     const delta = clamp(0.5 * (l - r) / (l - 2 * m + r || 1), -0.5, 0.5)
     const candidate = (peakBin + delta) * hz
     if (Math.abs(candidate - this.scanCandidate) < 35) this.scanCount++
     else { this.scanCandidate = candidate; this.scanCount = 1 }
     const close = Math.abs(candidate - this.frequency) < this.settings.bandwidth / 2
-    if (close || (this.scanCount >= 2 && (!this.keyed || time - this.lastMark > 1))) {
+    if (close || (this.scanCount >= 2 && time > this.carrierUntil && (!this.keyed || time - this.lastMark > 1))) {
       this.frequency = close ? this.frequency * 0.65 + candidate * 0.35 : candidate
     }
   }
@@ -268,7 +268,7 @@ export class CWDecoder {
         carrier = (peakBin + clamp(0.5 * (l - r) / (l - 2 * m + r || 1), -0.5, 0.5)) * hz
       }
     }
-    if (this.settings.autoTune && strongest > 1e-8) this.frequency = carrier
+    if (this.settings.autoTune && strongest > 0) this.frequency = carrier
     this.carrierNoise = Math.max(1e-10, median(frames.map(power => localNoise(power, Math.round(this.frequency / hz)))) * n / (6 * Math.LN2) * (1 - Math.exp(-Math.PI * this.settings.bandwidth / this.sampleRate)))
     this.noise = Math.max(1e-10, median(frames.map(power => localNoise(power, Math.round(this.frequency / hz), false))) * n / (6 * Math.LN2) * (1 - Math.exp(-Math.PI * this.settings.bandwidth / this.sampleRate)))
   }

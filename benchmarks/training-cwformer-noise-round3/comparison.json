@@ -1,0 +1,344 @@
+{
+  "experiment": "matched Gaussian chaos-noise SNR continuation",
+  "complete": true,
+  "promoted": false,
+  "selectedCheckpoint": null,
+  "decision": "Reject all six checkpoints on preregistered standard-development gates. Keep deployed v6; do not generate or consume reserved model-final corpora. Best treatment improves primary errors from 132 to 126 (4.55%, below 10%) and increases noise false characters from 1 to 2.",
+  "shortCircuit": "Full interrupted/consumed-real checks completed for control step 1,000 before switching to standard-first rejection. Remaining rejected checkpoints intentionally skip these checks.",
+  "reports": [
+    "hard-noise-1000-round3-dev.json",
+    "control-1000-round3-interrupted-dev.json",
+    "hard-noise-2000-round3-dev.json",
+    "control-3000-round3-dev.json",
+    "control-1000-round2-real-final.json",
+    "baseline-v6-round3-interrupted-dev.json",
+    "control-1000-real-dev-v2.json",
+    "control-1000-real-curated.json",
+    "baseline-v6-real-dev-v2.json",
+    "baseline-v6-round2-real-final.json",
+    "baseline-v6-real-final.json",
+    "control-1000-real-final.json",
+    "control-2000-round3-dev.json",
+    "hard-noise-3000-round3-dev.json",
+    "baseline-v6-real-curated.json",
+    "baseline-v6-round3-dev.json",
+    "control-1000-round3-dev.json"
+  ],
+  "candidates": [
+    {
+      "name": "baseline-v6",
+      "status": "REFERENCE",
+      "metrics": {
+        "standard": {
+          "errors": 134,
+          "characters": 1459,
+          "cer": 0.09184372858122002
+        },
+        "interrupted": {
+          "errors": 246,
+          "characters": 596,
+          "cer": 0.412751677852349
+        },
+        "roughChaos": {
+          "errors": 132,
+          "characters": 455,
+          "cer": 0.29010989010989013
+        },
+        "noiseFalse": 1,
+        "noiseSeconds": 240.0,
+        "pauseFalse": 18,
+        "consumedReal": {
+          "errors": 41,
+          "characters": 947,
+          "exceeds41": false
+        }
+      },
+      "guards": {
+        "roughChaosRelative": false,
+        "roughChaosAbsolute": false,
+        "standardCER": true,
+        "interruptedCER": true,
+        "noise": true,
+        "pause": true,
+        "clean": true,
+        "human": true,
+        "fading": true,
+        "crowded": true,
+        "rough": true,
+        "chaos": true
+      },
+      "issues": {}
+    },
+    {
+      "name": "control-1000",
+      "status": "EARLY_REJECTED",
+      "metrics": {
+        "standard": {
+          "errors": 136,
+          "characters": 1459,
+          "cer": 0.0932145305003427
+        },
+        "interrupted": {
+          "errors": 233,
+          "characters": 596,
+          "cer": 0.39093959731543626
+        },
+        "roughChaos": {
+          "errors": 134,
+          "characters": 455,
+          "cer": 0.2945054945054945
+        },
+        "noiseFalse": 0,
+        "noiseSeconds": 240.0,
+        "pauseFalse": 17,
+        "consumedReal": {
+          "errors": 38,
+          "characters": 947,
+          "exceeds41": false
+        }
+      },
+      "guards": {
+        "roughChaosRelative": false,
+        "roughChaosAbsolute": false,
+        "standardCER": true,
+        "interruptedCER": true,
+        "noise": true,
+        "pause": true,
+        "clean": true,
+        "human": true,
+        "fading": true,
+        "crowded": true,
+        "rough": true,
+        "chaos": true
+      },
+      "issues": {}
+    },
+    {
+      "name": "control-2000",
+      "status": "EARLY_REJECTED",
+      "metrics": {
+        "standard": {
+          "errors": 136,
+          "characters": 1459,
+          "cer": 0.0932145305003427
+        },
+        "roughChaos": {
+          "errors": 132,
+          "characters": 455,
+          "cer": 0.29010989010989013
+        },
+        "noiseFalse": 2,
+        "noiseSeconds": 240.0
+      },
+      "guards": {
+        "roughChaosRelative": false,
+        "roughChaosAbsolute": false,
+        "standardCER": true,
+        "interruptedCER": null,
+        "noise": false,
+        "pause": null,
+        "clean": true,
+        "human": true,
+        "fading": true,
+        "crowded": true,
+        "rough": true,
+        "chaos": true
+      },
+      "issues": {
+        "round3-interrupted-dev": "not run; rejected by standard development guards",
+        "real-dev-v2": "not run; rejected by standard development guards",
+        "real-curated": "not run; rejected by standard development guards",
+        "real-final": "not run; rejected by standard development guards",
+        "round2-real-final": "not run; rejected by standard development guards"
+      }
+    },
+    {
+      "name": "control-3000",
+      "status": "EARLY_REJECTED",
+      "metrics": {
+        "standard": {
+          "errors": 129,
+          "characters": 1459,
+          "cer": 0.0884167237834133
+        },
+        "roughChaos": {
+          "errors": 127,
+          "characters": 455,
+          "cer": 0.27912087912087913
+        },
+        "noiseFalse": 2,
+        "noiseSeconds": 240.0
+      },
+      "guards": {
+        "roughChaosRelative": false,
+        "roughChaosAbsolute": true,
+        "standardCER": true,
+        "interruptedCER": null,
+        "noise": false,
+        "pause": null,
+        "clean": true,
+        "human": true,
+        "fading": true,
+        "crowded": true,
+        "rough": true,
+        "chaos": true
+      },
+      "issues": {
+        "round3-interrupted-dev": "not run; rejected by standard development guards",
+        "real-dev-v2": "not run; rejected by standard development guards",
+        "real-curated": "not run; rejected by standard development guards",
+        "real-final": "not run; rejected by standard development guards",
+        "round2-real-final": "not run; rejected by standard development guards"
+      }
+    },
+    {
+      "name": "hard-noise-1000",
+      "status": "EARLY_REJECTED",
+      "metrics": {
+        "standard": {
+          "errors": 133,
+          "characters": 1459,
+          "cer": 0.09115832762165867
+        },
+        "roughChaos": {
+          "errors": 132,
+          "characters": 455,
+          "cer": 0.29010989010989013
+        },
+        "noiseFalse": 0,
+        "noiseSeconds": 240.0
+      },
+      "guards": {
+        "roughChaosRelative": false,
+        "roughChaosAbsolute": false,
+        "standardCER": true,
+        "interruptedCER": null,
+        "noise": true,
+        "pause": null,
+        "clean": true,
+        "human": true,
+        "fading": true,
+        "crowded": true,
+        "rough": true,
+        "chaos": true
+      },
+      "issues": {
+        "round3-interrupted-dev": "not run; rejected by standard development guards",
+        "real-dev-v2": "not run; rejected by standard development guards",
+        "real-curated": "not run; rejected by standard development guards",
+        "real-final": "not run; rejected by standard development guards",
+        "round2-real-final": "not run; rejected by standard development guards"
+      }
+    },
+    {
+      "name": "hard-noise-2000",
+      "status": "EARLY_REJECTED",
+      "metrics": {
+        "standard": {
+          "errors": 129,
+          "characters": 1459,
+          "cer": 0.0884167237834133
+        },
+        "roughChaos": {
+          "errors": 127,
+          "characters": 455,
+          "cer": 0.27912087912087913
+        },
+        "noiseFalse": 4,
+        "noiseSeconds": 240.0
+      },
+      "guards": {
+        "roughChaosRelative": false,
+        "roughChaosAbsolute": true,
+        "standardCER": true,
+        "interruptedCER": null,
+        "noise": false,
+        "pause": null,
+        "clean": true,
+        "human": true,
+        "fading": true,
+        "crowded": true,
+        "rough": true,
+        "chaos": true
+      },
+      "issues": {
+        "round3-interrupted-dev": "not run; rejected by standard development guards",
+        "real-dev-v2": "not run; rejected by standard development guards",
+        "real-curated": "not run; rejected by standard development guards",
+        "real-final": "not run; rejected by standard development guards",
+        "round2-real-final": "not run; rejected by standard development guards"
+      }
+    },
+    {
+      "name": "hard-noise-3000",
+      "status": "EARLY_REJECTED",
+      "metrics": {
+        "standard": {
+          "errors": 128,
+          "characters": 1459,
+          "cer": 0.08773132282385196
+        },
+        "roughChaos": {
+          "errors": 126,
+          "characters": 455,
+          "cer": 0.27692307692307694
+        },
+        "noiseFalse": 2,
+        "noiseSeconds": 240.0
+      },
+      "guards": {
+        "roughChaosRelative": false,
+        "roughChaosAbsolute": true,
+        "standardCER": true,
+        "interruptedCER": null,
+        "noise": false,
+        "pause": null,
+        "clean": true,
+        "human": true,
+        "fading": true,
+        "crowded": true,
+        "rough": true,
+        "chaos": true
+      },
+      "issues": {
+        "round3-interrupted-dev": "not run; rejected by standard development guards",
+        "real-dev-v2": "not run; rejected by standard development guards",
+        "real-curated": "not run; rejected by standard development guards",
+        "real-final": "not run; rejected by standard development guards",
+        "round2-real-final": "not run; rejected by standard development guards"
+      }
+    }
+  ],
+  "exports": [
+    {
+      "name": "export-control-1000",
+      "maxAbsoluteLogProbabilityDifference": 5e-05,
+      "positionOffsetSensitivity": 5.805516
+    },
+    {
+      "name": "export-control-2000",
+      "maxAbsoluteLogProbabilityDifference": 1.5e-05,
+      "positionOffsetSensitivity": 1.569206
+    },
+    {
+      "name": "export-control-3000",
+      "maxAbsoluteLogProbabilityDifference": 1.9e-05,
+      "positionOffsetSensitivity": 3.091618
+    },
+    {
+      "name": "export-hard-noise-1000",
+      "maxAbsoluteLogProbabilityDifference": 1.3e-05,
+      "positionOffsetSensitivity": 1.158268
+    },
+    {
+      "name": "export-hard-noise-2000",
+      "maxAbsoluteLogProbabilityDifference": 1.3e-05,
+      "positionOffsetSensitivity": 1.536161
+    },
+    {
+      "name": "export-hard-noise-3000",
+      "maxAbsoluteLogProbabilityDifference": 1.9e-05,
+      "positionOffsetSensitivity": 6.721254
+    }
+  ]
+}

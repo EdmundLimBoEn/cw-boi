@@ -1,6 +1,8 @@
 # Measured results
 
-**Current: [October 3 results and reproduction](ROUND2_RESULTS.md).** CWformer v6 passed all seven release guards against both CWformer v4 and RNN-T v1 and is now the recommended installed neural model. The [deployment record](round2-deployment.json) identifies the exact artifact and post-evaluation path-only wiring change. The adaptive proposal was rejected and archived; its deployed source remains `87ced16`.
+**Current: [October 3 acquisition fixes and thermal offload](ROUND3_RESULTS.md).** The shared scanner now acquires quiet carriers and retains an established station through key-up gaps; all 16 final integration gates pass. Neural inference runs on Chonkus through SSH. Additional noise training, CTC beam decoding and a pause-reset proposal were rejected on development evidence, so CWformer v6 remains the recommended model.
+
+The preceding [model release evaluation](ROUND2_RESULTS.md) remains the evidence for v6 versus CWformer v4 and RNN-T v1. Its [deployment record](round2-deployment.json) identifies the selected artifact. The round 2 adaptive timing proposal remains rejected; round 3 changes only shared carrier acquisition, not that archived timing proposal.
 
 ## Historical: October 2 release
 

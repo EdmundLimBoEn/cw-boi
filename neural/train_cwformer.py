@@ -56,9 +56,10 @@ def prepare(waveform, frequency=600, bandwidth=150, frontend='legacy'):
 
 
 class Data(Dataset):
-    def __init__(self, count, seed, noise_paths, frontend='legacy', short_gap_fraction=0, element_gap_range=(.25, 1)):
+    def __init__(self, count, seed, noise_paths, frontend='legacy', short_gap_fraction=0, element_gap_range=(.25, 1), chaos_snr_offset=0):
         self.count, self.seed = count, seed
         self.frontend = frontend
+        self.chaos_snr_offset = chaos_snr_offset
         self.short_gap_fraction, self.element_gap_range = short_gap_fraction, element_gap_range
         self.backgrounds = []
         for path in noise_paths:
@@ -87,7 +88,8 @@ class Data(Dataset):
                          if family != 'noise' and weighting_rng.random() < self.short_gap_fraction else 1)
             waveform, label = synth.case(
                 self.seed + index * 17 + part, family, punctuation=True,
-                continuous=False, background=background, return_audio=True, element_gap_scale=gap_scale)
+                continuous=False, background=background, return_audio=True, element_gap_scale=gap_scale,
+                chaos_snr_offset=self.chaos_snr_offset)
             waveforms.append(waveform)
             labels.append(label)
         joined = np.zeros(112000, np.float32)
@@ -165,6 +167,8 @@ def main():
     parser.add_argument('--save-every', type=int, default=200)
     parser.add_argument('--short-gap-fraction', type=float, default=0)
     parser.add_argument('--element-gap-range', type=float, nargs=2, default=[.25, 1], metavar=('MIN', 'MAX'))
+    parser.add_argument('--chaos-snr-offset', type=float, default=0,
+                        help='Gaussian chaos-noise SNR adjustment (-12 to 0 dB); recorded interference keeps its original level.')
     parser.add_argument('--noise-recording', action='append', default=[])
     args = parser.parse_args()
     if args.check:
@@ -174,6 +178,8 @@ def main():
         parser.error('steps and batch must be positive; workers nonnegative; learning rate between zero and one')
     if not 0 <= args.short_gap_fraction <= 1 or not .1 <= args.element_gap_range[0] <= args.element_gap_range[1] <= 1:
         parser.error('short-gap fraction must be 0–1; element-gap range must satisfy 0.1 <= MIN <= MAX <= 1')
+    if not -12 <= args.chaos_snr_offset <= 0:
+        parser.error('chaos SNR offset must be between -12 and 0 dB')
     torch.manual_seed(args.seed)
     torch.set_num_threads(4)
     model, saved_config = load(args.checkpoint, args.device)
@@ -189,7 +195,7 @@ def main():
         'initialCheckpointSHA256': hashlib.sha256(Path(args.checkpoint).read_bytes()).hexdigest()}
     (output / 'run.json').write_text(json.dumps(metadata, indent=2) + '\n')
     batches = DataLoader(Data(args.steps * args.batch, args.seed, args.noise_recording, args.frontend,
-                             args.short_gap_fraction, args.element_gap_range),
+                             args.short_gap_fraction, args.element_gap_range, args.chaos_snr_offset),
                          batch_size=args.batch, num_workers=args.workers, collate_fn=collate)
     started, running_loss = time.monotonic(), 0
     for step, (audio, targets, target_lengths) in enumerate(batches, 1):

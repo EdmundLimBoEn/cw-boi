@@ -1,0 +1,100 @@
+{
+  "experiment": "matched Gaussian chaos-noise SNR continuation",
+  "control": {
+    "check": false,
+    "checkpoint": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\weighted-ablation\\models\\adapt-weighted-v6\\step-2000.pt",
+    "output": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-noise\\models\\control",
+    "steps": 3000,
+    "batch": 4,
+    "seed": 8733911,
+    "device": "cuda",
+    "workers": 2,
+    "lr": 1e-05,
+    "frontend": "legacy",
+    "save_every": 1000,
+    "short_gap_fraction": 0.4,
+    "element_gap_range": [
+      0.25,
+      1.0
+    ],
+    "chaos_snr_offset": 0.0,
+    "noise_recording": [
+      "noise\\noise_20m_day.wav",
+      "noise\\noise_20m_night.wav"
+    ],
+    "upstreamRevision": "ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70",
+    "torch": "2.8.0+cu128",
+    "sourceSHA256": "ba93720b47f0d07befbc6a199632b59fbcb5c07d422b919cd7247f3e42a83e43",
+    "frontendSHA256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5",
+    "generatorSHA256": "806440ddbc65035ab82a25bf2cd5e190d8108025d05c72135c4fc31689086d63",
+    "initialCheckpointSHA256": "27ea2c00d8aa9ab3033d6475990a6248d411b0f9aaee46a7388094f7b85808bd"
+  },
+  "treatment": {
+    "check": false,
+    "checkpoint": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\weighted-ablation\\models\\adapt-weighted-v6\\step-2000.pt",
+    "output": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-noise\\models\\hard-noise",
+    "steps": 3000,
+    "batch": 4,
+    "seed": 8733911,
+    "device": "cuda",
+    "workers": 2,
+    "lr": 1e-05,
+    "frontend": "legacy",
+    "save_every": 1000,
+    "short_gap_fraction": 0.4,
+    "element_gap_range": [
+      0.25,
+      1.0
+    ],
+    "chaos_snr_offset": -3.0,
+    "noise_recording": [
+      "noise/noise_20m_day.wav",
+      "noise/noise_20m_night.wav"
+    ],
+    "upstreamRevision": "ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70",
+    "torch": "2.8.0+cu128",
+    "sourceSHA256": "ba93720b47f0d07befbc6a199632b59fbcb5c07d422b919cd7247f3e42a83e43",
+    "frontendSHA256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5",
+    "generatorSHA256": "806440ddbc65035ab82a25bf2cd5e190d8108025d05c72135c4fc31689086d63",
+    "initialCheckpointSHA256": "27ea2c00d8aa9ab3033d6475990a6248d411b0f9aaee46a7388094f7b85808bd"
+  },
+  "trainingExecution": [
+    {
+      "exitCode": null,
+      "condition": "control",
+      "startedUTC": "2026-10-03T01:22:35.3098408Z",
+      "elapsedSeconds": 259.48477349999996,
+      "pid": 4280,
+      "timeBudgetSeconds": 900,
+      "stepBudget": 3000,
+      "completion": "Checkpoint validated at step3000; Windows Process.ExitCode was unavailable."
+    },
+    {
+      "condition": "hard-noise",
+      "elapsedSeconds": 276.5,
+      "exitCode": 0,
+      "stepBudget": 3000,
+      "timeBudgetSeconds": 900
+    }
+  ],
+  "checkpoints": [
+    1000,
+    2000,
+    3000
+  ],
+  "diagnosis": "../round3-model-diagnosis.json",
+  "treatmentScope": "Only Gaussian background on chaos-family segments changes by -3dB. Segments using recorded backgrounds retain original amplitude; every other waveform RNG draw, family selection and label is unchanged. Same seed, initialization, optimizer and short-gap mixture in both runs.",
+  "executionPolicy": "RTX 3080 training, two 3,000-step runs only, each limited to 900 seconds. The cap tests one measured hypothesis with a matched control without extending the search after observing scores. ONNX exports and checkpoint evaluations run sequentially on Chonkus. An explicit wrapper sets PyTorch/ONNX/BLAS threads to 2 for baseline and all candidates; deployed runtime is unchanged. After GPU training finished, one independent two-thread acquisition replay was permitted concurrently, with at most four remote inference threads total. No further Mac inference was permitted after the thermal report.",
+  "evaluationWrapper": {
+    "sourceSHA256": "d1e4d826597f3fa419de30e6271ac5fc33e60d56e84b472efeb02e3704eac154",
+    "source": "import os,runpy,sys\nfor name in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','VECLIB_MAXIMUM_THREADS','NUMEXPR_NUM_THREADS'):\n os.environ[name]='2'\nimport onnxruntime as ort\noriginal=ort.InferenceSession\ndef limited(path,sess_options=None,*args,**kwargs):\n options=sess_options or ort.SessionOptions();options.intra_op_num_threads=2;options.inter_op_num_threads=1\n return original(path,options,*args,**kwargs)\nort.InferenceSession=limited\nimport torch\ntorch.set_num_threads(2);torch.set_num_interop_threads(1)\nscript=sys.argv.pop(1);sys.path.insert(0,os.path.dirname(os.path.abspath(script)))\nrunpy.run_path(script,run_name='__main__')\n"
+  },
+  "remoteBaselineParity": "Every original standard-development prediction/error exactly matches the remote 2-thread baseline: 134/1,459 errors and 1 false character. Interrupted and consumed real aggregates also match.",
+  "selection": "All standard-development checkpoints scored. A checkpoint failing primary relative/absolute improvement or any standard/noise guard is rejected early; its interrupted/real checks are not required. No final corpora used.",
+  "compatibility": {
+    "casePairs": 32,
+    "wholeTrainingItems": 8,
+    "result": "Default offset0 equals prechange audio and labels bit for bit; generator/control validation and CWformer checks passed locally before thermal restriction and on Chonkus."
+  },
+  "limitations": "One paired training seed. This tests -3dB extra Gaussian chaos noise with all other settings fixed; it does not establish limits of other noise curricula or architectures."
+}

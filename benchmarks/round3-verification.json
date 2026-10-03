@@ -1,0 +1,305 @@
+{
+  "version": 1,
+  "verifiedAt": "2026-10-03T01:37:21.446122+00:00",
+  "host": "chonkus",
+  "workspace": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-verify",
+  "thermalPolicy": "After user thermal stop, no local model inference, builds, audio generation or full benchmarks. Source ZIP used ZIP_STORED; execution moved to Chonkus.",
+  "environment": {
+    "bun": "1.3.14",
+    "node": "24.19.0",
+    "vite": "7.3.6",
+    "typescript": "5.9.3",
+    "workerCaps": {
+      "UV_THREADPOOL_SIZE": 2,
+      "GOMAXPROCS": 2,
+      "OMP_NUM_THREADS": 2
+    }
+  },
+  "checks": [
+    {
+      "command": "bun install --frozen-lockfile",
+      "result": "PASS,72packages"
+    },
+    {
+      "command": "bun test",
+      "result": "PASS,25tests,885assertions,20.95seconds"
+    },
+    {
+      "command": "bun run build",
+      "result": "PASS,TypeScript and Vite production build,1593modules"
+    },
+    {
+      "command": "parent .venv\\Scripts\\python.exe neural\\check_listen.py",
+      "result": "PASS,including omitted bandwidth uses engine recommendation"
+    },
+    {
+      "command": "Paired public acquisition DEV generator/scorer and compare-acquisition.py",
+      "result": "PASS:14gates; live336to3/760; file367to0/696; noise unchanged5live,4file per4minutes."
+    },
+    {
+      "command": "Frozen acquisition final command sequence in round3-acquisition-final-commands.json",
+      "result": "PASS:16gates; live430to2/760; file452to0/696; noise unchanged6/8minutes in eachpath."
+    },
+    {
+      "command": "bun run build (Chonkus, after latest src/App.tsx copy update)",
+      "result": "PASS: TypeScript and Vite production build,1593modules,2.14seconds. No tests or benchmarks repeated.",
+      "source": {
+        "file": "src/App.tsx",
+        "sha256": "2b87b14e88e2e6301a6fe3410a96957344d20e986a60e5d82282d89c0d26b4fd"
+      },
+      "remoteSourceHashVerified": true,
+      "verifiedAt": "2026-10-03T01:54:55.098765+00:00",
+      "scope": "Privacy/status/help text accurately permits SSH-hosted neural inference; frozen acquisition pipeline unchanged. Running app services left untouched."
+    }
+  ],
+  "testCorrection": "Initial new carrier-retention test used a strict <4Hz bound; observed exactly4Hz on Windows. Owner corrected to <=8Hz, one7.8125Hz FFTbin and stricter than the preregistered20Hz acquisition bound. Final full suite passes.",
+  "stagedSources": [
+    {
+      "file": "README.md",
+      "sha256": "1e035d0498ef965f82ab2ff35f06021c0eb6fb7839407f955eb365440237a642"
+    },
+    {
+      "file": "bun.lock",
+      "sha256": "73e940740a0974a146026f902c585be5f99a9f54e946798f418e0f39f0ab02b0"
+    },
+    {
+      "file": "index.html",
+      "sha256": "8f156259d16f97db63334ab5e33aeddfc92e8aec2ee941f6129708c5db544247"
+    },
+    {
+      "file": "neural/CWFORMER_LICENSE",
+      "sha256": "738e65f4bf38b8b2a51fc183bb3379f90e3224edf841494c97772e2a25726b48"
+    },
+    {
+      "file": "neural/MORSEFORMER_LICENSE",
+      "sha256": "1c93da3c261259d2303847f86fe5b057d6f7c86f009d7c825637031ab9a1e196"
+    },
+    {
+      "file": "neural/benchmark.py",
+      "sha256": "94bf37693311363eb46157d24c7c723fb94f1b13b6034f9d4853b1c1fd9b6381"
+    },
+    {
+      "file": "neural/benchmark_acquisition.py",
+      "sha256": "82b4941c8cd1b05c8044cfb5ba62906bc93a27c70db9d8612c5807f11838c3cc"
+    },
+    {
+      "file": "neural/benchmark_cwformer.py",
+      "sha256": "b49a717c1e07e467d572bcfe4b842a0997e28dd92b1b47af38e00ae9ceafd520"
+    },
+    {
+      "file": "neural/blend.py",
+      "sha256": "84e7ece70e58aeb4e3ca428f4013fd40bac7a141f36f9d289ddcaa9585aee40e"
+    },
+    {
+      "file": "neural/check.py",
+      "sha256": "4d8e598f05bc6a256d0f5520963828e5e60a32fad7b8853d025816ce389e2efb"
+    },
+    {
+      "file": "neural/check_cwformer.py",
+      "sha256": "bb6ed9ffab8cad96877b301676be06dcfb9da5558364f89781c8f8aa34ca8aa3"
+    },
+    {
+      "file": "neural/check_interrupted.py",
+      "sha256": "bedab2a6868e7cd72d14b580642fba2945238bf4ef0b77a8508a72d84b8e40e5"
+    },
+    {
+      "file": "neural/check_listen.py",
+      "sha256": "6686424d854918a71561902bbe4b75ef5993f49d89df8a62060806304a1408c7"
+    },
+    {
+      "file": "neural/check_service.py",
+      "sha256": "cacdc4764e20e803b6f46f30118b6028a3e66b1ac925e5aaa751e0664b126b21"
+    },
+    {
+      "file": "neural/check_streaming.py",
+      "sha256": "e2517f69f154a83e93499bf00e619aa7cb67730350b5f740bc3adc4f788f7535"
+    },
+    {
+      "file": "neural/corpus-dev-v2.json",
+      "sha256": "f23a72e007c794ecbd41a189d4fecd17ef990fcd1e8a48681c90c9298b5e4c31"
+    },
+    {
+      "file": "neural/corpus-final-v2-sealed.json",
+      "sha256": "3b071f35933b8c138f3f4b99334462f41af618a0ebfbb8898da3e5f466f377db"
+    },
+    {
+      "file": "neural/corpus-final-v2.json",
+      "sha256": "4ff69881fd40e26a9c6649c05ea4176bf8f898009418101e6411f12fc862a053"
+    },
+    {
+      "file": "neural/corpus-final-v3-sealed.json",
+      "sha256": "6de5b5ccbd0e643f99794e5ea0b922f89a67d9137c86acc36278da58dfd96ee0"
+    },
+    {
+      "file": "neural/corpus-holdout.json",
+      "sha256": "0f7542688429b8db90ce75d812266d72bfe3ccc65552167279355ebda5fd7990"
+    },
+    {
+      "file": "neural/corpus.json",
+      "sha256": "bf4baf39cab6cd7932aeb995bba7b5b5c4d1348cc27e380d7c10346332a26e4a"
+    },
+    {
+      "file": "neural/cwformer_engine.py",
+      "sha256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5"
+    },
+    {
+      "file": "neural/fetch_corpus.py",
+      "sha256": "d74685f6b27f4c04ba51feb6122be70fe5557229e77be1caba7399f2408f9727"
+    },
+    {
+      "file": "neural/fetch_corpus_v2.py",
+      "sha256": "d2340dcb94a8a89c41ea74302f19465ecedc13a7c01ccd014f3da08ab987b6f2"
+    },
+    {
+      "file": "neural/listen.py",
+      "sha256": "7853707537f3da5f6ecc556332b06da216f62b720f13ca5498697dc12344c295"
+    },
+    {
+      "file": "neural/mix_receiver_noise.py",
+      "sha256": "ca98738b4755e6cc3844d3f0c3422e5f57b80c163256dc129444988310d7f9d8"
+    },
+    {
+      "file": "neural/release.json",
+      "sha256": "a6418c1c0021b866f7ab7bec86a695ae4261829d4a57bcddd1f47554169e9e26"
+    },
+    {
+      "file": "neural/requirements.txt",
+      "sha256": "81bd8ec6347e3be27b2cfac1e27163266b5447be01a4f4ac850dd6c210b493c3"
+    },
+    {
+      "file": "neural/server.py",
+      "sha256": "eac03deb351be3a3cc09fe564979393d1413e22a8f97d8ccea81a99deae1cca0"
+    },
+    {
+      "file": "neural/streaming.py",
+      "sha256": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e"
+    },
+    {
+      "file": "neural/train.py",
+      "sha256": "806440ddbc65035ab82a25bf2cd5e190d8108025d05c72135c4fc31689086d63"
+    },
+    {
+      "file": "neural/train_cwformer.py",
+      "sha256": "ba93720b47f0d07befbc6a199632b59fbcb5c07d422b919cd7247f3e42a83e43"
+    },
+    {
+      "file": "package.json",
+      "sha256": "093728b50c5bf7db130a8ab7f0fb99a7cb295c0dca8913521bcdf9fd95780882"
+    },
+    {
+      "file": "public/favicon.svg",
+      "sha256": "3710b3adfc5ae41614935d99f80727eaf9a45a877033c8ad1279c4b18c8c81d1"
+    },
+    {
+      "file": "scripts/acquisition-benchmark.ts",
+      "sha256": "7e821b2267d036dcbed47eb5580a8e1d02dda88c4bd23b65aa0c2c3525416f01"
+    },
+    {
+      "file": "scripts/benchmark-adaptive.ts",
+      "sha256": "20b228078ce7e0212e15c792c7f7957f3cd5a454174824938ae2a52e02978151"
+    },
+    {
+      "file": "scripts/benchmark.ts",
+      "sha256": "c91a0c9c1129f1834473e16aed489f74fbf0b7b092eb9979cb37f5cbc56a0a67"
+    },
+    {
+      "file": "scripts/check-continuous-benchmark.py",
+      "sha256": "41da5faa4cb67953c6b8dbe27b75d243f8f3ebb507e04c2fd010e49059b83c00"
+    },
+    {
+      "file": "scripts/compare-decoders.ts",
+      "sha256": "ee7bf73a0dbcf1db3392ff816da285868275fef4c6663ee380be54b59206d3b6"
+    },
+    {
+      "file": "scripts/compare-round3.py",
+      "sha256": "395be264b1ee23ad6f19bc1748e9f98eba4c4f2cac1947c20c6a80516d275557"
+    },
+    {
+      "file": "scripts/continuous-benchmark.ts",
+      "sha256": "002b436787358f132f6e84a21b11a4c733238505861d15332256481f7ddd2170"
+    },
+    {
+      "file": "scripts/interrupted-benchmark.ts",
+      "sha256": "78780524d43f8ee628c45a0987dde181fa4e200ab022ae33014b1a9215032d1f"
+    },
+    {
+      "file": "src/App.tsx",
+      "sha256": "0cf6e94083c00609910487261c54c54b95e55a0ff69eb6a316211cb7c338224f"
+    },
+    {
+      "file": "src/Spectrum.tsx",
+      "sha256": "b41b40c722dc78662289dc4a0022ca638eccf499cb1f14dd78f8d68768db0c8f"
+    },
+    {
+      "file": "src/audio.ts",
+      "sha256": "c1d0ac5051aae9c8622a6ff6876264d6d20229f4400c3b6be15e826dea241a48"
+    },
+    {
+      "file": "src/decoder.test.ts",
+      "sha256": "bbb889485048c2cc98f33cfc51cdd927c345626e1b8e886336e0e3e5617f1044"
+    },
+    {
+      "file": "src/decoder.ts",
+      "sha256": "cecbcbfe9de3de0212a1c3d11e1a09c3dcedceeb4a3a50147d7cbfb52c638a86"
+    },
+    {
+      "file": "src/file.worker.ts",
+      "sha256": "79fd9dfa49c80428ff3de69ae2868874c370e7e21d67ce346ddc2c819c7363d4"
+    },
+    {
+      "file": "src/main.tsx",
+      "sha256": "b3f2c34a378454df17fdb44696e5cf69e159ee25f947d0618850a55fe136bf08"
+    },
+    {
+      "file": "src/morse.ts",
+      "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+    },
+    {
+      "file": "src/neural.test.ts",
+      "sha256": "d9e09a409b76052411e05f8a63bd400d2add538ae5fa8efb549f5eb1b8e49efb"
+    },
+    {
+      "file": "src/neural.ts",
+      "sha256": "0d33b6d0568f22699fec85d29ccd393c24cb65600d4f337b29de8b6eb4bbebfc"
+    },
+    {
+      "file": "src/receiver.worklet.ts",
+      "sha256": "c6a53925854ab4736c8c977ca2ef676647709bd3345de14f8d1d0edcc462861b"
+    },
+    {
+      "file": "src/signals.ts",
+      "sha256": "56b03d07848cc864c231535ec128c8a3c4d4137920d9e1f0299c89fb076d3269"
+    },
+    {
+      "file": "src/style.css",
+      "sha256": "e9223be5a92a880ac2897823d856e3c82d4f18cf359763fdb6c043e44670bd33"
+    },
+    {
+      "file": "src/timing.test.ts",
+      "sha256": "3e0b7e089cbcbd3d924c68253ffeecdbbde65549dbd69430206b9aedf458dec3"
+    },
+    {
+      "file": "src/timing.ts",
+      "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+    },
+    {
+      "file": "tsconfig.json",
+      "sha256": "ef8df8a235bdd277e7633bef299d2d7cc7b77a6fb23a69cc2462f6d329ca8d6c"
+    },
+    {
+      "file": "vite.config.ts",
+      "sha256": "241f28ce80f7915d166e7fa0b4f308918b0f9e1b56e14dafd5c71c8d6ee1bd97"
+    }
+  ],
+  "finalSourceAudit": "All frozen source hashes remain unchanged after final evaluation; final report model hashes match frozen v6 and frontend; both reports match the archived waveform manifest and scanner traces.",
+  "finalEnvironment": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "torch": "2.8.0+cu128",
+    "onnxruntime": "1.30.0",
+    "morseformer": "0.6.4"
+  },
+  "finalSourceAuditAt": "2026-10-03T01:50:33.630258+00:00",
+  "ownedRemoteEvaluationProcessesRemaining": 0,
+  "remoteCleanupVerifiedAt": "2026-10-03T01:51:00.161850+00:00"
+}

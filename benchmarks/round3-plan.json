@@ -1,0 +1,350 @@
+{
+  "version": 1,
+  "recordedAt": "2026-10-03T01:14:27.142096+00:00",
+  "status": "complete-acquisition-passed-other-final-sets-preserved-unused",
+  "baselineCommit": "9a03e0cd8d3062c854b7d81b65f4ac9ad310aa2e",
+  "baseline": {
+    "engine": "cwformer-weighted-v6-step2000",
+    "model": {
+      "file": "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+      "sha256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374"
+    },
+    "runtime": {
+      "file": "neural/cwformer_engine.py",
+      "sha256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5"
+    },
+    "snapshot": ".research/round3-baseline/neural",
+    "bandwidthHz": 150,
+    "knownCarrier": true,
+    "inputChunkSeconds": 0.5,
+    "developmentReports": [
+      {
+        "file": "benchmarks/round3-dev-v6-baseline.json",
+        "sha256": "74580b0ce6363cf0673fad9ca9c47665f6193d3f5c1cd98082c519cb9393f9eb"
+      },
+      {
+        "file": "benchmarks/round3-interrupted-dev-v6-baseline.json",
+        "sha256": "85a9e44b982f485d4c6e8b72bb4841a4c4b5531914cf132fd5664c925b0ca8f6"
+      }
+    ],
+    "frontendAssets": [
+      {
+        "file": "models/cwformer-weighted-v6/step-2000/mel_config.json",
+        "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+      },
+      {
+        "file": "models/cwformer-weighted-v6/step-2000/mel_basis.npy",
+        "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+      },
+      {
+        "file": "models/cwformer-weighted-v6/step-2000/mel_window.npy",
+        "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+      }
+    ]
+  },
+  "development": {
+    "standard": {
+      "seed": 3204107,
+      "casesPerCondition": 8,
+      "noiseRepeatsPerKind": 2,
+      "manifest": ".research/round3-dev/manifest.json",
+      "manifestSHA256": "c256d63e912bdac4934757a5da23c0833a6bff28c72524a11f97b82738a32bd7",
+      "cases": 60,
+      "characters": 1459,
+      "audioSeconds": 1256.9155
+    },
+    "interrupted": {
+      "seed": 5204107,
+      "casesPerCondition": 6,
+      "manifest": ".research/round3-interrupted-dev/manifest.json",
+      "manifestSHA256": "49bc6dd6de73f05c2660cee4a0e9fcb879534e76672ae006e1efa0546dd66b27",
+      "cases": 18,
+      "characters": 596,
+      "audioSeconds": 1128.779
+    }
+  },
+  "final": {
+    "state": "not-entered-this-round-preserved-for-future-use",
+    "standard": {
+      "seed": 4204107,
+      "casesPerCondition": 16,
+      "noiseRepeatsPerKind": 4,
+      "manifest": ".research/round3-final/manifest.json"
+    },
+    "interrupted": {
+      "seed": 6204107,
+      "casesPerCondition": 16,
+      "manifest": ".research/round3-interrupted-final/manifest.json"
+    },
+    "real": {
+      "schema": 1,
+      "split": "real-round3-final-sealed",
+      "privateManifest": ".research/round3-reserved/corpus-final-v3.json",
+      "manifestSHA256": "0f52be1369e8b3777e4c0a80257bd0fca787dd8ce7808aa70a0c0bc7c262bd27",
+      "clips": 5,
+      "referenceCharactersIncludingSpaces": 237,
+      "durationSeconds": 97.662,
+      "sourceSessions": 1,
+      "operators": 1,
+      "sourceDurationSeconds": 166.644,
+      "sourceBytes": 1333389,
+      "sourceAudioSHA256": "3af73b8efc948beb621011f0c7004bb8cb7277ee83fc17c700cfd50b3f3165a5",
+      "source": "https://archive.org/details/sending_morse_code_sound_recordings",
+      "sourceAudioURL": "https://archive.org/download/sending_morse_code_sound_recordings/nw6v_handkey_Vail_3June1844.mp3",
+      "license": "CC BY-NC-ND 4.0 (Internet Archive uploader declaration); local evaluation only, no redistributed audio",
+      "licenseSource": "https://archive.org/metadata/sending_morse_code_sound_recordings",
+      "transcriptSource": "https://groups.google.com/g/radio-officers/c/ccZ8aXi4sfI/m/WMVm9acTEAAJ",
+      "frequency": 710,
+      "bandwidth": 150,
+      "review": "Fixed bandpass/Hilbert mark timings at three amplitude thresholds; exact dot/dash agreement and non-overlapping within-crop intra/character gap classes. Publisher transcript supplies word spacing. All crops chosen before model/app decoding, excluding sender error and ambiguous character boundaries.",
+      "limits": "Five correlated crops from one new operator/session, relatively clean local sidetone rather than weak RF; complements receiver-noise tests but cannot establish general weak-signal performance. Word spacing follows sender text after independent dot/dash and character-boundary validation. No model/application predictions used; upstream pretrained-model exposure unknown.",
+      "access": "Reserve whole source session from training and tuning; reveal private manifest only after explicit candidate freeze.",
+      "state": "sealed-unread-by-tuning-and-evaluation-agents",
+      "publishedMetadata": "neural/corpus-final-v3-sealed.json",
+      "publicationAfterRootGO": "Copy private manifest unchanged to neural/corpus-final-v3.json, verify recorded SHA256, then prepare with existing neural/benchmark.py into .research/round3-real-final/manifest.json."
+    }
+  },
+  "lanes": {
+    "receiver": {
+      "primary": "all interrupted speech cases combined",
+      "minimumRelativeCERReduction": 0.1,
+      "minimumAbsoluteCERReduction": 0.01,
+      "entryStatus": "not-entered: development candidate missed required 10 percent primary improvement; complete regression checks stopped by Mac thermal constraint; no receiver runtime candidate frozen."
+    },
+    "hard-noise-model": {
+      "primary": "standard rough and chaos cases combined",
+      "minimumRelativeCERReduction": 0.1,
+      "minimumAbsoluteCERReduction": 0.01,
+      "maximumInterruptedCERIncrease": 0.005,
+      "entryStatus": "not-entered: all six control/treatment checkpoints rejected on development gates; original v6 retained."
+    }
+  },
+  "commonGuards": {
+    "maximumStandardAggregateCERIncrease": 0.005,
+    "maximumStandardConditionCERIncrease": {
+      "clean": 0.005,
+      "human": 0.005,
+      "fading": 0.02,
+      "crowded": 0.02,
+      "rough": 0.02,
+      "chaos": 0.02
+    },
+    "standardNoiseFalseCharacters": "no increase over matching baseline on the same eight minutes of negative audio",
+    "pauseFalseCharacters": "no increase over matching baseline across scored interrupted gaps",
+    "newRealSessionMaximumAdditionalErrors": 1,
+    "candidateSelection": "At most one candidate per lane, selected using development only and frozen with model/runtime/settings hashes before final generation. All applicable guards must pass. No reselection or tuning after final scores."
+  },
+  "interpretation": {
+    "multipleLanes": "Two separately declared improvement lanes; passing one does not prove both. Report every frozen candidate and failed guard, plus paired uncertainty; no winner selection from final results.",
+    "oldData": "All previous development/final recordings are consumed. Regression scores may be disclosed, not presented as fresh evidence.",
+    "freshness": "Synthetic final uses new random messages/waveforms, not independent human operators. New human operator recording is being independently annotated; if unavailable, report missing real generalization rather than substitute old data.",
+    "acquisition": "Known-carrier benchmarks do not evaluate automatic carrier acquisition. Any scanner integration fix needs separate paired end-to-end checks and claims."
+  },
+  "scoring": {
+    "CER": "Levenshtein errors divided by total reference characters including spaces and punctuation; uppercase and trim outer whitespace only. No dictionary correction.",
+    "aggregation": "Pool errors and character counts; preserve per-clip predictions.",
+    "pauseFalseCopy": "Count non-space emissions in full 0.5-second input chunks inside annotated key-up gaps starting two seconds after the last true mark and ending at the next burst or recording end. Flush copy stays in CER but not pause count.",
+    "pauseTimingLimit": "Emission time is input arrival time, not acoustic token alignment. Delayed correct copy later than two seconds may count as false copy. Final trailing pauses are included.",
+    "uncertainty": "Report 95% percentile interval of paired candidate-minus-baseline CER using 10000 bootstrap resamples of whole independent synthetic clips, stratified by condition. Descriptive only; point thresholds above decide the predeclared gates. Real crops within one recording are correlated and must not be treated as separate operators."
+  },
+  "generatorSources": [
+    {
+      "file": "scripts/continuous-benchmark.ts",
+      "sha256": "002b436787358f132f6e84a21b11a4c733238505861d15332256481f7ddd2170"
+    },
+    {
+      "file": "scripts/interrupted-benchmark.ts",
+      "sha256": "78780524d43f8ee628c45a0987dde181fa4e200ab022ae33014b1a9215032d1f"
+    },
+    {
+      "file": "src/signals.ts",
+      "sha256": "56b03d07848cc864c231535ec128c8a3c4d4137920d9e1f0299c89fb076d3269"
+    },
+    {
+      "file": "src/morse.ts",
+      "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+    }
+  ],
+  "interruptedDefinition": {
+    "conditions": [
+      "clean-paused",
+      "weak-paused",
+      "crowded-paused"
+    ],
+    "burstsPerCase": 3,
+    "speedWPM": [
+      12,
+      34
+    ],
+    "weakBroadbandSNRdB": [
+      -12,
+      -4
+    ],
+    "cleanBroadbandSNRdB": 30,
+    "interburstAndTrailingPauseSeconds": [
+      4,
+      8,
+      14,
+      25
+    ],
+    "noise": "Gaussian receiver noise continues through all gaps, with static and adjacent keyed station in crowded condition. Signal fading and jitter apply to complete bursts.",
+    "labels": "All bursts are complete messages; final 1 s generated key-up plus selected 3/7/13/24 s pause. No truncation or removed keyed audio."
+  },
+  "acquisitionLane": {
+    "kind": "integration-bugfix-separate-from-known-carrier-neural-lanes",
+    "generator": "scripts/acquisition-benchmark.ts",
+    "scorer": "neural/benchmark_acquisition.py",
+    "developmentSeed": 3401901,
+    "finalSeed": 4401901,
+    "finalState": "evaluated-consumed-no-post-final-tuning",
+    "cases": {
+      "lowAmplitude": 16,
+      "normalClean": 8,
+      "crowdedRetainFirstTarget": 8,
+      "laterNewCarrier": 4,
+      "noiseDevelopment": 12,
+      "noiseFinal": 24,
+      "noiseClipSeconds": 20
+    },
+    "lowAmplitudeDefinition": {
+      "SNRdB": [
+        20,
+        35
+      ],
+      "carrierHz": [
+        400,
+        1150
+      ],
+      "nominalCarrierPeakAmplitude": [
+        1.2e-05,
+        8e-05
+      ]
+    },
+    "crowdedDefinition": "Desired station starts 2\u20134 seconds before interferer; desired signal ends with the unchanged generator\u2019s 1.0-second key-up tail. Evaluate actual 256-sample file-scanner final carrier separately from 160-sample live scanner updates and NeuralStream queue.",
+    "newCarrierDefinition": "Old signal includes its 1.0-second tail; insert 3\u20136 seconds, then new signal has 0.15-second lead. True mark-to-mark gap is 4.15\u20137.15 seconds. The stored onset is the new recording start, 0.15 seconds before the first new mark, making the one-second acquisition guard conservative.",
+    "gates": {
+      "lowAmplitudeWithin20HzFractionMinimum": 0.95,
+      "crowdedRetention": "No target jumps during established-target key-ups; file end remains on first desired station.",
+      "minimumSpeechCERRelativeReduction": 0.1,
+      "minimumSpeechCERAbsoluteReduction": 0.01,
+      "normalCleanMaximumCERIncrease": 0.005,
+      "noiseFalseCharacters": "No increase in non-space output characters over baseline on the same eight minutes, separately for file and live paths.",
+      "laterNewCarrier": "Every case acquires new station within one second.",
+      "applyCopyGatesTo": [
+        "file",
+        "live"
+      ]
+    },
+    "baseline": "9a03e0c scanner and selected CWformer v6 step2000 model, identical settings and replay.",
+    "scope": "File scanner processes256-sample chunks like file.worker; live scanner processes160-sample chunks and replays actual NeuralStream queue. Four changing-carrier recordings are live-only, because file decoding assumes one selected station; exclude them from file reference denominator. No browser resampling or physical audio capture is tested.",
+    "freshness": "Callsign messages are fixed by case index. New final seed changes carriers, speed, amplitude, noise and interferer onset; it does not create new text messages. This is an integration regression suite, not independent language generalization.",
+    "comparison": "scripts/compare-acquisition.py",
+    "negativeLimit": "Gaussian receiver noise at varied amplitude only; not the six broader noise classes in the standard known-carrier suite.",
+    "candidateFreeze": "benchmarks/round3-acquisition-freeze.json",
+    "developmentComparison": "benchmarks/round3-acquisition-dev-comparison.json",
+    "finalGoAt": "2026-10-03T01:43:41.686959+00:00",
+    "completedAt": "2026-10-03T01:50:33.629144+00:00",
+    "finalManifest": {
+      "local": ".research/round3-evaluation/acquisition-final/manifest.json",
+      "remote": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-verify\\.research\\round3-acquisition-final\\manifest.json",
+      "sha256": "fde5f3e13c33f1160ab4f5615cfd9e1b62c373035516a80d375ac088e69b85b5",
+      "cases": 60,
+      "audioSeconds": 991.769625,
+      "liveReferenceCharacters": 760,
+      "fileReferenceCharacters": 696,
+      "negativeSeconds": 480
+    },
+    "finalReports": [
+      {
+        "file": "benchmarks/round3-acquisition-final-baseline.json",
+        "sha256": "83568602b2cb83372216e5b22a70517a2e8da49c7fd81be7897560ccde8258ec"
+      },
+      {
+        "file": "benchmarks/round3-acquisition-final-candidate.json",
+        "sha256": "1d8f2f50a7a57cd32de91fb1ebf1a64793dad80f7d35d8ab63baf12320a567a1"
+      },
+      {
+        "file": "benchmarks/round3-acquisition-final-comparison.json",
+        "sha256": "cc54cef78011f8abf7f92b30041bb8f9d10f0152255d7a1dd134c6d7418cf9a5"
+      },
+      {
+        "file": "benchmarks/round3-acquisition-final-uncertainty.json",
+        "sha256": "4c68f8062711fb04595078b61bb1f57490ab414dd8c96ba2cd233946a9445ff3"
+      },
+      {
+        "file": "benchmarks/round3-acquisition-final-commands.json",
+        "sha256": "69db7f1ba3fd737e9c9b530acf4a7bba21552be97107fc713e2dfdd275fbd7c6"
+      },
+      {
+        "file": "benchmarks/round3-final-preflight.json",
+        "sha256": "9d5feee2990bbb75a69e26a8bd11195076bef57ca72479c97cf9d40466d70037"
+      }
+    ],
+    "finalDecision": {
+      "allGuardsPass": true,
+      "gatesPassed": 16,
+      "paths": {
+        "live": {
+          "speechCases": 36,
+          "characters": 760,
+          "baselineErrors": 430,
+          "candidateErrors": 2,
+          "baselineCER": 0.5657894736842105,
+          "candidateCER": 0.002631578947368421,
+          "normalCleanDeltaCER": 0.0,
+          "noiseCases": 24,
+          "noiseSeconds": 480,
+          "baselineNoiseFalseCharacters": 6,
+          "candidateNoiseFalseCharacters": 6,
+          "lowAmplitudeAcquiredFraction": 1.0
+        },
+        "file": {
+          "speechCases": 32,
+          "characters": 696,
+          "baselineErrors": 452,
+          "candidateErrors": 0,
+          "baselineCER": 0.6494252873563219,
+          "candidateCER": 0.0,
+          "normalCleanDeltaCER": 0.0,
+          "noiseCases": 24,
+          "noiseSeconds": 480,
+          "baselineNoiseFalseCharacters": 6,
+          "candidateNoiseFalseCharacters": 6,
+          "lowAmplitudeAcquiredFraction": 1.0
+        }
+      },
+      "newStationReacquisitionSeconds": [
+        0.34537500000000065,
+        0.3616250000000001,
+        0.2942499999999999,
+        0.3151250000000001
+      ]
+    }
+  },
+  "verification": {
+    "checkedAt": "2026-10-03T01:20:13.377294+00:00",
+    "checks": [
+      {
+        "command": ".venv/bin/python neural/check_interrupted.py",
+        "result": "PASS: exact fixture reproducibility; complete bursts; nonzero receiver noise through final pause; grace/scored-window arithmetic; timed v6 streaming exactly equals original decode_offline for all three generated conditions."
+      },
+      {
+        "command": "python3 scripts/compare-round3.py --self-check",
+        "result": "PASS: paired ratio, sign and bootstrap interval; differing corpora rejected."
+      },
+      {
+        "command": "Compare 9a03e0c original scorer to updated optional-timing scorer on all 60 fresh standard development cases.",
+        "result": "PASS: every case id, reference, prediction and error count exactly matches; 134/1459 speech errors and one noise false character."
+      }
+    ],
+    "scorer": {
+      "file": "neural/benchmark_cwformer.py",
+      "sha256": "b49a717c1e07e467d572bcfe4b842a0997e28dd92b1b47af38e00ae9ceafd520"
+    },
+    "comparator": {
+      "file": "scripts/compare-round3.py",
+      "sha256": "395be264b1ee23ad6f19bc1748e9f98eba4c4f2cac1947c20c6a80516d275557"
+    },
+    "remote": "benchmarks/round3-verification.json"
+  }
+}

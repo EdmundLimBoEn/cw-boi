@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "candidateSources": [
+    {
+      "file": "src/decoder.ts",
+      "sha256": "cecbcbfe9de3de0212a1c3d11e1a09c3dcedceeb4a3a50147d7cbfb52c638a86"
+    },
+    {
+      "file": "src/timing.ts",
+      "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+    },
+    {
+      "file": "src/morse.ts",
+      "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+    },
+    {
+      "file": "src/neural.ts",
+      "sha256": "0d33b6d0568f22699fec85d29ccd393c24cb65600d4f337b29de8b6eb4bbebfc"
+    },
+    {
+      "file": "src/receiver.worklet.ts",
+      "sha256": "c6a53925854ab4736c8c977ca2ef676647709bd3345de14f8d1d0edcc462861b"
+    },
+    {
+      "file": "src/file.worker.ts",
+      "sha256": "79fd9dfa49c80428ff3de69ae2868874c370e7e21d67ce346ddc2c819c7363d4"
+    },
+    {
+      "file": "src/signals.ts",
+      "sha256": "56b03d07848cc864c231535ec128c8a3c4d4137920d9e1f0299c89fb076d3269"
+    },
+    {
+      "file": "scripts/acquisition-benchmark.ts",
+      "sha256": "7e821b2267d036dcbed47eb5580a8e1d02dda88c4bd23b65aa0c2c3525416f01"
+    },
+    {
+      "file": "neural/benchmark_acquisition.py",
+      "sha256": "82b4941c8cd1b05c8044cfb5ba62906bc93a27c70db9d8612c5807f11838c3cc"
+    },
+    {
+      "file": "neural/cwformer_engine.py",
+      "sha256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5"
+    },
+    {
+      "file": "scripts/compare-acquisition.py",
+      "sha256": "e772d0803ec16291f4447a9894f22180550b465438c6b35c2bad0112d7c87f82"
+    }
+  ],
+  "baselineScanner": {
+    "file": "src/decoder.ts",
+    "sha256": "8326b1304e5cb93c6c522cd68950a7bcf0c5a87f40ab7fe1f2e07935da27c676"
+  },
+  "modelAndFrontend": [
+    {
+      "file": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-noise\\models\\baseline-v6\\cwformer_streaming_fp32.onnx",
+      "sha256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374"
+    },
+    {
+      "file": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-noise\\models\\baseline-v6\\mel_config.json",
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    {
+      "file": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-noise\\models\\baseline-v6\\mel_basis.npy",
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    {
+      "file": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-noise\\models\\baseline-v6\\mel_window.npy",
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    }
+  ]
+}

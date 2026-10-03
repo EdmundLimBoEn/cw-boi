@@ -86,9 +86,11 @@ def continuous_waveform(rng, clean, element_gap_scale=1):
     return rendered[offset:offset + WINDOW].copy(), label, contained
 
 
-def case(seed, family, punctuation=False, continuous=False, background=None, return_audio=False, element_gap_scale=1):
+def case(seed, family, punctuation=False, continuous=False, background=None, return_audio=False, element_gap_scale=1, chaos_snr_offset=0):
     if not 0.1 <= element_gap_scale <= 1:
         raise ValueError('Element gap scale must be between 0.1 and 1.')
+    if not -12 <= chaos_snr_offset <= 0:
+        raise ValueError('Chaos SNR offset must be between -12 and 0 dB.')
     rng = np.random.default_rng(seed)
     clean = family == 'clean'
     chaotic = family == 'chaos'
@@ -145,7 +147,8 @@ def case(seed, family, punctuation=False, continuous=False, background=None, ret
         if chaotic:
             waveform *= 1 - rng.uniform(0, 0.35) * (0.5 + 0.5 * np.sin(time_axis * rng.uniform(20, 45)))
     snr = rng.uniform(18, 35) if clean else rng.uniform(-8, 3) if chaotic else rng.uniform(5, 20)
-    noise = rng.normal(0, 0.4 / math.sqrt(2) / 10 ** (snr / 20), WINDOW).astype(np.float32)
+    gaussian_snr = snr + (chaos_snr_offset if chaotic and background is None else 0)
+    noise = rng.normal(0, 0.4 / math.sqrt(2) / 10 ** (gaussian_snr / 20), WINDOW).astype(np.float32)
     if background is not None and family != 'noise':
         noise = background * (0.4 / math.sqrt(2) / 10 ** (snr / 20)) / max(1e-8, np.sqrt(np.mean(background ** 2)))
     if family == 'noise':

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "startedAt": "2026-10-03T01:44:37.912798+00:00",
+  "host": "chonkus",
+  "workspace": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-verify",
+  "transport": "SSH BatchMode, HostKeyAlias chonkus, PowerShell UTF16LE EncodedCommand",
+  "script": "$ProgressPreference='SilentlyContinue'; $ErrorActionPreference='Stop'; $root='C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment'; $python='C:\\Users\\limbo\\cw-boi-training-20261001\\.venv\\Scripts\\python.exe'; $limited=Join-Path $root 'round3-noise\\limited.py'; $model=Join-Path $root 'round3-noise\\models\\baseline-v6\\cwformer_streaming_fp32.onnx'; $env:UV_THREADPOOL_SIZE='2'; $env:GOMAXPROCS='2'; Set-Location $root; & $python -m zipfile -e round3-final-setup.zip round3-verify; if($LASTEXITCODE){exit $LASTEXITCODE}; Set-Location (Join-Path $root 'round3-verify'); & $python .research\\round3-evaluation\\preflight.py; if($LASTEXITCODE){exit $LASTEXITCODE}; & bun scripts\\acquisition-benchmark.ts --seed 4401901 --noise-cases 24 --output .research/round3-acquisition-final --scanner .research/round3-baseline/src/decoder.ts --name baseline; if($LASTEXITCODE){exit $LASTEXITCODE}; & bun scripts\\acquisition-benchmark.ts --seed 4401901 --noise-cases 24 --output .research/round3-acquisition-final --scanner src/decoder.ts --name candidate; if($LASTEXITCODE){exit $LASTEXITCODE}; & $python $limited neural\\benchmark_acquisition.py --traces .research/round3-acquisition-final/baseline-traces.json --model $model --output benchmarks/round3-acquisition-final-baseline.json; if($LASTEXITCODE){exit $LASTEXITCODE}; & $python $limited neural\\benchmark_acquisition.py --traces .research/round3-acquisition-final/candidate-traces.json --model $model --output benchmarks/round3-acquisition-final-candidate.json; if($LASTEXITCODE){exit $LASTEXITCODE}; & $python scripts\\compare-acquisition.py --baseline benchmarks/round3-acquisition-final-baseline.json --candidate benchmarks/round3-acquisition-final-candidate.json --output benchmarks/round3-acquisition-final-comparison.json --final; exit $LASTEXITCODE",
+  "authority": "Explicit root FINAL GO for frozen acquisition lane only. No post-final tuning.",
+  "compute": "Remote only; one inference at a time, ONNX/torch/BLAS threads capped2 by round3-noise/limited.py.",
+  "completedAt": "2026-10-03T01:47:26.782890+00:00",
+  "exitCode": 0
+}

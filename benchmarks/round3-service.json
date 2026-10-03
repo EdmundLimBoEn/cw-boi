@@ -1,0 +1,121 @@
+{
+  "recordedAt": "2026-10-03T01:50:08.678860+00:00",
+  "host": "limbo@192.168.0.17",
+  "sshHostKeyAlias": "chonkus",
+  "directory": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\service-v6",
+  "task": "CWboiDecoderService",
+  "autostart": false,
+  "lifetime": "Manually started persistent current run; no boot or logon trigger.",
+  "bind": "127.0.0.1:8787",
+  "listenerPIDAtVerification": 12640,
+  "python": "C:\\Users\\limbo\\cw-boi-training-20261001\\.venv\\Scripts\\python.exe",
+  "health": {
+    "ready": true,
+    "model": "CWformer \u00b7 v6",
+    "checkpoint": "step-2000/cwformer_streaming_fp32.onnx",
+    "device": "cpu",
+    "bandwidth": 150,
+    "confidence_threshold": null,
+    "digit_threshold": null,
+    "engine": "cwformer",
+    "base_revision": null,
+    "engines": [
+      {
+        "model": "CWformer \u00b7 v6",
+        "checkpoint": "step-2000/cwformer_streaming_fp32.onnx",
+        "device": "cpu",
+        "bandwidth": 150,
+        "confidence_threshold": null,
+        "digit_threshold": null,
+        "engine": "cwformer",
+        "base_revision": null
+      },
+      {
+        "model": "CW boi \u00b7 RNN-T v1",
+        "checkpoint": "models/cw-boi-rnnt-v1.pt",
+        "device": "cpu",
+        "bandwidth": 100,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "engine": "rnnt",
+        "base_revision": "9eab86a3ad7482f8c5801eabf26ec46f9493b919"
+      }
+    ]
+  },
+  "files": [
+    {
+      "file": "neural/server.py",
+      "sha256": "eac03deb351be3a3cc09fe564979393d1413e22a8f97d8ccea81a99deae1cca0"
+    },
+    {
+      "file": "neural/streaming.py",
+      "sha256": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e"
+    },
+    {
+      "file": "neural/cwformer_engine.py",
+      "sha256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5"
+    },
+    {
+      "file": "neural/release.json",
+      "sha256": "a6418c1c0021b866f7ab7bec86a695ae4261829d4a57bcddd1f47554169e9e26"
+    },
+    {
+      "file": "limited.py",
+      "sha256": "d1e4d826597f3fa419de30e6271ac5fc33e60d56e84b472efeb02e3704eac154"
+    },
+    {
+      "file": "service-bootstrap.py",
+      "sha256": "feb6ba5938b25cc9ce6a112e9c69538af0efff81ec72cc599db1b2569a76c5f2"
+    },
+    {
+      "file": "service-start.ps1",
+      "sha256": "5b8fb265580c4ebff6faf70578a718b7dc3550217d4931936457dbcabe2b9c6a"
+    },
+    {
+      "file": "models/cw-boi-rnnt-v1.pt",
+      "sha256": "421ec784604b6d238aa2641d94160a4e6659b66206c3ac363f1d695173a06495"
+    },
+    {
+      "file": "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+      "sha256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374"
+    },
+    {
+      "file": "models/cwformer-weighted-v6/step-2000/mel_config.json",
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    {
+      "file": "models/cwformer-weighted-v6/step-2000/mel_basis.npy",
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    {
+      "file": "models/cwformer-weighted-v6/step-2000/mel_window.npy",
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    }
+  ],
+  "threads": {
+    "onnxIntraOp": 2,
+    "onnxInterOp": 1,
+    "torchIntraOp": 2,
+    "torchInterOp": 1,
+    "protocol": "Same limited.py wrapper as evaluation; service-only bootstrap clamps later torch.set_num_threads calls to at most2 because the unchanged production server requests4. Startup log confirms2. No decoder source or model changes."
+  },
+  "network": "HTTP server binds loopback only; Mac access uses a localhost-only SSHforward. HF_HUB_OFFLINE=1; no upstream downloads.",
+  "commands": {
+    "start": "Start-ScheduledTask -TaskName 'CWboiDecoderService'",
+    "stop": "Stop-ScheduledTask -TaskName 'CWboiDecoderService'",
+    "restart": [
+      "Stop-ScheduledTask -TaskName 'CWboiDecoderService'",
+      "Start-ScheduledTask -TaskName 'CWboiDecoderService'"
+    ],
+    "status": "Get-ScheduledTask -TaskName 'CWboiDecoderService'",
+    "health": "Invoke-WebRequest 'http://127.0.0.1:8787/api/health' -UseBasicParsing",
+    "directLaunch": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\service-v6\\service-start.ps1"
+  },
+  "sanity": "Both released model hashes validated; GET health reports both models ready. No decode POST performed during setup; root will test through the Mac forward using an existing fixture.",
+  "operationalScripts": {
+    "service-bootstrap.py": "import os\nimport runpy\nimport sys\nfrom pathlib import Path\n\nfor variable in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'NUMEXPR_NUM_THREADS'):\n    os.environ[variable] = '2'\nos.environ['HF_HUB_OFFLINE'] = '1'\nimport torch\n\noriginal_set_threads = torch.set_num_threads\n\ndef set_threads(threads):\n    original_set_threads(min(threads, 2))\n    print(f'PyTorch thread cap: {torch.get_num_threads()}', flush=True)\n\ntorch.set_num_threads = set_threads\nroot = Path(__file__).resolve().parent\nsys.argv = [str(root / 'limited.py'), str(root / 'neural/server.py'), '--engine', 'cwformer', '--device', 'cpu', '--port', '8787']\nrunpy.run_path(str(root / 'limited.py'), run_name='__main__')\n",
+    "service-start.ps1": "$ErrorActionPreference='Stop'\n$env:PYTHONUNBUFFERED='1'\n$root='C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\service-v6'\nSet-Location $root\n& 'C:\\Users\\limbo\\cw-boi-training-20261001\\.venv\\Scripts\\python.exe' \"$root\\service-bootstrap.py\" >> \"$root\\service.log\" 2>> \"$root\\service.err\"\nexit $LASTEXITCODE\n",
+    "limited.py": "import os,runpy,sys\nfor name in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','VECLIB_MAXIMUM_THREADS','NUMEXPR_NUM_THREADS'):\n os.environ[name]='2'\nimport onnxruntime as ort\noriginal=ort.InferenceSession\ndef limited(path,sess_options=None,*args,**kwargs):\n options=sess_options or ort.SessionOptions();options.intra_op_num_threads=2;options.inter_op_num_threads=1\n return original(path,options,*args,**kwargs)\nort.InferenceSession=limited\nimport torch\ntorch.set_num_threads(2);torch.set_num_interop_threads(1)\nscript=sys.argv.pop(1);sys.path.insert(0,os.path.dirname(os.path.abspath(script)))\nrunpy.run_path(script,run_name='__main__')\n"
+  },
+  "sourceParity": "Remote server.py, streaming.py, cwformer_engine.py and release.json match current production source byte-for-byte."
+}

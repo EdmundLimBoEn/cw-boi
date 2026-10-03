@@ -1,0 +1,2195 @@
+{
+  "version": 1,
+  "experiment": "round3-nonlanguage-ctc-prefix-beam",
+  "archivedAt": "2026-10-03T01:31:52.867659+00:00",
+  "decision": {
+    "status": "rejected",
+    "selectedDecoder": "existing-greedy",
+    "reason": "Beam 4 removes only one synthetic character error overall; real improvement is entirely spacing. Rough conditions regress, an exact real clip regresses, and beam 8 has no aggregate synthetic gain. Added decoding work and unresolved live commitment behavior are not justified by these mixed gains.",
+    "productionChanges": false
+  },
+  "provenance": {
+    "sourceReport": ".research/round3-ctc/results.json",
+    "sourceReportSHA256": "275f4e9c2ae8890785e6ad5e05cd8c11bed51678170ca77775fac3c0c4adf1f4",
+    "model": {
+      "file": "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+      "sha256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374"
+    },
+    "baselineCommit": "9a03e0cd8d3062c854b7d81b65f4ac9ad310aa2e",
+    "baselineRuntimeReference": {
+      "file": "neural/cwformer_engine.py",
+      "sha256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5"
+    },
+    "runtimeProvenanceLimit": "The probe did not independently store a runtime hash at capture time; the baseline runtime reference above is from the preregistered round 3 plan. The wrapper used the unchanged current production decoder and asserted exact greedy reconstruction for every clip.",
+    "frontendAndModel": "Unchanged v6 weights, 150 Hz frontend, acoustic cache and reset rules. Fixed emissions were captured through a session wrapper, with each actual model reset kept as a separate segment.",
+    "inputIntegrity": "Every input audio SHA-256 was verified against its manifest before inference.",
+    "dataStatus": "Previously consumed recordings and synthetic fixtures used as development only; no round 3 final data accessed.",
+    "localArtifacts": ".research/round3-ctc contains the probe, source report and captured emission arrays; emission arrays are not included in this archive."
+  },
+  "method": {
+    "variants": [
+      "greedy",
+      "beam4",
+      "beam8"
+    ],
+    "beamWidths": [
+      4,
+      8
+    ],
+    "candidateTokens": "full model vocabulary at every frame",
+    "languageModel": null,
+    "dictionary": null,
+    "algorithm": "CTC prefix beam with separate blank/nonblank probability sums, repeated-token stay/extension rules, merge before pruning, and common per-frame probability rescaling.",
+    "primaryReference": "https://www.cs.toronto.edu/~graves/icml_2006.pdf",
+    "rendering": "Collapse CTC repeats and blanks; concatenate model tokens, collapse whitespace and strip outer whitespace identically for recorded greedy reconstruction and beam output.",
+    "validation": [
+      "Exact probability-sum agreement with exhaustive path enumeration for random sequences of 1\u20135 frames with 3 tokens.",
+      "Explicit repeated-token collapse check.",
+      "Reconstructed greedy output equals production output for every evaluated clip.",
+      "Independent source review found no CTC recurrence blocker."
+    ],
+    "streamingCommitLimitation": "Full-segment beam winners may revise earlier text. These are offline fixed-emission scores, not evidence for equivalent irreversible streaming output. Production use would require independently tested bounded-latency prefix commitment and bounded state."
+  },
+  "scoring": {
+    "errors": "Levenshtein distance on full character strings, including spaces.",
+    "nonspaceErrors": "Levenshtein distance after removing ASCII spaces from reference and hypothesis; reported only as a diagnostic, not as an alternate selection metric.",
+    "negativeFalseCharacters": "Non-space output characters on empty-reference noise clips.",
+    "timing": "rows.seconds.greedy is full acoustic inference plus greedy decode. Other rows.seconds entries are added prefix beam time only. Summary inferenceSeconds includes both acoustic and selected decoder time.",
+    "timingLimit": "Shared-machine wall times, not a controlled speed benchmark. Beam summary inferenceSeconds adds the shared acoustic-plus-greedy time and the measured extra beam decode time."
+  },
+  "observations": [
+    "Real human v2: 16 to 14 errors out of 438 reference characters for both beam widths; all gains are spacing, and nonspace errors stay at 6.",
+    "Old Marine: 12 errors out of 37 for all variants; one restored space is offset by a newly incorrect space in a previously exact WOOH clip. Nonspace errors stay at 9.",
+    "Synthetic: 148 to 147 errors out of 1467 for beam 4 and 148 for beam 8. Rough errors increase from 17 to 18/19; chaos errors fall from 130 to 128 for both beams.",
+    "Clean, human, crowded and fading counts are unchanged. All variants emit zero false characters across 240 seconds of synthetic negative audio."
+  ],
+  "datasets": [
+    {
+      "manifest": ".research/real-dev-v2/manifest.json",
+      "manifestSHA256": "9331961f4420aa68602020cd7c193425782cd5c4c2626168271a59c8f1c47c9e",
+      "variants": {
+        "greedy": {
+          "aggregate": {
+            "cases": 12,
+            "speechCases": 12,
+            "characters": 438,
+            "errors": 16,
+            "cer": 0.0365296803652968,
+            "exact": 6,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 290.87,
+            "inferenceSeconds": 19.957323291979264
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 12,
+              "speechCases": 12,
+              "characters": 438,
+              "errors": 16,
+              "cer": 0.0365296803652968,
+              "exact": 6,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 290.87,
+              "inferenceSeconds": 19.957323291979264
+            }
+          },
+          "nonspaceErrors": 6
+        },
+        "beam4": {
+          "aggregate": {
+            "cases": 12,
+            "speechCases": 12,
+            "characters": 438,
+            "errors": 14,
+            "cer": 0.0319634703196347,
+            "exact": 6,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 290.87,
+            "inferenceSeconds": 23.10095208301209
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 12,
+              "speechCases": 12,
+              "characters": 438,
+              "errors": 14,
+              "cer": 0.0319634703196347,
+              "exact": 6,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 290.87,
+              "inferenceSeconds": 23.10095208301209
+            }
+          },
+          "nonspaceErrors": 6
+        },
+        "beam8": {
+          "aggregate": {
+            "cases": 12,
+            "speechCases": 12,
+            "characters": 438,
+            "errors": 14,
+            "cer": 0.0319634703196347,
+            "exact": 6,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 290.87,
+            "inferenceSeconds": 27.754041584033985
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 12,
+              "speechCases": 12,
+              "characters": 438,
+              "errors": 14,
+              "cer": 0.0319634703196347,
+              "exact": 6,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 290.87,
+              "inferenceSeconds": 27.754041584033985
+            }
+          },
+          "nonspaceErrors": 6
+        }
+      },
+      "cases": [
+        {
+          "id": "marine-electric-ljkr-position",
+          "condition": "real-hand-keyed",
+          "expected": "QTH 0815 GMT N 38.23.2 W 74.41.3W SPEED 12 KNOTS",
+          "durationSeconds": 40.23,
+          "outputs": {
+            "greedy": "QTH 0815 GQN38.23.2 W74.4.3W SPEE D 12 KROTS",
+            "beam4": "QTH 0815 GQ N 38.23.2 W74.4.3W SPEE D 12 KROTS",
+            "beam8": "QTH 0815 GQ N 38.23.2 W74.4.3W SPEE D 12 KROTS"
+          },
+          "errors": {
+            "greedy": 8,
+            "beam4": 6,
+            "beam8": 6
+          },
+          "seconds": {
+            "greedy": 3.6280590419773944,
+            "beam4": 0.5125207919627428,
+            "beam8": 1.2233264590031467
+          }
+        },
+        {
+          "id": "marine-electric-wooh-standby",
+          "condition": "real-hand-keyed",
+          "expected": "PLEASE STANDBY FOR US",
+          "durationSeconds": 15.2,
+          "outputs": {
+            "greedy": "PLEASE STANDBY FOR US",
+            "beam4": "PLEASE STANDBY FOR US",
+            "beam8": "PLEASE STANDBY FOR US"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 1.0164917500223964,
+            "beam4": 0.1610702920006588,
+            "beam8": 0.2979625419829972
+          }
+        },
+        {
+          "id": "gpk-signoff-announcement",
+          "condition": "real-hand-keyed",
+          "expected": "AT 312359 UTC PORTPATRICKRADIO/GPK WILL END THE",
+          "durationSeconds": 29.17,
+          "outputs": {
+            "greedy": "AT 312359 UTC PORTPATRICKRADIO /GPK WILL END THE",
+            "beam4": "AT 312359 UTC PORTPATRICKRADIO /GPK WILL END THE",
+            "beam8": "AT 312359 UTC PORTPATRICKRADIO /GPK WILL END THE"
+          },
+          "errors": {
+            "greedy": 1,
+            "beam4": 1,
+            "beam8": 1
+          },
+          "seconds": {
+            "greedy": 1.9778068749583326,
+            "beam4": 0.31243950000498444,
+            "beam8": 0.7463495000265539
+          }
+        },
+        {
+          "id": "gpk-signoff-history",
+          "condition": "real-hand-keyed",
+          "expected": "AFTER 76 YEARS= IN 1844 QTC NR1 FM SAMUEL MORSE WAS",
+          "durationSeconds": 31.5,
+          "outputs": {
+            "greedy": "AFTER 76 YEARS= IN 1844 QTC NR1 FM SAMUEL MORSE WAS",
+            "beam4": "AFTER 76 YEARS= IN 1844 QTC NR1 FM SAMUEL MORSE WAS",
+            "beam8": "AFTER 76 YEARS= IN 1844 QTC NR1 FM SAMUEL MORSE WAS"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 1.9056408329633996,
+            "beam4": 0.34401708299992606,
+            "beam8": 0.9090862080338411
+          }
+        },
+        {
+          "id": "gpk-signoff-closing",
+          "condition": "real-hand-keyed",
+          "expected": "ALL R/OS NOW KEN THE ANSWER TO THIS= NW 73 73/SLAINTE TO ALL R/OS",
+          "durationSeconds": 36.63,
+          "outputs": {
+            "greedy": "ALL R/OS NOW KEN THE ANSWER TO THIS= NW 73 73/SLAINT E TO ALL R/OS",
+            "beam4": "ALL R/OS NOW KEN THE ANSWER TO THIS= NW 73 73/SLAINT E TO ALL R/OS",
+            "beam8": "ALL R/OS NOW KEN THE ANSWER TO THIS= NW 73 73/SLAINT E TO ALL R/OS"
+          },
+          "errors": {
+            "greedy": 1,
+            "beam4": 1,
+            "beam8": 1
+          },
+          "seconds": {
+            "greedy": 2.379193667031359,
+            "beam4": 0.4503137080464512,
+            "beam8": 1.1614295410108753
+          }
+        },
+        {
+          "id": "gpk-signoff-farewell",
+          "condition": "real-hand-keyed",
+          "expected": "PAST AND PRESENT FAREWELL + DE GPK GPK",
+          "durationSeconds": 21.59,
+          "outputs": {
+            "greedy": "PAST AND PRESTNT FAREWELL 1 DE GPK GPK",
+            "beam4": "PAST AND PRESTNT FAREWELL 1 DE GPK GPK",
+            "beam8": "PAST AND PRESTNT FAREWELL 1 DE GPK GPK"
+          },
+          "errors": {
+            "greedy": 2,
+            "beam4": 2,
+            "beam8": 2
+          },
+          "seconds": {
+            "greedy": 1.5383122920175083,
+            "beam4": 0.21883737499592826,
+            "beam8": 0.5485355419805273
+          }
+        },
+        {
+          "id": "marine-extra-ljkr-assist",
+          "condition": "real-hand-keyed",
+          "expected": "YES WE ARE PROCEEDING TO ASSIST SPEED 12 KNOTS",
+          "durationSeconds": 26.5,
+          "outputs": {
+            "greedy": "YES WE ARE PROCE EDING TO ASSIS T SPEE D 12 KNOTS",
+            "beam4": "YES WE ARE PROCE EDING TO ASSIS T SPEE D 12 KNOTS",
+            "beam8": "YES WE ARE PROCE EDING TO ASSIS T SPEE D 12 KNOTS"
+          },
+          "errors": {
+            "greedy": 3,
+            "beam4": 3,
+            "beam8": 3
+          },
+          "seconds": {
+            "greedy": 1.5529204159975052,
+            "beam4": 0.2868157920311205,
+            "beam8": 0.7745462080347352
+          }
+        },
+        {
+          "id": "marine-extra-wooh-abandon",
+          "condition": "real-hand-keyed",
+          "expected": "AT 0800GMT VESSEL DOWN BY HEAD PREPARING TO ABANDON",
+          "durationSeconds": 39.0,
+          "outputs": {
+            "greedy": "AT0800GMT VESSEL DOWN BY HEAD PREPARING TO ABANDON",
+            "beam4": "AT0800GMT VESSEL DOWN BY HEAD PREPARING TO ABANDON",
+            "beam8": "AT0800GMT VESSEL DOWN BY HEAD PREPARING TO ABANDON"
+          },
+          "errors": {
+            "greedy": 1,
+            "beam4": 1,
+            "beam8": 1
+          },
+          "seconds": {
+            "greedy": 2.5299432090250775,
+            "beam4": 0.3964564159978181,
+            "beam8": 0.9801304999855347
+          }
+        },
+        {
+          "id": "marine-extra-wooh-coal-carrier",
+          "condition": "real-hand-keyed",
+          "expected": "VESSEL COAL CARRIER BOUND",
+          "durationSeconds": 19.8,
+          "outputs": {
+            "greedy": "VESSEL COAL CARRIER BOUND",
+            "beam4": "VESSEL COAL CARRIER BOUND",
+            "beam8": "VESSEL COAL CARRIER BOUND"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 1.398628082999494,
+            "beam4": 0.20762166596250609,
+            "beam8": 0.5832897910149768
+          }
+        },
+        {
+          "id": "marine-extra-wooh-destination",
+          "condition": "real-hand-keyed",
+          "expected": "FOR FALL RIVER",
+          "durationSeconds": 10.1,
+          "outputs": {
+            "greedy": "FOR FALL RIVER",
+            "beam4": "FOR FALL RIVER",
+            "beam8": "FOR FALL RIVER"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.8171379580162466,
+            "beam4": 0.06911191699327901,
+            "beam8": 0.2184876250103116
+          }
+        },
+        {
+          "id": "marine-extra-wooh-flares",
+          "condition": "real-hand-keyed",
+          "expected": "YES HAVE FLARES II PFD?",
+          "durationSeconds": 15.35,
+          "outputs": {
+            "greedy": "YES HAVE FLARES II PFD?",
+            "beam4": "YES HAVE FLARES II PFD?",
+            "beam8": "YES HAVE FLARES II PFD?"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.8645387919968925,
+            "beam4": 0.13504575000843033,
+            "beam8": 0.23093433398753405
+          }
+        },
+        {
+          "id": "marine-extra-wooh-vessel-name",
+          "condition": "real-hand-keyed",
+          "expected": "SS MARINE",
+          "durationSeconds": 5.8,
+          "outputs": {
+            "greedy": "SS MARINE",
+            "beam4": "SS MARINE",
+            "beam8": "SS MARINE"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.3486503749736585,
+            "beam4": 0.04937850002897903,
+            "beam8": 0.12264004198368639
+          }
+        }
+      ]
+    },
+    {
+      "manifest": ".research/real-final/manifest.json",
+      "manifestSHA256": "87a9dba85b642a46ea366ebe42db52ca6a9789f03c7f137446198bd1a47ecb0c",
+      "variants": {
+        "greedy": {
+          "aggregate": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 37,
+            "errors": 12,
+            "cer": 0.32432432432432434,
+            "exact": 1,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 30.4,
+            "inferenceSeconds": 1.5183631670079194
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 2,
+              "speechCases": 2,
+              "characters": 37,
+              "errors": 12,
+              "cer": 0.32432432432432434,
+              "exact": 1,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 30.4,
+              "inferenceSeconds": 1.5183631670079194
+            }
+          },
+          "nonspaceErrors": 9
+        },
+        "beam4": {
+          "aggregate": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 37,
+            "errors": 12,
+            "cer": 0.32432432432432434,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 30.4,
+            "inferenceSeconds": 1.7671844169963151
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 2,
+              "speechCases": 2,
+              "characters": 37,
+              "errors": 12,
+              "cer": 0.32432432432432434,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 30.4,
+              "inferenceSeconds": 1.7671844169963151
+            }
+          },
+          "nonspaceErrors": 9
+        },
+        "beam8": {
+          "aggregate": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 37,
+            "errors": 12,
+            "cer": 0.32432432432432434,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 30.4,
+            "inferenceSeconds": 2.0829573330120184
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 2,
+              "speechCases": 2,
+              "characters": 37,
+              "errors": 12,
+              "cer": 0.32432432432432434,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 30.4,
+              "inferenceSeconds": 2.0829573330120184
+            }
+          },
+          "nonspaceErrors": 9
+        }
+      },
+      "cases": [
+        {
+          "id": "marine-electric-nmf-callsign",
+          "condition": "real-hand-keyed",
+          "expected": "DE NMF NMF ? K",
+          "durationSeconds": 9.65,
+          "outputs": {
+            "greedy": "QM9GPA3OK",
+            "beam4": "QM9GPA3O K",
+            "beam8": "QM9GPA3O K"
+          },
+          "errors": {
+            "greedy": 12,
+            "beam4": 11,
+            "beam8": 11
+          },
+          "seconds": {
+            "greedy": 0.5548438340192661,
+            "beam4": 0.09892620798200369,
+            "beam8": 0.2159759160131216
+          }
+        },
+        {
+          "id": "marine-electric-wooh-distress",
+          "condition": "real-hand-keyed",
+          "expected": "DOWN BY HEAD AT 0800GMT",
+          "durationSeconds": 20.75,
+          "outputs": {
+            "greedy": "DOWN BY HEAD AT 0800GMT",
+            "beam4": "DOWN BY HEAD AT 0800GM T",
+            "beam8": "DOWN BY HEAD AT 0800GM T"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 1,
+            "beam8": 1
+          },
+          "seconds": {
+            "greedy": 0.9635193329886533,
+            "beam4": 0.14989504200639203,
+            "beam8": 0.34861824999097735
+          }
+        }
+      ]
+    },
+    {
+      "manifest": ".research/round2-dev/manifest.json",
+      "manifestSHA256": "b2c4e32787fccdc991a3247e60a14b9121330124e5a4ac3947e356e459d8953f",
+      "variants": {
+        "greedy": {
+          "aggregate": {
+            "cases": 60,
+            "speechCases": 48,
+            "characters": 1467,
+            "errors": 148,
+            "cer": 0.10088616223585549,
+            "exact": 31,
+            "noiseCases": 12,
+            "noiseSeconds": 240.0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": 0.0,
+            "audioSeconds": 1256.13225,
+            "inferenceSeconds": 48.46402491501067
+          },
+          "conditions": {
+            "chaos": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 259,
+              "errors": 130,
+              "cer": 0.5019305019305019,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 167.5935,
+              "inferenceSeconds": 5.1588731270167045
+            },
+            "clean": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 255,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 160.5635,
+              "inferenceSeconds": 6.03850258392049
+            },
+            "crowded": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 258,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 137.147125,
+              "inferenceSeconds": 7.8599466680316254
+            },
+            "fading": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 252,
+              "errors": 1,
+              "cer": 0.003968253968253968,
+              "exact": 7,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 143.127375,
+              "inferenceSeconds": 7.55660283198813
+            },
+            "human": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 256,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 192.37275,
+              "inferenceSeconds": 5.972139374120161
+            },
+            "noise": {
+              "cases": 12,
+              "speechCases": 0,
+              "characters": 0,
+              "errors": 0,
+              "cer": null,
+              "exact": 0,
+              "noiseCases": 12,
+              "noiseSeconds": 240.0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": 0.0,
+              "audioSeconds": 240.0,
+              "inferenceSeconds": 7.09453499893425
+            },
+            "rough": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 187,
+              "errors": 17,
+              "cer": 0.09090909090909091,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 215.328,
+              "inferenceSeconds": 8.783425330999307
+            }
+          },
+          "nonspaceErrors": 128
+        },
+        "beam4": {
+          "aggregate": {
+            "cases": 60,
+            "speechCases": 48,
+            "characters": 1467,
+            "errors": 147,
+            "cer": 0.10020449897750511,
+            "exact": 31,
+            "noiseCases": 12,
+            "noiseSeconds": 240.0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": 0.0,
+            "audioSeconds": 1256.13225,
+            "inferenceSeconds": 57.387291789229494
+          },
+          "conditions": {
+            "chaos": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 259,
+              "errors": 128,
+              "cer": 0.4942084942084942,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 167.5935,
+              "inferenceSeconds": 6.369454460975248
+            },
+            "clean": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 255,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 160.5635,
+              "inferenceSeconds": 7.158715583034791
+            },
+            "crowded": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 258,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 137.147125,
+              "inferenceSeconds": 9.08202849997906
+            },
+            "fading": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 252,
+              "errors": 1,
+              "cer": 0.003968253968253968,
+              "exact": 7,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 143.127375,
+              "inferenceSeconds": 8.70072812406579
+            },
+            "human": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 256,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 192.37275,
+              "inferenceSeconds": 7.258629998250399
+            },
+            "noise": {
+              "cases": 12,
+              "speechCases": 0,
+              "characters": 0,
+              "errors": 0,
+              "cer": null,
+              "exact": 0,
+              "noiseCases": 12,
+              "noiseSeconds": 240.0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": 0.0,
+              "audioSeconds": 240.0,
+              "inferenceSeconds": 8.577704707044177
+            },
+            "rough": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 187,
+              "errors": 18,
+              "cer": 0.0962566844919786,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 215.328,
+              "inferenceSeconds": 10.240030415880028
+            }
+          },
+          "nonspaceErrors": 127
+        },
+        "beam8": {
+          "aggregate": {
+            "cases": 60,
+            "speechCases": 48,
+            "characters": 1467,
+            "errors": 148,
+            "cer": 0.10088616223585549,
+            "exact": 31,
+            "noiseCases": 12,
+            "noiseSeconds": 240.0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": 0.0,
+            "audioSeconds": 1256.13225,
+            "inferenceSeconds": 68.44708745414391
+          },
+          "conditions": {
+            "chaos": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 259,
+              "errors": 128,
+              "cer": 0.4942084942084942,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 167.5935,
+              "inferenceSeconds": 7.741672668082174
+            },
+            "clean": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 255,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 160.5635,
+              "inferenceSeconds": 8.65117570781149
+            },
+            "crowded": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 258,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 137.147125,
+              "inferenceSeconds": 10.749497751996387
+            },
+            "fading": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 252,
+              "errors": 1,
+              "cer": 0.003968253968253968,
+              "exact": 7,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 143.127375,
+              "inferenceSeconds": 10.269385372055694
+            },
+            "human": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 256,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 192.37275,
+              "inferenceSeconds": 8.855940332170576
+            },
+            "noise": {
+              "cases": 12,
+              "speechCases": 0,
+              "characters": 0,
+              "errors": 0,
+              "cer": null,
+              "exact": 0,
+              "noiseCases": 12,
+              "noiseSeconds": 240.0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": 0.0,
+              "audioSeconds": 240.0,
+              "inferenceSeconds": 10.187777833023574
+            },
+            "rough": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 187,
+              "errors": 19,
+              "cer": 0.10160427807486631,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 215.328,
+              "inferenceSeconds": 11.991637789004017
+            }
+          },
+          "nonspaceErrors": 127
+        }
+      },
+      "cases": [
+        {
+          "id": "clean-1",
+          "condition": "clean",
+          "expected": "CQ DE ZS3XC UR RST 599 NAME JANE K",
+          "durationSeconds": 22.5155,
+          "outputs": {
+            "greedy": "CQ DE ZS3XC UR RST 599 NAME JANE K",
+            "beam4": "CQ DE ZS3XC UR RST 599 NAME JANE K",
+            "beam8": "CQ DE ZS3XC UR RST 599 NAME JANE K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.8965939169866033,
+            "beam4": 0.1634442920330912,
+            "beam8": 0.371195416955743
+          }
+        },
+        {
+          "id": "clean-2",
+          "condition": "clean",
+          "expected": "S07J 51Z2 6F4M ZWK3 15XS",
+          "durationSeconds": 20.414875,
+          "outputs": {
+            "greedy": "S07J 51Z2 6F4M ZWK3 15XS",
+            "beam4": "S07J 51Z2 6F4M ZWK3 15XS",
+            "beam8": "S07J 51Z2 6F4M ZWK3 15XS"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7306426250142977,
+            "beam4": 0.13360254204599187,
+            "beam8": 0.32068670802982524
+          }
+        },
+        {
+          "id": "clean-3",
+          "condition": "clean",
+          "expected": "CLOUD EARLY NIGHT GREEN RIVER LIGHT NORTH",
+          "durationSeconds": 20.101375,
+          "outputs": {
+            "greedy": "CLOUD EARLY NIGHT GREEN RIVER LIGHT NORTH",
+            "beam4": "CLOUD EARLY NIGHT GREEN RIVER LIGHT NORTH",
+            "beam8": "CLOUD EARLY NIGHT GREEN RIVER LIGHT NORTH"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7034676250186749,
+            "beam4": 0.14694029098609462,
+            "beam8": 0.3392995409667492
+          }
+        },
+        {
+          "id": "clean-4",
+          "condition": "clean",
+          "expected": "CQ DE M8MEY UR RST 339 NAME JANE K",
+          "durationSeconds": 20.556,
+          "outputs": {
+            "greedy": "CQ DE M8MEY UR RST 339 NAME JANE K",
+            "beam4": "CQ DE M8MEY UR RST 339 NAME JANE K",
+            "beam8": "CQ DE M8MEY UR RST 339 NAME JANE K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7544065829715692,
+            "beam4": 0.13619087502593175,
+            "beam8": 0.39094208303140476
+          }
+        },
+        {
+          "id": "clean-5",
+          "condition": "clean",
+          "expected": "WOFN 71UA TYP5 FRNB TVMO",
+          "durationSeconds": 15.365375,
+          "outputs": {
+            "greedy": "WOFN 71UA TYP5 FRNB TVMO",
+            "beam4": "WOFN 71UA TYP5 FRNB TVMO",
+            "beam8": "WOFN 71UA TYP5 FRNB TVMO"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.5357643750030547,
+            "beam4": 0.11712399998214096,
+            "beam8": 0.2515066670021042
+          }
+        },
+        {
+          "id": "clean-6",
+          "condition": "clean",
+          "expected": "TODAY GREEN LIGHT NORTH EARLY HILL NIGHT",
+          "durationSeconds": 25.3485,
+          "outputs": {
+            "greedy": "TODAY GREEN LIGHT NORTH EARLY HILL NIGHT",
+            "beam4": "TODAY GREEN LIGHT NORTH EARLY HILL NIGHT",
+            "beam8": "TODAY GREEN LIGHT NORTH EARLY HILL NIGHT"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 1.0635577499633655,
+            "beam4": 0.17729433299973607,
+            "beam8": 0.4236755829770118
+          }
+        },
+        {
+          "id": "clean-7",
+          "condition": "clean",
+          "expected": "CQ DE JA8NI UR RST 599 NAME JANE K",
+          "durationSeconds": 19.8055,
+          "outputs": {
+            "greedy": "CQ DE JA8NI UR RST 599 NAME JANE K",
+            "beam4": "CQ DE JA8NI UR RST 599 NAME JANE K",
+            "beam8": "CQ DE JA8NI UR RST 599 NAME JANE K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7630203340086155,
+            "beam4": 0.1548656250233762,
+            "beam8": 0.3310446249670349
+          }
+        },
+        {
+          "id": "clean-8",
+          "condition": "clean",
+          "expected": "NCSZ J4U3 UCT9 EER9 H1S2",
+          "durationSeconds": 16.456375,
+          "outputs": {
+            "greedy": "NCSZ J4U3 UCT9 EER9 H1S2",
+            "beam4": "NCSZ J4U3 UCT9 EER9 H1S2",
+            "beam8": "NCSZ J4U3 UCT9 EER9 H1S2"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.5910493749543093,
+            "beam4": 0.0907510410179384,
+            "beam8": 0.1843224999611266
+          }
+        },
+        {
+          "id": "human-1",
+          "condition": "human",
+          "expected": "CQ DE K4DR UR RST 599 NAME JOHN K",
+          "durationSeconds": 25.93925,
+          "outputs": {
+            "greedy": "CQ DE K4DR UR RST 599 NAME JOHN K",
+            "beam4": "CQ DE K4DR UR RST 599 NAME JOHN K",
+            "beam8": "CQ DE K4DR UR RST 599 NAME JOHN K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7362070410163142,
+            "beam4": 0.17161404201760888,
+            "beam8": 0.3220883750473149
+          }
+        },
+        {
+          "id": "human-2",
+          "condition": "human",
+          "expected": "Z9R4 T2O2 AQZ4 ZIAT 8Z30",
+          "durationSeconds": 23.481125,
+          "outputs": {
+            "greedy": "Z9R4 T2O2 AQZ4 ZIAT 8Z30",
+            "beam4": "Z9R4 T2O2 AQZ4 ZIAT 8Z30",
+            "beam8": "Z9R4 T2O2 AQZ4 ZIAT 8Z30"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.9192774160183035,
+            "beam4": 0.14046783302910626,
+            "beam8": 0.32500233402242884
+          }
+        },
+        {
+          "id": "human-3",
+          "condition": "human",
+          "expected": "GREEN NORTH CLEAR HILL VALLEY EARLY NIGHT",
+          "durationSeconds": 26.76125,
+          "outputs": {
+            "greedy": "GREEN NORTH CLEAR HILL VALLEY EARLY NIGHT",
+            "beam4": "GREEN NORTH CLEAR HILL VALLEY EARLY NIGHT",
+            "beam8": "GREEN NORTH CLEAR HILL VALLEY EARLY NIGHT"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.706415000022389,
+            "beam4": 0.1788026670110412,
+            "beam8": 0.4292507499922067
+          }
+        },
+        {
+          "id": "human-4",
+          "condition": "human",
+          "expected": "CQ DE ZS6DT UR RST 599 NAME JOHN K",
+          "durationSeconds": 24.29975,
+          "outputs": {
+            "greedy": "CQ DE ZS6DT UR RST 599 NAME JOHN K",
+            "beam4": "CQ DE ZS6DT UR RST 599 NAME JOHN K",
+            "beam8": "CQ DE ZS6DT UR RST 599 NAME JOHN K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7217195840203203,
+            "beam4": 0.1651174160069786,
+            "beam8": 0.3413461670279503
+          }
+        },
+        {
+          "id": "human-5",
+          "condition": "human",
+          "expected": "RAW6 HHPD 7POZ 6FJP ME20",
+          "durationSeconds": 20.8115,
+          "outputs": {
+            "greedy": "RAW6 HHPD 7POZ 6FJP ME20",
+            "beam4": "RAW6 HHPD 7POZ 6FJP ME20",
+            "beam8": "RAW6 HHPD 7POZ 6FJP ME20"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.5846064169891179,
+            "beam4": 0.1359920420218259,
+            "beam8": 0.29319029103498906
+          }
+        },
+        {
+          "id": "human-6",
+          "condition": "human",
+          "expected": "BRIDGE TODAY CLOUD BRIDGE STONE RAIN AFTER",
+          "durationSeconds": 26.917625,
+          "outputs": {
+            "greedy": "BRIDGE TODAY CLOUD BRIDGE STONE RAIN AFTER",
+            "beam4": "BRIDGE TODAY CLOUD BRIDGE STONE RAIN AFTER",
+            "beam8": "BRIDGE TODAY CLOUD BRIDGE STONE RAIN AFTER"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7303209580131806,
+            "beam4": 0.17779124999651685,
+            "beam8": 0.4188454579561949
+          }
+        },
+        {
+          "id": "human-7",
+          "condition": "human",
+          "expected": "CQ DE F4ILU UR RST 579 NAME MARY K",
+          "durationSeconds": 24.472875,
+          "outputs": {
+            "greedy": "CQ DE F4ILU UR RST 579 NAME MARY K",
+            "beam4": "CQ DE F4ILU UR RST 579 NAME MARY K",
+            "beam8": "CQ DE F4ILU UR RST 579 NAME MARY K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7604577500023879,
+            "beam4": 0.18085033301031217,
+            "beam8": 0.4561450830078684
+          }
+        },
+        {
+          "id": "human-8",
+          "condition": "human",
+          "expected": "RESW AITR FIUJ 8VW8 318Z",
+          "durationSeconds": 19.689375,
+          "outputs": {
+            "greedy": "RESW AITR FIUJ 8VW8 318Z",
+            "beam4": "RESW AITR FIUJ 8VW8 318Z",
+            "beam8": "RESW AITR FIUJ 8VW8 318Z"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.8131352080381475,
+            "beam4": 0.13585504103684798,
+            "beam8": 0.29793249996146187
+          }
+        },
+        {
+          "id": "fading-1",
+          "condition": "fading",
+          "expected": "CQ DE M0GZZ UR RST 579 NAME FRED K",
+          "durationSeconds": 21.3135,
+          "outputs": {
+            "greedy": "CQ DE M0GZZ UR RST 579 NAME FRED K",
+            "beam4": "CQ DE M0GZZ UR RST 579 NAME FRED K",
+            "beam8": "CQ DE M0GZZ UR RST 579 NAME FRED K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7486053329776041,
+            "beam4": 0.1443989159888588,
+            "beam8": 0.3590628749807365
+          }
+        },
+        {
+          "id": "fading-2",
+          "condition": "fading",
+          "expected": "1SFD JZOE N7XG 9C1E 61C3",
+          "durationSeconds": 16.57775,
+          "outputs": {
+            "greedy": "1SFD JZOE N7XG 9C1E 61C3",
+            "beam4": "1SFD JZOE N7XG 9C1E 61C3",
+            "beam8": "1SFD JZOE N7XG 9C1E 61C3"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.9867063750280067,
+            "beam4": 0.13081875001080334,
+            "beam8": 0.29362524999305606
+          }
+        },
+        {
+          "id": "fading-3",
+          "condition": "fading",
+          "expected": "RAIN RAIN EARLY TODAY STONE RIVER CLOUD",
+          "durationSeconds": 18.051125,
+          "outputs": {
+            "greedy": "RAIN RAIN EARL Y TODAY STONE RIVER CLOUD",
+            "beam4": "RAIN RAIN EARL Y TODAY STONE RIVER CLOUD",
+            "beam8": "RAIN RAIN EARL Y TODAY STONE RIVER CLOUD"
+          },
+          "errors": {
+            "greedy": 1,
+            "beam4": 1,
+            "beam8": 1
+          },
+          "seconds": {
+            "greedy": 1.2232124169822782,
+            "beam4": 0.15505458298139274,
+            "beam8": 0.3857811249908991
+          }
+        },
+        {
+          "id": "fading-4",
+          "condition": "fading",
+          "expected": "CQ DE DL6RJP UR RST 459 NAME JOHN K",
+          "durationSeconds": 20.640875,
+          "outputs": {
+            "greedy": "CQ DE DL6RJP UR RST 459 NAME JOHN K",
+            "beam4": "CQ DE DL6RJP UR RST 459 NAME JOHN K",
+            "beam8": "CQ DE DL6RJP UR RST 459 NAME JOHN K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 1.1088018330046907,
+            "beam4": 0.16765854199184105,
+            "beam8": 0.382366041012574
+          }
+        },
+        {
+          "id": "fading-5",
+          "condition": "fading",
+          "expected": "ZYYT 5V6G Z1GP NG7F 3OEV",
+          "durationSeconds": 16.2225,
+          "outputs": {
+            "greedy": "ZYYT 5V6G Z1GP NG7F 3OEV",
+            "beam4": "ZYYT 5V6G Z1GP NG7F 3OEV",
+            "beam8": "ZYYT 5V6G Z1GP NG7F 3OEV"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 1.0254589579999447,
+            "beam4": 0.14706987503450364,
+            "beam8": 0.331442708033137
+          }
+        },
+        {
+          "id": "fading-6",
+          "condition": "fading",
+          "expected": "AFTER GREEN ROAD RIVER GREEN HILL ROAD",
+          "durationSeconds": 17.53075,
+          "outputs": {
+            "greedy": "AFTER GREEN ROAD RIVER GREEN HILL ROAD",
+            "beam4": "AFTER GREEN ROAD RIVER GREEN HILL ROAD",
+            "beam8": "AFTER GREEN ROAD RIVER GREEN HILL ROAD"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 1.0071032909909263,
+            "beam4": 0.13241933402605355,
+            "beam8": 0.36427900003036484
+          }
+        },
+        {
+          "id": "fading-7",
+          "condition": "fading",
+          "expected": "CQ DE DL1EK UR RST 459 NAME ALAN K",
+          "durationSeconds": 16.323875,
+          "outputs": {
+            "greedy": "CQ DE DL1EK UR RST 459 NAME ALAN K",
+            "beam4": "CQ DE DL1EK UR RST 459 NAME ALAN K",
+            "beam8": "CQ DE DL1EK UR RST 459 NAME ALAN K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7185040410258807,
+            "beam4": 0.12569433404132724,
+            "beam8": 0.28014408302260563
+          }
+        },
+        {
+          "id": "fading-8",
+          "condition": "fading",
+          "expected": "09GE 9MDO NH48 KFW5 I9XY",
+          "durationSeconds": 16.467,
+          "outputs": {
+            "greedy": "09GE 9MDO NH48 KFW5 I9XY",
+            "beam4": "09GE 9MDO NH48 KFW5 I9XY",
+            "beam8": "09GE 9MDO NH48 KFW5 I9XY"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7382105839787982,
+            "beam4": 0.14101095800288022,
+            "beam8": 0.3160814580041915
+          }
+        },
+        {
+          "id": "crowded-1",
+          "condition": "crowded",
+          "expected": "CQ DE VK0RCF UR RST 459 NAME MARY K",
+          "durationSeconds": 17.719375,
+          "outputs": {
+            "greedy": "CQ DE VK0RCF UR RST 459 NAME MARY K",
+            "beam4": "CQ DE VK0RCF UR RST 459 NAME MARY K",
+            "beam8": "CQ DE VK0RCF UR RST 459 NAME MARY K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.9861408330034465,
+            "beam4": 0.15758841601200402,
+            "beam8": 0.3262223749770783
+          }
+        },
+        {
+          "id": "crowded-2",
+          "condition": "crowded",
+          "expected": "A3QE 44ZT 5QH9 9K63 9YGR",
+          "durationSeconds": 17.57675,
+          "outputs": {
+            "greedy": "A3QE 44ZT 5QH9 9K63 9YGR",
+            "beam4": "A3QE 44ZT 5QH9 9K63 9YGR",
+            "beam8": "A3QE 44ZT 5QH9 9K63 9YGR"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.9498428329825401,
+            "beam4": 0.14404883299721405,
+            "beam8": 0.5769900839659385
+          }
+        },
+        {
+          "id": "crowded-3",
+          "condition": "crowded",
+          "expected": "HILL LIGHT TODAY ROAD BRIDGE TODAY AFTER",
+          "durationSeconds": 19.22,
+          "outputs": {
+            "greedy": "HILL LIGHT TODAY ROAD BRIDGE TODAY AFTER",
+            "beam4": "HILL LIGHT TODAY ROAD BRIDGE TODAY AFTER",
+            "beam8": "HILL LIGHT TODAY ROAD BRIDGE TODAY AFTER"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 1.221290167013649,
+            "beam4": 0.15145570796448737,
+            "beam8": 0.3898253330262378
+          }
+        },
+        {
+          "id": "crowded-4",
+          "condition": "crowded",
+          "expected": "CQ DE 9V5SHE UR RST 599 NAME ALAN K",
+          "durationSeconds": 15.613875,
+          "outputs": {
+            "greedy": "CQ DE 9V5SHE UR RST 599 NAME ALAN K",
+            "beam4": "CQ DE 9V5SHE UR RST 599 NAME ALAN K",
+            "beam8": "CQ DE 9V5SHE UR RST 599 NAME ALAN K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.9259374170214869,
+            "beam4": 0.1722079999744892,
+            "beam8": 0.34618520800722763
+          }
+        },
+        {
+          "id": "crowded-5",
+          "condition": "crowded",
+          "expected": "DUNG 8P8P W1YJ 4K03 KU6I",
+          "durationSeconds": 14.830625,
+          "outputs": {
+            "greedy": "DUNG 8P8P W1YJ 4K03 KU6I",
+            "beam4": "DUNG 8P8P W1YJ 4K03 KU6I",
+            "beam8": "DUNG 8P8P W1YJ 4K03 KU6I"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.7493117920239456,
+            "beam4": 0.11517549998825416,
+            "beam8": 0.295306249987334
+          }
+        },
+        {
+          "id": "crowded-6",
+          "condition": "crowded",
+          "expected": "RADIO STONE RAIN VALLEY STONE RIVER AFTER",
+          "durationSeconds": 18.36775,
+          "outputs": {
+            "greedy": "RADIO STONE RAIN VALLEY STONE RIVER AFTER",
+            "beam4": "RADIO STONE RAIN VALLEY STONE RIVER AFTER",
+            "beam8": "RADIO STONE RAIN VALLEY STONE RIVER AFTER"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 1.230863208998926,
+            "beam4": 0.16788900003302842,
+            "beam8": 0.34094970900332555
+          }
+        },
+        {
+          "id": "crowded-7",
+          "condition": "crowded",
+          "expected": "CQ DE VK2POD UR RST 579 NAME ALAN K",
+          "durationSeconds": 17.787125,
+          "outputs": {
+            "greedy": "CQ DE VK2POD UR RST 579 NAME ALAN K",
+            "beam4": "CQ DE VK2POD UR RST 579 NAME ALAN K",
+            "beam8": "CQ DE VK2POD UR RST 579 NAME ALAN K"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.8833339170087129,
+            "beam4": 0.1896624169894494,
+            "beam8": 0.32474125002045184
+          }
+        },
+        {
+          "id": "crowded-8",
+          "condition": "crowded",
+          "expected": "7YTA FOBX 9XV1 D0H1 U638",
+          "durationSeconds": 16.031625,
+          "outputs": {
+            "greedy": "7YTA FOBX 9XV1 D0H1 U638",
+            "beam4": "7YTA FOBX 9XV1 D0H1 U638",
+            "beam8": "7YTA FOBX 9XV1 D0H1 U638"
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.9132264999789186,
+            "beam4": 0.12405395798850805,
+            "beam8": 0.2893308749771677
+          }
+        },
+        {
+          "id": "rough-1",
+          "condition": "rough",
+          "expected": "CQ DE JA2JXA UR RST 339",
+          "durationSeconds": 26.18075,
+          "outputs": {
+            "greedy": "CQ TIE JA2JX AUR RST 339",
+            "beam4": "CQ TIE JA2JX AUR RST 339",
+            "beam8": "CQ TIE JA2JX AUR RST 339"
+          },
+          "errors": {
+            "greedy": 4,
+            "beam4": 4,
+            "beam8": 4
+          },
+          "seconds": {
+            "greedy": 2.127054999989923,
+            "beam4": 0.1732699170242995,
+            "beam8": 0.5516940830275416
+          }
+        },
+        {
+          "id": "rough-2",
+          "condition": "rough",
+          "expected": "VIEK 30GC 9I8N S4YL",
+          "durationSeconds": 29.291125,
+          "outputs": {
+            "greedy": "VIEK 30GC9I8N S4YL",
+            "beam4": "VIEK 30GC9I8N S4YL",
+            "beam8": "VIEK 30GC9I8N S4YL"
+          },
+          "errors": {
+            "greedy": 1,
+            "beam4": 1,
+            "beam8": 1
+          },
+          "seconds": {
+            "greedy": 1.4753396249725483,
+            "beam4": 0.22261925000930205,
+            "beam8": 0.45339920796686783
+          }
+        },
+        {
+          "id": "rough-3",
+          "condition": "rough",
+          "expected": "WIND SOUTH LIGHT CLOUD TODAY",
+          "durationSeconds": 28.6595,
+          "outputs": {
+            "greedy": "WIND SOUTHLIGHT NLOUDTODAY",
+            "beam4": "WIND SOUTHLIGHT NLOUDTODAY",
+            "beam8": "WIND SOUTHLIGHT NLOUDTODAY"
+          },
+          "errors": {
+            "greedy": 3,
+            "beam4": 3,
+            "beam8": 3
+          },
+          "seconds": {
+            "greedy": 1.4239586659823544,
+            "beam4": 0.1662339589674957,
+            "beam8": 0.31711850001011044
+          }
+        },
+        {
+          "id": "rough-4",
+          "condition": "rough",
+          "expected": "CQ DE 9V1MN UR RST",
+          "durationSeconds": 23.69375,
+          "outputs": {
+            "greedy": "CQ DE 9V1MNUR RST",
+            "beam4": "CQ DE 9V1MNUR RST",
+            "beam8": "CQ DE 9V1MNUR RST"
+          },
+          "errors": {
+            "greedy": 1,
+            "beam4": 1,
+            "beam8": 1
+          },
+          "seconds": {
+            "greedy": 0.6106370419729501,
+            "beam4": 0.11806391697609797,
+            "beam8": 0.26625970797613263
+          }
+        },
+        {
+          "id": "rough-5",
+          "condition": "rough",
+          "expected": "MA0A 1T7V 8QKZ V4ZF",
+          "durationSeconds": 28.202625,
+          "outputs": {
+            "greedy": "MA0A 1T 7V8QKZ V4ZF",
+            "beam4": "MA0A 1T 7V8QKZ V4ZF",
+            "beam8": "MA0A 1T 7V8QK Z V4ZF"
+          },
+          "errors": {
+            "greedy": 2,
+            "beam4": 2,
+            "beam8": 3
+          },
+          "seconds": {
+            "greedy": 0.7784118330455385,
+            "beam4": 0.17881049995776266,
+            "beam8": 0.3686518340255134
+          }
+        },
+        {
+          "id": "rough-6",
+          "condition": "rough",
+          "expected": "RIVER WATER LIGHT RIVER WIND SOUTH EARLY",
+          "durationSeconds": 26.300375,
+          "outputs": {
+            "greedy": "RIVERWATER LIGHT RIVER WIND SOUTH EARLY",
+            "beam4": "RIVERWATER LIGHT RIV ER WIND SOUTH EARLY",
+            "beam8": "RIVERWATER LIGHT RIV ER WIND SOUTH EARLY"
+          },
+          "errors": {
+            "greedy": 1,
+            "beam4": 2,
+            "beam8": 2
+          },
+          "seconds": {
+            "greedy": 0.8608261659974232,
+            "beam4": 0.21886074997019023,
+            "beam8": 0.4315152500057593
+          }
+        },
+        {
+          "id": "rough-7",
+          "condition": "rough",
+          "expected": "CQ DE M7JJ UR RST 459",
+          "durationSeconds": 26.923,
+          "outputs": {
+            "greedy": "CQ DE M7JJ IUER RST 459",
+            "beam4": "CQ DE M7JJ IUER RST 459",
+            "beam8": "CQ DE M7JJ IUER RST 459"
+          },
+          "errors": {
+            "greedy": 2,
+            "beam4": 2,
+            "beam8": 2
+          },
+          "seconds": {
+            "greedy": 0.7488996660104021,
+            "beam4": 0.19351558398921043,
+            "beam8": 0.4046422499814071
+          }
+        },
+        {
+          "id": "rough-8",
+          "condition": "rough",
+          "expected": "Z6M5 RSMJ BKEG FIC8",
+          "durationSeconds": 26.076875,
+          "outputs": {
+            "greedy": "Z6M5 RSMJ TIEKEG FIC8",
+            "beam4": "Z6M5 RSMJ TIEKEG FIC8",
+            "beam8": "Z6M5 RSMJ TIEKEG FIC8"
+          },
+          "errors": {
+            "greedy": 3,
+            "beam4": 3,
+            "beam8": 3
+          },
+          "seconds": {
+            "greedy": 0.7582973330281675,
+            "beam4": 0.18523120798636228,
+            "beam8": 0.41493162501137704
+          }
+        },
+        {
+          "id": "chaos-1",
+          "condition": "chaos",
+          "expected": "CQ DE DL6MMA UR RST 339 NAME JANE K",
+          "durationSeconds": 18.174625,
+          "outputs": {
+            "greedy": "C D DLD OXRUR RT W99 J",
+            "beam4": "C D DLD OXRUR RST W99 J",
+            "beam8": "C D DLD OXRUR RST W99 J"
+          },
+          "errors": {
+            "greedy": 20,
+            "beam4": 19,
+            "beam8": 19
+          },
+          "seconds": {
+            "greedy": 0.5370440839906223,
+            "beam4": 0.12537162500666454,
+            "beam8": 0.2679638330009766
+          }
+        },
+        {
+          "id": "chaos-2",
+          "condition": "chaos",
+          "expected": "8CHQ YLR6 U6PW UTXM RA0S",
+          "durationSeconds": 20.765125,
+          "outputs": {
+            "greedy": "XRHQ KD N AM 0I",
+            "beam4": "XRHQ KDD N AM 0I",
+            "beam8": "XRHQ KDD N AM 0I"
+          },
+          "errors": {
+            "greedy": 16,
+            "beam4": 16,
+            "beam8": 16
+          },
+          "seconds": {
+            "greedy": 0.5820593339740299,
+            "beam4": 0.16281933401478454,
+            "beam8": 0.29816720803501084
+          }
+        },
+        {
+          "id": "chaos-3",
+          "condition": "chaos",
+          "expected": "NORTH STONE EARLY RIVER CLOUD RAIN AFTER",
+          "durationSeconds": 22.75725,
+          "outputs": {
+            "greedy": "NRDE ESTYEARLY RIVER CLW TZ RAINAFTER",
+            "beam4": "NRDE ESTYEARLY RIVER CLW TZ RAINAFTER",
+            "beam8": "NRDE ESTYEARLY RIVER CLW TZ RAINAFTER"
+          },
+          "errors": {
+            "greedy": 13,
+            "beam4": 13,
+            "beam8": 13
+          },
+          "seconds": {
+            "greedy": 0.6621466660290025,
+            "beam4": 0.22484204202191904,
+            "beam8": 0.4255977920256555
+          }
+        },
+        {
+          "id": "chaos-4",
+          "condition": "chaos",
+          "expected": "CQ DE F2SM UR RST 339 NAME JOHN K",
+          "durationSeconds": 19.42875,
+          "outputs": {
+            "greedy": "CQ DER2G RRST W9 NAME 8 K",
+            "beam4": "CQ DE R2G RRST W9 NAME 8 K",
+            "beam8": "CQ DE R2G RRST W9 NAME 8 K"
+          },
+          "errors": {
+            "greedy": 12,
+            "beam4": 11,
+            "beam8": 11
+          },
+          "seconds": {
+            "greedy": 0.7827837499789894,
+            "beam4": 0.11126037500798702,
+            "beam8": 0.2581837910111062
+          }
+        },
+        {
+          "id": "chaos-5",
+          "condition": "chaos",
+          "expected": "4CLW CN6W 6FNT ZDNE Q6BV",
+          "durationSeconds": 18.999875,
+          "outputs": {
+            "greedy": "CLW D9UW 6F DT QDB",
+            "beam4": "CLW D9UW 6F DT QDB",
+            "beam8": "CLW D9UW 6F DT QDB"
+          },
+          "errors": {
+            "greedy": 11,
+            "beam4": 11,
+            "beam8": 11
+          },
+          "seconds": {
+            "greedy": 0.5859950829762965,
+            "beam4": 0.13339895801618695,
+            "beam8": 0.26249070797348395
+          }
+        },
+        {
+          "id": "chaos-6",
+          "condition": "chaos",
+          "expected": "RADIO CLOUD BRIDGE WATER BRIDGE CLOUD CLEAR",
+          "durationSeconds": 24.17475,
+          "outputs": {
+            "greedy": "U5 3 CLQD 7R QTC B5 CJFM C5 Y",
+            "beam4": "U5 3 CLQD 7R QTC B5 C JFM C5 Y",
+            "beam8": "U5 3 CLQD 7R QTC B5 C JFM C5 Y"
+          },
+          "errors": {
+            "greedy": 29,
+            "beam4": 29,
+            "beam8": 29
+          },
+          "seconds": {
+            "greedy": 0.6940015419968404,
+            "beam4": 0.15883241698611528,
+            "beam8": 0.3654267090023495
+          }
+        },
+        {
+          "id": "chaos-7",
+          "condition": "chaos",
+          "expected": "CQ DE JA6NPF UR RST 459 NAME PETER K",
+          "durationSeconds": 20.415125,
+          "outputs": {
+            "greedy": "GNQA DE JA6L /F UR AS 9 NAME PA A",
+            "beam4": "GNQA DE JA6L /F UR AS 9 NAME PA A",
+            "beam8": "GNQA DE JA6L /F UR AS 9 NAME PA A"
+          },
+          "errors": {
+            "greedy": 15,
+            "beam4": 15,
+            "beam8": 15
+          },
+          "seconds": {
+            "greedy": 0.5739912090357393,
+            "beam4": 0.14230024995049462,
+            "beam8": 0.3710509170196019
+          }
+        },
+        {
+          "id": "chaos-8",
+          "condition": "chaos",
+          "expected": "4JHY H8A3 VOSB 12K9 I41I",
+          "durationSeconds": 22.878,
+          "outputs": {
+            "greedy": "S3 A9FY H8RI. FOSB 1.9 I4J",
+            "beam4": "S3 A9FY H8RI. FOSB 1.9 I4J",
+            "beam8": "S3 A9FY H8RI. FOSB 1.9 I4J"
+          },
+          "errors": {
+            "greedy": 14,
+            "beam4": 14,
+            "beam8": 14
+          },
+          "seconds": {
+            "greedy": 0.7408514590351842,
+            "beam4": 0.15175633295439184,
+            "beam8": 0.33391858299728483
+          }
+        },
+        {
+          "id": "noise-1-1",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.5870224160025828,
+            "beam4": 0.10117254103533924,
+            "beam8": 0.21729362499900162
+          }
+        },
+        {
+          "id": "noise-1-2",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.5362062079948373,
+            "beam4": 0.11303075001342222,
+            "beam8": 0.25084575003711507
+          }
+        },
+        {
+          "id": "noise-2-1",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.5890342500060797,
+            "beam4": 0.11965429200790823,
+            "beam8": 0.25681379198795184
+          }
+        },
+        {
+          "id": "noise-2-2",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.544226375001017,
+            "beam4": 0.1291782499756664,
+            "beam8": 0.28422487498028204
+          }
+        },
+        {
+          "id": "noise-3-1",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.5937290419824421,
+            "beam4": 0.11700816603843123,
+            "beam8": 0.27312279102625325
+          }
+        },
+        {
+          "id": "noise-3-2",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.6892738330061547,
+            "beam4": 0.10855887504294515,
+            "beam8": 0.23532045801403
+          }
+        },
+        {
+          "id": "noise-4-1",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.6121859999839216,
+            "beam4": 0.1212990420171991,
+            "beam8": 0.23696154198842123
+          }
+        },
+        {
+          "id": "noise-4-2",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.5897284169914201,
+            "beam4": 0.1255439579836093,
+            "beam8": 0.27543887501815334
+          }
+        },
+        {
+          "id": "noise-5-1",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.5446781669743359,
+            "beam4": 0.16859604098135605,
+            "beam8": 0.2624397500185296
+          }
+        },
+        {
+          "id": "noise-5-2",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.5715061249793507,
+            "beam4": 0.1331037090276368,
+            "beam8": 0.28774158394662663
+          }
+        },
+        {
+          "id": "noise-6-1",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.6113472080323845,
+            "beam4": 0.12852037500124425,
+            "beam8": 0.2557492920313962
+          }
+        },
+        {
+          "id": "noise-6-2",
+          "condition": "noise",
+          "expected": "",
+          "durationSeconds": 20.0,
+          "outputs": {
+            "greedy": "",
+            "beam4": "",
+            "beam8": ""
+          },
+          "errors": {
+            "greedy": 0,
+            "beam4": 0,
+            "beam8": 0
+          },
+          "seconds": {
+            "greedy": 0.6255969579797238,
+            "beam4": 0.11750370898516849,
+            "beam8": 0.25729050004156306
+          }
+        }
+      ]
+    }
+  ]
+}

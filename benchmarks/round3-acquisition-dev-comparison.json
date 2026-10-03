@@ -1,0 +1,66 @@
+{
+  "allGuardsPass": true,
+  "gates": {
+    "liveRelativeImprovementAtLeast10Percent": true,
+    "liveAbsoluteImprovementAtLeastOnePoint": true,
+    "liveNormalCleanNoninferiorHalfPoint": true,
+    "liveNoiseFalseCharactersNonincrease": true,
+    "liveLowAmplitudeWithin20HzAtLeast95Percent": true,
+    "liveCrowdedKeepsDesiredStation": true,
+    "fileRelativeImprovementAtLeast10Percent": true,
+    "fileAbsoluteImprovementAtLeastOnePoint": true,
+    "fileNormalCleanNoninferiorHalfPoint": true,
+    "fileNoiseFalseCharactersNonincrease": true,
+    "fileLowAmplitudeWithin20HzAtLeast95Percent": true,
+    "fileCrowdedKeepsDesiredStation": true,
+    "liveCrowdedNoOffTargetUpdates": true,
+    "newStationAcquiredWithinOneSecond": true
+  },
+  "paths": {
+    "live": {
+      "speechCases": 36,
+      "characters": 760,
+      "baselineErrors": 336,
+      "candidateErrors": 3,
+      "baselineCER": 0.4421052631578947,
+      "candidateCER": 0.003947368421052632,
+      "normalCleanDeltaCER": 0.0,
+      "noiseCases": 12,
+      "noiseSeconds": 240,
+      "baselineNoiseFalseCharacters": 5,
+      "candidateNoiseFalseCharacters": 5,
+      "lowAmplitudeAcquiredFraction": 1.0
+    },
+    "file": {
+      "speechCases": 32,
+      "characters": 696,
+      "baselineErrors": 367,
+      "candidateErrors": 0,
+      "baselineCER": 0.5272988505747126,
+      "candidateCER": 0.0,
+      "normalCleanDeltaCER": 0.0,
+      "noiseCases": 12,
+      "noiseSeconds": 240,
+      "baselineNoiseFalseCharacters": 4,
+      "candidateNoiseFalseCharacters": 4,
+      "lowAmplitudeAcquiredFraction": 1.0
+    }
+  },
+  "newStationReacquisitionSeconds": [
+    0.3223749999999992,
+    0.31362500000000004,
+    0.3490000000000002,
+    0.3460000000000001
+  ],
+  "claimLimits": "Fixed message templates with fresh waveform parameters. Gaussian-only negatives; no real-operator claim. Actual queue replay excludes browser resampling, physical audio capture, and HTTP latency.",
+  "sources": [
+    {
+      "file": "benchmarks/round3-acquisition-dev-baseline.json",
+      "sha256": "aa0a64b7db42dc11fa2d66ece31427cba2ccbf5fa2bd6d971cf6cc3b218360b7"
+    },
+    {
+      "file": "benchmarks/round3-acquisition-dev-candidate.json",
+      "sha256": "bf686028c3d9db675a41057b0940ce48bb37135e51a3ce746ce3a77aca7ebf39"
+    }
+  ]
+}

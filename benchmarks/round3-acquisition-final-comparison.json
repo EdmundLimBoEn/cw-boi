@@ -1,0 +1,68 @@
+{
+  "allGuardsPass": true,
+  "gates": {
+    "liveRelativeImprovementAtLeast10Percent": true,
+    "liveAbsoluteImprovementAtLeastOnePoint": true,
+    "liveNormalCleanNoninferiorHalfPoint": true,
+    "liveNoiseFalseCharactersNonincrease": true,
+    "liveLowAmplitudeWithin20HzAtLeast95Percent": true,
+    "liveCrowdedKeepsDesiredStation": true,
+    "liveEightMinutesOfFreshFinalNoise": true,
+    "fileRelativeImprovementAtLeast10Percent": true,
+    "fileAbsoluteImprovementAtLeastOnePoint": true,
+    "fileNormalCleanNoninferiorHalfPoint": true,
+    "fileNoiseFalseCharactersNonincrease": true,
+    "fileLowAmplitudeWithin20HzAtLeast95Percent": true,
+    "fileCrowdedKeepsDesiredStation": true,
+    "fileEightMinutesOfFreshFinalNoise": true,
+    "liveCrowdedNoOffTargetUpdates": true,
+    "newStationAcquiredWithinOneSecond": true
+  },
+  "paths": {
+    "live": {
+      "speechCases": 36,
+      "characters": 760,
+      "baselineErrors": 430,
+      "candidateErrors": 2,
+      "baselineCER": 0.5657894736842105,
+      "candidateCER": 0.002631578947368421,
+      "normalCleanDeltaCER": 0.0,
+      "noiseCases": 24,
+      "noiseSeconds": 480,
+      "baselineNoiseFalseCharacters": 6,
+      "candidateNoiseFalseCharacters": 6,
+      "lowAmplitudeAcquiredFraction": 1.0
+    },
+    "file": {
+      "speechCases": 32,
+      "characters": 696,
+      "baselineErrors": 452,
+      "candidateErrors": 0,
+      "baselineCER": 0.6494252873563219,
+      "candidateCER": 0.0,
+      "normalCleanDeltaCER": 0.0,
+      "noiseCases": 24,
+      "noiseSeconds": 480,
+      "baselineNoiseFalseCharacters": 6,
+      "candidateNoiseFalseCharacters": 6,
+      "lowAmplitudeAcquiredFraction": 1.0
+    }
+  },
+  "newStationReacquisitionSeconds": [
+    0.34537500000000065,
+    0.3616250000000001,
+    0.2942499999999999,
+    0.3151250000000001
+  ],
+  "claimLimits": "Fixed message templates with fresh waveform parameters. Gaussian-only negatives; no real-operator claim. Actual queue replay excludes browser resampling, physical audio capture, and HTTP latency.",
+  "sources": [
+    {
+      "file": "benchmarks/round3-acquisition-final-baseline.json",
+      "sha256": "83568602b2cb83372216e5b22a70517a2e8da49c7fd81be7897560ccde8258ec"
+    },
+    {
+      "file": "benchmarks/round3-acquisition-final-candidate.json",
+      "sha256": "1d8f2f50a7a57cd32de91fb1ebf1a64793dad80f7d35d8ab63baf12320a567a1"
+    }
+  ]
+}

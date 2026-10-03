@@ -1,0 +1,2100 @@
+{
+  "version": 1,
+  "split": "round3-interrupted-dev",
+  "manifest": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-noise\\data\\round3-interrupted-dev\\manifest.json",
+  "manifestSHA256": "49bc6dd6de73f05c2660cee4a0e9fcb879534e76672ae006e1efa0546dd66b27",
+  "model": "C:\\Users\\limbo\\cw-boi-training-20261001\\cwformer-experiment\\round3-noise\\models\\control\\step-1000\\cwformer_streaming_fp32.onnx",
+  "modelSHA256": "19940783f9e2cb47125d3ea07bde768aeb9639f40f7534c479efe424c219d073",
+  "decoderSHA256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5",
+  "benchmarkSHA256": "b49a717c1e07e467d572bcfe4b842a0997e28dd92b1b47af38e00ae9ceafd520",
+  "onnxruntimeVersion": "1.30.0",
+  "provider": "CPUExecutionProvider",
+  "knownCarrier": true,
+  "bandwidth": 150.0,
+  "complete": true,
+  "results": [
+    {
+      "id": "clean-paused-1",
+      "condition": "clean-paused",
+      "expected": "CQ DE N261N UR RST 579 73 DE F3EQQ K",
+      "actual": "CQ DE N261N B UR RST 579 B3 DE F3EQQ K",
+      "errors": 3,
+      "durationSeconds": 80.349,
+      "inferenceSeconds": 3.590564999999515,
+      "emissions": [
+        {
+          "inputEndSeconds": 2.5,
+          "text": "C",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.0,
+          "text": "Q",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.5,
+          "text": " D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.0,
+          "text": " N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 8.5,
+          "text": "2",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 10.0,
+          "text": "6",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 11.5,
+          "text": "1",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 12.5,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 24.0,
+          "text": " B",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 27.5,
+          "text": " U",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 28.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 29.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 30.0,
+          "text": "S",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 31.0,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 32.0,
+          "text": " 5",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 33.5,
+          "text": "7",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 35.5,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 62.0,
+          "text": " B",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 63.5,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 64.5,
+          "text": " D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 65.0,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 66.5,
+          "text": " F",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 68.0,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 68.5,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 70.0,
+          "text": "Q",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 71.5,
+          "text": "Q",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 73.0,
+          "text": " K",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 1,
+      "pauseScoredSeconds": 39.5
+    },
+    {
+      "id": "clean-paused-2",
+      "condition": "clean-paused",
+      "expected": "NHNY 8NXQ 6XSH F58O SGMC KWO6",
+      "actual": "NHNY 8NXQ 6XSH F58O Q SGMC KWO6",
+      "errors": 2,
+      "durationSeconds": 54.72575,
+      "inferenceSeconds": 2.500649899999189,
+      "emissions": [
+        {
+          "inputEndSeconds": 3.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 3.5,
+          "text": "H",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.5,
+          "text": "Y",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": " 8",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.5,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.0,
+          "text": "X",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 8.0,
+          "text": "Q",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 22.5,
+          "text": " 6",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 23.5,
+          "text": "X",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 24.0,
+          "text": "S",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 24.5,
+          "text": "H",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 25.5,
+          "text": " F",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 26.0,
+          "text": "5",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 27.0,
+          "text": "8",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 27.5,
+          "text": "O",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 37.0,
+          "text": " Q",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 42.0,
+          "text": " S",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 43.0,
+          "text": "G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 43.5,
+          "text": "M",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 44.0,
+          "text": "C",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 45.0,
+          "text": " K",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 45.5,
+          "text": "W",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 46.5,
+          "text": "O",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 47.0,
+          "text": "6",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 1,
+      "pauseScoredSeconds": 28.5
+    },
+    {
+      "id": "clean-paused-3",
+      "condition": "clean-paused",
+      "expected": "RAIN WATER EARLY NORTH RAIN WIND",
+      "actual": "RAIN WATER RLY NORTH D RAIN WIND",
+      "errors": 4,
+      "durationSeconds": 76.067125,
+      "inferenceSeconds": 3.3354662000001554,
+      "emissions": [
+        {
+          "inputEndSeconds": 2.5,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 3.0,
+          "text": "A",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 3.5,
+          "text": "I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.0,
+          "text": " W",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.5,
+          "text": "A",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.5,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 33.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 34.0,
+          "text": "L",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 35.0,
+          "text": "Y",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 36.0,
+          "text": " N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 37.0,
+          "text": "O",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 37.5,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 38.0,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 38.5,
+          "text": "H",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 49.5,
+          "text": " D",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 64.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 65.0,
+          "text": "A",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 65.5,
+          "text": "I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 66.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 67.0,
+          "text": " W",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 67.5,
+          "text": "I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 68.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 68.5,
+          "text": "D",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 1,
+      "pauseScoredSeconds": 50.5
+    },
+    {
+      "id": "clean-paused-4",
+      "condition": "clean-paused",
+      "expected": "CQ DE G0E4H UR RST 339 73 DE DL8526 K",
+      "actual": "CQ DE G0E4H UR RST 339 73 DE DL8526 K",
+      "errors": 0,
+      "durationSeconds": 55.463875,
+      "inferenceSeconds": 2.4848032999998395,
+      "emissions": [
+        {
+          "inputEndSeconds": 2.5,
+          "text": "C",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 3.0,
+          "text": "Q",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 3.5,
+          "text": " D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.0,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.5,
+          "text": " G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.5,
+          "text": "0",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.5,
+          "text": "4",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.0,
+          "text": "H",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 11.5,
+          "text": " U",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 12.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 12.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 13.0,
+          "text": "ST",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 14.0,
+          "text": " 3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 15.0,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 15.5,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 24.5,
+          "text": " 7",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 25.0,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 26.0,
+          "text": " DE",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 26.5,
+          "text": " D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 27.0,
+          "text": "L",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 28.0,
+          "text": "8",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 28.5,
+          "text": "5",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 29.5,
+          "text": "2",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 30.0,
+          "text": "6",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 31.0,
+          "text": " K",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 0,
+      "pauseScoredSeconds": 29.5
+    },
+    {
+      "id": "clean-paused-5",
+      "condition": "clean-paused",
+      "expected": "9HFO DPB6 IW7L C32O CW3C 0E0I",
+      "actual": "9HFO DPB6 IW7L C32O RW3C 0E0I",
+      "errors": 1,
+      "durationSeconds": 60.692375,
+      "inferenceSeconds": 2.8115286000002015,
+      "emissions": [
+        {
+          "inputEndSeconds": 3.0,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.0,
+          "text": "H",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.5,
+          "text": "F",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.5,
+          "text": "O",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.5,
+          "text": " D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.5,
+          "text": "P",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 8.0,
+          "text": "B",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 9.0,
+          "text": "6",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 17.5,
+          "text": " I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 18.5,
+          "text": "W",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 19.5,
+          "text": "7",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 20.0,
+          "text": "L",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 21.5,
+          "text": " C",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 22.5,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 23.5,
+          "text": "2",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 24.5,
+          "text": "O",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 50.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 51.0,
+          "text": "W",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 52.5,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 53.0,
+          "text": "C",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 55.0,
+          "text": " 0",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 55.5,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 56.5,
+          "text": "0",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 57.0,
+          "text": "I",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 0,
+      "pauseScoredSeconds": 29.5
+    },
+    {
+      "id": "clean-paused-6",
+      "condition": "clean-paused",
+      "expected": "WIND WATER RIVER RAIN NIGHT NIGHT",
+      "actual": "WIND WATER K RIVER RAIN NIGHT NIGHT",
+      "errors": 2,
+      "durationSeconds": 52.15225,
+      "inferenceSeconds": 2.2984493000003567,
+      "emissions": [
+        {
+          "inputEndSeconds": 3.5,
+          "text": "WI",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.5,
+          "text": "D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.5,
+          "text": " W",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": "AT",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.5,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 23.5,
+          "text": " K",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 32.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 33.0,
+          "text": "I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 33.5,
+          "text": "VE",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 34.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 35.0,
+          "text": " RA",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 35.5,
+          "text": "I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 36.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 44.5,
+          "text": " NI",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 45.5,
+          "text": "G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 46.0,
+          "text": "HT",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 47.0,
+          "text": " NI",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 47.5,
+          "text": "G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 48.0,
+          "text": "H",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 48.5,
+          "text": "T",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 1,
+      "pauseScoredSeconds": 29.5
+    },
+    {
+      "id": "weak-paused-1",
+      "condition": "weak-paused",
+      "expected": "CQ DE G9GPM UR RST 579 73 DE DL7Y37 K",
+      "actual": "BT DE G9CPM ST 579 7T3 DE DL7X37 K",
+      "errors": 9,
+      "durationSeconds": 91.0285,
+      "inferenceSeconds": 4.073483099999976,
+      "emissions": [
+        {
+          "inputEndSeconds": 3.0,
+          "text": "B",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.0,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.0,
+          "text": " DE",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.5,
+          "text": " G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.5,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 8.5,
+          "text": "C",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 9.5,
+          "text": "P",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 10.0,
+          "text": "M",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 38.0,
+          "text": " S",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 38.5,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 39.5,
+          "text": " 5",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 40.5,
+          "text": "7",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 42.0,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 57.0,
+          "text": " 7",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 57.5,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 58.5,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 59.0,
+          "text": " D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 59.5,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 60.5,
+          "text": " D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 61.0,
+          "text": "L",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 62.5,
+          "text": "7",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 63.5,
+          "text": "X",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 64.5,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 65.5,
+          "text": "7",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 66.5,
+          "text": " K",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 0,
+      "pauseScoredSeconds": 56.5
+    },
+    {
+      "id": "weak-paused-2",
+      "condition": "weak-paused",
+      "expected": "EIUP DRTQ F3P6 0VFL EIX9 R3OZ",
+      "actual": "T. DRTQ 5 F3P6 0VRL K HNT9 R3OZ",
+      "errors": 12,
+      "durationSeconds": 72.896625,
+      "inferenceSeconds": 3.237304799999947,
+      "emissions": [
+        {
+          "inputEndSeconds": 3.5,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.5,
+          "text": ".",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.0,
+          "text": " D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.5,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.0,
+          "text": "Q",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 30.5,
+          "text": " 5",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 32.5,
+          "text": " F",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 33.5,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 34.5,
+          "text": "P",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 35.0,
+          "text": "6",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 36.5,
+          "text": " 0",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 37.0,
+          "text": "V",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 38.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 38.5,
+          "text": "L",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 45.5,
+          "text": " K",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 64.0,
+          "text": " H",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 64.5,
+          "text": "NT",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 66.0,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 66.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 67.5,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 68.5,
+          "text": "O",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 69.5,
+          "text": "Z",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 2,
+      "pauseScoredSeconds": 46.5
+    },
+    {
+      "id": "weak-paused-3",
+      "condition": "weak-paused",
+      "expected": "GREEN ROAD RIVER GREEN WIND NIGHT",
+      "actual": "S .Q RR LE W IT",
+      "errors": 22,
+      "durationSeconds": 48.4695,
+      "inferenceSeconds": 2.1937725999996474,
+      "emissions": [
+        {
+          "inputEndSeconds": 3.5,
+          "text": "S",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.0,
+          "text": " .",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": "Q",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 12.0,
+          "text": " R",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 13.5,
+          "text": "R",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 22.5,
+          "text": " L",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 23.0,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 23.5,
+          "text": " W",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 38.0,
+          "text": " I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 41.0,
+          "text": "T",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 2,
+      "pauseScoredSeconds": 28.5
+    },
+    {
+      "id": "weak-paused-4",
+      "condition": "weak-paused",
+      "expected": "CQ DE K9QCA UR RST 599 73 DE JA8EGU K",
+      "actual": "DE KO 599 LE JAG NU K",
+      "errors": 21,
+      "durationSeconds": 56.35275,
+      "inferenceSeconds": 2.510130100000424,
+      "emissions": [
+        {
+          "inputEndSeconds": 5.5,
+          "text": "D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.0,
+          "text": " K",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.5,
+          "text": "O",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 29.0,
+          "text": " 5",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 30.5,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 31.0,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 43.0,
+          "text": " LE",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 44.5,
+          "text": " J",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 45.0,
+          "text": "A",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 46.0,
+          "text": "G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 47.5,
+          "text": " N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 48.0,
+          "text": "U",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 49.0,
+          "text": " K",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 0,
+      "pauseScoredSeconds": 22.5
+    },
+    {
+      "id": "weak-paused-5",
+      "condition": "weak-paused",
+      "expected": "DKQW 3FIW HJR1 W2I3 4AFL 31XD",
+      "actual": "FW J2S3 5JXD",
+      "errors": 20,
+      "durationSeconds": 57.658125,
+      "inferenceSeconds": 2.528936800000338,
+      "emissions": [
+        {
+          "inputEndSeconds": 5.0,
+          "text": "F",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": "W",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 33.0,
+          "text": " J",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 34.5,
+          "text": "2",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 35.0,
+          "text": "S",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 35.5,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 50.0,
+          "text": " 5",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 53.0,
+          "text": "J",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 53.5,
+          "text": "X",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 54.0,
+          "text": "D",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 0,
+      "pauseScoredSeconds": 35.5
+    },
+    {
+      "id": "weak-paused-6",
+      "condition": "weak-paused",
+      "expected": "EARLY WATER RADIO WATER EARLY EARLY",
+      "actual": "R R RLY",
+      "errors": 28,
+      "durationSeconds": 51.06025,
+      "inferenceSeconds": 2.273917700000311,
+      "emissions": [
+        {
+          "inputEndSeconds": 7.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 35.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 42.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 43.0,
+          "text": "L",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 43.5,
+          "text": "Y",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 0,
+      "pauseScoredSeconds": 29.5
+    },
+    {
+      "id": "crowded-paused-1",
+      "condition": "crowded-paused",
+      "expected": "CQ DE K5JJF UR RST 339 73 DE K6RNJ K",
+      "actual": "NTX DE K5J2F S TRST 33 V R QRO DE K6A 2K",
+      "errors": 18,
+      "durationSeconds": 72.1615,
+      "inferenceSeconds": 3.2575690000003306,
+      "emissions": [
+        {
+          "inputEndSeconds": 2.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 2.5,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 3.5,
+          "text": "X",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.5,
+          "text": " DE",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": " K",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.5,
+          "text": "5",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.5,
+          "text": "J",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 9.0,
+          "text": "2",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 9.5,
+          "text": "F",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 16.5,
+          "text": " S",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 35.5,
+          "text": " T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 37.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 37.5,
+          "text": "ST",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 39.0,
+          "text": " 3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 40.5,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 41.5,
+          "text": " V",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 47.5,
+          "text": " R",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 50.5,
+          "text": " Q",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 51.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 51.5,
+          "text": "O",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 52.5,
+          "text": " D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 53.0,
+          "text": "E",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 54.0,
+          "text": " K",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 55.0,
+          "text": "6",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 56.0,
+          "text": "A",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 57.5,
+          "text": " 2",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 58.5,
+          "text": "K",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 2,
+      "pauseScoredSeconds": 39.5
+    },
+    {
+      "id": "crowded-paused-2",
+      "condition": "crowded-paused",
+      "expected": "Z37K DTNB ZJAC GHLR INCP 7LIG",
+      "actual": "Z37K DTNB ZJ.GHLR CP 7LIG",
+      "errors": 5,
+      "durationSeconds": 48.140125,
+      "inferenceSeconds": 2.1041997000002084,
+      "emissions": [
+        {
+          "inputEndSeconds": 2.0,
+          "text": "Z",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 3.0,
+          "text": "3",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 3.5,
+          "text": "7",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 4.0,
+          "text": "K",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.0,
+          "text": " D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.5,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 6.5,
+          "text": "B",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 11.0,
+          "text": " Z",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 12.0,
+          "text": "J",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 13.0,
+          "text": ".",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 13.5,
+          "text": "G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 14.0,
+          "text": "H",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 14.5,
+          "text": "L",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 15.5,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 41.5,
+          "text": " C",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 42.0,
+          "text": "P",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 43.0,
+          "text": " 7",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 43.5,
+          "text": "L",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 44.0,
+          "text": "I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 44.5,
+          "text": "G",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 0,
+      "pauseScoredSeconds": 25.5
+    },
+    {
+      "id": "crowded-paused-3",
+      "condition": "crowded-paused",
+      "expected": "ROAD NIGHT GREEN RIVER RADIO RIVER",
+      "actual": "DENIT FRST RIS RX OGR Q 5",
+      "errors": 21,
+      "durationSeconds": 89.944375,
+      "inferenceSeconds": 3.8544302000000243,
+      "emissions": [
+        {
+          "inputEndSeconds": 6.5,
+          "text": "DE",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.5,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 8.0,
+          "text": "I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 10.5,
+          "text": "T",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 31.5,
+          "text": " F",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 32.0,
+          "text": "R",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 32.5,
+          "text": "S",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 33.0,
+          "text": "T",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 40.0,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 40.5,
+          "text": "I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 41.5,
+          "text": "S",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 44.0,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 44.5,
+          "text": "X",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 61.0,
+          "text": " O",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 63.0,
+          "text": "G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 65.5,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 72.5,
+          "text": " Q",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 74.0,
+          "text": " 5",
+          "insideScoredPause": true
+        }
+      ],
+      "pauseFalseCharacters": 6,
+      "pauseScoredSeconds": 56.5
+    },
+    {
+      "id": "crowded-paused-4",
+      "condition": "crowded-paused",
+      "expected": "CQ DE K1NO1 UR RST 599 73 DE JA0ZUG K",
+      "actual": "K1D C X 5999 JA8 K U",
+      "errors": 25,
+      "durationSeconds": 54.006375,
+      "inferenceSeconds": 2.359807499999988,
+      "emissions": [
+        {
+          "inputEndSeconds": 5.5,
+          "text": "K",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.0,
+          "text": "1",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.5,
+          "text": "D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 14.0,
+          "text": " C",
+          "insideScoredPause": true
+        },
+        {
+          "inputEndSeconds": 26.0,
+          "text": " X",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 27.0,
+          "text": " 5",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 28.0,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 29.0,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 29.5,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 41.5,
+          "text": " J",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 42.0,
+          "text": "A",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 43.0,
+          "text": "8",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 46.5,
+          "text": " K",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 48.0,
+          "text": " U",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 1,
+      "pauseScoredSeconds": 22.5
+    },
+    {
+      "id": "crowded-paused-5",
+      "condition": "crowded-paused",
+      "expected": "1CCA P9MV Y2UO ZE74 M0UF PELV",
+      "actual": "QT9CA PX WV WUO ZN/4 RN IUFP7V",
+      "errors": 17,
+      "durationSeconds": 50.332375,
+      "inferenceSeconds": 2.2371093000001565,
+      "emissions": [
+        {
+          "inputEndSeconds": 4.0,
+          "text": "QT",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.5,
+          "text": "9",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.0,
+          "text": "C",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.5,
+          "text": "A",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 9.0,
+          "text": " P",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 10.0,
+          "text": "X",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 11.0,
+          "text": " W",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 12.0,
+          "text": "V",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 18.5,
+          "text": " W",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 19.5,
+          "text": "U",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 20.5,
+          "text": "O",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 22.0,
+          "text": " Z",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 23.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 23.5,
+          "text": "/",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 24.5,
+          "text": "4",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 40.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 41.0,
+          "text": "N",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 41.5,
+          "text": " I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 42.0,
+          "text": "U",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 43.0,
+          "text": "F",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 44.5,
+          "text": "P",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 45.5,
+          "text": "7",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 47.0,
+          "text": "V",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 0,
+      "pauseScoredSeconds": 14.5
+    },
+    {
+      "id": "crowded-paused-6",
+      "condition": "crowded-paused",
+      "expected": "GREEN GREEN RIVER GREEN RIVER RIVER",
+      "actual": "DK GREG F K/ GRL RRIG9",
+      "errors": 23,
+      "durationSeconds": 57.278125,
+      "inferenceSeconds": 2.5624198999994405,
+      "emissions": [
+        {
+          "inputEndSeconds": 4.5,
+          "text": "D",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 5.5,
+          "text": "K",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 7.0,
+          "text": " G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 8.0,
+          "text": "RE",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 9.0,
+          "text": "G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 17.5,
+          "text": " F",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 19.0,
+          "text": " K",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 20.0,
+          "text": "/",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 21.5,
+          "text": " G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 22.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 23.5,
+          "text": "L",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 40.5,
+          "text": " R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 41.0,
+          "text": "R",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 41.5,
+          "text": "I",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 42.5,
+          "text": "G",
+          "insideScoredPause": false
+        },
+        {
+          "inputEndSeconds": 44.0,
+          "text": "9",
+          "insideScoredPause": false
+        }
+      ],
+      "pauseFalseCharacters": 0,
+      "pauseScoredSeconds": 28.5
+    }
+  ],
+  "aggregate": {
+    "cases": 18,
+    "speechCases": 18,
+    "characters": 596,
+    "errors": 233,
+    "cer": 0.39093959731543626,
+    "exact": 1,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 1128.779,
+    "inferenceSeconds": 50.21454300000005
+  },
+  "conditions": {
+    "clean-paused": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 196,
+      "errors": 12,
+      "cer": 0.061224489795918366,
+      "exact": 1,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 379.450375,
+      "inferenceSeconds": 17.021462299999257
+    },
+    "crowded-paused": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 200,
+      "errors": 109,
+      "cer": 0.545,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 371.862875,
+      "inferenceSeconds": 16.37553560000015
+    },
+    "weak-paused": {
+      "cases": 6,
+      "speechCases": 6,
+      "characters": 200,
+      "errors": 112,
+      "cer": 0.56,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 377.46575,
+      "inferenceSeconds": 16.817545100000643
+    }
+  },
+  "pauseTiming": {
+    "falseCharacters": 17,
+    "scoredSeconds": 613.0,
+    "definition": "Non-space characters emitted during whole 0.5-second input chunks inside annotated key-up gaps, after two seconds of grace; includes the final trailing pause.",
+    "limit": "Input arrival times, not acoustic token alignment. Delayed correct copy beyond grace can count as false copy; flush emissions remain in CER but are excluded from pause counts."
+  }
+}

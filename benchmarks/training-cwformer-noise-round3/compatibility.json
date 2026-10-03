@@ -1,0 +1,231 @@
+{
+  "passed": true,
+  "casePairs": 32,
+  "datasetPairs": 8,
+  "cases": [
+    {
+      "family": "clean",
+      "seed": 0,
+      "background": false,
+      "label": "BK ANT RST",
+      "audioSHA256": "6dd62b82cf35ec1718554c208e7961bc34b5f71656402d5f6e5de91b895d6d72"
+    },
+    {
+      "family": "clean",
+      "seed": 0,
+      "background": true,
+      "label": "BK ANT RST",
+      "audioSHA256": "176ea3a793ac8c93029b823286d341f2497bf5b48d436795ad3a5f13524ee0bb"
+    },
+    {
+      "family": "clean",
+      "seed": 9217,
+      "background": false,
+      "label": "589",
+      "audioSHA256": "0ba42b63f2caaffa0e148818ed170c48d2a1f9a8101c355c612e33131881668c"
+    },
+    {
+      "family": "clean",
+      "seed": 9217,
+      "background": true,
+      "label": "589",
+      "audioSHA256": "b0fb7f80f89c3e1663b498e099b75ef7a77e313f922f8f3e2b467f985e98d59b"
+    },
+    {
+      "family": "clean",
+      "seed": 920581,
+      "background": false,
+      "label": "PWR QSL QSL",
+      "audioSHA256": "8fece67057e863f87e30f20fc386c5045878a2e498a38130043c6e6b4726fdb4"
+    },
+    {
+      "family": "clean",
+      "seed": 920581,
+      "background": true,
+      "label": "PWR QSL QSL",
+      "audioSHA256": "991195accc3dd08e5f2deb369c8a0c101f1483d95735a158d58d9d2ea8d8595b"
+    },
+    {
+      "family": "clean",
+      "seed": 30028123,
+      "background": false,
+      "label": "FD 0POJD",
+      "audioSHA256": "4f9e2f120285791b6eb8affc9ccc4e6fe3bcb2538e14881a1b3e7b02031d32b5"
+    },
+    {
+      "family": "clean",
+      "seed": 30028123,
+      "background": true,
+      "label": "FD 0POJD",
+      "audioSHA256": "27481ccae5b7b4c64be4432e5679edcc9729db366de18198a3c2418ed468eb92"
+    },
+    {
+      "family": "rough",
+      "seed": 0,
+      "background": false,
+      "label": "TEST",
+      "audioSHA256": "7ec088d0359c89a0931ea77c5120119b1ef656bf9d7efc35a81699410de5d92d"
+    },
+    {
+      "family": "rough",
+      "seed": 0,
+      "background": true,
+      "label": "TEST",
+      "audioSHA256": "13eeee8f661c677dedaab11966fb99ef4d21a77a5fbea7b387a31e0478b796e3"
+    },
+    {
+      "family": "rough",
+      "seed": 9217,
+      "background": false,
+      "label": "589",
+      "audioSHA256": "89256729489543df04df448534ad56875938efc2bbe966fe863a569a613a04c7"
+    },
+    {
+      "family": "rough",
+      "seed": 9217,
+      "background": true,
+      "label": "589",
+      "audioSHA256": "c07f9a3051dd633dbe6ee368d6da9cee795038bd96abbd189db26e7215700ad1"
+    },
+    {
+      "family": "rough",
+      "seed": 920581,
+      "background": false,
+      "label": "PWR QSL QSL",
+      "audioSHA256": "5abc8b8c948b8e7010643d5d5c0f902e2c86cdb2b0b4e76d65b69e67928fe272"
+    },
+    {
+      "family": "rough",
+      "seed": 920581,
+      "background": true,
+      "label": "PWR QSL QSL",
+      "audioSHA256": "d16788b85e76dca5f8199831d5dda4cebfaa296a589a7630271c6c5829f59226"
+    },
+    {
+      "family": "rough",
+      "seed": 30028123,
+      "background": false,
+      "label": "FD 0POJD",
+      "audioSHA256": "97766ca1f5baade282b260bf4f3bed170fdd852289de8b93b5c2f9495584d608"
+    },
+    {
+      "family": "rough",
+      "seed": 30028123,
+      "background": true,
+      "label": "FD 0POJD",
+      "audioSHA256": "13e969ccc7bccdbec071ab77a0dd0f1385c9fcca073b976eb20742940cec4817"
+    },
+    {
+      "family": "chaos",
+      "seed": 0,
+      "background": false,
+      "label": "TEST",
+      "audioSHA256": "9f71dbd29a9cb6732b12f8f9ac26d60bc6e9f6b20480d3de0f0d1cf794982cc5"
+    },
+    {
+      "family": "chaos",
+      "seed": 0,
+      "background": true,
+      "label": "TEST",
+      "audioSHA256": "e6006fa84455a180382ae7a1a76ac6633e5416fcfa13b611fc880a98bb2a8490"
+    },
+    {
+      "family": "chaos",
+      "seed": 9217,
+      "background": false,
+      "label": "589",
+      "audioSHA256": "c4e16b7e635ecc6a8d027cf73b87f02d75b4b4b30de5f65fced4df4ca63e66b9"
+    },
+    {
+      "family": "chaos",
+      "seed": 9217,
+      "background": true,
+      "label": "589",
+      "audioSHA256": "b7179a9642a992983979c84855ecdc307d3cdab9e827a855f6715aaf95484d2f"
+    },
+    {
+      "family": "chaos",
+      "seed": 920581,
+      "background": false,
+      "label": "PWR QSL QSL",
+      "audioSHA256": "aa920740c22b521b73d98f8ff78a4eaa6daec68fecdb7177e11565b537e52590"
+    },
+    {
+      "family": "chaos",
+      "seed": 920581,
+      "background": true,
+      "label": "PWR QSL QSL",
+      "audioSHA256": "ae27021cc976a5bb7152808e07ae3234d5191f22695ba8bf634921a28e2a0ea9"
+    },
+    {
+      "family": "chaos",
+      "seed": 30028123,
+      "background": false,
+      "label": "FD 0POJD",
+      "audioSHA256": "e98493ea4bdfb9944ac966b58c2863652bb477c286ec1a5a0077b69d44c59655"
+    },
+    {
+      "family": "chaos",
+      "seed": 30028123,
+      "background": true,
+      "label": "FD 0POJD",
+      "audioSHA256": "af26c9380ade95b814bd7a72ba145ad806d20503a8c953cd0fda56b3a0785b1c"
+    },
+    {
+      "family": "noise",
+      "seed": 0,
+      "background": false,
+      "label": "",
+      "audioSHA256": "a02ac921cef8e72ddf2b6bf7c51ebbd899e86ac5789214ddd7afda9b08558512"
+    },
+    {
+      "family": "noise",
+      "seed": 0,
+      "background": true,
+      "label": "",
+      "audioSHA256": "a02ac921cef8e72ddf2b6bf7c51ebbd899e86ac5789214ddd7afda9b08558512"
+    },
+    {
+      "family": "noise",
+      "seed": 9217,
+      "background": false,
+      "label": "",
+      "audioSHA256": "0b26241191a17d0a7e0d7c9ff690572a2bec613cd0098990d1b7743efbfe9405"
+    },
+    {
+      "family": "noise",
+      "seed": 9217,
+      "background": true,
+      "label": "",
+      "audioSHA256": "0b26241191a17d0a7e0d7c9ff690572a2bec613cd0098990d1b7743efbfe9405"
+    },
+    {
+      "family": "noise",
+      "seed": 920581,
+      "background": false,
+      "label": "",
+      "audioSHA256": "f5862a0e411cd870f6a2cc96a139861ca57116b49ebffd93bc58a91c081522b5"
+    },
+    {
+      "family": "noise",
+      "seed": 920581,
+      "background": true,
+      "label": "",
+      "audioSHA256": "f5862a0e411cd870f6a2cc96a139861ca57116b49ebffd93bc58a91c081522b5"
+    },
+    {
+      "family": "noise",
+      "seed": 30028123,
+      "background": false,
+      "label": "",
+      "audioSHA256": "8a91322551b46292ed3202865157c918d81b3bb630c754eaa72f3c1cb9da1852"
+    },
+    {
+      "family": "noise",
+      "seed": 30028123,
+      "background": true,
+      "label": "",
+      "audioSHA256": "8a91322551b46292ed3202865157c918d81b3bb630c754eaa72f3c1cb9da1852"
+    }
+  ]
+}

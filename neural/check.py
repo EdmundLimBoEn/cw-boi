@@ -53,6 +53,19 @@ if __name__ == '__main__':
             assert len(weighted) == WINDOW and np.isfinite(weighted).all() and label
     for scale in (0, float('nan'), float('inf'), 1.1):
         rejected(lambda: case(1, 'clean', element_gap_scale=scale))
+    for family in ('clean', 'rough', 'chaos', 'noise'):
+        normal, text = case(58219, family, return_audio=True)
+        repeated, repeated_text = case(58219, family, return_audio=True, chaos_snr_offset=0)
+        harder, harder_text = case(58219, family, return_audio=True, chaos_snr_offset=-3)
+        assert text == repeated_text == harder_text and np.array_equal(normal, repeated)
+        assert np.isfinite(harder).all() and len(harder) == WINDOW
+        assert np.array_equal(normal, harder) == (family != 'chaos')
+    background = np.random.default_rng(19341).normal(0, .2, WINDOW).astype(np.float32)
+    normal, text = case(58219, 'chaos', background=background, return_audio=True)
+    harder, harder_text = case(58219, 'chaos', background=background, return_audio=True, chaos_snr_offset=-3)
+    assert text == harder_text and np.array_equal(normal, harder), 'Recorded interference keeps its original amplitude.'
+    for offset in (-13, 1, float('nan'), float('inf')):
+        rejected(lambda: case(1, 'chaos', chaos_snr_offset=offset))
     batch, targets, lengths = collate([(torch.zeros(3000, 1), torch.tensor([], dtype=torch.long)),
                                       (torch.zeros(3000, 1), torch.tensor(encode('CQ')))])
     assert batch.shape == (2, 3000, 1) and lengths.tolist() == [0, 2]

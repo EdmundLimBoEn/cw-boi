@@ -93,7 +93,9 @@ def pcm_chunks(input_index, seconds):
 
 
 def listen(args):
-    params = {'frequency': args.frequency, 'bandwidth': args.bandwidth}
+    params = {'frequency': args.frequency}
+    if args.bandwidth is not None:
+        params['bandwidth'] = args.bandwidth
     session = request(args.url, 'start', params).get('session')
     if not isinstance(session, str) or not session:
         raise RuntimeError('The local decoder did not open a session.')
@@ -145,7 +147,7 @@ def main(argv=None):
     parser.add_argument('--list-inputs', action='store_true', help='List AVFoundation audio device indices and exit.')
     parser.add_argument('--input-index', type=int, help='Audio input index from --list-inputs (for example, 1 for BlackHole).')
     parser.add_argument('--frequency', type=float, default=711, help='CW carrier in Hz, 250–1400 (default: 711).')
-    parser.add_argument('--bandwidth', type=float, default=80, help='Filter width in Hz, 40–500 (default: 80).')
+    parser.add_argument('--bandwidth', type=float, help='Filter width in Hz, 40–500 (default: selected engine recommendation).')
     parser.add_argument('--seconds', type=int, default=180, help='Capture limit, 1–600 seconds (default: 180).')
     parser.add_argument('--url', default='http://127.0.0.1:8787', help='Local decoder HTTP origin.')
     args = parser.parse_args(argv)
@@ -164,7 +166,7 @@ def main(argv=None):
             parser.error('--seconds must be between 1 and 600.')
         if not math.isfinite(args.frequency) or not 250 <= args.frequency <= 1400:
             parser.error('--frequency must be between 250 and 1400 Hz.')
-        if not math.isfinite(args.bandwidth) or not 40 <= args.bandwidth <= 500:
+        if args.bandwidth is not None and (not math.isfinite(args.bandwidth) or not 40 <= args.bandwidth <= 500):
             parser.error('--bandwidth must be between 40 and 500 Hz.')
         listen(args)
         return 0

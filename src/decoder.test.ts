@@ -44,11 +44,36 @@ describe('Morse timing and audio', () => {
     expect(decoder.finish().text).toBe('')
   })
   test('rejects noise without learning a fictitious fast sender', () => {
-    for (const amplitude of [0.01, 0.1, 0.5]) {
+    for (const amplitude of [0.00001, 0.0001, 0.01, 0.1, 0.5]) {
       const random = randomSource(7741)
       const noise = Float32Array.from({ length: 8000 * 30 }, () => amplitude * Math.sqrt(-2 * Math.log(Math.max(1e-12, random()))) * Math.cos(2 * Math.PI * random()))
       expect(decodeSamples(noise, 8000).text).toBe('')
     }
+  })
+  test('acquires a quiet high-SNR carrier both initially and after silence', () => {
+    for (const lead of [0, 16000]) {
+      const signal = makeSignal('CQ TEST 73', { ...CHALLENGES[0], frequency: 900 }, 1349761).map(value => value * 0.0001)
+      const samples = new Float32Array(lead + signal.length)
+      samples.set(signal, lead)
+      expect(Math.abs(decodeSamples(samples, 8000).frequency - 900)).toBeLessThan(3)
+    }
+  })
+  test('retains an active station through key-up gaps and acquires a new carrier after it stops', () => {
+    const target = makeSignal('CQ DE W1ABC UR RST 599 TEST 73', { ...CHALLENGES[0], frequency: 800 }, 68113)
+    const neighbor = synthesize(transmission('CQ CQ DE K9XYZ UR 579 K CQ CQ DE K9XYZ UR 579 K', 25), 1000, 8000, 0.52)
+    for (let i = 16000; i < target.length; i++) target[i] += neighbor[i - 16000] ?? 0
+    const decoder = new CWDecoder(8000, { bandwidth: 150 })
+    for (let at = 0; at < target.length; at += 160) {
+      const reading = decoder.process(target.subarray(at, at + 160))
+      if (at >= 16000) expect(Math.abs(reading.frequency - 800)).toBeLessThanOrEqual(8)
+    }
+    decoder.process(new Float32Array(24000))
+    const next = synthesize(transmission('TEST 599 K', 20), 500, 8000)
+    for (let at = 0; at < 8000; at += 160) decoder.process(next.subarray(at, at + 160))
+    expect(Math.abs(decoder.frequency - 500)).toBeLessThan(4)
+    decoder.configure({ autoTune: false, frequency: 720 })
+    decoder.process(next.subarray(8000))
+    expect(decoder.frequency).toBe(720)
   })
   test('rejects colored receiver noise and still acquires a carrier above it', () => {
     for (const seed of [915, 919]) {

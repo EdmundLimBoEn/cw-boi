@@ -16,7 +16,7 @@ def rejected(function, error=ValueError):
     raise AssertionError('Expected rejection')
 
 
-def run_capture(reads, fail=None, clock=None, waits=None):
+def run_capture(reads, fail=None, clock=None, waits=None, bandwidth=80):
     process = Mock()
     process.stdout.fileno.return_value = 123
     process.poll.return_value = None
@@ -40,7 +40,7 @@ def run_capture(reads, fail=None, clock=None, waits=None):
             process.stdout.close.assert_called_once()
         return {'text': 'CQ DE K' if action == 'finish' else ''}
 
-    args = SimpleNamespace(input_index=1, seconds=2, frequency=711, bandwidth=80, url='http://127.0.0.1:8787')
+    args = SimpleNamespace(input_index=1, seconds=2, frequency=711, bandwidth=bandwidth, url='http://127.0.0.1:8787')
     output = StringIO()
     errors = StringIO()
     failure = None
@@ -85,6 +85,9 @@ if __name__ == '__main__':
     assert [action for action, _, _ in calls] == ['start', 'feed', 'feed', 'finish']
     assert b''.join(body for action, _, body in calls if action == 'feed') == b'\0' * 38004
     assert all(len(body) % 4 == 0 for action, _, body in calls if action == 'feed')
+    assert all(params['bandwidth'] == 80 for _, params, _ in calls)
+    calls, _, _, failure, _ = run_capture([b'\0' * 32000, b''], bandwidth=None)
+    assert failure is None and all('bandwidth' not in params for _, params, _ in calls)
     _, _, _, failure, errors = run_capture([b'\0\0\0?' * 8000, b''])
     assert failure is None and 'digital zero' not in errors
 
@@ -114,9 +117,10 @@ if __name__ == '__main__':
                                                waits=[listen.subprocess.TimeoutExpired('ffmpeg', 2), 0])
     assert isinstance(failure, RuntimeError) and calls[-1][0] == 'cancel'
     process.kill.assert_called_once()
-    with (patch.object(listen, 'listen', side_effect=KeyboardInterrupt),
+    with (patch.object(listen, 'listen', side_effect=KeyboardInterrupt) as capture,
           patch.object(listen.sys, 'platform', 'darwin'),
           patch.object(listen.shutil, 'which', return_value='/usr/local/bin/ffmpeg'),
           redirect_stderr(StringIO())):
         assert listen.main(['--input-index', '1']) == 130
+        assert capture.call_args.args[0].bandwidth is None
     print('Local-only transport, partial reads, incremental copy, timeout and interruption cleanup passed.')

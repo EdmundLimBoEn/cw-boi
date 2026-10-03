@@ -1,0 +1,1393 @@
+{
+  "experiment": "short-element-gap-training-v6",
+  "complete": true,
+  "promoted": false,
+  "selectedStep": 2000,
+  "decision": "Freeze step 2000 at 150 Hz for preregistered final evaluation. It ties v4 on fresh synthetic aggregate, reduces expanded real-development errors from 99 to 16, and emits no noise characters. No final evaluation results were used for selection.",
+  "tradeoffs": "Fresh fading adds one error; old synthetic development increases from 50 to 54 errors. SAQ remains 6/50, consumed Marine improves from 13 to 12/37. GPK weighted timing supplies most real-development gain; LJKR position retains spacing and character errors.",
+  "selectionLimitation": "One training seed and no matched same-seed additional unweighted continuation; exact causal attribution to augmentation is not established. New reserved final holdouts remain unopened by this training agent.",
+  "scores": {
+    "round2-dev": {
+      "baseline": {
+        "report": "benchmarks/round2-dev-cwformer-v4-baseline.json",
+        "aggregate": {
+          "cases": 60,
+          "speechCases": 48,
+          "characters": 1467,
+          "errors": 148,
+          "cer": 0.10088616223585549,
+          "exact": 32,
+          "noiseCases": 12,
+          "noiseSeconds": 240.0,
+          "falseCharacters": 1,
+          "falseCharactersPerMinute": 0.25,
+          "audioSeconds": 1256.13225,
+          "inferenceSeconds": 21.11295700102346
+        },
+        "conditions": {
+          "chaos": {
+            "cases": 8,
+            "speechCases": 8,
+            "characters": 259,
+            "errors": 129,
+            "cer": 0.4980694980694981,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 167.5935,
+            "inferenceSeconds": 2.7026512080337852
+          },
+          "clean": {
+            "cases": 8,
+            "speechCases": 8,
+            "characters": 255,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 8,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 160.5635,
+            "inferenceSeconds": 2.7983682940830477
+          },
+          "crowded": {
+            "cases": 8,
+            "speechCases": 8,
+            "characters": 258,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 8,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 137.147125,
+            "inferenceSeconds": 2.32992887502769
+          },
+          "fading": {
+            "cases": 8,
+            "speechCases": 8,
+            "characters": 252,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 8,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 143.127375,
+            "inferenceSeconds": 2.2618267909856513
+          },
+          "human": {
+            "cases": 8,
+            "speechCases": 8,
+            "characters": 256,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 8,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 192.37275,
+            "inferenceSeconds": 2.9709408750059083
+          },
+          "noise": {
+            "cases": 12,
+            "speechCases": 0,
+            "characters": 0,
+            "errors": 0,
+            "cer": null,
+            "exact": 0,
+            "noiseCases": 12,
+            "noiseSeconds": 240.0,
+            "falseCharacters": 1,
+            "falseCharactersPerMinute": 0.25,
+            "audioSeconds": 240.0,
+            "inferenceSeconds": 3.5312409988837317
+          },
+          "rough": {
+            "cases": 8,
+            "speechCases": 8,
+            "characters": 187,
+            "errors": 19,
+            "cer": 0.10160427807486631,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 215.328,
+            "inferenceSeconds": 4.517999959003646
+          }
+        }
+      },
+      "candidates": {
+        "1000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/round2-dev-step-1000.json",
+          "modelSHA256": "bae2d7e970737be1be2e4558da928f55831afdb21194f02b892174d6292e7ba9",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 60,
+            "speechCases": 48,
+            "characters": 1467,
+            "errors": 154,
+            "cer": 0.10497614178595774,
+            "exact": 31,
+            "noiseCases": 12,
+            "noiseSeconds": 240.0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": 0.0,
+            "audioSeconds": 1256.13225,
+            "inferenceSeconds": 17.25665475410642
+          },
+          "conditions": {
+            "chaos": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 259,
+              "errors": 133,
+              "cer": 0.5135135135135135,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 167.5935,
+              "inferenceSeconds": 2.278772961057257
+            },
+            "clean": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 255,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 160.5635,
+              "inferenceSeconds": 2.0822972930036485
+            },
+            "crowded": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 258,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 137.147125,
+              "inferenceSeconds": 1.881759999145288
+            },
+            "fading": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 252,
+              "errors": 1,
+              "cer": 0.003968253968253968,
+              "exact": 7,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 143.127375,
+              "inferenceSeconds": 1.953244789969176
+            },
+            "human": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 256,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 192.37275,
+              "inferenceSeconds": 2.7952774200821295
+            },
+            "noise": {
+              "cases": 12,
+              "speechCases": 0,
+              "characters": 0,
+              "errors": 0,
+              "cer": null,
+              "exact": 0,
+              "noiseCases": 12,
+              "noiseSeconds": 240.0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": 0.0,
+              "audioSeconds": 240.0,
+              "inferenceSeconds": 3.338273582921829
+            },
+            "rough": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 187,
+              "errors": 20,
+              "cer": 0.10695187165775401,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 215.328,
+              "inferenceSeconds": 2.927028707927093
+            }
+          }
+        },
+        "2000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/round2-dev-step-2000.json",
+          "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 60,
+            "speechCases": 48,
+            "characters": 1467,
+            "errors": 148,
+            "cer": 0.10088616223585549,
+            "exact": 31,
+            "noiseCases": 12,
+            "noiseSeconds": 240.0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": 0.0,
+            "audioSeconds": 1256.13225,
+            "inferenceSeconds": 16.27437062712852
+          },
+          "conditions": {
+            "chaos": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 259,
+              "errors": 130,
+              "cer": 0.5019305019305019,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 167.5935,
+              "inferenceSeconds": 2.127560499997344
+            },
+            "clean": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 255,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 160.5635,
+              "inferenceSeconds": 2.2485833749524318
+            },
+            "crowded": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 258,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 137.147125,
+              "inferenceSeconds": 1.8266574159497395
+            },
+            "fading": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 252,
+              "errors": 1,
+              "cer": 0.003968253968253968,
+              "exact": 7,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 143.127375,
+              "inferenceSeconds": 1.831022793019656
+            },
+            "human": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 256,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 192.37275,
+              "inferenceSeconds": 2.461477459000889
+            },
+            "noise": {
+              "cases": 12,
+              "speechCases": 0,
+              "characters": 0,
+              "errors": 0,
+              "cer": null,
+              "exact": 0,
+              "noiseCases": 12,
+              "noiseSeconds": 240.0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": 0.0,
+              "audioSeconds": 240.0,
+              "inferenceSeconds": 3.058523377054371
+            },
+            "rough": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 187,
+              "errors": 17,
+              "cer": 0.09090909090909091,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 215.328,
+              "inferenceSeconds": 2.7205457071540877
+            }
+          }
+        },
+        "3000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/round2-dev-step-3000.json",
+          "modelSHA256": "8332c926c323562b07545a8f8486a998c13f93f42e76060463b2a2220d48ae25",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 60,
+            "speechCases": 48,
+            "characters": 1467,
+            "errors": 154,
+            "cer": 0.10497614178595774,
+            "exact": 31,
+            "noiseCases": 12,
+            "noiseSeconds": 240.0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": 0.0,
+            "audioSeconds": 1256.13225,
+            "inferenceSeconds": 15.9881909560645
+          },
+          "conditions": {
+            "chaos": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 259,
+              "errors": 134,
+              "cer": 0.5173745173745173,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 167.5935,
+              "inferenceSeconds": 2.1382499570026994
+            },
+            "clean": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 255,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 160.5635,
+              "inferenceSeconds": 2.041017542069312
+            },
+            "crowded": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 258,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 137.147125,
+              "inferenceSeconds": 1.756670790957287
+            },
+            "fading": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 252,
+              "errors": 1,
+              "cer": 0.003968253968253968,
+              "exact": 7,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 143.127375,
+              "inferenceSeconds": 1.8070557480677962
+            },
+            "human": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 256,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 8,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 192.37275,
+              "inferenceSeconds": 2.422827292000875
+            },
+            "noise": {
+              "cases": 12,
+              "speechCases": 0,
+              "characters": 0,
+              "errors": 0,
+              "cer": null,
+              "exact": 0,
+              "noiseCases": 12,
+              "noiseSeconds": 240.0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": 0.0,
+              "audioSeconds": 240.0,
+              "inferenceSeconds": 3.0569850829197094
+            },
+            "rough": {
+              "cases": 8,
+              "speechCases": 8,
+              "characters": 187,
+              "errors": 19,
+              "cer": 0.10160427807486631,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 215.328,
+              "inferenceSeconds": 2.765384543046821
+            }
+          }
+        }
+      }
+    },
+    "real-dev-v2": {
+      "baseline": {
+        "report": "benchmarks/round2-real-dev-cwformer-v4-baseline.json",
+        "aggregate": {
+          "cases": 12,
+          "speechCases": 12,
+          "characters": 438,
+          "errors": 99,
+          "cer": 0.22602739726027396,
+          "exact": 4,
+          "noiseCases": 0,
+          "noiseSeconds": 0,
+          "falseCharacters": 0,
+          "falseCharactersPerMinute": null,
+          "audioSeconds": 290.87,
+          "inferenceSeconds": 5.360604791960213
+        },
+        "conditions": {
+          "real-hand-keyed": {
+            "cases": 12,
+            "speechCases": 12,
+            "characters": 438,
+            "errors": 99,
+            "cer": 0.22602739726027396,
+            "exact": 4,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 290.87,
+            "inferenceSeconds": 5.360604791960213
+          }
+        }
+      },
+      "candidates": {
+        "1000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/real-dev-v2-step-1000.json",
+          "modelSHA256": "bae2d7e970737be1be2e4558da928f55831afdb21194f02b892174d6292e7ba9",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 12,
+            "speechCases": 12,
+            "characters": 438,
+            "errors": 19,
+            "cer": 0.04337899543378995,
+            "exact": 5,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 290.87,
+            "inferenceSeconds": 3.7954728758195415
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 12,
+              "speechCases": 12,
+              "characters": 438,
+              "errors": 19,
+              "cer": 0.04337899543378995,
+              "exact": 5,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 290.87,
+              "inferenceSeconds": 3.7954728758195415
+            }
+          }
+        },
+        "2000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/real-dev-v2-step-2000.json",
+          "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 12,
+            "speechCases": 12,
+            "characters": 438,
+            "errors": 16,
+            "cer": 0.0365296803652968,
+            "exact": 6,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 290.87,
+            "inferenceSeconds": 3.745342669833917
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 12,
+              "speechCases": 12,
+              "characters": 438,
+              "errors": 16,
+              "cer": 0.0365296803652968,
+              "exact": 6,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 290.87,
+              "inferenceSeconds": 3.745342669833917
+            }
+          }
+        },
+        "3000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/real-dev-v2-step-3000.json",
+          "modelSHA256": "8332c926c323562b07545a8f8486a998c13f93f42e76060463b2a2220d48ae25",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 12,
+            "speechCases": 12,
+            "characters": 438,
+            "errors": 17,
+            "cer": 0.03881278538812785,
+            "exact": 4,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 290.87,
+            "inferenceSeconds": 3.719679874891881
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 12,
+              "speechCases": 12,
+              "characters": 438,
+              "errors": 17,
+              "cer": 0.03881278538812785,
+              "exact": 4,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 290.87,
+              "inferenceSeconds": 3.719679874891881
+            }
+          }
+        }
+      }
+    },
+    "old-dev": {
+      "baseline": {
+        "report": "benchmarks/continuous-dev-cwformer-v4-runtime.json",
+        "aggregate": {
+          "cases": 24,
+          "speechCases": 18,
+          "characters": 556,
+          "errors": 50,
+          "cer": 0.08992805755395683,
+          "exact": 12,
+          "noiseCases": 6,
+          "noiseSeconds": 120.0,
+          "falseCharacters": 1,
+          "falseCharactersPerMinute": 0.5,
+          "audioSeconds": 504.764875,
+          "inferenceSeconds": 7.11764425097499
+        },
+        "conditions": {
+          "chaos": {
+            "cases": 3,
+            "speechCases": 3,
+            "characters": 98,
+            "errors": 43,
+            "cer": 0.4387755102040816,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 61.954,
+            "inferenceSeconds": 0.8733778340392746
+          },
+          "clean": {
+            "cases": 3,
+            "speechCases": 3,
+            "characters": 98,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 3,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 57.989125,
+            "inferenceSeconds": 0.8837108329753391
+          },
+          "crowded": {
+            "cases": 3,
+            "speechCases": 3,
+            "characters": 99,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 3,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 56.027375,
+            "inferenceSeconds": 0.7893804589984939
+          },
+          "fading": {
+            "cases": 3,
+            "speechCases": 3,
+            "characters": 98,
+            "errors": 2,
+            "cer": 0.02040816326530612,
+            "exact": 2,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 54.07275,
+            "inferenceSeconds": 0.7604672500165179
+          },
+          "human": {
+            "cases": 3,
+            "speechCases": 3,
+            "characters": 97,
+            "errors": 0,
+            "cer": 0.0,
+            "exact": 3,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 75.08025,
+            "inferenceSeconds": 1.0470764159690589
+          },
+          "noise": {
+            "cases": 6,
+            "speechCases": 0,
+            "characters": 0,
+            "errors": 0,
+            "cer": null,
+            "exact": 0,
+            "noiseCases": 6,
+            "noiseSeconds": 120.0,
+            "falseCharacters": 1,
+            "falseCharactersPerMinute": 0.5,
+            "audioSeconds": 120.0,
+            "inferenceSeconds": 1.6542287089978345
+          },
+          "rough": {
+            "cases": 3,
+            "speechCases": 3,
+            "characters": 66,
+            "errors": 5,
+            "cer": 0.07575757575757576,
+            "exact": 1,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 79.641375,
+            "inferenceSeconds": 1.1094027499784715
+          }
+        }
+      },
+      "candidates": {
+        "1000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/old-dev-step-1000.json",
+          "modelSHA256": "bae2d7e970737be1be2e4558da928f55831afdb21194f02b892174d6292e7ba9",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 24,
+            "speechCases": 18,
+            "characters": 556,
+            "errors": 53,
+            "cer": 0.09532374100719425,
+            "exact": 12,
+            "noiseCases": 6,
+            "noiseSeconds": 120.0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": 0.0,
+            "audioSeconds": 504.764875,
+            "inferenceSeconds": 6.444592332118191
+          },
+          "conditions": {
+            "chaos": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 98,
+              "errors": 47,
+              "cer": 0.47959183673469385,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 61.954,
+              "inferenceSeconds": 0.7829613749636337
+            },
+            "clean": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 98,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 3,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 57.989125,
+              "inferenceSeconds": 0.7468013329780661
+            },
+            "crowded": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 99,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 3,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 56.027375,
+              "inferenceSeconds": 0.7406322089955211
+            },
+            "fading": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 98,
+              "errors": 2,
+              "cer": 0.02040816326530612,
+              "exact": 2,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 54.07275,
+              "inferenceSeconds": 0.682538959023077
+            },
+            "human": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 97,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 3,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 75.08025,
+              "inferenceSeconds": 0.9689364170772023
+            },
+            "noise": {
+              "cases": 6,
+              "speechCases": 0,
+              "characters": 0,
+              "errors": 0,
+              "cer": null,
+              "exact": 0,
+              "noiseCases": 6,
+              "noiseSeconds": 120.0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": 0.0,
+              "audioSeconds": 120.0,
+              "inferenceSeconds": 1.4886969990329817
+            },
+            "rough": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 66,
+              "errors": 4,
+              "cer": 0.06060606060606061,
+              "exact": 1,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 79.641375,
+              "inferenceSeconds": 1.034025040047709
+            }
+          }
+        },
+        "2000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/old-dev-step-2000.json",
+          "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 24,
+            "speechCases": 18,
+            "characters": 556,
+            "errors": 54,
+            "cer": 0.09712230215827339,
+            "exact": 12,
+            "noiseCases": 6,
+            "noiseSeconds": 120.0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": 0.0,
+            "audioSeconds": 504.764875,
+            "inferenceSeconds": 6.596738333988469
+          },
+          "conditions": {
+            "chaos": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 98,
+              "errors": 48,
+              "cer": 0.4897959183673469,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 61.954,
+              "inferenceSeconds": 0.8106062500155531
+            },
+            "clean": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 98,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 3,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 57.989125,
+              "inferenceSeconds": 0.7480871260049753
+            },
+            "crowded": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 99,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 3,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 56.027375,
+              "inferenceSeconds": 0.7291052919463255
+            },
+            "fading": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 98,
+              "errors": 2,
+              "cer": 0.02040816326530612,
+              "exact": 2,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 54.07275,
+              "inferenceSeconds": 0.7145035840221681
+            },
+            "human": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 97,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 3,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 75.08025,
+              "inferenceSeconds": 0.9863356669666246
+            },
+            "noise": {
+              "cases": 6,
+              "speechCases": 0,
+              "characters": 0,
+              "errors": 0,
+              "cer": null,
+              "exact": 0,
+              "noiseCases": 6,
+              "noiseSeconds": 120.0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": 0.0,
+              "audioSeconds": 120.0,
+              "inferenceSeconds": 1.5603867490426637
+            },
+            "rough": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 66,
+              "errors": 4,
+              "cer": 0.06060606060606061,
+              "exact": 1,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 79.641375,
+              "inferenceSeconds": 1.047713665990159
+            }
+          }
+        },
+        "3000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/old-dev-step-3000.json",
+          "modelSHA256": "8332c926c323562b07545a8f8486a998c13f93f42e76060463b2a2220d48ae25",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 24,
+            "speechCases": 18,
+            "characters": 556,
+            "errors": 53,
+            "cer": 0.09532374100719425,
+            "exact": 11,
+            "noiseCases": 6,
+            "noiseSeconds": 120.0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": 0.0,
+            "audioSeconds": 504.764875,
+            "inferenceSeconds": 6.39814420993207
+          },
+          "conditions": {
+            "chaos": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 98,
+              "errors": 45,
+              "cer": 0.45918367346938777,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 61.954,
+              "inferenceSeconds": 0.7887811259133741
+            },
+            "clean": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 98,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 3,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 57.989125,
+              "inferenceSeconds": 0.741584041970782
+            },
+            "crowded": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 99,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 3,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 56.027375,
+              "inferenceSeconds": 0.7058882089331746
+            },
+            "fading": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 98,
+              "errors": 2,
+              "cer": 0.02040816326530612,
+              "exact": 2,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 54.07275,
+              "inferenceSeconds": 0.6770312510197982
+            },
+            "human": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 97,
+              "errors": 0,
+              "cer": 0.0,
+              "exact": 3,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 75.08025,
+              "inferenceSeconds": 0.9380982500733808
+            },
+            "noise": {
+              "cases": 6,
+              "speechCases": 0,
+              "characters": 0,
+              "errors": 0,
+              "cer": null,
+              "exact": 0,
+              "noiseCases": 6,
+              "noiseSeconds": 120.0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": 0.0,
+              "audioSeconds": 120.0,
+              "inferenceSeconds": 1.5048776660114527
+            },
+            "rough": {
+              "cases": 3,
+              "speechCases": 3,
+              "characters": 66,
+              "errors": 6,
+              "cer": 0.09090909090909091,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 79.641375,
+              "inferenceSeconds": 1.0418836660101078
+            }
+          }
+        }
+      }
+    },
+    "saq-dev": {
+      "baseline": {
+        "report": "benchmarks/real-dev-cwformer-v4-runtime.json",
+        "aggregate": {
+          "cases": 2,
+          "speechCases": 2,
+          "characters": 50,
+          "errors": 6,
+          "cer": 0.12,
+          "exact": 0,
+          "noiseCases": 0,
+          "noiseSeconds": 0,
+          "falseCharacters": 0,
+          "falseCharactersPerMinute": null,
+          "audioSeconds": 38.95,
+          "inferenceSeconds": 0.556605749996379
+        },
+        "conditions": {
+          "real-hand-keyed": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 50,
+            "errors": 6,
+            "cer": 0.12,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 38.95,
+            "inferenceSeconds": 0.556605749996379
+          }
+        }
+      },
+      "candidates": {
+        "1000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/saq-dev-step-1000.json",
+          "modelSHA256": "bae2d7e970737be1be2e4558da928f55831afdb21194f02b892174d6292e7ba9",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 50,
+            "errors": 6,
+            "cer": 0.12,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 38.95,
+            "inferenceSeconds": 0.5722795010660775
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 2,
+              "speechCases": 2,
+              "characters": 50,
+              "errors": 6,
+              "cer": 0.12,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 38.95,
+              "inferenceSeconds": 0.5722795010660775
+            }
+          }
+        },
+        "2000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/saq-dev-step-2000.json",
+          "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 50,
+            "errors": 6,
+            "cer": 0.12,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 38.95,
+            "inferenceSeconds": 0.5371515000006184
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 2,
+              "speechCases": 2,
+              "characters": 50,
+              "errors": 6,
+              "cer": 0.12,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 38.95,
+              "inferenceSeconds": 0.5371515000006184
+            }
+          }
+        },
+        "3000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/saq-dev-step-3000.json",
+          "modelSHA256": "8332c926c323562b07545a8f8486a998c13f93f42e76060463b2a2220d48ae25",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 50,
+            "errors": 6,
+            "cer": 0.12,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 38.95,
+            "inferenceSeconds": 0.5033395000500605
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 2,
+              "speechCases": 2,
+              "characters": 50,
+              "errors": 6,
+              "cer": 0.12,
+              "exact": 0,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 38.95,
+              "inferenceSeconds": 0.5033395000500605
+            }
+          }
+        }
+      }
+    },
+    "marine-regression": {
+      "baseline": {
+        "report": "benchmarks/real-final-cwformer-v4.json",
+        "aggregate": {
+          "cases": 2,
+          "speechCases": 2,
+          "characters": 37,
+          "errors": 13,
+          "cer": 0.35135135135135137,
+          "exact": 0,
+          "noiseCases": 0,
+          "noiseSeconds": 0,
+          "falseCharacters": 0,
+          "falseCharactersPerMinute": null,
+          "audioSeconds": 30.4,
+          "inferenceSeconds": 0.439636834023986
+        },
+        "conditions": {
+          "real-hand-keyed": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 37,
+            "errors": 13,
+            "cer": 0.35135135135135137,
+            "exact": 0,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 30.4,
+            "inferenceSeconds": 0.439636834023986
+          }
+        }
+      },
+      "candidates": {
+        "1000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/marine-regression-step-1000.json",
+          "modelSHA256": "bae2d7e970737be1be2e4558da928f55831afdb21194f02b892174d6292e7ba9",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 37,
+            "errors": 11,
+            "cer": 0.2972972972972973,
+            "exact": 1,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 30.4,
+            "inferenceSeconds": 0.39474816696019843
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 2,
+              "speechCases": 2,
+              "characters": 37,
+              "errors": 11,
+              "cer": 0.2972972972972973,
+              "exact": 1,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 30.4,
+              "inferenceSeconds": 0.39474816696019843
+            }
+          }
+        },
+        "2000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/marine-regression-step-2000.json",
+          "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 37,
+            "errors": 12,
+            "cer": 0.32432432432432434,
+            "exact": 1,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 30.4,
+            "inferenceSeconds": 0.40351333300350234
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 2,
+              "speechCases": 2,
+              "characters": 37,
+              "errors": 12,
+              "cer": 0.32432432432432434,
+              "exact": 1,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 30.4,
+              "inferenceSeconds": 0.40351333300350234
+            }
+          }
+        },
+        "3000": {
+          "report": "benchmarks/training-cwformer-weighted-v6/marine-regression-step-3000.json",
+          "modelSHA256": "8332c926c323562b07545a8f8486a998c13f93f42e76060463b2a2220d48ae25",
+          "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+          "aggregate": {
+            "cases": 2,
+            "speechCases": 2,
+            "characters": 37,
+            "errors": 10,
+            "cer": 0.2702702702702703,
+            "exact": 1,
+            "noiseCases": 0,
+            "noiseSeconds": 0,
+            "falseCharacters": 0,
+            "falseCharactersPerMinute": null,
+            "audioSeconds": 30.4,
+            "inferenceSeconds": 0.395808334054891
+          },
+          "conditions": {
+            "real-hand-keyed": {
+              "cases": 2,
+              "speechCases": 2,
+              "characters": 37,
+              "errors": 10,
+              "cer": 0.2702702702702703,
+              "exact": 1,
+              "noiseCases": 0,
+              "noiseSeconds": 0,
+              "falseCharacters": 0,
+              "falseCharactersPerMinute": null,
+              "audioSeconds": 30.4,
+              "inferenceSeconds": 0.395808334054891
+            }
+          }
+        }
+      }
+    }
+  }
+}

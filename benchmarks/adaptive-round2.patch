@@ -1,0 +1,105 @@
+diff --git a/src/decoder.test.ts b/src/decoder.test.ts
+index 5497913..3bbe0c7 100644
+--- a/src/decoder.test.ts
++++ b/src/decoder.test.ts
+@@ -117,6 +117,37 @@ describe('Morse timing and audio', () => {
+       expect(characterErrors(text, decoded.text).cer).toBeLessThanOrEqual(0.03)
+     }
+   })
++  test('learns heavily weighted marks independently of their short element gaps', () => {
++    const text = 'THIS IS THE FIRST TEST SEE EIGHT'
++    for (const wpm of [12, 20, 30]) {
++      const plan = transmission(text, wpm)
++      for (const tone of plan.tones) tone.end += 0.5 * 1.2 / wpm
++      expect(decodeSamples(synthesize(plan, 650, 8000), 8000, { autoTune: false }).text.trim()).toBe(text)
++    }
++  })
++  test('distinguishes key-up carrier leakage amplified by receiver AGC', () => {
++    const text = 'PARIS CQ TEST K'
++    const clean = synthesize(transmission(text, 18), 650, 8000, 0.4)
++    for (const release of [0.03, 0.1, 0.3]) {
++      const random = randomSource(276430), audio = new Float32Array(clean.length)
++      let envelope = 0.01
++      for (let i = 0; i < audio.length; i++) {
++        const noise = Math.sqrt(-2 * Math.log(Math.max(random(), 1e-10))) * Math.cos(2 * Math.PI * random()) * 0.04 / Math.sqrt(2)
++        const sample = clean[i] + noise + 0.04 * Math.sin(2 * Math.PI * 650 * i / 8000)
++        const power = sample * sample
++        envelope += (1 - Math.exp(-1 / (8000 * (power > envelope ? 0.005 : release)))) * (power - envelope)
++        audio[i] = sample * 0.2 / Math.sqrt(envelope + 1e-6)
++      }
++      expect(characterErrors(text, decodeSamples(audio, 8000, { autoTune: false }).text).errors).toBeLessThanOrEqual(1)
++    }
++  })
++  test('does not interpret modest amplitude flutter on a continuous carrier as keying', () => {
++    for (const rate of [0.4, 2, 10]) {
++      const carrier = Float32Array.from({ length: 8000 * 20 }, (_, i) =>
++        0.3 * (1 + 0.3 * Math.sin(2 * Math.PI * rate * i / 8000)) * Math.sin(2 * Math.PI * 650 * i / 8000))
++      expect(decodeSamples(carrier, 8000, { autoTune: false }).text).toBe('')
++    }
++  })
+   test('Farnsworth spacing and different input block sizes preserve copy', () => {
+     const text = 'CQ TEST 73'
+     const samples = synthesize(transmission(text, 25, 10), 800, 8000)
+diff --git a/src/decoder.ts b/src/decoder.ts
+index 6fdc588..c4da6fb 100644
+--- a/src/decoder.ts
++++ b/src/decoder.ts
+@@ -21,7 +21,8 @@ export function inferDit(runs: Run[], initial: number) {
+       cost += Math.min(error * error, 1)
+     }
+     cost /= marks.length
+-    if (shortestGap) cost += 0.28 * Math.min(Math.abs(Math.log(shortestGap / dit)) ** 2, 1)
++    // Heavy key weighting lengthens marks and shortens gaps; gaps cannot outweigh the marks.
++    if (shortestGap) cost += 0.05 * Math.min(Math.abs(Math.log(shortestGap / dit)) ** 2, 1)
+     cost += 0.003 * Math.abs(Math.log(dit / initial))
+     if (cost < bestCost) { bestCost = cost; best = dit }
+   }
+@@ -92,6 +93,9 @@ export class CWDecoder {
+   private noise = 0.000001
+   private carrierNoise = 0.000001
+   private peak = 0.00001
++  private envelopes: number[] = []
++  private envelopeIndex = 0
++  private envelopeGate = 0
+   private keyed = false
+   private candidate = false
+   private candidateSince = 0
+@@ -180,6 +184,29 @@ export class CWDecoder {
+ 
+   private detect(power: number, time: number) {
+     this.power = power
++    this.envelopes[this.envelopeIndex++ % 400] = Math.sqrt(power)
++    if (this.envelopeIndex % 16 === 0) {
++      const ordered = [...this.envelopes].sort((a, b) => a - b)
++      let low = ordered[Math.floor(ordered.length * 0.2)], high = ordered[Math.floor(ordered.length * 0.8)]
++      for (let round = 0; round < 3; round++) {
++        const midpoint = (low + high) / 2
++        let lower = 0, upper = 0, count = 0
++        for (const value of ordered) {
++          if (value < midpoint) { lower += value; count++ }
++          else upper += value
++        }
++        if (count) low = lower / count
++        if (count < ordered.length) high = upper / (ordered.length - count)
++      }
++      let variance = 0, count = 0
++      for (const value of ordered) {
++        if (value < (low + high) / 2) { variance += (value - low) ** 2; count++ }
++      }
++      // Receiver AGC can amplify a residual key-up tone. Require two distinct, stable levels
++      // above the noise floor so fading marks and modest carrier flutter keep the normal gate.
++      this.envelopeGate = high > 2 * low && low * low > this.carrierNoise && variance / count < (0.6 * low) ** 2
++        ? ((low + high) / 2) ** 2 : 0
++    }
+     // A sudden real carrier must not inherit an unconfirmed noise pulse after silence.
+     if (this.keyed && time > this.carrierUntil && power > this.markPeak * 16) {
+       const gap = this.runs.at(-1)
+@@ -190,7 +217,7 @@ export class CWDecoder {
+     this.peak = Math.max(power, this.peak * 0.982)
+     // A Schmitt gate follows the signal envelope; the noise estimate only learns below the gate.
+     const floor = Math.max(1e-9, (time > this.carrierUntil ? Math.max(this.noise, this.carrierNoise) : this.noise) * 10 ** (this.settings.threshold / 10))
+-    const threshold = Math.max(floor * (this.keyed ? 0.5 : 1), this.peak * (this.keyed ? 0.14 : 0.27))
++    const threshold = Math.max(this.envelopeGate * (this.keyed ? 0.8 : 1.2), floor * (this.keyed ? 0.5 : 1), this.peak * (this.keyed ? 0.14 : 0.27))
+     const on = power > threshold
+     if (!on && power < this.peak * 0.1) this.noise += 0.003 * (power - this.noise)
+     if (on !== this.candidate) { this.candidate = on; this.candidateSince = time }

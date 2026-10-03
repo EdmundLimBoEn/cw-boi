@@ -44,3 +44,30 @@ test('cancelling a pending start releases the late session', async () => {
     expect(calls.some(url => url.includes('/cancel?session=late-session'))).toBe(true)
   } finally { globalThis.fetch = original }
 })
+
+test('engine selection follows file and stream requests, and cancelled copy stays cancelled', async () => {
+  const original = globalThis.fetch
+  const calls: URL[] = []
+  let resolveFeed!: (value: Response) => void
+  globalThis.fetch = ((input) => {
+    const url = new URL(String(input), 'http://localhost'); calls.push(url)
+    if (url.pathname.endsWith('/start')) return Promise.resolve(Response.json({ session: 'cwformer-session' }))
+    if (url.pathname.endsWith('/feed')) return new Promise(resolve => { resolveFeed = resolve })
+    return Promise.resolve(Response.json({ text: 'CQ' }))
+  }) as typeof fetch
+  try {
+    const { neuralDecode } = await import('./neural')
+    expect(await neuralDecode(new Float32Array(160), DEFAULT_RECEIVER, 'cwformer')).toBe('CQ')
+    const stream = new NeuralStream('cwformer')
+    let text = ''
+    stream.onText = copy => { text = copy }
+    await stream.start(DEFAULT_RECEIVER)
+    stream.feed(new Float32Array(8000))
+    stream.cancel()
+    resolveFeed(Response.json({ text: 'OLD COPY' }))
+    await stream.finish()
+    expect(text).toBe('')
+    expect(calls.map(url => url.pathname)).toEqual(['/api/decode', '/api/stream/start', '/api/stream/feed', '/api/stream/cancel'])
+    expect(calls.every(url => url.searchParams.get('engine') === 'cwformer')).toBe(true)
+  } finally { globalThis.fetch = original }
+})

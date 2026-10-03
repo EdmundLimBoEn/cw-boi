@@ -1,0 +1,844 @@
+{
+  "version": 1,
+  "split": "real-round2-final",
+  "seed": null,
+  "manifest": ".research/round2-real-final/manifest.json",
+  "manifestSHA256": "89abd7407877fefd17651de4e80a1a7fcf8ac20b4655815bb20f5f5e53d28caf",
+  "checkpoint": "models/cw-boi-rnnt-v1.pt",
+  "checkpointSHA256": "421ec784604b6d238aa2641d94160a4e6659b66206c3ac363f1d695173a06495",
+  "mode": "stream",
+  "decoder": "app",
+  "chunkSeconds": 1.0,
+  "device": "cpu",
+  "torchVersion": "2.14.1",
+  "morseformerVersion": "0.6.4",
+  "decoderSHA256": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e",
+  "serverSHA256": "e72ed300de21da9f2443d5d423446877e3118e7ed63da35c2a6a622ec79c58e3",
+  "benchmarkSHA256": "94bf37693311363eb46157d24c7c723fb94f1b13b6034f9d4853b1c1fd9b6381",
+  "knownCarrier": true,
+  "complete": true,
+  "results": [
+    {
+      "id": "saq-20221116-reserved-01",
+      "condition": "real-hand-keyed",
+      "expected": "USING THE ALEXANDERSON 200 KW ALTERNATOR ON",
+      "actual": "USING THE ALEXANDERSON 20 KW ALTERNATOR ON",
+      "errors": 1,
+      "cer": 0.023255813953488372,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 31.443,
+      "inferenceSeconds": 0.73342391703045,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 760.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "USING T"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "HE A"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "LEX"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "AN"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "DERS"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "ON"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " 2"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "0"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": " "
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "KW"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": " ALT"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": "ERN"
+        },
+        {
+          "atSeconds": 30.0,
+          "text": "ATO"
+        },
+        {
+          "atSeconds": 31.443,
+          "text": "R ON",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "saq-20221116-reserved-02",
+      "condition": "real-hand-keyed",
+      "expected": "2022 MARKS THE 50TH",
+      "actual": "2022 MARKS THE 50TH",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 17.122,
+      "inferenceSeconds": 0.35935245803557336,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 760.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "202"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "2"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " MA"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "RK"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "S TH"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "E 5"
+        },
+        {
+          "atSeconds": 17.122,
+          "text": "0TH",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "saq-20221116-reserved-03",
+      "condition": "real-hand-keyed",
+      "expected": "CONVENTION. UNESCO WORLD HERITAGE",
+      "actual": "CONVENTION. UNESCO WORLD HERITAGE",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 24.137,
+      "inferenceSeconds": 0.5650428749504499,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 760.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CONV"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "ENTIO"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "N."
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " U"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "NES"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "CO"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " WO"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "RL"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "D H"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "ERIT"
+        },
+        {
+          "atSeconds": 24.137,
+          "text": "AGE",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "saq-20221116-reserved-04",
+      "condition": "real-hand-keyed",
+      "expected": "ARE IRREPLACEABLE ASSETS OF HUMANITY BUT MANY OF THEM ARE",
+      "actual": "ARE IREPLACEABLE ASSETS OF HUMANITY BUT MANY OF THEM ARE",
+      "errors": 1,
+      "cer": 0.017543859649122806,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 37.861,
+      "inferenceSeconds": 0.8979500000132248,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 760.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "ARE IR"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "EPL"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "AC"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "EAB"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "LE A"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "SSET"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "S O"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "F H"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "UM"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "ANIT"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "Y"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": " BU"
+        },
+        {
+          "atSeconds": 30.0,
+          "text": "T MA"
+        },
+        {
+          "atSeconds": 32.0,
+          "text": "NY"
+        },
+        {
+          "atSeconds": 34.0,
+          "text": " O"
+        },
+        {
+          "atSeconds": 36.0,
+          "text": "F TH"
+        },
+        {
+          "atSeconds": 37.861,
+          "text": "EM ARE",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "saq-20221116-reserved-05",
+      "condition": "real-hand-keyed",
+      "expected": "CHANGE. TO ENSURE THEIR PROTECTION,",
+      "actual": "CHANGE. TO ENSURE THEIR PROTECTION,",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 24.678,
+      "inferenceSeconds": 0.5778564580250531,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 760.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "CHANG"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "E."
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " TO"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " ENS"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "URE"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": " THEI"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "R P"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "RO"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "TEC"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "TIO"
+        },
+        {
+          "atSeconds": 24.678,
+          "text": "N,",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "saq-20221116-reserved-06",
+      "condition": "real-hand-keyed",
+      "expected": "COOPERATION TO PROMOTE PEACE, INTERNATIONAL UNDERSTANDING AND SUSTAINABLE DEVELOPMENT IS MORE",
+      "actual": "COPPERATION TO PROMOTE PEACE, INTERNATIONAL UNDERSTANDING AND SUSTAINABLE DEVELOPMENT IS MORE",
+      "errors": 1,
+      "cer": 0.010752688172043012,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 62.797,
+      "inferenceSeconds": 1.6362427090061828,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 760.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "COPP"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "ERA"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "TIO"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "N TO"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " P"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "RO"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "MO"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "TE P"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "EAC"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "E,"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": " IN"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": "TERN"
+        },
+        {
+          "atSeconds": 30.0,
+          "text": "ATI"
+        },
+        {
+          "atSeconds": 32.0,
+          "text": "ONA"
+        },
+        {
+          "atSeconds": 34.0,
+          "text": "L U"
+        },
+        {
+          "atSeconds": 36.0,
+          "text": "NDE"
+        },
+        {
+          "atSeconds": 38.0,
+          "text": "RSTA"
+        },
+        {
+          "atSeconds": 40.0,
+          "text": "NDI"
+        },
+        {
+          "atSeconds": 42.0,
+          "text": "NG"
+        },
+        {
+          "atSeconds": 44.0,
+          "text": " AND"
+        },
+        {
+          "atSeconds": 46.0,
+          "text": " SU"
+        },
+        {
+          "atSeconds": 48.0,
+          "text": "STAI"
+        },
+        {
+          "atSeconds": 50.0,
+          "text": "NAB"
+        },
+        {
+          "atSeconds": 52.0,
+          "text": "LE"
+        },
+        {
+          "atSeconds": 54.0,
+          "text": " DEV"
+        },
+        {
+          "atSeconds": 56.0,
+          "text": "ELO"
+        },
+        {
+          "atSeconds": 58.0,
+          "text": "PM"
+        },
+        {
+          "atSeconds": 60.0,
+          "text": "ENT"
+        },
+        {
+          "atSeconds": 62.0,
+          "text": " IS M"
+        },
+        {
+          "atSeconds": 62.797,
+          "text": "ORE",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "saq-20221116-reserved-07",
+      "condition": "real-hand-keyed",
+      "expected": "SIGNED: LENA SOMMESTAD, CHAIR SWEDISH NATIONAL",
+      "actual": "SIGNED8 LENA SOMMEST AD, CHAIR SWEDISS NATIONAL",
+      "errors": 3,
+      "cer": 0.06521739130434782,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 31.495,
+      "inferenceSeconds": 0.7282980000018142,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 760.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "SIGNED8"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " L"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "ENA"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " SO"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "MM"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "EST A"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "D,"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " C"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "HAI"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "R SW"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "EDI"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": "SS"
+        },
+        {
+          "atSeconds": 30.0,
+          "text": " NATI"
+        },
+        {
+          "atSeconds": 31.495,
+          "text": "ONAL",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "saq-20221116-reserved-08",
+      "condition": "real-hand-keyed",
+      "expected": "GRIMETON RADIO STATION AND THE ALEXANDER",
+      "actual": "GRIMET ON RADIO STATION AND THE ALEXANNDER",
+      "errors": 2,
+      "cer": 0.05,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 24.875,
+      "inferenceSeconds": 0.5675928330165334,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 760.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "GRIMET O"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "N "
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "RAD"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "IO "
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "STAT"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "ION"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " AND"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " TH"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "E AL"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "EXA"
+        },
+        {
+          "atSeconds": 24.875,
+          "text": "NNDER",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "saq-20221116-reserved-09",
+      "condition": "real-hand-keyed",
+      "expected": "FOR QSL INFO PLEASE READ OUR WEBSITE: WWW.ALEXANDER.N.SE",
+      "actual": "FOR QSL INFO PLEASE READ OUR WEBSITE8 WWW. ALXANDER.N.SE",
+      "errors": 3,
+      "cer": 0.05357142857142857,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 42.05,
+      "inferenceSeconds": 1.0326051249867305,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 760.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "FOR Q"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "SL"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " INF"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "O "
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "PLE"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "ASE"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " READ"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " O"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "UR"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " WEB"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "SITE"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": "8"
+        },
+        {
+          "atSeconds": 30.0,
+          "text": " WW"
+        },
+        {
+          "atSeconds": 32.0,
+          "text": "W."
+        },
+        {
+          "atSeconds": 34.0,
+          "text": " AL"
+        },
+        {
+          "atSeconds": 36.0,
+          "text": "X"
+        },
+        {
+          "atSeconds": 38.0,
+          "text": "AND"
+        },
+        {
+          "atSeconds": 40.0,
+          "text": "ER."
+        },
+        {
+          "atSeconds": 42.0,
+          "text": "N."
+        },
+        {
+          "atSeconds": 42.05,
+          "text": "SE",
+          "final": true
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "cases": 9,
+    "speechCases": 9,
+    "characters": 422,
+    "errors": 11,
+    "cer": 0.026066350710900472,
+    "exact": 3,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 296.45799999999997,
+    "inferenceSeconds": 7.098364375066012
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 9,
+      "speechCases": 9,
+      "characters": 422,
+      "errors": 11,
+      "cer": 0.026066350710900472,
+      "exact": 3,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 296.45799999999997,
+      "inferenceSeconds": 7.098364375066012
+    }
+  }
+}

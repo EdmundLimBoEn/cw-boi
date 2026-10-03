@@ -62,3 +62,45 @@ Both WAV files were reproduced byte-for-byte from the pinned prefix. The fetcher
 - [Priyom's CW Saturday](https://priyom.org/blog/cw-saturday): actual naval CW reception with a human-published transcript, CC BY-NC-SA 4.0. The downloaded recording contains extra repeated groups and a callsign that does not match the Latin transcription exactly. It is **not accepted as scored ground truth**. Its very regular element durations also do not establish human keying.
 
 No decoder output is used as a reference transcript. Original recordings, conversions and exploratory predictions are not committed.
+
+## Round 2: expanded real development and a new session holdout
+
+The earlier SAQ 2019 and two Marine Electric checks above have now been evaluated. They remain **consumed regression examples**, not fresh final tests. Their original manifests and reports are unchanged.
+
+`neural/corpus-dev-v2.json` adds **12 non-overlapping clips, 438 reference characters including spaces, and 290.87 seconds**. These cover three operators and two recording sessions:
+
+| Session | Operators | Clips | Reference characters |
+| --- | --- | ---: | ---: |
+| Marine Electric distress traffic, 1983 | WOOH and LJKR | 8 | 237 |
+| Portpatrick Radio final broadcast, 1997 | Graham Mercer / GM4BES, GPK | 4 | 201 |
+
+Marine Electric labels use the independent [published human transcript](https://archive.org/download/SsMarineElectricWoohSos/Transcript_SOS_WOOH.txt). The actual dits, dahs, word gaps and crop boundaries were checked with narrow-band envelope extraction at three or four fixed thresholds; all retained characters agree. The reference preserves transmitted number groups and spacing, including a question-mark prosign attached directly to its preceding group. These examples share the source session used by the old tiny regression check, so they do not establish session-independent generalization.
+
+The [GPK recording](https://zl1.nz/about-amateur-radio/new-zealand-nets/nz-net/newsletters/nr106/) is corroborated by [Chris G3TUX's contemporary first-person transcription](https://www.jproc.ca/radiostor/fwcwgb.html), which describes the closing transmissions as hand-sent. Independent I/Q envelope inspection at three thresholds verifies every retained Morse pattern and gap. Actual repeated tokens and attached prosigns are retained; editorial spacing is not imposed on the signal. Ambiguous or differently transcribed regions were excluded before evaluating the models. These four crops are one operator, not four independent tests.
+
+The new development manifest contains source URLs, byte counts, source and crop SHA-256 hashes, original time ranges, carrier settings, and per-character mark/gap evidence. Neither app output nor neural predictions supplied any reference label. **All v2 real speech remains evaluation-only and is excluded from training.** Marine Electric has the uploader's CC0 declaration. No open redistribution license was found for the GPK recording, so it remains a local evaluation download; neither original nor derived audio is committed.
+
+The earlier acquisition had completed the full Marine Electric MP3, whose MD5 matches Archive metadata. Reproduction of v2 needs only its pinned first 9 MiB, sufficient for the last reviewed crop at 1599 seconds. It does not redownload the full 91-minute recording.
+
+```sh
+.venv/bin/python neural/fetch_corpus_v2.py --check
+.venv/bin/python neural/fetch_corpus_v2.py
+.venv/bin/python neural/benchmark.py --prepare neural/corpus-dev-v2.json --output .research/real-dev-v2/manifest.json
+```
+
+All 12 WAV crops were re-derived using the fetch helper and reproduced with identical SHA-256 hashes. Conversion failure leaves any existing valid file intact.
+
+### Round 2 real test, now consumed
+
+`neural/corpus-final-v2-sealed.json` preserves the original seal: **nine non-overlapping crops, 422 reference characters, 296.458 seconds**, from the [November 16, 2022 SAQ reception by Richard B. Langley](https://shortwavearchive.com/archive/saq-grimeton-radio-november-16-2022). The entire 570.63-second session was excluded from development and training. After all candidate configurations were frozen, the annotation was published unchanged as `neural/corpus-final-v2.json`, SHA-256 `4ff69881fd40e26a9c6649c05ea4176bf8f898009418101e6411f12fc862a053`. Audio remains local and outside Git.
+
+The receiver-authored transcript was independently checked against four fixed envelope thresholds. Only complete-word regions with agreement were retained, before any model evaluation; unclear passages and disagreements were excluded rather than corrected using a model. The site declares CC BY-NC 3.0. Attribution is retained and the recording is used only for local evaluation, with no training or redistributed audio.
+
+This is one transmitter/receiver session, with correlated crops and receiver noise reduction already applied. It measures generalization to an additional session; it does not establish performance for every form of human keying or severe interference. Unknown exposure during upstream pretrained-model development cannot be excluded. The [one-time final comparison](round2-final-comparison.json) is complete. This session and synthetic final seed `2203917` are now **consumed evaluation data**; no candidate was tuned after their results.
+
+```sh
+.venv/bin/python neural/fetch_corpus_v2.py --manifest neural/corpus-final-v2.json
+.venv/bin/python neural/benchmark.py --prepare neural/corpus-final-v2.json --output .research/round2-real-final/manifest.json
+```
+
+The prepared 8 kHz corpus manifest has SHA-256 `89abd7407877fefd17651de4e80a1a7fcf8ac20b4655815bb20f5f5e53d28caf`. Its hash differs from the source annotation because it includes conversion metadata and references the derived float32 audio files. Actual evaluator commands, source and model hashes, original release guards, and all predictions are retained in [the round 2 plan](round2-plan.json), [commands](round2-final-commands.json), and comparison reports.

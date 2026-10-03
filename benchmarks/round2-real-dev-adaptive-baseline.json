@@ -1,0 +1,371 @@
+{
+  "version": 1,
+  "split": "real-round2-dev",
+  "manifest": ".research/real-dev-v2/manifest.json",
+  "manifestSHA256": "9331961f4420aa68602020cd7c193425782cd5c4c2626168271a59c8f1c47c9e",
+  "engine": "adaptive",
+  "mode": "stream",
+  "chunkSamples": 256,
+  "knownCarrier": true,
+  "sources": [
+    {
+      "file": "src/decoder.ts",
+      "sha256": "8326b1304e5cb93c6c522cd68950a7bcf0c5a87f40ab7fe1f2e07935da27c676"
+    },
+    {
+      "file": "src/timing.ts",
+      "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+    },
+    {
+      "file": "src/morse.ts",
+      "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+    }
+  ],
+  "benchmarkSHA256": "20b228078ce7e0212e15c792c7f7957f3cd5a454174824938ae2a52e02978151",
+  "complete": true,
+  "results": [
+    {
+      "id": "marine-electric-ljkr-position",
+      "condition": "real-hand-keyed",
+      "expected": "QTH 0815 GMT N 38.23.2 W 74.41.3W SPEED 12 KNOTS",
+      "actual": "Q�M8�B NZBOP�:W�YN W_IV��'AWVMN�ED�TU <KN>TQSE",
+      "errors": 38,
+      "cer": 0.7916666666666666,
+      "errorsWithoutSpaces": 34,
+      "durationSeconds": 40.23,
+      "inferenceSeconds": 1.1224874580000006
+    },
+    {
+      "id": "marine-electric-wooh-standby",
+      "condition": "real-hand-keyed",
+      "expected": "PLEASE STANDBY FOR US",
+      "actual": "PLEASE STANDBY/OR US",
+      "errors": 2,
+      "cer": 0.09523809523809523,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 15.2,
+      "inferenceSeconds": 0.13581458399999974
+    },
+    {
+      "id": "gpk-signoff-announcement",
+      "condition": "real-hand-keyed",
+      "expected": "AT 312359 UTC PORTPATRICKRADIO/GPK WILL END THE",
+      "actual": "AT 312�10 OTC EPORTPATRA�OOMOIO/GPK OM��TMO T�T",
+      "errors": 21,
+      "cer": 0.44680851063829785,
+      "errorsWithoutSpaces": 20,
+      "durationSeconds": 29.17,
+      "inferenceSeconds": 0.5700087920000005
+    },
+    {
+      "id": "gpk-signoff-history",
+      "condition": "real-hand-keyed",
+      "expected": "AFTER 76 YEARS= IN 1844 QTC NR1 FM SAMUEL MORSE WAS",
+      "actual": "M�TTO 00 �TMOO0 MM 0082 �TY MO0 �M OMMOTJ MOOOT OMO",
+      "errors": 35,
+      "cer": 0.6862745098039216,
+      "errorsWithoutSpaces": 35,
+      "durationSeconds": 31.5,
+      "inferenceSeconds": 0.6217012080000004
+    },
+    {
+      "id": "gpk-signoff-closing",
+      "condition": "real-hand-keyed",
+      "expected": "ALL R/OS NOW KEN THE ANSWER TO THIS= NW 73 73/SLAINTE TO ALL R/OS",
+      "actual": "M��O0OO MOO OTM TJT MMOOTO TO T�MO0 MO 00 000O�MMMTT TO M��O0OO",
+      "errors": 44,
+      "cer": 0.676923076923077,
+      "errorsWithoutSpaces": 42,
+      "durationSeconds": 36.63,
+      "inferenceSeconds": 0.8847606250000009
+    },
+    {
+      "id": "gpk-signoff-farewell",
+      "condition": "real-hand-keyed",
+      "expected": "PAST AND PRESENT FAREWELL + DE GPK GPK",
+      "actual": "�MOT MMO �OTOTMT �MOTOT��0 OT O �K GJO",
+      "errors": 29,
+      "cer": 0.7631578947368421,
+      "errorsWithoutSpaces": 27,
+      "durationSeconds": 21.59,
+      "inferenceSeconds": 0.28899570800000035
+    },
+    {
+      "id": "marine-extra-ljkr-assist",
+      "condition": "real-hand-keyed",
+      "expected": "YES WE ARE PROCEEDING TO ASSIST SPEED 12 KNOTS",
+      "actual": "YTS WE URE1RO.EEDFGTAOASDIST HPTTD 12OTOTS",
+      "errors": 17,
+      "cer": 0.3695652173913043,
+      "errorsWithoutSpaces": 13,
+      "durationSeconds": 26.5,
+      "inferenceSeconds": 0.4509874159999999
+    },
+    {
+      "id": "marine-extra-wooh-abandon",
+      "condition": "real-hand-keyed",
+      "expected": "AT 0800GMT VESSEL DOWN BY HEAD PREPARING TO ABANDON",
+      "actual": "AT 0800GQ VESSEL DOWN BY HEAD PREPARING TO ABANDON",
+      "errors": 2,
+      "cer": 0.0392156862745098,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 39,
+      "inferenceSeconds": 0.765473958999999
+    },
+    {
+      "id": "marine-extra-wooh-coal-carrier",
+      "condition": "real-hand-keyed",
+      "expected": "VESSEL COAL CARRIER BOUND",
+      "actual": "VESSEL COAL CARRIERE BOUND",
+      "errors": 1,
+      "cer": 0.04,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 19.8,
+      "inferenceSeconds": 0.21659562499999993
+    },
+    {
+      "id": "marine-extra-wooh-destination",
+      "condition": "real-hand-keyed",
+      "expected": "FOR FALL RIVER",
+      "actual": "FOR FALL RIVER",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 10.1,
+      "inferenceSeconds": 0.07707441699999981
+    },
+    {
+      "id": "marine-extra-wooh-flares",
+      "condition": "real-hand-keyed",
+      "expected": "YES HAVE FLARES II PFD?",
+      "actual": "YES HAVESNLARES II PFTM",
+      "errors": 4,
+      "cer": 0.17391304347826086,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 15.35,
+      "inferenceSeconds": 0.151609375
+    },
+    {
+      "id": "marine-extra-wooh-vessel-name",
+      "condition": "real-hand-keyed",
+      "expected": "SS MARINE",
+      "actual": "SS MARINE",
+      "errors": 0,
+      "cer": 0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 5.8,
+      "inferenceSeconds": 0.02707416700000067
+    }
+  ],
+  "summary": {
+    "cases": 12,
+    "speechCases": 12,
+    "characters": 438,
+    "errors": 193,
+    "cer": 0.4406392694063927,
+    "exact": 2,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 290.87000000000006,
+    "inferenceSeconds": 5.312583334
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 12,
+      "speechCases": 12,
+      "characters": 438,
+      "errors": 193,
+      "cer": 0.4406392694063927,
+      "exact": 2,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 290.87000000000006,
+      "inferenceSeconds": 5.312583334
+    }
+  },
+  "baseline": {
+    "commit": "87ced16fb4402c2836d02aeff2c8a434afa58a81",
+    "sources": [
+      {
+        "file": "src/decoder.ts",
+        "sha256": "8326b1304e5cb93c6c522cd68950a7bcf0c5a87f40ab7fe1f2e07935da27c676"
+      },
+      {
+        "file": "src/timing.ts",
+        "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+      },
+      {
+        "file": "src/morse.ts",
+        "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+      }
+    ],
+    "results": [
+      {
+        "id": "marine-electric-ljkr-position",
+        "condition": "real-hand-keyed",
+        "expected": "QTH 0815 GMT N 38.23.2 W 74.41.3W SPEED 12 KNOTS",
+        "actual": "Q�M8�B NZBOP�:W�YN W_IV��'AWVMN�ED�TU <KN>TQSE",
+        "errors": 38,
+        "cer": 0.7916666666666666,
+        "errorsWithoutSpaces": 34,
+        "durationSeconds": 40.23,
+        "inferenceSeconds": 0.8611718330000001
+      },
+      {
+        "id": "marine-electric-wooh-standby",
+        "condition": "real-hand-keyed",
+        "expected": "PLEASE STANDBY FOR US",
+        "actual": "PLEASE STANDBY/OR US",
+        "errors": 2,
+        "cer": 0.09523809523809523,
+        "errorsWithoutSpaces": 1,
+        "durationSeconds": 15.2,
+        "inferenceSeconds": 0.142461542
+      },
+      {
+        "id": "gpk-signoff-announcement",
+        "condition": "real-hand-keyed",
+        "expected": "AT 312359 UTC PORTPATRICKRADIO/GPK WILL END THE",
+        "actual": "AT 312�10 OTC EPORTPATRA�OOMOIO/GPK OM��TMO T�T",
+        "errors": 21,
+        "cer": 0.44680851063829785,
+        "errorsWithoutSpaces": 20,
+        "durationSeconds": 29.17,
+        "inferenceSeconds": 0.56935625
+      },
+      {
+        "id": "gpk-signoff-history",
+        "condition": "real-hand-keyed",
+        "expected": "AFTER 76 YEARS= IN 1844 QTC NR1 FM SAMUEL MORSE WAS",
+        "actual": "M�TTO 00 �TMOO0 MM 0082 �TY MO0 �M OMMOTJ MOOOT OMO",
+        "errors": 35,
+        "cer": 0.6862745098039216,
+        "errorsWithoutSpaces": 35,
+        "durationSeconds": 31.5,
+        "inferenceSeconds": 0.791336209
+      },
+      {
+        "id": "gpk-signoff-closing",
+        "condition": "real-hand-keyed",
+        "expected": "ALL R/OS NOW KEN THE ANSWER TO THIS= NW 73 73/SLAINTE TO ALL R/OS",
+        "actual": "M��O0OO MOO OTM TJT MMOOTO TO T�MO0 MO 00 000O�MMMTT TO M��O0OO",
+        "errors": 44,
+        "cer": 0.676923076923077,
+        "errorsWithoutSpaces": 42,
+        "durationSeconds": 36.63,
+        "inferenceSeconds": 1.261000125
+      },
+      {
+        "id": "gpk-signoff-farewell",
+        "condition": "real-hand-keyed",
+        "expected": "PAST AND PRESENT FAREWELL + DE GPK GPK",
+        "actual": "�MOT MMO �OTOTMT �MOTOT��0 OT O �K GJO",
+        "errors": 29,
+        "cer": 0.7631578947368421,
+        "errorsWithoutSpaces": 27,
+        "durationSeconds": 21.59,
+        "inferenceSeconds": 0.41110108300000003
+      },
+      {
+        "id": "marine-extra-ljkr-assist",
+        "condition": "real-hand-keyed",
+        "expected": "YES WE ARE PROCEEDING TO ASSIST SPEED 12 KNOTS",
+        "actual": "YTS WE URE1RO.EEDFGTAOASDIST HPTTD 12OTOTS",
+        "errors": 17,
+        "cer": 0.3695652173913043,
+        "errorsWithoutSpaces": 13,
+        "durationSeconds": 26.5,
+        "inferenceSeconds": 0.5902460839999994
+      },
+      {
+        "id": "marine-extra-wooh-abandon",
+        "condition": "real-hand-keyed",
+        "expected": "AT 0800GMT VESSEL DOWN BY HEAD PREPARING TO ABANDON",
+        "actual": "AT 0800GQ VESSEL DOWN BY HEAD PREPARING TO ABANDON",
+        "errors": 2,
+        "cer": 0.0392156862745098,
+        "errorsWithoutSpaces": 2,
+        "durationSeconds": 39,
+        "inferenceSeconds": 0.9713279579999998
+      },
+      {
+        "id": "marine-extra-wooh-coal-carrier",
+        "condition": "real-hand-keyed",
+        "expected": "VESSEL COAL CARRIER BOUND",
+        "actual": "VESSEL COAL CARRIERE BOUND",
+        "errors": 1,
+        "cer": 0.04,
+        "errorsWithoutSpaces": 1,
+        "durationSeconds": 19.8,
+        "inferenceSeconds": 0.2696284169999999
+      },
+      {
+        "id": "marine-extra-wooh-destination",
+        "condition": "real-hand-keyed",
+        "expected": "FOR FALL RIVER",
+        "actual": "FOR FALL RIVER",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 10.1,
+        "inferenceSeconds": 0.08391066699999919
+      },
+      {
+        "id": "marine-extra-wooh-flares",
+        "condition": "real-hand-keyed",
+        "expected": "YES HAVE FLARES II PFD?",
+        "actual": "YES HAVESNLARES II PFTM",
+        "errors": 4,
+        "cer": 0.17391304347826086,
+        "errorsWithoutSpaces": 4,
+        "durationSeconds": 15.35,
+        "inferenceSeconds": 0.19001737500000035
+      },
+      {
+        "id": "marine-extra-wooh-vessel-name",
+        "condition": "real-hand-keyed",
+        "expected": "SS MARINE",
+        "actual": "SS MARINE",
+        "errors": 0,
+        "cer": 0,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 5.8,
+        "inferenceSeconds": 0.03555429199999981
+      }
+    ],
+    "summary": {
+      "cases": 12,
+      "speechCases": 12,
+      "characters": 438,
+      "errors": 193,
+      "cer": 0.4406392694063927,
+      "exact": 2,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 290.87000000000006,
+      "inferenceSeconds": 6.177111834999999
+    },
+    "conditions": {
+      "real-hand-keyed": {
+        "cases": 12,
+        "speechCases": 12,
+        "characters": 438,
+        "errors": 193,
+        "cer": 0.4406392694063927,
+        "exact": 2,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 290.87000000000006,
+        "inferenceSeconds": 6.177111834999999
+      }
+    }
+  }
+}

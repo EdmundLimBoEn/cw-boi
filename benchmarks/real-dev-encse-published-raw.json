@@ -1,0 +1,80 @@
+{
+  "source": "https://github.com/encse/morse-decoder",
+  "commit": "b4244d0b2635652eaefb21a7f421e96889636e73",
+  "license": "MIT",
+  "checkpoint": ".research/encse-morse-decoder/models/final.pt",
+  "checkpointSHA256": "d71258ed1b7c60ca7279df429c00e00014109de9f58c4628dc2d591f5c479b2c",
+  "manifest": ".research/real-curated/manifest.json",
+  "manifestSHA256": "a946b87ba2badc30183e9347bc3c2d4d6c6eb412b8cea12262975e7c19eb06b1",
+  "split": "real-dev",
+  "parameters": 742407,
+  "torchVersion": "2.14.1",
+  "device": "cpu",
+  "complete": true,
+  "decoder": "encse-published-final",
+  "protocol": "Upstream pinned model and preprocessing, raw original Float32 amplitudes, causal LSTM state retained in default 25-frame chunks; upstream offline 0.7s trailing silence flush; greedy 5-token CTC collapse and upstream deterministic Morse parsing. Each bracketed invalid Morse character counts one replacement glyph; raw output retained. No language model or transcript tuning. No supplied carrier, speed or receiver filter.",
+  "aggregate": {
+    "cases": 2,
+    "speechCases": 2,
+    "characters": 50,
+    "errors": 3,
+    "cer": 0.06,
+    "exact": 0,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 38.95,
+    "inferenceSeconds": 0.029307999939192086
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 50,
+      "errors": 3,
+      "cer": 0.06,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 38.95,
+      "inferenceSeconds": 0.029307999939192086
+    }
+  },
+  "results": [
+    {
+      "id": "saq-2019-website",
+      "condition": "real-hand-keyed",
+      "expected": "OUR WEBSITE : WWW.ALEXANDER.N.SE",
+      "actual": "OUR WEBSITE : WWW.\ufffdEXANDER.N.SE",
+      "rawActual": "OUR WEBSITE : WWW.[.-..-..]EXANDER.N.SE",
+      "morse": "--- ..- .-. / .-- . -... ... .. - . / ---... / .-- .-- .-- .-.-.- .-..-.. . -..- .- -. -.. . .-. .-.-.- -. .-.-.- ... .",
+      "valid": false,
+      "parserError": null,
+      "errors": 2,
+      "cer": 0.0625,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 24.1,
+      "inferenceSeconds": 0.018718749983236194,
+      "inputSHA256": "95c37a2df17d10e6a42f5e8ab7926a66b24b7a920b010b25c1e76d9d93935b78"
+    },
+    {
+      "id": "saq-2019-website-repeat",
+      "condition": "real-hand-keyed",
+      "expected": "WWW.ALEXANDER.N.SE",
+      "actual": "WOW.ALEXANDER.N.SE",
+      "rawActual": "WOW.ALEXANDER.N.SE",
+      "morse": ".-- --- .-- .-.-.- .- .-.. . -..- .- -. -.. . .-. .-.-.- -. .-.-.- ... .",
+      "valid": true,
+      "parserError": null,
+      "errors": 1,
+      "cer": 0.05555555555555555,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 14.85,
+      "inferenceSeconds": 0.010589249955955893,
+      "inputSHA256": "b2a23345c7f780bb5b7d768f4ccfba1d074f8f9b01526c4e3f8d9cb759444622"
+    }
+  ]
+}

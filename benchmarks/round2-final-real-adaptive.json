@@ -1,0 +1,305 @@
+{
+  "version": 1,
+  "split": "real-round2-final",
+  "manifest": ".research/round2-real-final/manifest.json",
+  "manifestSHA256": "89abd7407877fefd17651de4e80a1a7fcf8ac20b4655815bb20f5f5e53d28caf",
+  "engine": "adaptive",
+  "mode": "stream",
+  "chunkSamples": 256,
+  "knownCarrier": true,
+  "sources": [
+    {
+      "file": "src/decoder.ts",
+      "sha256": "ab3fc739685bc76592acb579f7a6debff493f11910d6c33aa61ac905d81466db"
+    },
+    {
+      "file": "src/timing.ts",
+      "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+    },
+    {
+      "file": "src/morse.ts",
+      "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+    }
+  ],
+  "benchmarkSHA256": "20b228078ce7e0212e15c792c7f7957f3cd5a454174824938ae2a52e02978151",
+  "complete": true,
+  "results": [
+    {
+      "id": "saq-20221116-reserved-01",
+      "condition": "real-hand-keyed",
+      "expected": "USING THE ALEXANDERSON 200 KW ALTERNATOR ON",
+      "actual": "USING TESEIALEXANDERSON �T00 KW EALTERNATOR ON",
+      "errors": 6,
+      "cer": 0.13953488372093023,
+      "errorsWithoutSpaces": 6,
+      "durationSeconds": 31.443,
+      "inferenceSeconds": 0.6120067499999996
+    },
+    {
+      "id": "saq-20221116-reserved-02",
+      "condition": "real-hand-keyed",
+      "expected": "2022 MARKS THE 50TH",
+      "actual": "2022E MARKS ETHE �0TH",
+      "errors": 3,
+      "cer": 0.15789473684210525,
+      "errorsWithoutSpaces": 3,
+      "durationSeconds": 17.122,
+      "inferenceSeconds": 0.17496054100000039
+    },
+    {
+      "id": "saq-20221116-reserved-03",
+      "condition": "real-hand-keyed",
+      "expected": "CONVENTION. UNESCO WORLD HERITAGE",
+      "actual": "CONVENTION. UNESCOIWORREDEHERITAGE",
+      "errors": 4,
+      "cer": 0.12121212121212122,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 24.137,
+      "inferenceSeconds": 0.3427861249999996
+    },
+    {
+      "id": "saq-20221116-reserved-04",
+      "condition": "real-hand-keyed",
+      "expected": "ARE IRREPLACEABLE ASSETS OF HUMANITY BUT MANY OF THEM ARE",
+      "actual": "ARE EIRREPLACEABLE ASSETS 2FEHUMANITY BUT MANYEOF THEM ARE",
+      "errors": 4,
+      "cer": 0.07017543859649122,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 37.861,
+      "inferenceSeconds": 0.8903377080000009
+    },
+    {
+      "id": "saq-20221116-reserved-05",
+      "condition": "real-hand-keyed",
+      "expected": "CHANGE. TO ENSURE THEIR PROTECTION,",
+      "actual": "CHANGE. AO ENSUREUHEIR<KN>ROTECTION,",
+      "errors": 7,
+      "cer": 0.2,
+      "errorsWithoutSpaces": 6,
+      "durationSeconds": 24.678,
+      "inferenceSeconds": 0.36883499999999914
+    },
+    {
+      "id": "saq-20221116-reserved-06",
+      "condition": "real-hand-keyed",
+      "expected": "COOPERATION TO PROMOTE PEACE, INTERNATIONAL UNDERSTANDING AND SUSTAINABLE DEVELOPMENT IS MORE",
+      "actual": "COOPERATIONETO9ROMOTE �EACE,ESNTERNATIONAL UNDERSTANDING AND ESUSTAINABLE DE4ELOPMENT DS MORE",
+      "errors": 9,
+      "cer": 0.0967741935483871,
+      "errorsWithoutSpaces": 8,
+      "durationSeconds": 62.797,
+      "inferenceSeconds": 2.535621832999999
+    },
+    {
+      "id": "saq-20221116-reserved-07",
+      "condition": "real-hand-keyed",
+      "expected": "SIGNED: LENA SOMMESTAD, CHAIR SWEDISH NATIONAL",
+      "actual": "HIGNED: LENA SOMMESTAD, CHAIR SWEDISS RATIONAL",
+      "errors": 3,
+      "cer": 0.06521739130434782,
+      "errorsWithoutSpaces": 3,
+      "durationSeconds": 31.495,
+      "inferenceSeconds": 0.5823444589999999
+    },
+    {
+      "id": "saq-20221116-reserved-08",
+      "condition": "real-hand-keyed",
+      "expected": "GRIMETON RADIO STATION AND THE ALEXANDER",
+      "actual": "GRIMETONSRADIOTSTATIONEUND THE ALEXANDER",
+      "errors": 4,
+      "cer": 0.1,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 24.875,
+      "inferenceSeconds": 0.3819800420000011
+    },
+    {
+      "id": "saq-20221116-reserved-09",
+      "condition": "real-hand-keyed",
+      "expected": "FOR QSL INFO PLEASE READ OUR WEBSITE: WWW.ALEXANDER.N.SE",
+      "actual": "FOROASL DNFO PLEASEIREAD OUREWEBSITE:3WW.ULEXANDER.N.SE",
+      "errors": 8,
+      "cer": 0.14285714285714285,
+      "errorsWithoutSpaces": 7,
+      "durationSeconds": 42.05,
+      "inferenceSeconds": 1.0832837499999988
+    }
+  ],
+  "summary": {
+    "cases": 9,
+    "speechCases": 9,
+    "characters": 422,
+    "errors": 48,
+    "cer": 0.11374407582938388,
+    "exact": 0,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 296.45799999999997,
+    "inferenceSeconds": 6.972156207999998
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 9,
+      "speechCases": 9,
+      "characters": 422,
+      "errors": 48,
+      "cer": 0.11374407582938388,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 296.45799999999997,
+      "inferenceSeconds": 6.972156207999998
+    }
+  },
+  "baseline": {
+    "commit": "87ced16fb4402c2836d02aeff2c8a434afa58a81",
+    "sources": [
+      {
+        "file": "src/decoder.ts",
+        "sha256": "8326b1304e5cb93c6c522cd68950a7bcf0c5a87f40ab7fe1f2e07935da27c676"
+      },
+      {
+        "file": "src/timing.ts",
+        "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+      },
+      {
+        "file": "src/morse.ts",
+        "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+      }
+    ],
+    "results": [
+      {
+        "id": "saq-20221116-reserved-01",
+        "condition": "real-hand-keyed",
+        "expected": "USING THE ALEXANDERSON 200 KW ALTERNATOR ON",
+        "actual": "USING MESEIALEXANDERSON �T00�W EALTERNATOR ON",
+        "errors": 9,
+        "cer": 0.20930232558139536,
+        "errorsWithoutSpaces": 8,
+        "durationSeconds": 31.443,
+        "inferenceSeconds": 0.6012926670000001
+      },
+      {
+        "id": "saq-20221116-reserved-02",
+        "condition": "real-hand-keyed",
+        "expected": "2022 MARKS THE 50TH",
+        "actual": "2022IMARKS TTHE SS0TH",
+        "errors": 4,
+        "cer": 0.21052631578947367,
+        "errorsWithoutSpaces": 4,
+        "durationSeconds": 17.122,
+        "inferenceSeconds": 0.16220875
+      },
+      {
+        "id": "saq-20221116-reserved-03",
+        "condition": "real-hand-keyed",
+        "expected": "CONVENTION. UNESCO WORLD HERITAGE",
+        "actual": "CONVENTION. VNESCO2ORREDIHERITAGE",
+        "errors": 6,
+        "cer": 0.18181818181818182,
+        "errorsWithoutSpaces": 5,
+        "durationSeconds": 24.137,
+        "inferenceSeconds": 0.3241417080000001
+      },
+      {
+        "id": "saq-20221116-reserved-04",
+        "condition": "real-hand-keyed",
+        "expected": "ARE IRREPLACEABLE ASSETS OF HUMANITY BUT MANY OF THEM ARE",
+        "actual": "AREISRREPLACEABLE ASSETS 2FIHUMANITY �UT YANY2F THEM URE",
+        "errors": 9,
+        "cer": 0.15789473684210525,
+        "errorsWithoutSpaces": 7,
+        "durationSeconds": 37.861,
+        "inferenceSeconds": 0.9015644580000001
+      },
+      {
+        "id": "saq-20221116-reserved-05",
+        "condition": "real-hand-keyed",
+        "expected": "CHANGE. TO ENSURE THEIR PROTECTION,",
+        "actual": "CHANGE.UO INSURE UHEIR<KN>ROTECTION,",
+        "errors": 8,
+        "cer": 0.22857142857142856,
+        "errorsWithoutSpaces": 7,
+        "durationSeconds": 24.678,
+        "inferenceSeconds": 0.352798417
+      },
+      {
+        "id": "saq-20221116-reserved-06",
+        "condition": "real-hand-keyed",
+        "expected": "COOPERATION TO PROMOTE PEACE, INTERNATIONAL UNDERSTANDING AND SUSTAINABLE DEVELOPMENT IS MORE",
+        "actual": "COOPERATIONETO9ROMOTE �EACE,ESNTERNATIONAL 4NDERSTANDING UND ESUSTAINABLE DE4ELOPMENT DS MORE",
+        "errors": 11,
+        "cer": 0.11827956989247312,
+        "errorsWithoutSpaces": 10,
+        "durationSeconds": 62.797,
+        "inferenceSeconds": 2.5309586250000002
+      },
+      {
+        "id": "saq-20221116-reserved-07",
+        "condition": "real-hand-keyed",
+        "expected": "SIGNED: LENA SOMMESTAD, CHAIR SWEDISH NATIONAL",
+        "actual": "HIGNED: LENA SOMMESTAD,TCHAIRBWEDISS RATIONAL",
+        "errors": 6,
+        "cer": 0.13043478260869565,
+        "errorsWithoutSpaces": 5,
+        "durationSeconds": 31.495,
+        "inferenceSeconds": 0.5755385839999999
+      },
+      {
+        "id": "saq-20221116-reserved-08",
+        "condition": "real-hand-keyed",
+        "expected": "GRIMETON RADIO STATION AND THE ALEXANDER",
+        "actual": "GRIMETONSRADIOTSTATIONEUNDTTHE ALEXANDER",
+        "errors": 5,
+        "cer": 0.125,
+        "errorsWithoutSpaces": 5,
+        "durationSeconds": 24.875,
+        "inferenceSeconds": 0.3622610420000001
+      },
+      {
+        "id": "saq-20221116-reserved-09",
+        "condition": "real-hand-keyed",
+        "expected": "FOR QSL INFO PLEASE READ OUR WEBSITE: WWW.ALEXANDER.N.SE",
+        "actual": "FOROASL NNFO<KN>LEASE�EAD OUREWEBSITE:2WW.ULEXANDER.N.SE",
+        "errors": 13,
+        "cer": 0.23214285714285715,
+        "errorsWithoutSpaces": 11,
+        "durationSeconds": 42.05,
+        "inferenceSeconds": 1.0740636250000006
+      }
+    ],
+    "summary": {
+      "cases": 9,
+      "speechCases": 9,
+      "characters": 422,
+      "errors": 71,
+      "cer": 0.16824644549763032,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 296.45799999999997,
+      "inferenceSeconds": 6.884827876000001
+    },
+    "conditions": {
+      "real-hand-keyed": {
+        "cases": 9,
+        "speechCases": 9,
+        "characters": 422,
+        "errors": 71,
+        "cer": 0.16824644549763032,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 296.45799999999997,
+        "inferenceSeconds": 6.884827876000001
+      }
+    }
+  }
+}

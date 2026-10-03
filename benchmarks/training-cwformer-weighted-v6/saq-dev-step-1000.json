@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "split": "real-dev",
+  "manifest": ".research/real-curated/manifest.json",
+  "manifestSHA256": "a946b87ba2badc30183e9347bc3c2d4d6c6eb412b8cea12262975e7c19eb06b1",
+  "model": "models/cwformer-weighted-v6/step-1000/cwformer_streaming_fp32.onnx",
+  "modelSHA256": "bae2d7e970737be1be2e4558da928f55831afdb21194f02b892174d6292e7ba9",
+  "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+  "benchmarkSHA256": "ff217705f86a8338b094bda6d26e773bfcbbc49da9ad30ddc230b6b318f68f68",
+  "onnxruntimeVersion": "1.30.0",
+  "provider": "CPUExecutionProvider",
+  "knownCarrier": true,
+  "bandwidth": 150.0,
+  "complete": true,
+  "results": [
+    {
+      "id": "saq-2019-website",
+      "condition": "real-hand-keyed",
+      "expected": "OUR WEBSITE : WWW.ALEXANDER.N.SE",
+      "actual": "OUR WEBSITE 7 WWW.ALEXAND R.N+ SE",
+      "errors": 4,
+      "durationSeconds": 24.1,
+      "inferenceSeconds": 0.3533026670338586
+    },
+    {
+      "id": "saq-2019-website-repeat",
+      "condition": "real-hand-keyed",
+      "expected": "WWW.ALEXANDER.N.SE",
+      "actual": "WWW.AR XANDER.N.SE",
+      "errors": 2,
+      "durationSeconds": 14.85,
+      "inferenceSeconds": 0.2189768340322189
+    }
+  ],
+  "aggregate": {
+    "cases": 2,
+    "speechCases": 2,
+    "characters": 50,
+    "errors": 6,
+    "cer": 0.12,
+    "exact": 0,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 38.95,
+    "inferenceSeconds": 0.5722795010660775
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 50,
+      "errors": 6,
+      "cer": 0.12,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 38.95,
+      "inferenceSeconds": 0.5722795010660775
+    }
+  }
+}

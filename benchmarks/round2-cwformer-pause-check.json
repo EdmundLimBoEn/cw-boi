@@ -1,0 +1,532 @@
+{
+  "purpose": "Independent development probe of CWformer re-acquisition after pauses; no reserved data.",
+  "seed": 702117,
+  "sourceSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+  "candidateSHA256": "a3572156230a6271e0dd86903fe91574ae647a33f995bd398be8bbe6c77156f0",
+  "modelSHA256": "c1a956b35cc184a8fac7641b586d500514c18a99254aff2ed933697775e808a3",
+  "summary": {
+    "cases": 34,
+    "baselineErrors": 10,
+    "warmResetErrors": 10,
+    "improvedCases": 1,
+    "regressedCases": 1
+  },
+  "results": [
+    {
+      "wpm": 9,
+      "gapSeconds": 5.1,
+      "noiseStd": 0,
+      "expected": "DE W1AW RIG QRP 5W",
+      "baseline": {
+        "actual": "DE W1AW NIG QRP 5W",
+        "errors": 1
+      },
+      "warmReset": {
+        "actual": "DE W1AW NIG QRP 5W",
+        "errors": 1
+      }
+    },
+    {
+      "wpm": 9,
+      "gapSeconds": 5.1,
+      "noiseStd": 0.012,
+      "expected": "K6ABC TNX FER CALL",
+      "baseline": {
+        "actual": "K6ABC NX FER CALL",
+        "errors": 1
+      },
+      "warmReset": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 9,
+      "gapSeconds": 7.7,
+      "noiseStd": 0,
+      "expected": "RST 579 NAME BOB",
+      "baseline": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 9,
+      "gapSeconds": 7.7,
+      "noiseStd": 0.012,
+      "expected": "QTH OSLO WX RAIN 73",
+      "baseline": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 9,
+      "gapSeconds": 14.3,
+      "noiseStd": 0,
+      "expected": "599 TU F4XYZ K",
+      "baseline": {
+        "actual": "599 TU 4XYZ K",
+        "errors": 1
+      },
+      "warmReset": {
+        "actual": "599 TU I4XYZ K",
+        "errors": 1
+      }
+    },
+    {
+      "wpm": 9,
+      "gapSeconds": 14.3,
+      "noiseStd": 0.012,
+      "expected": "DE W1AW RIG QRP 5W",
+      "baseline": {
+        "actual": "DE W1AW IG QRP 5W",
+        "errors": 1
+      },
+      "warmReset": {
+        "actual": "DE W1AW IG QRP 5W",
+        "errors": 1
+      }
+    },
+    {
+      "wpm": 15,
+      "gapSeconds": 5.1,
+      "noiseStd": 0,
+      "expected": "K6ABC TNX FER CALL",
+      "baseline": {
+        "actual": "K6ABC NX FER CALL",
+        "errors": 1
+      },
+      "warmReset": {
+        "actual": "K6ABC ENX FER CALL",
+        "errors": 1
+      }
+    },
+    {
+      "wpm": 15,
+      "gapSeconds": 5.1,
+      "noiseStd": 0.012,
+      "expected": "RST 579 NAME BOB",
+      "baseline": {
+        "actual": "RST 579 AME BOB",
+        "errors": 1
+      },
+      "warmReset": {
+        "actual": "RST 579 AME BOB",
+        "errors": 1
+      }
+    },
+    {
+      "wpm": 15,
+      "gapSeconds": 7.7,
+      "noiseStd": 0,
+      "expected": "QTH OSLO WX RAIN 73",
+      "baseline": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 15,
+      "gapSeconds": 7.7,
+      "noiseStd": 0.012,
+      "expected": "599 TU F4XYZ K",
+      "baseline": {
+        "actual": "599 TU F4XYZ K",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "599 TU F4XYZ K",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 15,
+      "gapSeconds": 14.3,
+      "noiseStd": 0,
+      "expected": "DE W1AW RIG QRP 5W",
+      "baseline": {
+        "actual": "DE W1AW RIG QRP 5W",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "DE W1AW RIG QRP 5W",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 15,
+      "gapSeconds": 14.3,
+      "noiseStd": 0.012,
+      "expected": "K6ABC TNX FER CALL",
+      "baseline": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 23,
+      "gapSeconds": 5.1,
+      "noiseStd": 0,
+      "expected": "RST 579 NAME BOB",
+      "baseline": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 23,
+      "gapSeconds": 5.1,
+      "noiseStd": 0.012,
+      "expected": "QTH OSLO WX RAIN 73",
+      "baseline": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 23,
+      "gapSeconds": 7.7,
+      "noiseStd": 0,
+      "expected": "599 TU F4XYZ K",
+      "baseline": {
+        "actual": "599 TU F4XYZ K",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "599 TU F4XYZ K",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 23,
+      "gapSeconds": 7.7,
+      "noiseStd": 0.012,
+      "expected": "DE W1AW RIG QRP 5W",
+      "baseline": {
+        "actual": "DE W1AW RIG QRP 5W",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "DE W1AW RIG QRP 5W",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 23,
+      "gapSeconds": 14.3,
+      "noiseStd": 0,
+      "expected": "K6ABC TNX FER CALL",
+      "baseline": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 23,
+      "gapSeconds": 14.3,
+      "noiseStd": 0.012,
+      "expected": "RST 579 NAME BOB",
+      "baseline": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 35,
+      "gapSeconds": 5.1,
+      "noiseStd": 0,
+      "expected": "QTH OSLO WX RAIN 73",
+      "baseline": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 35,
+      "gapSeconds": 5.1,
+      "noiseStd": 0.012,
+      "expected": "599 TU F4XYZ K",
+      "baseline": {
+        "actual": "599 TU F4XYZ K",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "599 TU F4XYZ K",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 35,
+      "gapSeconds": 7.7,
+      "noiseStd": 0,
+      "expected": "DE W1AW RIG QRP 5W",
+      "baseline": {
+        "actual": "DE W1AW RIG QRP 5W",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "DE W1AW RIG QRP 5W",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 35,
+      "gapSeconds": 7.7,
+      "noiseStd": 0.012,
+      "expected": "K6ABC TNX FER CALL",
+      "baseline": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 35,
+      "gapSeconds": 14.3,
+      "noiseStd": 0,
+      "expected": "RST 579 NAME BOB",
+      "baseline": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 35,
+      "gapSeconds": 14.3,
+      "noiseStd": 0.012,
+      "expected": "QTH OSLO WX RAIN 73",
+      "baseline": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 50,
+      "gapSeconds": 5.1,
+      "noiseStd": 0,
+      "expected": "599 TU F4XYZ K",
+      "baseline": {
+        "actual": "599 TU R4XYZ K",
+        "errors": 1
+      },
+      "warmReset": {
+        "actual": "599 TU R4XYZ K",
+        "errors": 1
+      }
+    },
+    {
+      "wpm": 50,
+      "gapSeconds": 5.1,
+      "noiseStd": 0.012,
+      "expected": "DE W1AW RIG QRP 5W",
+      "baseline": {
+        "actual": "DE W1AW NIG QRP 5W",
+        "errors": 1
+      },
+      "warmReset": {
+        "actual": "DE W1AW IIG QRP 5W",
+        "errors": 1
+      }
+    },
+    {
+      "wpm": 50,
+      "gapSeconds": 7.7,
+      "noiseStd": 0,
+      "expected": "K6ABC TNX FER CALL",
+      "baseline": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 50,
+      "gapSeconds": 7.7,
+      "noiseStd": 0.012,
+      "expected": "RST 579 NAME BOB",
+      "baseline": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 50,
+      "gapSeconds": 14.3,
+      "noiseStd": 0,
+      "expected": "QTH OSLO WX RAIN 73",
+      "baseline": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "QTH OSLO WX RAIN 73",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 50,
+      "gapSeconds": 14.3,
+      "noiseStd": 0.012,
+      "expected": "599 TU F4XYZ K",
+      "baseline": {
+        "actual": "599 TU F4XYZ K",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "599 TU F4XYZ K",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 20,
+      "gapSeconds": 31.3,
+      "noiseStd": 0,
+      "expected": "DE W1AW RIG QRP 5W",
+      "baseline": {
+        "actual": "DE W1AW RIG QRP 5W",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "DE W1AW RIG QRP 5W",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 20,
+      "gapSeconds": 31.3,
+      "noiseStd": 0.08,
+      "expected": "K6ABC TNX FER CALL",
+      "baseline": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "K6ABC TNX FER CALL",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 20,
+      "gapSeconds": 61.1,
+      "noiseStd": 0,
+      "expected": "RST 579 NAME BOB",
+      "baseline": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      },
+      "warmReset": {
+        "actual": "RST 579 NAME BOB",
+        "errors": 0
+      }
+    },
+    {
+      "wpm": 20,
+      "gapSeconds": 61.1,
+      "noiseStd": 0.08,
+      "expected": "QTH OSLO WX RAIN 73",
+      "baseline": {
+        "actual": "QTH OSLO 5 X RAIN 73",
+        "errors": 2
+      },
+      "warmReset": {
+        "actual": "QTH OSLO 5 TX RAIN 73",
+        "errors": 3
+      }
+    }
+  ],
+  "noiseAfterSignal": [
+    {
+      "noiseStd": 0,
+      "noiseSeconds": 60,
+      "baseline": {
+        "signal": "DE N0ABC 73",
+        "noise": ""
+      },
+      "warmReset": {
+        "signal": "DE N0ABC 73",
+        "noise": ""
+      }
+    },
+    {
+      "noiseStd": 0.01,
+      "noiseSeconds": 60,
+      "baseline": {
+        "signal": "DE N0ABC 73",
+        "noise": " R S"
+      },
+      "warmReset": {
+        "signal": "DE N0ABC 73",
+        "noise": " N"
+      }
+    },
+    {
+      "noiseStd": 0.1,
+      "noiseSeconds": 60,
+      "baseline": {
+        "signal": "DE N0ABC 73",
+        "noise": " Q"
+      },
+      "warmReset": {
+        "signal": "DE N0ABC 73",
+        "noise": ""
+      }
+    }
+  ],
+  "decision": "Rejected: aggregate pause errors unchanged and one new per-case regression; production runtime unchanged.",
+  "interpretation": "Adding one second of synthetic silence after a cache reset helps one 9 WPM resumption but adds an error after a 61.1 second noisy pause. Both variants can emit false characters from noise following a valid signal. This development probe does not establish a safe general improvement."
+}

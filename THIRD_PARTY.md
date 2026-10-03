@@ -16,6 +16,8 @@ The optional causal engine uses **CWformer** by parsimo2010, under the MIT licen
 
 **Gerke Decoder 3.2.11** by fowlay is used only as an external benchmark executable. Its source is not incorporated into the application. The comparison uses revision `9ecceceeb04a2bae2fc563a3da79ba517194283f`, licensed GPL-3.0-or-later. [Source/license](https://github.com/fowlay/gerke-decoder) and [comparison provenance](benchmarks/gerke-independent-baseline.json).
 
+**encse/morse-decoder** is also an external development benchmark only, under MIT, pinned to `b4244d0b2635652eaefb21a7f421e96889636e73`. Its code and weights are not incorporated into the application. [Source/license](https://github.com/encse/morse-decoder) and [comparison provenance](benchmarks/continuous-dev-encse-published-bandpass.json).
+
 The interface uses React, Vite, Lucide icons, Space Grotesk, and IBM Plex Mono. Their licenses are distributed with their installed packages.
 
-Recordings retain their individual terms: CWformer receiver noise is MIT; Archive.org declares the Marine Electric recording CC0; SAQ audio has no explicit reuse license and is restricted here to local evaluation, excluded from training and redistribution. All audio stays outside Git. [Corpus documentation](benchmarks/CORPUS.md) and [download manifest](neural/corpus.json) record URLs, hashes, licenses, transcript provenance and split restrictions.
+Recordings retain their individual terms: CWformer receiver noise is MIT; Archive.org declares the Marine Electric recording CC0; the SAQ 2022 reception page declares CC BY-NC 3.0. No open redistribution license was found for the SAQ 2019 or GPK recordings. All real CW recordings are restricted here to local evaluation, excluded from training and audio redistribution. All audio stays outside Git. [Corpus documentation](benchmarks/CORPUS.md) and the linked download manifests record URLs, hashes, licenses, transcript provenance and split restrictions.

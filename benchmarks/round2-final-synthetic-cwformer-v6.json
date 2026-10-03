@@ -1,0 +1,1211 @@
+{
+  "version": 1,
+  "split": "final",
+  "manifest": ".research/round2-final/manifest.json",
+  "manifestSHA256": "e8078cd3f7ef49a41a8cd402ee62f7f45ac5d5770078c68c6dd56d462e6a019d",
+  "model": "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+  "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+  "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+  "benchmarkSHA256": "ff217705f86a8338b094bda6d26e773bfcbbc49da9ad30ddc230b6b318f68f68",
+  "onnxruntimeVersion": "1.30.0",
+  "provider": "CPUExecutionProvider",
+  "knownCarrier": true,
+  "bandwidth": 150.0,
+  "complete": true,
+  "results": [
+    {
+      "id": "clean-1",
+      "condition": "clean",
+      "expected": "CQ DE F2VO UR RST 579 NAME FRED K",
+      "actual": "CQ DE F2VO UR RST 579 NAME FRED K",
+      "errors": 0,
+      "durationSeconds": 19.879875,
+      "inferenceSeconds": 0.3323400000226684
+    },
+    {
+      "id": "clean-2",
+      "condition": "clean",
+      "expected": "2M8N GMXC 71MA R9TR GDSH",
+      "actual": "2M8N GMXC 71MA R9TR GDSH",
+      "errors": 0,
+      "durationSeconds": 15.707375,
+      "inferenceSeconds": 0.25909708300605416
+    },
+    {
+      "id": "clean-3",
+      "condition": "clean",
+      "expected": "HILL AFTER HILL EARLY CLOUD VALLEY EARLY",
+      "actual": "HILL AFTER HILL EARLY CLOUD VALLEY EARLY",
+      "errors": 0,
+      "durationSeconds": 22.33825,
+      "inferenceSeconds": 0.363366958044935
+    },
+    {
+      "id": "clean-4",
+      "condition": "clean",
+      "expected": "CQ DE 9V3RI UR RST 459 NAME FRED K",
+      "actual": "CQ DE 9V3RI UR RST 459 NAME FRED K",
+      "errors": 0,
+      "durationSeconds": 18.398625,
+      "inferenceSeconds": 0.29016700002830476
+    },
+    {
+      "id": "clean-5",
+      "condition": "clean",
+      "expected": "6YWX 7FXD YO1Q 1BSE P2JH",
+      "actual": "6YWX 7FXD YO1Q 1BSE P2JH",
+      "errors": 0,
+      "durationSeconds": 21.50825,
+      "inferenceSeconds": 0.3386560000362806
+    },
+    {
+      "id": "clean-6",
+      "condition": "clean",
+      "expected": "AFTER EARLY EARLY SOUTH BRIDGE AFTER RIVER",
+      "actual": "AFTER EARLY EARLY SOUTH BRIDGE AFTER RIVER",
+      "errors": 0,
+      "durationSeconds": 21.12075,
+      "inferenceSeconds": 0.3426577909849584
+    },
+    {
+      "id": "clean-7",
+      "condition": "clean",
+      "expected": "CQ DE DL6LFP UR RST 339 NAME JOHN K",
+      "actual": "CQ DE DL6LFP UR RST 339 NAME JOHN K",
+      "errors": 0,
+      "durationSeconds": 25.0875,
+      "inferenceSeconds": 0.4111839160323143
+    },
+    {
+      "id": "clean-8",
+      "condition": "clean",
+      "expected": "ILD1 9UOR 2EE1 DGFD F23E",
+      "actual": "ILD1 9UOR 2EE1 DGFD F23E",
+      "errors": 0,
+      "durationSeconds": 14.873125,
+      "inferenceSeconds": 0.24371041695121676
+    },
+    {
+      "id": "clean-9",
+      "condition": "clean",
+      "expected": "NIGHT NORTH TODAY BRIDGE CLEAR CLEAR NIGHT",
+      "actual": "NIGHT NORTH TODAY BRIDGE CLEAR CLEAR NIGHT",
+      "errors": 0,
+      "durationSeconds": 23.202375,
+      "inferenceSeconds": 0.38368366699432954
+    },
+    {
+      "id": "clean-10",
+      "condition": "clean",
+      "expected": "CQ DE W1PO UR RST 459 NAME PETER K",
+      "actual": "CQ DE W1PO UR RST 459 NAME PETER K",
+      "errors": 0,
+      "durationSeconds": 21.342,
+      "inferenceSeconds": 0.3315022499882616
+    },
+    {
+      "id": "clean-11",
+      "condition": "clean",
+      "expected": "IIT8 CL0U YI5P CDKP B92Z",
+      "actual": "IIT8 CL0U YI5P CDKP B92Z",
+      "errors": 0,
+      "durationSeconds": 18.482125,
+      "inferenceSeconds": 0.3017122090095654
+    },
+    {
+      "id": "clean-12",
+      "condition": "clean",
+      "expected": "CLOUD TODAY GREEN VALLEY EARLY WIND EARLY",
+      "actual": "CLOUD TODAY GREEN VALLEY EARLY WIND EARLY",
+      "errors": 0,
+      "durationSeconds": 26.2355,
+      "inferenceSeconds": 0.46379083301872015
+    },
+    {
+      "id": "clean-13",
+      "condition": "clean",
+      "expected": "CQ DE N2PA UR RST 339 NAME FRED K",
+      "actual": "CQ DE N2PA UR RST 339 NAME FRED K",
+      "errors": 0,
+      "durationSeconds": 20.53125,
+      "inferenceSeconds": 0.4176097910385579
+    },
+    {
+      "id": "clean-14",
+      "condition": "clean",
+      "expected": "BG80 OJH5 X85A RDIH IA9X",
+      "actual": "BG80 OJH5 X85A RDIH IA9X",
+      "errors": 0,
+      "durationSeconds": 16.4245,
+      "inferenceSeconds": 0.32713320798939094
+    },
+    {
+      "id": "clean-15",
+      "condition": "clean",
+      "expected": "AFTER EARLY HILL RIVER ROAD STONE VALLEY",
+      "actual": "AFTER EARLY HILL RIVER ROAD STONE VALLEY",
+      "errors": 0,
+      "durationSeconds": 20.837625,
+      "inferenceSeconds": 0.35439525003312156
+    },
+    {
+      "id": "clean-16",
+      "condition": "clean",
+      "expected": "CQ DE K5AQ UR RST 459 NAME JANE K",
+      "actual": "CQ DE K5AQ UR RST 459 NAME JANE K",
+      "errors": 0,
+      "durationSeconds": 22.48025,
+      "inferenceSeconds": 0.3751824999926612
+    },
+    {
+      "id": "human-1",
+      "condition": "human",
+      "expected": "CQ DE F1SSM UR RST 579 NAME JANE K",
+      "actual": "CQ DE F1SSM UR RST 579 NAME JANE K",
+      "errors": 0,
+      "durationSeconds": 21.660125,
+      "inferenceSeconds": 0.34731337503762916
+    },
+    {
+      "id": "human-2",
+      "condition": "human",
+      "expected": "3N7O CAM8 C78Z LTFC 5EBN",
+      "actual": "3N7O CAM8 C78Z LTFC 5EBN",
+      "errors": 0,
+      "durationSeconds": 19.088375,
+      "inferenceSeconds": 0.34728599997470155
+    },
+    {
+      "id": "human-3",
+      "condition": "human",
+      "expected": "RIVER GREEN RIVER LIGHT WATER SOUTH NORTH",
+      "actual": "RIVER GREEN RIVER LIGHT WATER SOUTH NORTH",
+      "errors": 0,
+      "durationSeconds": 29.381875,
+      "inferenceSeconds": 0.4665942920255475
+    },
+    {
+      "id": "human-4",
+      "condition": "human",
+      "expected": "CQ DE 9V9ZF UR RST 579 NAME MARY",
+      "actual": "CQ DE 9V9ZF UR RST 579 NAME MARY",
+      "errors": 0,
+      "durationSeconds": 29.089625,
+      "inferenceSeconds": 0.4576134999515489
+    },
+    {
+      "id": "human-5",
+      "condition": "human",
+      "expected": "QPME 4ZDE LCQH 85S5 BS6G",
+      "actual": "QPME 4ZDE LCQH 85S5 BS6G",
+      "errors": 0,
+      "durationSeconds": 22.111,
+      "inferenceSeconds": 0.3665144160040654
+    },
+    {
+      "id": "human-6",
+      "condition": "human",
+      "expected": "WATER NIGHT LIGHT EARLY TODAY LIGHT NIGHT",
+      "actual": "WATER NIGHT LIGHT EARLY TODAY LIGHT NIGHT",
+      "errors": 0,
+      "durationSeconds": 24.713625,
+      "inferenceSeconds": 0.39905262499814853
+    },
+    {
+      "id": "human-7",
+      "condition": "human",
+      "expected": "CQ DE DL5BK UR RST 459 NAME MARY K",
+      "actual": "CQ DE DL5BK UR RST 459 NAME MARY K",
+      "errors": 0,
+      "durationSeconds": 22.46075,
+      "inferenceSeconds": 0.38346812495728955
+    },
+    {
+      "id": "human-8",
+      "condition": "human",
+      "expected": "VRU1 RGHO MQSU B5NE G2DQ",
+      "actual": "VRU1 RGHO MQSU B5NE G2DQ",
+      "errors": 0,
+      "durationSeconds": 20.6895,
+      "inferenceSeconds": 0.37017025001114234
+    },
+    {
+      "id": "human-9",
+      "condition": "human",
+      "expected": "VALLEY WATER WATER ROAD RIVER STONE WATER",
+      "actual": "VALLEY WATER WATER ROAD RIVER STONE WATER",
+      "errors": 0,
+      "durationSeconds": 26.3425,
+      "inferenceSeconds": 0.42543220799416304
+    },
+    {
+      "id": "human-10",
+      "condition": "human",
+      "expected": "CQ DE JA2LMQ UR RST 579 NAME ALAN K",
+      "actual": "CQ DE JA2LMQ UR RST 579 NAME ALAN K",
+      "errors": 0,
+      "durationSeconds": 24.351125,
+      "inferenceSeconds": 0.4114440829725936
+    },
+    {
+      "id": "human-11",
+      "condition": "human",
+      "expected": "8N2D 25EY 2UOD OFA3 YA4C",
+      "actual": "8N2D 25EY 2UOD OFA3 YA4C",
+      "errors": 0,
+      "durationSeconds": 22.633875,
+      "inferenceSeconds": 0.3522769589908421
+    },
+    {
+      "id": "human-12",
+      "condition": "human",
+      "expected": "GREEN CLOUD NIGHT NIGHT RIVER NIGHT NORTH",
+      "actual": "GREEN CLOUD NIGHT NIGHT RIVER NIGHT NORTH",
+      "errors": 0,
+      "durationSeconds": 26.601125,
+      "inferenceSeconds": 0.4392889999435283
+    },
+    {
+      "id": "human-13",
+      "condition": "human",
+      "expected": "CQ DE 9V4DBO UR RST 339 NAME MARY",
+      "actual": "CQ DE 9V4DBO UR RST 339 NAME MARY",
+      "errors": 0,
+      "durationSeconds": 29.117,
+      "inferenceSeconds": 0.4964890410192311
+    },
+    {
+      "id": "human-14",
+      "condition": "human",
+      "expected": "89IL AJQB XNEQ G9TH MAPS",
+      "actual": "89IL AJQB XNEQ G9TH MAPS",
+      "errors": 0,
+      "durationSeconds": 21.30375,
+      "inferenceSeconds": 0.34163124999031425
+    },
+    {
+      "id": "human-15",
+      "condition": "human",
+      "expected": "TODAY BRIDGE RAIN RAIN HILL WATER WATER",
+      "actual": "TODAY BRIDGE RAIN RAIN HILL WATER WATER",
+      "errors": 0,
+      "durationSeconds": 22.383875,
+      "inferenceSeconds": 0.39292283402755857
+    },
+    {
+      "id": "human-16",
+      "condition": "human",
+      "expected": "CQ DE 9V4DX UR RST 459 NAME JOHN K",
+      "actual": "CQ DE 9V4DX UR RST 459 NAME JOHN K",
+      "errors": 0,
+      "durationSeconds": 24.132,
+      "inferenceSeconds": 0.389649290998932
+    },
+    {
+      "id": "fading-1",
+      "condition": "fading",
+      "expected": "CQ DE ZS9HGF UR RST 599 NAME ALAN K",
+      "actual": "CQ DE ZS9HGF UR RST 599 NAME ALAN K",
+      "errors": 0,
+      "durationSeconds": 22.126625,
+      "inferenceSeconds": 0.3608144170138985
+    },
+    {
+      "id": "fading-2",
+      "condition": "fading",
+      "expected": "I4KJ 8B5F ZTDF XDGP R7D5",
+      "actual": "I4KJ 8B5F ZTDF XDGP R7D5",
+      "errors": 0,
+      "durationSeconds": 14.72025,
+      "inferenceSeconds": 0.22907454200321808
+    },
+    {
+      "id": "fading-3",
+      "condition": "fading",
+      "expected": "RAIN RADIO WATER LIGHT CLOUD WIND RADIO",
+      "actual": "RAIN RADIO WATERLIGHT CLOUD WIND RADIO",
+      "errors": 1,
+      "durationSeconds": 18.13975,
+      "inferenceSeconds": 0.29694670799653977
+    },
+    {
+      "id": "fading-4",
+      "condition": "fading",
+      "expected": "CQ DE ZS2KLZ UR RST 599 NAME PETER K",
+      "actual": "CQ DE ZS2KLZ UR RST 599 NAME PETER K",
+      "errors": 0,
+      "durationSeconds": 22.49075,
+      "inferenceSeconds": 0.34616037498926744
+    },
+    {
+      "id": "fading-5",
+      "condition": "fading",
+      "expected": "E0E5 RATB GPKC MSFI DVSC VALLEY",
+      "actual": "E0E5 RATB GPKC MSFI DVSC VALLEY",
+      "errors": 0,
+      "durationSeconds": 16.14225,
+      "inferenceSeconds": 0.26857650000602007
+    },
+    {
+      "id": "fading-6",
+      "condition": "fading",
+      "expected": "EARLY NIGHT RAIN ROAD GREEN TODAY WIND",
+      "actual": "EARLY NIGHT RAIN ROAD GREEDTODAY WIND",
+      "errors": 2,
+      "durationSeconds": 19.53075,
+      "inferenceSeconds": 0.3242102089570835
+    },
+    {
+      "id": "fading-7",
+      "condition": "fading",
+      "expected": "CQ DE 9V5OH UR RST 459 NAME PETER K",
+      "actual": "CQ DE 9V5OH UR RST 459 NAME PETER K",
+      "errors": 0,
+      "durationSeconds": 17.068125,
+      "inferenceSeconds": 0.28939112497027963
+    },
+    {
+      "id": "fading-8",
+      "condition": "fading",
+      "expected": "V2LR 0OKZ 0GWD XZK2 NRPK",
+      "actual": "V2LR 0OKZ 0GWD XZK2 NRPK",
+      "errors": 0,
+      "durationSeconds": 16.029375,
+      "inferenceSeconds": 0.2512709170114249
+    },
+    {
+      "id": "fading-9",
+      "condition": "fading",
+      "expected": "NORTH LIGHT SOUTH BRIDGE CLEAR VALLEY HILL",
+      "actual": "NORTH LIGHT SOUTH BRIDGE CLEAR VALLEY HILL",
+      "errors": 0,
+      "durationSeconds": 21.57075,
+      "inferenceSeconds": 0.36207183299120516
+    },
+    {
+      "id": "fading-10",
+      "condition": "fading",
+      "expected": "CQ DE N9KV UR RST 579 NAME JANE K",
+      "actual": "CQ DE N9KV UR RST 579 NAME JANE K",
+      "errors": 0,
+      "durationSeconds": 16.183875,
+      "inferenceSeconds": 0.2720624579815194
+    },
+    {
+      "id": "fading-11",
+      "condition": "fading",
+      "expected": "P9YB PLE9 CMBL 1FMC STVZ",
+      "actual": "P9YB PLE9 CMBL 1FMC STVZ",
+      "errors": 0,
+      "durationSeconds": 16.512375,
+      "inferenceSeconds": 0.2605327499913983
+    },
+    {
+      "id": "fading-12",
+      "condition": "fading",
+      "expected": "AFTER RADIO NORTH RIVER CLOUD ROAD BRIDGE",
+      "actual": "AFTER RADIO NORTH RIVER CLOUD ROAD BRIDGE",
+      "errors": 0,
+      "durationSeconds": 19.56575,
+      "inferenceSeconds": 0.33038466703146696
+    },
+    {
+      "id": "fading-13",
+      "condition": "fading",
+      "expected": "CQ DE N6NO UR RST 459 NAME ALAN K",
+      "actual": "CQ DE N6NO UR RST 459 NAME ALAN K",
+      "errors": 0,
+      "durationSeconds": 16.524625,
+      "inferenceSeconds": 0.28125716699287295
+    },
+    {
+      "id": "fading-14",
+      "condition": "fading",
+      "expected": "IAOI OI7X Z66D HJSY F9VK",
+      "actual": "IAOI OI7X Z66D HJSY F9VK",
+      "errors": 0,
+      "durationSeconds": 15.856,
+      "inferenceSeconds": 0.2533383750123903
+    },
+    {
+      "id": "fading-15",
+      "condition": "fading",
+      "expected": "ROAD RAIN SOUTH ROAD WIND WATER HILL",
+      "actual": "ROAD RAIN SOUTH ROAD WIND WATER HILL",
+      "errors": 0,
+      "durationSeconds": 17.815875,
+      "inferenceSeconds": 0.2883271670434624
+    },
+    {
+      "id": "fading-16",
+      "condition": "fading",
+      "expected": "CQ DE JA6XW UR RST 459 NAME PETER K",
+      "actual": "CQ DE JA6XW UR RST 459 NAME PETER K",
+      "errors": 0,
+      "durationSeconds": 18.187375,
+      "inferenceSeconds": 0.2870457079843618
+    },
+    {
+      "id": "crowded-1",
+      "condition": "crowded",
+      "expected": "CQ DE N0LIW UR RST 339 NAME JOHN K",
+      "actual": "CQ DE N0LIW UR RST 339 NAME JOHN K",
+      "errors": 0,
+      "durationSeconds": 17.24475,
+      "inferenceSeconds": 0.2711795000359416
+    },
+    {
+      "id": "crowded-2",
+      "condition": "crowded",
+      "expected": "V5VM D0ZI OLDX YN6O H943",
+      "actual": "V5VM D0ZI OLDX YN6O H943",
+      "errors": 0,
+      "durationSeconds": 15.619,
+      "inferenceSeconds": 0.25560091697843745
+    },
+    {
+      "id": "crowded-3",
+      "condition": "crowded",
+      "expected": "WIND BRIDGE NIGHT RIVER HILL AFTER BRIDGE",
+      "actual": "WIND BRIDGE NIGHT RIVER HILL AFTER BRIDGE",
+      "errors": 0,
+      "durationSeconds": 16.170625,
+      "inferenceSeconds": 0.25933862500824034
+    },
+    {
+      "id": "crowded-4",
+      "condition": "crowded",
+      "expected": "CQ DE DL2LW UR RST 339 NAME ALAN K",
+      "actual": "CQ DE DL2LW UR RST 339 NAME ALAN K",
+      "errors": 0,
+      "durationSeconds": 16.928875,
+      "inferenceSeconds": 0.28945583396125585
+    },
+    {
+      "id": "crowded-5",
+      "condition": "crowded",
+      "expected": "CB9K V9WL 6CB5 M0AC 4N1C",
+      "actual": "CB9K V9WL 6CB5 M0AC 4N1C",
+      "errors": 0,
+      "durationSeconds": 18.34075,
+      "inferenceSeconds": 0.3225289160036482
+    },
+    {
+      "id": "crowded-6",
+      "condition": "crowded",
+      "expected": "EARLY RADIO RIVER CLEAR SOUTH GREEN NIGHT",
+      "actual": "EARLY RADIO RIVER CLEAR SOUTH GREEN NIGHT",
+      "errors": 0,
+      "durationSeconds": 17.091,
+      "inferenceSeconds": 0.3000844590133056
+    },
+    {
+      "id": "crowded-7",
+      "condition": "crowded",
+      "expected": "CQ DE M0XO UR RST 339 NAME PETER K",
+      "actual": "CQ DE M0XO UR RST 339 NAME PETER K",
+      "errors": 0,
+      "durationSeconds": 19.57875,
+      "inferenceSeconds": 0.30455066700233147
+    },
+    {
+      "id": "crowded-8",
+      "condition": "crowded",
+      "expected": "2KAZ P1R1 K56M 8HQK 38HM",
+      "actual": "2KAZ P1R1 K56M 8HQK 38HM",
+      "errors": 0,
+      "durationSeconds": 14.600875,
+      "inferenceSeconds": 0.2461189579917118
+    },
+    {
+      "id": "crowded-9",
+      "condition": "crowded",
+      "expected": "AFTER ROAD LIGHT NIGHT WATER CLEAR RADIO",
+      "actual": "AFTER ROAD LIGHT NIGHT WATER CLEAR RADIO",
+      "errors": 0,
+      "durationSeconds": 15.75425,
+      "inferenceSeconds": 0.2523138339747675
+    },
+    {
+      "id": "crowded-10",
+      "condition": "crowded",
+      "expected": "CQ DE 9V6YKR UR RST 579 NAME MARY K",
+      "actual": "CQ DE 9V6YKR UR RST 579 NAME MARY K",
+      "errors": 0,
+      "durationSeconds": 16.9855,
+      "inferenceSeconds": 0.28033129195682704
+    },
+    {
+      "id": "crowded-11",
+      "condition": "crowded",
+      "expected": "I7LM SE31 2PFB 3FUF F5EH HILL",
+      "actual": "I7LM SE31 2PFB 3FUF F5EH HILL",
+      "errors": 0,
+      "durationSeconds": 15.3475,
+      "inferenceSeconds": 0.2511090000043623
+    },
+    {
+      "id": "crowded-12",
+      "condition": "crowded",
+      "expected": "RAIN SOUTH AFTER BRIDGE SOUTH VALLEY LIGHT",
+      "actual": "RAIN SOUTH AFTER BRIDGE SOUTH VALLEY LIGHT",
+      "errors": 0,
+      "durationSeconds": 21.27075,
+      "inferenceSeconds": 0.3550966249895282
+    },
+    {
+      "id": "crowded-13",
+      "condition": "crowded",
+      "expected": "CQ DE K1NOT UR RST 459 NAME PETER K",
+      "actual": "CQ DE K1NOT UR RST 459 NAME PETER K",
+      "errors": 0,
+      "durationSeconds": 20.13425,
+      "inferenceSeconds": 0.3255902089877054
+    },
+    {
+      "id": "crowded-14",
+      "condition": "crowded",
+      "expected": "SM2P 0NJ2 3CIK 4ARC Y2ZF",
+      "actual": "SM2P 0NJ2 3CIK 4ARC Y2ZF",
+      "errors": 0,
+      "durationSeconds": 16.297,
+      "inferenceSeconds": 0.26377716701244935
+    },
+    {
+      "id": "crowded-15",
+      "condition": "crowded",
+      "expected": "TODAY WIND CLOUD RADIO CLEAR STONE SOUTH",
+      "actual": "TODAY WIND CLOUD RADIO CLEAR STONE SOUTH",
+      "errors": 0,
+      "durationSeconds": 17.887625,
+      "inferenceSeconds": 0.2956246249959804
+    },
+    {
+      "id": "crowded-16",
+      "condition": "crowded",
+      "expected": "CQ DE M1RSX UR RST 339 NAME JOHN K",
+      "actual": "CQ DE M1RSX UR RST 339 NAME JOHN K",
+      "errors": 0,
+      "durationSeconds": 16.993,
+      "inferenceSeconds": 0.28005558298900723
+    },
+    {
+      "id": "rough-1",
+      "condition": "rough",
+      "expected": "CQ DE G6MR UR RST 339 NAME JOHN K",
+      "actual": "CQ DE G6MR UR RST 339 NAME JOHNK",
+      "errors": 1,
+      "durationSeconds": 28.992,
+      "inferenceSeconds": 0.4743755409726873
+    },
+    {
+      "id": "rough-2",
+      "condition": "rough",
+      "expected": "QPWV 2B9V 0TCQ",
+      "actual": "QPWV U2B09V 0TCQ",
+      "errors": 2,
+      "durationSeconds": 24.768625,
+      "inferenceSeconds": 0.3948654580162838
+    },
+    {
+      "id": "rough-3",
+      "condition": "rough",
+      "expected": "AFTER CLOUD GREEN RAIN TODAY",
+      "actual": "AFTER CLOUD GREEN RAIN TODAY",
+      "errors": 0,
+      "durationSeconds": 27.681,
+      "inferenceSeconds": 0.4706702919793315
+    },
+    {
+      "id": "rough-4",
+      "condition": "rough",
+      "expected": "CQ DE VK4KWB UR RST 459 NAME",
+      "actual": "CQ DE VK4KWB UR RST 459NAME",
+      "errors": 1,
+      "durationSeconds": 26.78275,
+      "inferenceSeconds": 0.45570612500887364
+    },
+    {
+      "id": "rough-5",
+      "condition": "rough",
+      "expected": "WCG7 EOY0 APLI 7WLI",
+      "actual": "WCG7 EOY0 APLI 7WLI",
+      "errors": 0,
+      "durationSeconds": 26.837625,
+      "inferenceSeconds": 0.4158662909758277
+    },
+    {
+      "id": "rough-6",
+      "condition": "rough",
+      "expected": "TODAY STONE AFTER EARLY WIND",
+      "actual": "T8AY STONEAFT ER EARLY WIND",
+      "errors": 4,
+      "durationSeconds": 26.9715,
+      "inferenceSeconds": 0.4302386250346899
+    },
+    {
+      "id": "rough-7",
+      "condition": "rough",
+      "expected": "CQ DE F2TZQ UR RST 339",
+      "actual": "CQ DE F2TT8Q EETR RST 339",
+      "errors": 5,
+      "durationSeconds": 27.072375,
+      "inferenceSeconds": 0.45054020901443437
+    },
+    {
+      "id": "rough-8",
+      "condition": "rough",
+      "expected": "Y7KY P3LM XC83 RLN3",
+      "actual": "KT7KY P3LM TXC83 RLN3",
+      "errors": 3,
+      "durationSeconds": 27.4,
+      "inferenceSeconds": 0.42897258297307417
+    },
+    {
+      "id": "rough-9",
+      "condition": "rough",
+      "expected": "RIVER TODAY CLEAR CLEAR RIVER LIGHT",
+      "actual": "RIVERTODAY CLEAR CLEARRIVER LIGHT",
+      "errors": 2,
+      "durationSeconds": 27.477375,
+      "inferenceSeconds": 0.45862604200374335
+    },
+    {
+      "id": "rough-10",
+      "condition": "rough",
+      "expected": "CQ DE 9V5GX UR RST 599 NAME",
+      "actual": "CQ DE 9V5GX UR RST 599 NAME",
+      "errors": 0,
+      "durationSeconds": 29.03075,
+      "inferenceSeconds": 0.4558890420012176
+    },
+    {
+      "id": "rough-11",
+      "condition": "rough",
+      "expected": "QLPG 9BV7 U94W BDDR",
+      "actual": "QLPG 9BV7 EU94W BDDR",
+      "errors": 1,
+      "durationSeconds": 26.226125,
+      "inferenceSeconds": 0.4163396250223741
+    },
+    {
+      "id": "rough-12",
+      "condition": "rough",
+      "expected": "GREEN CLEAR CLOUD RADIO",
+      "actual": "GREEN CLEAR CLOUDRADI2",
+      "errors": 2,
+      "durationSeconds": 26.081875,
+      "inferenceSeconds": 0.4367404580116272
+    },
+    {
+      "id": "rough-13",
+      "condition": "rough",
+      "expected": "CQ DE JA4URE UR RST 339",
+      "actual": "CQ DE JA4URE UR RST 339",
+      "errors": 0,
+      "durationSeconds": 28.53875,
+      "inferenceSeconds": 0.5564735420048237
+    },
+    {
+      "id": "rough-14",
+      "condition": "rough",
+      "expected": "KQIK 3GJN 7JMI S6AB",
+      "actual": "KQIK ES3GJN TBJM I S6AB",
+      "errors": 5,
+      "durationSeconds": 28.7825,
+      "inferenceSeconds": 0.463278041977901
+    },
+    {
+      "id": "rough-15",
+      "condition": "rough",
+      "expected": "VALLEY AFTER VALLEY WIND CLOUD",
+      "actual": "VALLEY AFTER VALLEY WIND CLOUD",
+      "errors": 0,
+      "durationSeconds": 27.813625,
+      "inferenceSeconds": 0.46265995799330994
+    },
+    {
+      "id": "rough-16",
+      "condition": "rough",
+      "expected": "CQ DE ZS5ZOI UR RST",
+      "actual": "CQ DE ZS5GEOI UR RST",
+      "errors": 2,
+      "durationSeconds": 25.981625,
+      "inferenceSeconds": 0.39944345800904557
+    },
+    {
+      "id": "chaos-1",
+      "condition": "chaos",
+      "expected": "CQ DE VK2FK UR RST 459 NAME FRED K",
+      "actual": "3Y NE V2UK WL RST 4 59 7FRDC",
+      "errors": 16,
+      "durationSeconds": 22.82375,
+      "inferenceSeconds": 0.4077605419442989
+    },
+    {
+      "id": "chaos-2",
+      "condition": "chaos",
+      "expected": "HQ2J X4SL DPJ8 6IG7 WDGU",
+      "actual": "H9 WJ SL A 8 CT WGU",
+      "errors": 13,
+      "durationSeconds": 22.073,
+      "inferenceSeconds": 0.3576851669931784
+    },
+    {
+      "id": "chaos-3",
+      "condition": "chaos",
+      "expected": "ROAD EARLY AFTER RAIN CLOUD CLOUD RIVER",
+      "actual": "R D VRTM AFTN =ACLOUDC6",
+      "errors": 23,
+      "durationSeconds": 23.819,
+      "inferenceSeconds": 0.397075709013734
+    },
+    {
+      "id": "chaos-4",
+      "condition": "chaos",
+      "expected": "CQ DE VK2CH UR RST 459 NAME ALAN K",
+      "actual": "L VK5AST 59 ME ASB",
+      "errors": 21,
+      "durationSeconds": 25.18625,
+      "inferenceSeconds": 0.42369633400812745
+    },
+    {
+      "id": "chaos-5",
+      "condition": "chaos",
+      "expected": "A0WN H66S WNZC G3J8 40OQ",
+      "actual": "9NENL AN67 CZC G ?W07S",
+      "errors": 16,
+      "durationSeconds": 18.63925,
+      "inferenceSeconds": 0.3366667079972103
+    },
+    {
+      "id": "chaos-6",
+      "condition": "chaos",
+      "expected": "ROAD NIGHT SOUTH NIGHT EARLY TODAY HILL",
+      "actual": "RTLD NIG HN IOUTH ATRLYODAY H3R",
+      "errors": 17,
+      "durationSeconds": 23.416,
+      "inferenceSeconds": 0.40461349999532104
+    },
+    {
+      "id": "chaos-7",
+      "condition": "chaos",
+      "expected": "CQ DE F1NV UR RST 579 NAME JANE K",
+      "actual": "U DEFY6T UR RST 79 NAME OA",
+      "errors": 12,
+      "durationSeconds": 20.268,
+      "inferenceSeconds": 0.33411720796721056
+    },
+    {
+      "id": "chaos-8",
+      "condition": "chaos",
+      "expected": "FA1U EDK6 DELP ZU5W ZKE6",
+      "actual": "RRTITDDE L. 3ZK 6",
+      "errors": 17,
+      "durationSeconds": 18.503375,
+      "inferenceSeconds": 0.3078644999768585
+    },
+    {
+      "id": "chaos-9",
+      "condition": "chaos",
+      "expected": "RIVER ROAD NIGHT WATER EARLY WATER AFTER",
+      "actual": "CW ROADLT A WWEF G WTX ATTT",
+      "errors": 25,
+      "durationSeconds": 19.641375,
+      "inferenceSeconds": 0.3397999579901807
+    },
+    {
+      "id": "chaos-10",
+      "condition": "chaos",
+      "expected": "CQ DE G8ARK UR RST 579 NAME JOHN K",
+      "actual": "RW HKE P83 Q UR RTH79 NAME DONK",
+      "errors": 14,
+      "durationSeconds": 21.279625,
+      "inferenceSeconds": 0.34711654199054465
+    },
+    {
+      "id": "chaos-11",
+      "condition": "chaos",
+      "expected": "THN0 2I8O 077X Z25S B6I2",
+      "actual": "H KN228O 077K G9 B6I2",
+      "errors": 10,
+      "durationSeconds": 21.911625,
+      "inferenceSeconds": 0.34945237496867776
+    },
+    {
+      "id": "chaos-12",
+      "condition": "chaos",
+      "expected": "RIVER CLOUD GREEN STONE BRIDGE CLOUD RAIN",
+      "actual": "7R CLMQ X GR EET C NT",
+      "errors": 30,
+      "durationSeconds": 21.1285,
+      "inferenceSeconds": 0.366687958012335
+    },
+    {
+      "id": "chaos-13",
+      "condition": "chaos",
+      "expected": "CQ DE G6LFJ UR RST 579 NAME JOHN K",
+      "actual": "CQ DE G6LWL UR RST TM AM JOHN",
+      "errors": 9,
+      "durationSeconds": 18.06425,
+      "inferenceSeconds": 0.5147170830168761
+    },
+    {
+      "id": "chaos-14",
+      "condition": "chaos",
+      "expected": "8LSA 2SJL PO1I LBHE 8BPB",
+      "actual": "KBVV 25RL P3GLBES 8WF",
+      "errors": 15,
+      "durationSeconds": 19.265875,
+      "inferenceSeconds": 0.3089535830076784
+    },
+    {
+      "id": "chaos-15",
+      "condition": "chaos",
+      "expected": "BRIDGE GREEN BRIDGE WIND NIGHT GREEN CLOUD",
+      "actual": "BLGE GRER SRIDGE WIND NIG JUL",
+      "errors": 18,
+      "durationSeconds": 20.74875,
+      "inferenceSeconds": 0.3529607919626869
+    },
+    {
+      "id": "chaos-16",
+      "condition": "chaos",
+      "expected": "CQ DE VK8WD UR RST 459 NAME ALAN K",
+      "actual": "62 DE VK8WH RR RST 459 8D=N K",
+      "errors": 12,
+      "durationSeconds": 22.09825,
+      "inferenceSeconds": 0.35698058299021795
+    },
+    {
+      "id": "noise-1-1",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.33752883301349357
+    },
+    {
+      "id": "noise-1-2",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.32955999998375773
+    },
+    {
+      "id": "noise-1-3",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.33048424997832626
+    },
+    {
+      "id": "noise-1-4",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.3267200000118464
+    },
+    {
+      "id": "noise-2-1",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.3125508749508299
+    },
+    {
+      "id": "noise-2-2",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.3508623329689726
+    },
+    {
+      "id": "noise-2-3",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.34275395795702934
+    },
+    {
+      "id": "noise-2-4",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.3134337910450995
+    },
+    {
+      "id": "noise-3-1",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.3114202079595998
+    },
+    {
+      "id": "noise-3-2",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.3309796249959618
+    },
+    {
+      "id": "noise-3-3",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.31372462498256937
+    },
+    {
+      "id": "noise-3-4",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.30240658298134804
+    },
+    {
+      "id": "noise-4-1",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.31094933400163427
+    },
+    {
+      "id": "noise-4-2",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.3138043750077486
+    },
+    {
+      "id": "noise-4-3",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.344211624993477
+    },
+    {
+      "id": "noise-4-4",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.3440507500199601
+    },
+    {
+      "id": "noise-5-1",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.3299792080069892
+    },
+    {
+      "id": "noise-5-2",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.3135100419749506
+    },
+    {
+      "id": "noise-5-3",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.319488791981712
+    },
+    {
+      "id": "noise-5-4",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.32402225001715124
+    },
+    {
+      "id": "noise-6-1",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.308450874988921
+    },
+    {
+      "id": "noise-6-2",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.33308283402584493
+    },
+    {
+      "id": "noise-6-3",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.31013324996456504
+    },
+    {
+      "id": "noise-6-4",
+      "condition": "noise",
+      "expected": "",
+      "actual": "",
+      "errors": 0,
+      "durationSeconds": 20.0,
+      "inferenceSeconds": 0.31485979101853445
+    }
+  ],
+  "aggregate": {
+    "cases": 120,
+    "speechCases": 96,
+    "characters": 3027,
+    "errors": 299,
+    "cer": 0.09877766765774694,
+    "exact": 67,
+    "noiseCases": 24,
+    "noiseSeconds": 480.0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": 0.0,
+    "audioSeconds": 2534.523875,
+    "inferenceSeconds": 42.02335929061519
+  },
+  "conditions": {
+    "chaos": {
+      "cases": 16,
+      "speechCases": 16,
+      "characters": 524,
+      "errors": 268,
+      "cer": 0.5114503816793893,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 338.866875,
+      "inferenceSeconds": 5.906148541835137
+    },
+    "clean": {
+      "cases": 16,
+      "speechCases": 16,
+      "characters": 527,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 16,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 328.449375,
+      "inferenceSeconds": 5.536188873171341
+    },
+    "crowded": {
+      "cases": 16,
+      "speechCases": 16,
+      "characters": 535,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 16,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 276.2445,
+      "inferenceSeconds": 4.5527562109055
+    },
+    "fading": {
+      "cases": 16,
+      "speechCases": 16,
+      "characters": 530,
+      "errors": 3,
+      "cer": 0.005660377358490566,
+      "exact": 14,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 288.4645,
+      "inferenceSeconds": 4.701464917976409
+    },
+    "human": {
+      "cases": 16,
+      "speechCases": 16,
+      "characters": 525,
+      "errors": 0,
+      "cer": 0.0,
+      "exact": 16,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 386.060125,
+      "inferenceSeconds": 6.387147248897236
+    },
+    "noise": {
+      "cases": 24,
+      "speechCases": 0,
+      "characters": 0,
+      "errors": 0,
+      "cer": null,
+      "exact": 0,
+      "noiseCases": 24,
+      "noiseSeconds": 480.0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": 0.0,
+      "audioSeconds": 480.0,
+      "inferenceSeconds": 7.768968206830323
+    },
+    "rough": {
+      "cases": 16,
+      "speechCases": 16,
+      "characters": 386,
+      "errors": 28,
+      "cer": 0.07253886010362694,
+      "exact": 5,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 436.4385,
+      "inferenceSeconds": 7.170685290999245
+    }
+  }
+}

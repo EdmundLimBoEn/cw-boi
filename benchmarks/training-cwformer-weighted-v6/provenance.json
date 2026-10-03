@@ -1,0 +1,159 @@
+{
+  "experiment": "Add synthetic heavy key weighting with short intra-character gaps",
+  "initialCheckpoint": "models/cwformer-adapt-v4/step-2000.pt",
+  "initialCheckpointSHA256": "41d6658634c93539c81064bc00f0b5c23ec0c2be980370c011e8df4dc7293ebf",
+  "diagnosis": "Real development GPK keying has approximately 90 ms dits, 210 ms dahs and 27 ms intra-element gaps; earlier synthetic generation rarely produced an element gap near 0.3 dit. No real development audio was used for training.",
+  "changes": [
+    "In 40 percent of non-noise utterances, scale nominal intra-character gaps uniformly in [0.25, 1] before jitter using existing OperatorConfig.gap_inflation. Independent augmentation RNG leaves unaugmented examples unchanged."
+  ],
+  "fixed": [
+    "Legacy whole-clip training frontend, as in the original v4 run",
+    "Marks, character gaps and word gaps retain original parameters",
+    "Complete-utterance rejection recomputes shortened durations before rendering; no audio truncation with complete labels",
+    "CTC loss, model architecture and 250-frame context",
+    "Batch 4, AdamW learning rate 1e-5, same additive receiver-noise sources"
+  ],
+  "seed": 8721911,
+  "steps": 3000,
+  "checkpoints": [
+    1000,
+    2000,
+    3000
+  ],
+  "upstreamRevision": "ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70",
+  "trainingDevice": "NVIDIA GeForce RTX 3080 10GB",
+  "trainingTorch": "2.8.0+cu128",
+  "selectionCorpora": [
+    ".research/round2-dev/manifest.json",
+    ".research/real-dev-v2/manifest.json"
+  ],
+  "regressionCorpora": [
+    ".research/continuous-dev/manifest.json",
+    ".research/real-curated/manifest.json",
+    ".research/real-final/manifest.json"
+  ],
+  "evaluationNote": "All are development or consumed regression sets. The new reserved SAQ2022 session was not opened.",
+  "negativeTargets": "Synthetic noise only; recorded 20 m day/night receiver noise is additive interference for positive transcripts.",
+  "backwardCompatibility": "320 default generator waveform hashes and labels, and 80 zero-fraction CF datasets (40 legacy + 40 causal) exactly match prior code; both runnable checks pass locally and remotely before training.",
+  "sourceSHA256": {
+    "server.py": "e72ed300de21da9f2443d5d423446877e3118e7ed63da35c2a6a622ec79c58e3",
+    "check.py": "89bac0022e98c9349f04da767b66d76e62b113d217ce6490f437ccbcf3633bce",
+    "train_cwformer.py": "93c2c5903005e179047e88e55fbdd41712b7d32c704cc9180906258d8afd40b8",
+    "cwformer_engine.py": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+    "train.py": "b12b6657bafd03b058d35a214e89eb6c27cf3823b357b448e4c4b3c447c756ba",
+    "streaming.py": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e"
+  },
+  "noiseSHA256": {
+    "noise_20m_day.wav": "5a66a1107a3b1c6948dc455f3895d922b6cb246686bce0f435928252ab7ab5fe",
+    "noise_20m_night.wav": "4d52568e9db5073bfad1b94b420495d9d880fdd27bcc789d0ecec73bc35b16ad"
+  },
+  "trainingElapsedSeconds": 254.984,
+  "trainingComplete": true,
+  "export": {
+    "commandTemplate": "OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 .venv/bin/python .research/cwformer/quantize_cwformer.py --checkpoint models/cwformer-weighted-v6/step-{step}.pt --output-dir models/cwformer-weighted-v6/step-{step} --benchmark-iters 3",
+    "scriptSHA256": "bf3c57e31f53edc076e34a8297710e7c3c18fd200e6964110703c9da650a0b34",
+    "opset": 17,
+    "exporter": "legacy",
+    "validation": {
+      "1000": {
+        "maxLogProbabilityDifference": 1.5e-05,
+        "positionOffsetSensitivity": 9.983889
+      },
+      "2000": {
+        "maxLogProbabilityDifference": 1.3e-05,
+        "positionOffsetSensitivity": 14.82114
+      },
+      "3000": {
+        "maxLogProbabilityDifference": 1.1e-05,
+        "positionOffsetSensitivity": 7.707899
+      }
+    },
+    "positionLengthResponse": "100-frame mel input advances by 50, 50-frame mel input advances by 25 for all three exports."
+  },
+  "files": {
+    "models/cwformer-weighted-v6/step-2000.pt": {
+      "bytes": 78680971,
+      "sha256": "27ea2c00d8aa9ab3033d6475990a6248d411b0f9aaee46a7388094f7b85808bd"
+    },
+    "models/cwformer-weighted-v6/step-1000.pt": {
+      "bytes": 78680971,
+      "sha256": "775e6cf86c40ab4109a7d841a62d37c048a2222728376121b4df01aecd50a357"
+    },
+    "models/cwformer-weighted-v6/step-3000.pt": {
+      "bytes": 78680971,
+      "sha256": "6e85100aa14869a45fe537fa2f5346abab4d6156dd86eca777aec7ade77cbe96"
+    },
+    "models/cwformer-weighted-v6/step-1000/mel_window.npy": {
+      "bytes": 1728,
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    },
+    "models/cwformer-weighted-v6/step-1000/LICENSE": {
+      "bytes": 1068,
+      "sha256": "738e65f4bf38b8b2a51fc183bb3379f90e3224edf841494c97772e2a25726b48"
+    },
+    "models/cwformer-weighted-v6/step-1000/cwformer_streaming_fp32.onnx": {
+      "bytes": 83222226,
+      "sha256": "bae2d7e970737be1be2e4558da928f55831afdb21194f02b892174d6292e7ba9"
+    },
+    "models/cwformer-weighted-v6/step-1000/mel_config.json": {
+      "bytes": 293,
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    "models/cwformer-weighted-v6/step-1000/mel_basis.npy": {
+      "bytes": 32288,
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    "models/cwformer-weighted-v6/step-1000/cwformer_streaming_int8.onnx": {
+      "bytes": 24953338,
+      "sha256": "e09ce1b281705e71e167706788d75b73437377fd4982fe96395330abdea73500"
+    },
+    "models/cwformer-weighted-v6/step-2000/mel_window.npy": {
+      "bytes": 1728,
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    },
+    "models/cwformer-weighted-v6/step-2000/LICENSE": {
+      "bytes": 1068,
+      "sha256": "738e65f4bf38b8b2a51fc183bb3379f90e3224edf841494c97772e2a25726b48"
+    },
+    "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx": {
+      "bytes": 83222226,
+      "sha256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374"
+    },
+    "models/cwformer-weighted-v6/step-2000/mel_config.json": {
+      "bytes": 293,
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    "models/cwformer-weighted-v6/step-2000/mel_basis.npy": {
+      "bytes": 32288,
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    "models/cwformer-weighted-v6/step-2000/cwformer_streaming_int8.onnx": {
+      "bytes": 24953338,
+      "sha256": "2fc7a719fce0c155577aa9473f116f55bf4e3f3890f2fdf3075f4dc7d91c5bad"
+    },
+    "models/cwformer-weighted-v6/step-3000/mel_window.npy": {
+      "bytes": 1728,
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    },
+    "models/cwformer-weighted-v6/step-3000/LICENSE": {
+      "bytes": 1068,
+      "sha256": "738e65f4bf38b8b2a51fc183bb3379f90e3224edf841494c97772e2a25726b48"
+    },
+    "models/cwformer-weighted-v6/step-3000/cwformer_streaming_fp32.onnx": {
+      "bytes": 83222226,
+      "sha256": "8332c926c323562b07545a8f8486a998c13f93f42e76060463b2a2220d48ae25"
+    },
+    "models/cwformer-weighted-v6/step-3000/mel_config.json": {
+      "bytes": 293,
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    "models/cwformer-weighted-v6/step-3000/mel_basis.npy": {
+      "bytes": 32288,
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    "models/cwformer-weighted-v6/step-3000/cwformer_streaming_int8.onnx": {
+      "bytes": 24953338,
+      "sha256": "4b98470b2dd26ffe56aff817813c9b8e74538d791d92973210a6af54253de8b0"
+    }
+  }
+}

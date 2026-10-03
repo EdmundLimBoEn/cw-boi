@@ -23,7 +23,7 @@ import listen
 def run(url, engine, checkpoint):
     url = listen.local_url(url)
     opener = build_opener(ProxyHandler({}), listen.NoRedirect())
-    sessions = set()
+    sessions = {}
 
     def call(path, body=None, headers=None, status=200):
         request = Request(url + path, data=body, headers=headers or {}, method='GET' if body is None else 'POST')
@@ -37,17 +37,32 @@ def run(url, engine, checkpoint):
             assert response.code in expected, (path, response.code, status, data)
             return data
 
-    def start(frequency=711, bandwidth=150):
-        key = call('/api/stream/start?' + urlencode({'frequency': frequency, 'bandwidth': bandwidth}), b'')['session']
-        sessions.add(key)
+    def start(frequency=711, bandwidth=150, selected=engine):
+        result = call('/api/stream/start?' + urlencode({'frequency': frequency, 'bandwidth': bandwidth, 'engine': selected}), b'')
+        assert result['engine'] == selected, result
+        key = result['session']
+        assert isinstance(key, str) and key and key not in sessions, result
+        sessions[key] = selected
         return key
 
-    def action(name, key, body=b'', frequency=711, bandwidth=150, status=200):
-        return call('/api/stream/' + name + '?' + urlencode({'session': key, 'frequency': frequency, 'bandwidth': bandwidth}), body, status=status)
+    def action(name, key, body=b'', frequency=711, bandwidth=150, status=200, selected=None):
+        selected = selected or sessions.get(key, engine)
+        result = call('/api/stream/' + name + '?' + urlencode({'session': key, 'frequency': frequency, 'bandwidth': bandwidth,
+                                                               'engine': selected}), body, status=status)
+        if status == 200:
+            assert result['engine'] == selected, result
+        return result
 
     health = call('/api/health')
-    assert health['ready'] and health['engine'] == engine
-    assert health['checkpoint'] == f'{checkpoint.parent.name}/{checkpoint.name}', health
+    assert health['ready']
+    available = {item['engine']: item for item in health['engines']}
+    assert len(available) == len(health['engines']) and engine in available, health
+    assert health['engine'] in available, health
+    for name, info in available.items():
+        assert name in {'rnnt', 'cwformer'} and info['model'] and info['checkpoint'], info
+        assert info['device'] in {'cpu', 'cuda', 'mps'} and 40 <= info['bandwidth'] <= 500, info
+    selected_info = available[engine]
+    assert selected_info['checkpoint'] == f'{checkpoint.parent.name}/{checkpoint.name}', selected_info
     torch.set_num_threads(4)
     if engine == 'cwformer':
         from cwformer_engine import Model, StreamingDecoder, decode_offline
@@ -57,8 +72,8 @@ def run(url, engine, checkpoint):
         from streaming import StreamingDecoder, decode_offline
         model = load_model(str(checkpoint))
     config = StreamingConfig(carrier_hz=711, bandwidth_hz=150,
-                             confidence_threshold=health['confidence_threshold'] if engine == 'rnnt' else .6,
-                             digit_threshold=health['digit_threshold'] if engine == 'rnnt' else .9)
+                             confidence_threshold=selected_info['confidence_threshold'] if engine == 'rnnt' else .6,
+                             digit_threshold=selected_info['digit_threshold'] if engine == 'rnnt' else .9)
     audio = render_events(build_events('CQ TEST 73', OperatorConfig(wpm=20)), freq=711,
                           sample_rate=8000, amplitude=.4, tail_ms=1000)
     raw = audio.astype('<f4').tobytes()
@@ -66,15 +81,16 @@ def run(url, engine, checkpoint):
         direct = decode_offline(model, audio, config)
     assert direct == 'CQ TEST 73', (engine, 'direct engine', direct)
     try:
-        offline = call('/api/decode?frequency=711&bandwidth=150', raw)['text']
-        assert offline == direct, (engine, 'HTTP offline', offline, direct)
+        offline = call('/api/decode?' + urlencode({'frequency': 711, 'bandwidth': 150, 'engine': engine}), raw)
+        assert offline['engine'] == engine and offline['model'] == selected_info['checkpoint'], offline
+        assert offline['text'] == direct, (engine, 'HTTP offline', offline, direct)
         key = start()
         for offset in range(0, len(audio), 8011):
             action('feed', key, audio[offset:offset + 8011].astype('<f4').tobytes())
         final = action('finish', key)['text']
         assert final == direct, (engine, 'HTTP stream', final, direct)
         action('finish', key, status=404)
-        sessions.discard(key)
+        sessions.pop(key)
 
         key = start(1000, 300)
         retuned_cfg = StreamingConfig(carrier_hz=1000, bandwidth_hz=300, confidence_threshold=config.confidence_threshold,
@@ -93,9 +109,36 @@ def run(url, engine, checkpoint):
                 action('feed', key, block.astype('<f4').tobytes(), 711, 80)
             wanted += decoder.flush()
         actual = action('finish', key)['text']
-        sessions.discard(key)
+        sessions.pop(key)
         assert actual == wanted.strip(), (engine, 'retune', actual, wanted)
         assert actual == 'CQ TEST 73', (engine, 'retune copy', actual)
+
+        key = start()
+        for query in ('engine=', 'engine=missing', f'engine={engine}&engine={engine}', 'engine=rnnt&engine=cwformer'):
+            call('/api/stream/start?' + query, b'', status=400)
+            call('/api/decode?' + query, raw, status=400)
+            for name in ('feed', 'finish', 'cancel'):
+                call(f'/api/stream/{name}?session={key}&{query}', raw if name == 'feed' else b'', status=400)
+        other = next((name for name in available if name != engine), None)
+        if other:
+            for name in ('feed', 'finish', 'cancel'):
+                action(name, key, raw if name == 'feed' else b'', selected=other, status=400)
+            other_key = start(selected=other)
+            quiet = np.zeros_like(audio)
+            for offset in range(0, len(audio), 8000):
+                action('feed', key, audio[offset:offset + 8000].astype('<f4').tobytes())
+                action('feed', other_key, quiet[offset:offset + 8000].astype('<f4').tobytes())
+            assert action('finish', key)['text'] == direct, (engine, 'interleaved speech')
+            assert action('finish', other_key)['text'] == '', (other, 'interleaved silence')
+            sessions.pop(key)
+            sessions.pop(other_key)
+            key = start(selected=other)
+            for offset in range(0, len(audio), 8011):
+                action('feed', key, audio[offset:offset + 8011].astype('<f4').tobytes())
+            assert action('finish', key)['text'] == 'CQ TEST 73', (other, 'selected engine copy')
+        else:
+            action('cancel', key)
+        sessions.pop(key)
 
         for headers in ({'Host': 'example.com'}, {'Host': '['}, {'Origin': 'https://evil.example'},
                         {'Origin': 'http://['}, {'Origin': 'ftp://localhost'}, {'Origin': 'null'}):
@@ -112,30 +155,33 @@ def run(url, engine, checkpoint):
             call('/api/decode', bad, status=400)
         action('cancel', key)
         action('feed', key, raw[:640], status=404)
-        sessions.discard(key)
+        sessions.pop(key)
         call('/api/decode', b'', headers={'Content-Length': str(8000 * 600 * 4 + 4)}, status=413)
-        for _ in range(4):
-            start()
-        call('/api/stream/start', b'', status=429)
+        names = list(available)
+        for index in range(4):
+            start(selected=names[index % len(names)])
+        for name in names:
+            call('/api/stream/start?' + urlencode({'engine': name}), b'', status=429)
         for key in list(sessions):
             action('cancel', key)
-            sessions.discard(key)
+            sessions.pop(key)
 
-        process = Mock()
-        process.stdout.fileno.return_value = 123
-        process.poll.return_value = None
-        process.wait.return_value = 0
-        source = BytesIO(raw)
-        copy = StringIO()
-        args = SimpleNamespace(url=url, input_index=1, frequency=711, bandwidth=150, seconds=60)
-        with (patch.object(listen.subprocess, 'Popen', return_value=process),
-              patch.object(listen.select, 'select', return_value=([process.stdout], [], [])),
-              patch.object(listen.os, 'read', side_effect=lambda _fd, count: source.read(min(997, count))),
-              redirect_stdout(copy), redirect_stderr(StringIO())):
-            listen.listen(args)
-        process.stdout.close.assert_called_once()
-        assert copy.getvalue().strip() == direct, (engine, 'Terminal bridge', copy.getvalue(), direct)
-        print(f'{engine}: HTTP/direct CQ TEST 73, retune, cancel, validation, origin checks, session limits and mocked capture passed.')
+        if engine == health['engine']:
+            process = Mock()
+            process.stdout.fileno.return_value = 123
+            process.poll.return_value = None
+            process.wait.return_value = 0
+            source = BytesIO(raw)
+            copy = StringIO()
+            args = SimpleNamespace(url=url, input_index=1, frequency=711, bandwidth=150, seconds=60)
+            with (patch.object(listen.subprocess, 'Popen', return_value=process),
+                  patch.object(listen.select, 'select', return_value=([process.stdout], [], [])),
+                  patch.object(listen.os, 'read', side_effect=lambda _fd, count: source.read(min(997, count))),
+                  redirect_stdout(copy), redirect_stderr(StringIO())):
+                listen.listen(args)
+            process.stdout.close.assert_called_once()
+            assert copy.getvalue().strip() == direct, (engine, 'Terminal bridge', copy.getvalue(), direct)
+        print(f'{engine}: HTTP/direct copy, retune, engine selection/isolation, validation, origins and shared session limits passed.')
     finally:
         for key in sessions:
             action('cancel', key, status=(200, 404))

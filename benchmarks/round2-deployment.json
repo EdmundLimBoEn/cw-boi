@@ -1,0 +1,27 @@
+{
+  "deployedAt": "2026-10-03T00:08:55.806823+00:00",
+  "engine": "cwformer",
+  "model": "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+  "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+  "promotionEvidence": "benchmarks/round2-final-comparison.json",
+  "frozenInferenceSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+  "deployedInferenceSHA256": "b33f621eb8f9c82942d0152a8fd9f17b74c6b1753fb9e09c99efee7cf56a0df5",
+  "postEvaluationChange": "Only DEFAULT_MODEL artifact path changed; exact source equality after that replacement was asserted. Server display label is CWformer \u00b7 v6. No weights, inference logic, or filter parameters changed.",
+  "serviceCommand": ".venv/bin/python neural/server.py --engine cwformer",
+  "serviceDefault": "cwformer; explicitly selected for this local running service. CLI without --engine retains RNNT for compatibility.",
+  "bandwidthHz": 150,
+  "adaptive": {
+    "deployedSource": "87ced16 unchanged",
+    "candidateDeployed": false,
+    "reason": "Strict aggregate-improvement gate failed on a tie,449/3027 for both.",
+    "archivedPatch": "benchmarks/adaptive-round2.patch",
+    "patchSHA256": "b58f7f367365414fb5827cbde935f996f432c372dc38f9080b49e559f2c8eb67"
+  },
+  "verification": {
+    "tests": "23 Bun tests pass; TypeScript and Vite production build pass.",
+    "python": "Generator/complete labels, streaming, native bridge, CTC/augmentation, corpus integrity, synthetic seed compatibility, and selected CWformer chunk/noise checks pass.",
+    "service": "Both CWformer v6 and RNN-T pass real HTTP/direct equivalence, retuning, selection/isolation, invalid inputs, origins, shared session limit, and simulated capture checks.",
+    "browser": "CWformer v6 Signal lab human timing: exact39-character copy. Sender \u2192 AudioWorklet \u2192 CWformer v6: CQ TEST 73 exact. Station left on CWformer v6, idle; volume/message restored.",
+    "liveDeviceLimit": "Actual BlackHole radio transcript remains unverified; no claim of live reception accuracy."
+  }
+}

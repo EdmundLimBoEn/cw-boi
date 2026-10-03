@@ -11,7 +11,7 @@ import numpy as np
 from scipy.signal import butter, firwin, lfilter, sosfilt
 
 TOKENS = [''] + [' '] + list('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,?/(&=+') + ['AR', 'SK', 'BT', 'KN', 'AS', 'CT']
-DEFAULT_MODEL = Path(__file__).resolve().parents[1] / 'models/cwformer-adapt-v4/cwformer_streaming_fp32.onnx'
+DEFAULT_MODEL = Path(__file__).resolve().parents[1] / 'models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx'
 
 
 class Model:

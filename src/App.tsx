@@ -5,7 +5,7 @@ import { DEFAULT_RECEIVER, type DecoderReading, type ReceiverSettings } from './
 import { ALPHABET, DEFAULT_SENDER, MORSE, decodeText, synthesize, transmission, wavBytes, type SenderSettings } from './morse'
 import { CHALLENGES, characterErrors, makeSignal, type Challenge } from './signals'
 import { Spectrum } from './Spectrum'
-import { NeuralStream, neuralDecode } from './neural'
+import { NeuralStream, neuralDecode, type NeuralEngine, type NeuralEngineInfo } from './neural'
 
 const EMPTY: DecoderReading = { text: '', pending: '', frequency: 650, wpm: 20, snr: 0, level: -100, keyed: false, confidence: 0, spectrum: [] }
 const DEMO_TEXT = 'CQ CQ DE CWBOI 73'
@@ -58,9 +58,8 @@ function App() {
   const [deviceId, setDeviceId] = useState('')
   const [results, setResults] = useState<Record<string, LabResult>>({})
   const [labRunning, setLabRunning] = useState<string | null>(null)
-  const [neuralReady, setNeuralReady] = useState(false)
-  const [neuralName, setNeuralName] = useState('Local acoustic model')
-  const [engine, setEngine] = useState<'adaptive' | 'neural'>('adaptive')
+  const [neuralEngines, setNeuralEngines] = useState<NeuralEngineInfo[]>([])
+  const [engine, setEngine] = useState<'adaptive' | NeuralEngine>('adaptive')
   const [neuralText, setNeuralText] = useState('')
   const [neuralBusy, setNeuralBusy] = useState(false)
   const neuralStream = useRef<NeuralStream | null>(null)
@@ -84,7 +83,7 @@ function App() {
   const plan = planResult.plan
   const active = source !== 'idle' && !busy
   const activeToken = playing && plan ? plan.tones.find(tone => elapsed >= tone.start && elapsed < tone.end)?.index : undefined
-  const displayedText = receiverTab === 'text' ? decodeText(morseInput) : engine === 'neural' ? neuralText : reading.text
+  const displayedText = receiverTab === 'text' ? decodeText(morseInput) : engine !== 'adaptive' ? neuralText : reading.text
   const changeRx = (settings: Partial<ReceiverSettings>) => setRx(previous => ({ ...previous, ...settings }))
   const changeTx = (settings: Partial<SenderSettings>) => setTx(previous => ({ ...previous, ...settings }))
 
@@ -98,7 +97,7 @@ function App() {
       }
     }
     audio.onReceiverEnded = () => { finishNeural(); setSource('idle'); setNotice('Audio input disconnected.') }
-    void fetch('/api/health').then(response => response.ok ? response.json() : null).then(data => { if (data?.ready) { setNeuralReady(true); setNeuralName(data.model) } }).catch(() => {})
+    void fetch('/api/health').then(response => response.ok ? response.json() : null).then(data => { if (data?.ready) setNeuralEngines((data.engines ?? [data]).filter((entry: NeuralEngineInfo) => entry.engine === 'rnnt' || entry.engine === 'cwformer')) }).catch(() => {})
     return () => { worker.current?.terminate(); neuralStream.current?.cancel(); neuralRequest.current?.abort(); audio.dispose() }
   }, [])
   useEffect(() => { station.current?.configure(rx) }, [rx])
@@ -134,14 +133,20 @@ function App() {
 
   async function startNeural(settings: ReceiverSettings) {
     getAudio().onSamples = null
-    if (engine !== 'neural') return
-    const stream = new NeuralStream()
+    if (engine === 'adaptive') return
+    const stream = new NeuralStream(engine)
     neuralStream.current = stream
     stream.onText = setNeuralText
     stream.onError = error => { setError(audioError(error)); setNeuralBusy(false) }
     await stream.start(settings)
     if (neuralStream.current !== stream) return
     getAudio().onSamples = samples => stream.feed(samples)
+  }
+
+  const changeEngine = (next: 'adaptive' | NeuralEngine) => {
+    if (next === engine) return
+    stop(); setEngine(next); setReading(EMPTY); setNeuralText(''); setResults({}); setSourceName(''); setError(''); setNotice('')
+    changeRx({ bandwidth: next === 'adaptive' ? DEFAULT_RECEIVER.bandwidth : neuralEngines.find(entry => entry.engine === next)?.bandwidth ?? (next === 'cwformer' ? 150 : 100) })
   }
 
   const stop = (finish = false) => {
@@ -210,7 +215,7 @@ function App() {
       })
       if (ticket !== operation.current) { audio.stopSender(); return }
       setPlaying(true)
-    } catch (error) { stop(); setError(audioError(error)) }
+    } catch (error) { if (ticket === operation.current) { stop(); setError(audioError(error)) } }
     finally { if (ticket === operation.current) setBusy(false) }
   }
 
@@ -234,6 +239,7 @@ function App() {
     const decoderWorker = new Worker(new URL('./file.worker.ts', import.meta.url), { type: 'module' })
     worker.current = decoderWorker
     decoderWorker.onmessage = ({ data }) => {
+      if (worker.current !== decoderWorker) return
       if (data.type === 'progress') setProgress(data.progress)
       else {
         decoderWorker.terminate(); worker.current = null; setBusy(false); setSource('idle'); setLabRunning(null)
@@ -241,7 +247,7 @@ function App() {
         else { setReading(data.reading); onDone(data.reading) }
       }
     }
-    decoderWorker.onerror = () => { stop(); setError('The audio decoder could not finish. Try a shorter recording.') }
+    decoderWorker.onerror = () => { if (worker.current === decoderWorker) { stop(); setError('The audio decoder could not finish. Try a shorter recording.') } }
     decoderWorker.postMessage({ samples, settings }, [samples.buffer])
   }
 
@@ -252,11 +258,12 @@ function App() {
       const samples = await getAudio().readFile(file)
       if (ticket !== operation.current) return
       setSource('file')
-      const neuralSamples = engine === 'neural' ? samples.slice() : null
+      const selectedEngine = engine
+      const neuralSamples = engine !== 'adaptive' ? samples.slice() : null
       analyze(samples, rx, result => {
-        if (!neuralSamples) { setNotice(result.text.trim() ? 'Recording decoded. Your audio stayed on this device.' : 'No Morse found. Try tuning the carrier or lowering the signal gate.'); return }
+        if (!neuralSamples || selectedEngine === 'adaptive') { setNotice(result.text.trim() ? 'Recording decoded. Your audio stayed on this device.' : 'No Morse found. Try tuning the carrier or lowering the signal gate.'); return }
         const controller = new AbortController(); neuralRequest.current = controller; setNeuralBusy(true)
-        void neuralDecode(neuralSamples, { ...rx, frequency: rx.autoTune ? result.frequency : rx.frequency }, controller.signal)
+        void neuralDecode(neuralSamples, { ...rx, frequency: rx.autoTune ? result.frequency : rx.frequency }, selectedEngine, controller.signal)
           .then(text => { if (ticket === operation.current) { setNeuralText(text); setNotice(text ? 'Recording decoded. Your audio stayed on this device.' : 'No Morse found. Try tuning the carrier.') } })
           .catch(error => { if (!controller.signal.aborted) setError(audioError(error)) })
           .finally(() => { if (ticket === operation.current) setNeuralBusy(false) })
@@ -277,7 +284,7 @@ function App() {
       await audio.prepareKey(tx)
       if (ticket !== operation.current) { audio.stopKey(); return }
       setArmed(true); setSource('key'); setSourceName('Straight key')
-    } catch (error) { stop(); setError(audioError(error)) }
+    } catch (error) { if (ticket === operation.current) { stop(); setError(audioError(error)) } }
     finally { if (ticket === operation.current) setBusy(false) }
   }
 
@@ -285,10 +292,10 @@ function App() {
     stop(); setBusy(true); setProgress(0); setLabRunning(challenge.id); setSourceName(challenge.name); setReading(EMPTY)
     const started = performance.now()
     const samples = makeSignal(LAB_TEXT, challenge, 947)
-    if (engine === 'neural') {
+    if (engine !== 'adaptive') {
       const controller = new AbortController(); neuralRequest.current = controller
       try {
-        const text = await neuralDecode(samples, { ...rx, frequency: challenge.frequency }, controller.signal)
+        const text = await neuralDecode(samples, { ...rx, frequency: challenge.frequency }, engine, controller.signal)
         if (!controller.signal.aborted) {
           setNeuralText(text)
           setResults(previous => ({ ...previous, [challenge.id]: { text, ...characterErrors(LAB_TEXT, text), milliseconds: Math.round(performance.now() - started) } }))
@@ -336,12 +343,12 @@ function App() {
 
           <div className="receiver-controls"><div className="receiver-tuning"><Slider label="Target tone" value={rx.frequency} min={250} max={1400} step={5} suffix="Hz" onChange={frequency => changeRx({ frequency, autoTune: false })} /><Toggle checked={rx.autoTune} onChange={autoTune => changeRx({ autoTune })}>Auto tune</Toggle></div>
             <div className="receive-actions"><button className={`button primary ${source === 'mic' ? 'stop-button' : ''}`} disabled={busy} onClick={() => source === 'mic' ? stop(true) : void listen()}>{source === 'mic' ? <Square size={16} fill="currentColor" /> : <Mic size={17} />}{source === 'mic' ? 'Stop listening' : 'Start listening'}</button><button className="button secondary" disabled={busy} onClick={() => fileInput.current?.click()}><Upload size={16} /> Audio file</button><button className="icon-button advanced-button" aria-label="Receiver settings" aria-expanded={advanced} onClick={() => setAdvanced(!advanced)}><SlidersHorizontal size={18} /></button><input ref={fileInput} type="file" accept="audio/*,.wav,.mp3,.ogg,.m4a,.flac" className="visually-hidden" aria-label="Import audio recording" onChange={event => { const file = event.target.files?.[0]; if (file) void importAudio(file); event.target.value = '' }} /></div>
-            {advanced && <div className="advanced-controls"><div className="controls-grid"><Slider label="Filter width" value={rx.bandwidth} min={40} max={300} step={10} suffix="Hz" onChange={bandwidth => changeRx({ bandwidth })} /><Slider disabled={engine === 'neural'} label="Signal gate" value={rx.threshold} min={3} max={18} suffix="dB" onChange={threshold => changeRx({ threshold })} /><Slider disabled={engine === 'neural'} label="Expected speed" value={rx.wpm} min={5} max={60} suffix="WPM" onChange={wpm => changeRx({ wpm, spacing: Math.min(rx.spacing, wpm) })} /><Slider disabled={engine === 'neural'} label="Spacing speed" value={rx.spacing} min={5} max={rx.wpm} suffix="WPM" onChange={spacing => changeRx({ spacing })} /></div><Toggle disabled={engine === 'neural'} checked={rx.autoSpeed} onChange={autoSpeed => changeRx({ autoSpeed })}>Learn the sender’s timing</Toggle><label className="device-picker">Audio input<select value={deviceId} disabled={source === 'mic'} onChange={event => setDeviceId(event.target.value)}><option value="">System default</option>{devices.map(device => <option key={device.deviceId} value={device.deviceId}>{device.label || 'Audio input'}</option>)}</select></label><p>Use a narrow filter for weak signals. Turn off auto tune to stay with one station in a crowded band.{engine === 'neural' && ' The acoustic model learns timing itself; gate and speed controls apply to the adaptive decoder.'}</p></div>}
+            {advanced && <div className="advanced-controls"><div className="controls-grid"><Slider label="Filter width" value={rx.bandwidth} min={40} max={300} step={10} suffix="Hz" onChange={bandwidth => changeRx({ bandwidth })} /><Slider disabled={engine !== 'adaptive'} label="Signal gate" value={rx.threshold} min={3} max={18} suffix="dB" onChange={threshold => changeRx({ threshold })} /><Slider disabled={engine !== 'adaptive'} label="Expected speed" value={rx.wpm} min={5} max={60} suffix="WPM" onChange={wpm => changeRx({ wpm, spacing: Math.min(rx.spacing, wpm) })} /><Slider disabled={engine !== 'adaptive'} label="Spacing speed" value={rx.spacing} min={5} max={rx.wpm} suffix="WPM" onChange={spacing => changeRx({ spacing })} /></div><Toggle disabled={engine !== 'adaptive'} checked={rx.autoSpeed} onChange={autoSpeed => changeRx({ autoSpeed })}>Learn the sender’s timing</Toggle><label className="device-picker">Audio input<select value={deviceId} disabled={source === 'mic'} onChange={event => setDeviceId(event.target.value)}><option value="">System default</option>{devices.map(device => <option key={device.deviceId} value={device.deviceId}>{device.label || 'Audio input'}</option>)}</select></label><p>Use a narrow filter for weak signals. Turn off auto tune to stay with one station in a crowded band.{engine !== 'adaptive' && ' The acoustic model learns timing itself; gate and speed controls apply to the adaptive decoder.'}</p></div>}
           </div>
 
-          <div className="transcript-section"><div className="engine-row"><span><Activity size={13} /> Decoder</span><select aria-label="Decoder engine" value={engine} disabled={active || busy || neuralBusy} onChange={event => { setEngine(event.target.value as 'adaptive' | 'neural'); setResults({}) }}><option value="adaptive">Adaptive signal decoder</option>{neuralReady && <option value="neural">{neuralName}</option>}</select>{engine === 'neural' && <small>{neuralBusy ? 'Finishing copy…' : 'Local acoustic decoding'}</small>}</div><div className="section-toolbar"><div className="transcript-tabs"><button className={receiverTab === 'audio' ? 'active' : ''} onClick={() => setReceiverTab('audio')}>Live copy</button><button className={receiverTab === 'text' ? 'active' : ''} onClick={() => setReceiverTab('text')}>Morse text</button></div><div className="toolbar-actions"><button className="icon-button" aria-label="Copy transcript" disabled={!displayedText} onClick={() => void copy(displayedText)}><Copy size={14} /></button><button className="icon-button" aria-label="Save transcript" disabled={!displayedText} onClick={() => download(displayedText, 'text/plain', 'cw-boi-transcript.txt')}><ArrowDownToLine size={15} /></button><button className="icon-button" aria-label="Clear transcript" disabled={!displayedText && !reading.pending} onClick={clearTranscript}><RotateCcw size={14} /></button></div></div>
+          <div className="transcript-section"><div className="engine-row"><span><Activity size={13} /> Decoder</span><select aria-label="Decoder engine" value={engine} onChange={event => changeEngine(event.target.value as 'adaptive' | NeuralEngine)}><option value="adaptive">Adaptive signal decoder</option>{neuralEngines.map(entry => <option key={entry.engine} value={entry.engine}>{entry.model}</option>)}</select>{engine !== 'adaptive' && <small>{neuralBusy ? 'Finishing copy…' : 'Local acoustic decoding'}</small>}</div><div className="section-toolbar"><div className="transcript-tabs"><button className={receiverTab === 'audio' ? 'active' : ''} onClick={() => setReceiverTab('audio')}>Live copy</button><button className={receiverTab === 'text' ? 'active' : ''} onClick={() => setReceiverTab('text')}>Morse text</button></div><div className="toolbar-actions"><button className="icon-button" aria-label="Copy transcript" disabled={!displayedText} onClick={() => void copy(displayedText)}><Copy size={14} /></button><button className="icon-button" aria-label="Save transcript" disabled={!displayedText} onClick={() => download(displayedText, 'text/plain', 'cw-boi-transcript.txt')}><ArrowDownToLine size={15} /></button><button className="icon-button" aria-label="Clear transcript" disabled={!displayedText && !reading.pending} onClick={clearTranscript}><RotateCcw size={14} /></button></div></div>
             {receiverTab === 'text' && <textarea className="morse-input" aria-label="Morse code to decode" value={morseInput} onChange={event => setMorseInput(event.target.value)} placeholder="... --- ... / .- -...   · Separate letters with spaces and words with /" spellCheck={false} maxLength={10000} />}
-            <div className={`transcript ${displayedText ? 'has-copy' : ''}`} role="log" aria-live="polite" aria-label="Decoded transcript">{displayedText ? <>{displayedText}<span className={active ? 'text-cursor live' : 'text-cursor'} /></> : <div className="empty-transcript"><Waves size={27} strokeWidth={1.3} /><span>{busy ? 'Finding the signal…' : active ? 'Listening for the first dits and dahs…' : 'There’s a conversation in the static.'}</span><small>{active ? engine === 'neural' ? 'Neural decoding uses a few seconds of context.' : 'Decoded characters will appear here.' : 'Connect your audio, or take a sample for a spin.'}</small>{!active && !busy && receiverTab === 'audio' && <button onClick={() => void playDemo()}><Play size={11} fill="currentColor" /> Try a sample signal <ChevronRight size={13} /></button>}</div>}</div>
+            <div className={`transcript ${displayedText ? 'has-copy' : ''}`} role="log" aria-live="polite" aria-label="Decoded transcript">{displayedText ? <>{displayedText}<span className={active ? 'text-cursor live' : 'text-cursor'} /></> : <div className="empty-transcript"><Waves size={27} strokeWidth={1.3} /><span>{busy ? 'Finding the signal…' : active ? 'Listening for the first dits and dahs…' : 'There’s a conversation in the static.'}</span><small>{active ? engine !== 'adaptive' ? 'Neural decoding uses a few seconds of context.' : 'Decoded characters will appear here.' : 'Connect your audio, or take a sample for a spin.'}</small>{!active && !busy && receiverTab === 'audio' && <button onClick={() => void playDemo()}><Play size={11} fill="currentColor" /> Try a sample signal <ChevronRight size={13} /></button>}</div>}</div>
             {engine === 'adaptive' && !!reading.alternatives?.length && <details className="copy-alternatives"><summary>Ambiguous timing · other possible copy</summary>{reading.alternatives.map((text, index) => <code key={index}>{text}</code>)}</details>}<div className="transcript-footer"><span className="pending-code">{reading.pending ? reading.pending.replace(/\./g, '·').replace(/-/g, '−') : '· · ·'}<span>{active ? 'Decoding locally' : sourceName ? `Last source: ${sourceName}` : 'Waiting for a signal'}</span></span><span>{displayedText.trim().length} characters</span></div>
           </div>
         </section>
@@ -362,7 +369,7 @@ function App() {
         </section>
       </div> : <section className="lab-panel">
         <div className="lab-intro"><div className="lab-icon"><FlaskConical size={26} /></div><div><h2>Less guessing. More testing.</h2><p>Six repeatable synthetic conditions, including deliberately brutal ones. Each goes through the same decoder as your microphone. Character error rate counts substitutions, insertions, and deletions.</p></div></div>
-        <div className="lab-engine"><label htmlFor="lab-engine">Test decoder</label><select id="lab-engine" value={engine} disabled={busy || active} onChange={event => { setEngine(event.target.value as 'adaptive' | 'neural'); setResults({}) }}><option value="adaptive">Adaptive signal decoder</option>{neuralReady && <option value="neural">{neuralName}</option>}</select></div><div className="lab-target"><span>Expected copy</span><code>{LAB_TEXT}</code><small>Fixed seed 947 · 8 kHz audio · Known carrier · SNR measured against broadband noise</small></div>
+        <div className="lab-engine"><label htmlFor="lab-engine">Test decoder</label><select id="lab-engine" value={engine} onChange={event => changeEngine(event.target.value as 'adaptive' | NeuralEngine)}><option value="adaptive">Adaptive signal decoder</option>{neuralEngines.map(entry => <option key={entry.engine} value={entry.engine}>{entry.model}</option>)}</select></div><div className="lab-target"><span>Expected copy</span><code>{LAB_TEXT}</code><small>Fixed seed 947 · 8 kHz audio · Known carrier · SNR measured against broadband noise</small></div>
         <div className="challenge-grid">{CHALLENGES.map((challenge, index) => <article className="challenge" key={challenge.id}><div className="challenge-top"><span className="challenge-wave">{index === 0 ? <Waves /> : index === 1 ? <Activity /> : index === 2 ? <AudioLines /> : <Radio />}</span><span className="challenge-tag">{challenge.wpm} WPM / {challenge.snr > 0 ? '+' : ''}{challenge.snr} dB</span></div><h3>{challenge.name}</h3><p>{challenge.description}</p>{results[challenge.id] ? <div className="lab-result"><strong className={results[challenge.id].cer === 0 ? 'perfect' : ''}>{(results[challenge.id].cer * 100).toFixed(1)}% <span>character error</span></strong><code>{results[challenge.id].text || '(No copy)'}</code><small>{results[challenge.id].errors} edits / {LAB_TEXT.length} characters · {results[challenge.id].milliseconds} ms</small></div> : <div className="lab-result untested"><span>Ready for a fair test.</span><small>No result until you run the decoder.</small></div>}<div className="challenge-actions"><button className="button secondary" disabled={busy || active || playing} onClick={() => runChallenge(challenge)}>{labRunning === challenge.id ? <span className="spinner" /> : <FlaskConical size={14} />}{labRunning === challenge.id ? 'Running…' : 'Run test'}</button><button className="icon-button" disabled={busy || active || playing} aria-label={`Listen to ${challenge.name}`} onClick={() => { void playDemo(challenge, LAB_TEXT); setView('station') }}><Play size={15} /></button></div></article>)}</div>
         <div className="lab-caveat"><ShieldCheck size={18} /><p>Synthetic results are a regression check, not a claim of real-world accuracy. Real radio comparisons and failure cases are recorded alongside the benchmarks. Unknown symbols appear as <code>�</code>; callsigns are never autocorrected.</p></div>
       </section>}

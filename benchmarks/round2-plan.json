@@ -1,0 +1,376 @@
+{
+  "version": 1,
+  "recordedAt": "2026-10-02T23:40:10.482551+00:00",
+  "status": "final-evaluation-complete-consumed-no-post-final-tuning",
+  "reason": "All previous development and final sets are consumed. New random seeds provide fresh messages and waveforms from the same synthetic distribution; they do not establish generalization to new human operators.",
+  "baselineCommit": "87ced16fb4402c2836d02aeff2c8a434afa58a81",
+  "baselines": {
+    "adaptive": {
+      "sources": [
+        {
+          "file": "src/decoder.ts",
+          "sha256": "8326b1304e5cb93c6c522cd68950a7bcf0c5a87f40ab7fe1f2e07935da27c676"
+        },
+        {
+          "file": "src/timing.ts",
+          "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+        },
+        {
+          "file": "src/morse.ts",
+          "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+        }
+      ],
+      "bandwidthHz": 100,
+      "knownCarrier": true,
+      "developmentReport": {
+        "file": "benchmarks/round2-dev-adaptive-baseline.json",
+        "sha256": "55d67903409fb22b62fc358a2ea5e173f5ac81d9924d6bd430141a84ab36cabb",
+        "command": "bun scripts/benchmark-adaptive.ts --manifest .research/round2-dev/manifest.json --baseline 87ced16 --output benchmarks/round2-dev-adaptive-baseline.json",
+        "summary": {
+          "cases": 60,
+          "speechCases": 48,
+          "characters": 1467,
+          "errors": 229,
+          "cer": 0.15610088616223586,
+          "exact": 31,
+          "noiseCases": 12,
+          "noiseSeconds": 240,
+          "falseCharacters": 1,
+          "falseCharactersPerMinute": 0.25,
+          "audioSeconds": 1256.1322499999999,
+          "inferenceSeconds": 13.31008716799999
+        }
+      },
+      "realDevelopmentReport": {
+        "file": "benchmarks/round2-real-dev-adaptive-baseline.json",
+        "sha256": "14d2dc53b0ce464566c8a3dd53f319183a83eb0c909c9a9e843bf1c0e30162a1",
+        "summary": {
+          "cases": 12,
+          "speechCases": 12,
+          "characters": 438,
+          "errors": 193,
+          "cer": 0.4406392694063927,
+          "exact": 2,
+          "noiseCases": 0,
+          "noiseSeconds": 0,
+          "falseCharacters": 0,
+          "falseCharactersPerMinute": null,
+          "audioSeconds": 290.87000000000006,
+          "inferenceSeconds": 6.177111834999999
+        }
+      }
+    },
+    "rnnt-v1": {
+      "model": "models/cw-boi-rnnt-v1.pt",
+      "modelSHA256": "421ec784604b6d238aa2641d94160a4e6659b66206c3ac363f1d695173a06495",
+      "sources": [
+        {
+          "file": "neural/streaming.py",
+          "sha256": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e"
+        },
+        {
+          "file": "neural/server.py",
+          "sha256": "e72ed300de21da9f2443d5d423446877e3118e7ed63da35c2a6a622ec79c58e3"
+        }
+      ],
+      "confidenceThreshold": 0.6,
+      "digitThreshold": 0.9,
+      "bandwidthHz": 100,
+      "knownCarrier": true,
+      "inputChunkSeconds": 1,
+      "developmentReport": {
+        "file": "benchmarks/round2-dev-rnnt-v1-baseline.json",
+        "sha256": "3557079bd6e868902183e9ac3bfff91a2211ab99ce11d7d3607605a0249870d0",
+        "command": ".venv/bin/python .research/round2-baseline/neural/benchmark.py --manifest .research/round2-dev/manifest.json --checkpoint models/cw-boi-rnnt-v1.pt --decoder app --confidence-threshold 0.6 --digit-threshold 0.9 --threads 2 --output benchmarks/round2-dev-rnnt-v1-baseline.json",
+        "summary": {
+          "cases": 60,
+          "speechCases": 48,
+          "characters": 1467,
+          "errors": 226,
+          "cer": 0.15405589638718473,
+          "exact": 25,
+          "noiseCases": 12,
+          "noiseSeconds": 240.0,
+          "falseCharacters": 12,
+          "falseCharactersPerMinute": 3.0,
+          "audioSeconds": 1256.13225,
+          "inferenceSeconds": 37.4433857499389
+        }
+      },
+      "snapshotReproduction": "Extract tracked neural/ files from baselineCommit into .research/round2-baseline/neural/ with git show, preserving filenames. The weights remain at their recorded model path.",
+      "realDevelopmentReport": {
+        "file": "benchmarks/round2-real-dev-rnnt-v1-baseline.json",
+        "sha256": "6ebb9d64b4bd88af53a35e62ab41e30d5f0eaf0a2a52b816f7da75fc1b84411d",
+        "summary": {
+          "cases": 12,
+          "speechCases": 12,
+          "characters": 438,
+          "errors": 68,
+          "cer": 0.1552511415525114,
+          "exact": 3,
+          "noiseCases": 0,
+          "noiseSeconds": 0,
+          "falseCharacters": 0,
+          "falseCharactersPerMinute": null,
+          "audioSeconds": 290.87,
+          "inferenceSeconds": 10.485040249943268
+        }
+      }
+    },
+    "cwformer-v4": {
+      "model": "models/cwformer-adapt-v4/cwformer_streaming_fp32.onnx",
+      "modelSHA256": "c1a956b35cc184a8fac7641b586d500514c18a99254aff2ed933697775e808a3",
+      "sources": [
+        {
+          "file": "neural/cwformer_engine.py",
+          "sha256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561"
+        }
+      ],
+      "bandwidthHz": 150,
+      "knownCarrier": true,
+      "inputChunkSeconds": 0.5,
+      "developmentReport": {
+        "file": "benchmarks/round2-dev-cwformer-v4-baseline.json",
+        "sha256": "62988469ef35d2e8a29a74afdc7b678e53103953127442e9e36f5d8399bf8d69",
+        "command": ".venv/bin/python .research/round2-baseline/neural/benchmark_cwformer.py --manifest .research/round2-dev/manifest.json --model models/cwformer-adapt-v4/cwformer_streaming_fp32.onnx --bandwidth 150 --output benchmarks/round2-dev-cwformer-v4-baseline.json",
+        "summary": {
+          "cases": 60,
+          "speechCases": 48,
+          "characters": 1467,
+          "errors": 148,
+          "cer": 0.10088616223585549,
+          "exact": 32,
+          "noiseCases": 12,
+          "noiseSeconds": 240.0,
+          "falseCharacters": 1,
+          "falseCharactersPerMinute": 0.25,
+          "audioSeconds": 1256.13225,
+          "inferenceSeconds": 21.11295700102346
+        }
+      },
+      "snapshotReproduction": "Extract tracked neural/ files from baselineCommit into .research/round2-baseline/neural/ with git show, preserving filenames. The weights remain at their recorded model path.",
+      "realDevelopmentReport": {
+        "file": "benchmarks/round2-real-dev-cwformer-v4-baseline.json",
+        "sha256": "cf8df869644f2e8d4f077c33cf5de458c182bd0683d72dc60a4a8debdb7b2fde",
+        "summary": {
+          "cases": 12,
+          "speechCases": 12,
+          "characters": 438,
+          "errors": 99,
+          "cer": 0.22602739726027396,
+          "exact": 4,
+          "noiseCases": 0,
+          "noiseSeconds": 0,
+          "falseCharacters": 0,
+          "falseCharactersPerMinute": null,
+          "audioSeconds": 290.87,
+          "inferenceSeconds": 5.360604791960213
+        }
+      },
+      "frontendAssets": [
+        {
+          "file": "models/cwformer-adapt-v4/mel_config.json",
+          "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+        },
+        {
+          "file": "models/cwformer-adapt-v4/mel_basis.npy",
+          "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+        },
+        {
+          "file": "models/cwformer-adapt-v4/mel_window.npy",
+          "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+        }
+      ]
+    }
+  },
+  "development": {
+    "seed": 1203817,
+    "casesPerCondition": 8,
+    "noiseRepeatsPerKind": 2,
+    "speechCases": 48,
+    "negativeCases": 12,
+    "characters": 1467,
+    "audioSeconds": 1256.13225,
+    "manifest": ".research/round2-dev/manifest.json",
+    "manifestSHA256": "b2c4e32787fccdc991a3247e60a14b9121330124e5a4ac3947e356e459d8953f",
+    "command": "bun scripts/continuous-benchmark.ts --seed 1203817 --cases-per-condition 8 --noise-repeats 2 --output .research/round2-dev"
+  },
+  "final": {
+    "seed": 2203917,
+    "split": "final",
+    "casesPerCondition": 16,
+    "noiseRepeatsPerKind": 4,
+    "speechCases": 96,
+    "negativeCases": 24,
+    "negativeSeconds": 480,
+    "manifest": ".research/round2-final/manifest.json",
+    "state": "evaluated-consumed",
+    "commandAfterCandidateFreezeOnly": "bun scripts/continuous-benchmark.ts --split final --seed 2203917 --cases-per-condition 16 --noise-repeats 4 --output .research/round2-final",
+    "manifestSHA256": "e8078cd3f7ef49a41a8cd402ee62f7f45ac5d5770078c68c6dd56d462e6a019d",
+    "characters": 3027,
+    "audioSeconds": 2534.523875
+  },
+  "guards": {
+    "aggregateSyntheticCER": "strictly lower than the matching 87ced16 engine baseline",
+    "maximumAbsoluteCERIncrease": {
+      "clean": 0.02,
+      "human": 0.02,
+      "fading": 0.02,
+      "crowded": 0.02
+    },
+    "negativeFalseCharacters": "no greater than the matching baseline over the same 480 seconds",
+    "realReservedSessionAdditionalCharacterErrors": 1,
+    "realReservedSession": {
+      "session": "SAQ 2022-11-16 16:00 UTC, Richard B. Langley off-air reception via University of Twente",
+      "manifest": ".research/round2-reserved/corpus-final-v2.json",
+      "manifestSHA256": "4ff69881fd40e26a9c6649c05ea4176bf8f898009418101e6411f12fc862a053",
+      "clips": 9,
+      "characters": 422,
+      "audioSeconds": 296.458,
+      "wholeSessionSeconds": 570.630125,
+      "carrierHz": 760,
+      "bandwidthHz": 100,
+      "annotation": "Non-overlapping complete-word crops. Every selected character agrees between receiver-authored public transcript and independent carrier envelope extraction at four fixed thresholds. Ambiguous regions excluded before any model evaluation. Whole session excluded from training and development.",
+      "independenceLimit": "One previously unused reception/session, not nine independent operators. Same historical transmitting station as earlier SAQ 2019 development audio; operator identity is not established.",
+      "state": "unsealed-unchanged-evaluated-consumed",
+      "sealedMetadata": "neural/corpus-final-v2-sealed.json",
+      "publishedManifest": "neural/corpus-final-v2.json",
+      "preparedManifest": ".research/round2-real-final/manifest.json",
+      "preparedManifestSHA256": "89abd7407877fefd17651de4e80a1a7fcf8ac20b4655815bb20f5f5e53d28caf"
+    },
+    "defaultEngineChange": "CWformer must additionally pass these same guards against RNN-T v1 before becoming the default; an improvement versus CWformer v4 alone is insufficient.",
+    "decision": "All guards must pass. Freeze each candidate checkpoint, runtime sources and settings before generating final data. Do not tune or select a different candidate after final results."
+  },
+  "scoring": {
+    "characterErrorRate": "Levenshtein insertions, deletions and substitutions / total reference characters. Include spaces and punctuation. Uppercase and strip outer whitespace only. Retain actual sent transcription errors; no dictionary correction.",
+    "negativeFalseCharacters": "Count all non-space output characters from negative clips. Report count and rate per minute separately from speech CER.",
+    "aggregation": "Sum errors and reference characters before dividing, rather than averaging clip CER. Keep full per-clip predictions.",
+    "consumedRegressionSets": [
+      ".research/real-final/manifest.json (Marine Electric, 37 reference characters)",
+      "All previously reported synthetic and SAQ 2019 sets"
+    ],
+    "consumedRegressionPolicy": "May be used for development, not fresh promotion evidence. Explicitly report regressions on the consumed 37-character Marine set, even if fresh promotion guards pass."
+  },
+  "provenance": {
+    "generator": [
+      {
+        "file": "scripts/continuous-benchmark.ts",
+        "sha256": "002b436787358f132f6e84a21b11a4c733238505861d15332256481f7ddd2170"
+      },
+      {
+        "file": "src/signals.ts",
+        "sha256": "56b03d07848cc864c231535ec128c8a3c4d4137920d9e1f0299c89fb076d3269"
+      },
+      {
+        "file": "src/morse.ts",
+        "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+      }
+    ],
+    "syntheticDefinition": "Known carrier; clean, human-like timing, fading, adjacent CW, rough fist, and combined chaos. Broadband SNR is keyed carrier RMS versus 8 kHz Gaussian noise before fading. No Python training generator is used.",
+    "realSource": "https://shortwavearchive.com/archive/saq-grimeton-radio-november-16-2022",
+    "realUse": "Local evaluation only. No real holdout audio used for training or distributed in Git."
+  },
+  "compatibilityCheck": {
+    "command": "python3 scripts/check-continuous-benchmark.py",
+    "contract": "Both original default splits and explicit equivalent seeds reproduce baseline case records and every audio byte. Invalid seeds fail before output creation; maximum uint32 is accepted.",
+    "passedAt": "2026-10-02T23:41:13.167511+00:00",
+    "result": "PASS: 24 dev and 24 final cases exactly match 87ced16 metadata and raw audio bytes; explicit legacy seeds match defaults; 9 invalid seeds rejected; 4294967295 accepted."
+  },
+  "realDevelopment": {
+    "manifest": ".research/real-dev-v2/manifest.json",
+    "manifestSHA256": "9331961f4420aa68602020cd7c193425782cd5c4c2626168271a59c8f1c47c9e",
+    "sourceManifest": "neural/corpus-dev-v2.json",
+    "split": "real-round2-dev",
+    "cases": 12,
+    "characters": 438,
+    "audioSeconds": 290.87,
+    "operators": 3,
+    "sessions": 2,
+    "usage": "Development and candidate selection only, never training. Some operators/source sessions overlap consumed Marine Electric regression data. Not reserved final evidence.",
+    "sourceManifestSHA256": "f23a72e007c794ecbd41a189d4fecd17ef990fcd1e8a48681c90c9298b5e4c31"
+  },
+  "provenanceAudit": {
+    "checkedAt": "2026-10-02T23:55:18.164103+00:00",
+    "checksPassed": [
+      "development prepared manifest",
+      "development all audio hashes and sample counts",
+      "realDevelopment prepared manifest",
+      "realDevelopment all audio hashes and sample counts",
+      "realDevelopment annotation source manifest",
+      "adaptive weights, baseline commit sources, frozen runtime snapshots and report hashes",
+      "rnnt-v1 weights, baseline commit sources, frozen runtime snapshots and report hashes",
+      "cwformer-v4 weights, baseline commit sources, frozen runtime snapshots and report hashes",
+      "synthetic generator current sources"
+    ],
+    "sourceVsPreparedManifest": "f23a72e007c794ecbd41a189d4fecd17ef990fcd1e8a48681c90c9298b5e4c31 identifies the source annotation JSON; 9331961f4420aa68602020cd7c193425782cd5c4c2626168271a59c8f1c47c9e identifies its prepared 8 kHz audio corpus manifest. No metadata regeneration or audio change occurred.",
+    "final": "No final synthetic manifest or prepared final real manifest generated; private reserved transcript not opened."
+  },
+  "environmentVersions": {
+    "torch": "2.14.1",
+    "morseformer": "0.6.4",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "onnxruntime": "1.30.0"
+  },
+  "finalEvaluationCommands": {
+    "status": "Executed after explicit root FINAL GO and candidate freeze; actual argv retained in benchmarks/round2-final-commands.json.",
+    "prepareRealAfterUnsealing": ".venv/bin/python .research/round2-baseline/neural/benchmark.py --prepare neural/corpus-final-v2.json --output .research/round2-real-final/manifest.json",
+    "suites": [
+      ".research/round2-final/manifest.json",
+      ".research/round2-real-final/manifest.json"
+    ],
+    "adaptiveCurrentAndFrozenBaseline": "bun scripts/benchmark-adaptive.ts --manifest MANIFEST --baseline 87ced16 --output REPORT",
+    "rnntFrozenReference": ".venv/bin/python .research/round2-baseline/neural/benchmark.py --manifest MANIFEST --checkpoint models/cw-boi-rnnt-v1.pt --decoder app --confidence-threshold 0.6 --digit-threshold 0.9 --threads 2 --output REPORT",
+    "cwformerFrozenReference": ".venv/bin/python .research/round2-baseline/neural/benchmark_cwformer.py --manifest MANIFEST --model models/cwformer-adapt-v4/cwformer_streaming_fp32.onnx --bandwidth 150 --output REPORT",
+    "cwformerCandidate": ".venv/bin/python neural/benchmark_cwformer.py --manifest MANIFEST --model models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx --bandwidth 150 --output REPORT"
+  },
+  "candidateFreeze": {
+    "frozenAt": "2026-10-03T00:01:54.231947+00:00",
+    "authority": "Root FINAL GO after candidate selection; frozen before final generation or unsealing.",
+    "adaptive": {
+      "sources": [
+        {
+          "file": "src/decoder.ts",
+          "sha256": "ab3fc739685bc76592acb579f7a6debff493f11910d6c33aa61ac905d81466db"
+        },
+        {
+          "file": "src/timing.ts",
+          "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+        },
+        {
+          "file": "src/morse.ts",
+          "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+        }
+      ],
+      "bandwidthHz": 100,
+      "knownCarrier": true
+    },
+    "cwformer-weighted-v6": {
+      "selectedStep": 2000,
+      "model": "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+      "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+      "runtime": "neural/cwformer_engine.py",
+      "runtimeSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+      "frontendAssets": [
+        {
+          "file": "models/cwformer-weighted-v6/step-2000/mel_config.json",
+          "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+        },
+        {
+          "file": "models/cwformer-weighted-v6/step-2000/mel_basis.npy",
+          "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+        },
+        {
+          "file": "models/cwformer-weighted-v6/step-2000/mel_window.npy",
+          "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+        }
+      ],
+      "bandwidthHz": 150,
+      "knownCarrier": true,
+      "runtimeChanged": false
+    },
+    "rnnt-v1": "Unchanged frozen87ced16 reference; no candidate runtime or checkpoint change."
+  },
+  "finalEvaluationStartedAt": "2026-10-03T00:02:59.864124+00:00",
+  "finalEvaluationCompletedAt": "2026-10-03T00:06:51.262547+00:00"
+}

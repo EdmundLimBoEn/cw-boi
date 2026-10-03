@@ -1,0 +1,148 @@
+{
+  "experiment": "Match training preprocessing to deployed half-second causal frontend",
+  "initialCheckpoint": "models/cwformer-adapt-v4/step-2000.pt",
+  "initialCheckpointSHA256": "41d6658634c93539c81064bc00f0b5c23ec0c2be980370c011e8df4dc7293ebf",
+  "changes": [
+    "Replace whole-clip frequency shift, resample_poly and global random peak normalization with deployed Frontend.process on 4000-sample 8 kHz blocks."
+  ],
+  "fixed": [
+    "Source waveform generation and transcript targets",
+    "Two complete six-second utterances in each fourteen-second example",
+    "CTC target boundary spaces and empty-target loss normalization",
+    "Training noise sources",
+    "Model architecture and 250-frame causal context",
+    "Batch size 4, AdamW learning rate 1e-5"
+  ],
+  "seed": 8720911,
+  "steps": 3000,
+  "checkpoints": [
+    1000,
+    2000,
+    3000
+  ],
+  "upstreamRevision": "ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70",
+  "trainingDevice": "NVIDIA GeForce RTX 3080 10GB",
+  "trainingTorch": "2.8.0+cu128",
+  "selectionCorpus": ".research/round2-dev/manifest.json",
+  "selectionManifestSHA256": "b2c4e32787fccdc991a3247e60a14b9121330124e5a4ac3947e356e459d8953f",
+  "regressionCorpora": [
+    ".research/continuous-dev/manifest.json",
+    ".research/real-curated/manifest.json",
+    ".research/real-final/manifest.json"
+  ],
+  "evaluationNote": "Marine Electric was previously consumed and is regression-only. New SAQ 2022 holdout remains unopened. No promotion is implied by these results.",
+  "negativeTargets": "Synthetic noise only; recorded 20 m day/night receiver noise is additive interference for positive transcripts.",
+  "sourceSHA256": {
+    "server.py": "e72ed300de21da9f2443d5d423446877e3118e7ed63da35c2a6a622ec79c58e3",
+    "train_cwformer.py": "f6ec663c34cf0eef593af0dd2806a0ef12459168e746617325a3c42b38b649ec",
+    "cwformer_engine.py": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+    "train.py": "4b3a633683b3e8c5ce2921bd78be016c6603297cbb69aa2307af7ca6448f6772",
+    "streaming.py": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e"
+  },
+  "noiseSHA256": {
+    "noise_20m_day.wav": "5a66a1107a3b1c6948dc455f3895d922b6cb246686bce0f435928252ab7ab5fe",
+    "noise_20m_night.wav": "4d52568e9db5073bfad1b94b420495d9d880fdd27bcc789d0ecec73bc35b16ad"
+  },
+  "trainingElapsedSeconds": 270.265,
+  "trainingComplete": true,
+  "additionalSelectionCorpus": {
+    "manifest": ".research/real-dev-v2/manifest.json",
+    "sha256": "9331961f4420aa68602020cd7c193425782cd5c4c2626168271a59c8f1c47c9e",
+    "purpose": "Real development recordings only; never used as training audio or targets."
+  },
+  "export": {
+    "commandTemplate": "OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 .venv/bin/python .research/cwformer/quantize_cwformer.py --checkpoint models/cwformer-causal-v5/step-{step}.pt --output-dir models/cwformer-causal-v5/step-{step} --benchmark-iters 3",
+    "scriptSHA256": "bf3c57e31f53edc076e34a8297710e7c3c18fd200e6964110703c9da650a0b34",
+    "opset": 17,
+    "exporter": "legacy",
+    "validation": {
+      "1000": {
+        "maxLogProbabilityDifference": 1.9e-05,
+        "positionOffsetSensitivity": 9.485931
+      },
+      "2000": {
+        "maxLogProbabilityDifference": 3.5e-05,
+        "positionOffsetSensitivity": 5.090415
+      },
+      "3000": {
+        "maxLogProbabilityDifference": 1.1e-05,
+        "positionOffsetSensitivity": 3.859612
+      }
+    },
+    "positionLengthResponse": "100-frame mel input advances by50,50-frame mel input advances by25 for all three exports."
+  },
+  "files": {
+    "models/cwformer-causal-v5/step-2000.pt": {
+      "bytes": 78680907,
+      "sha256": "1b02abeadca8064482f08ae79d9d9bdbedea43cf5f97e376dfc81b8ae1cf297c"
+    },
+    "models/cwformer-causal-v5/step-1000.pt": {
+      "bytes": 78680907,
+      "sha256": "fca35358223976fa34a00e2aa361d8ac643e2d3e9185b37102ebf7805f532147"
+    },
+    "models/cwformer-causal-v5/step-3000.pt": {
+      "bytes": 78680907,
+      "sha256": "036b7b04d01dbb0d4966be00e6e11b5e5bf588e76b0dafa8927f9303712df1a0"
+    },
+    "models/cwformer-causal-v5/step-1000/mel_window.npy": {
+      "bytes": 1728,
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    },
+    "models/cwformer-causal-v5/step-1000/cwformer_streaming_fp32.onnx": {
+      "bytes": 83222226,
+      "sha256": "0b90a1efdc1e5c1aca5a30402e78f01ecd26c57d68fcc214ca70cfc127dbef87"
+    },
+    "models/cwformer-causal-v5/step-1000/mel_config.json": {
+      "bytes": 293,
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    "models/cwformer-causal-v5/step-1000/mel_basis.npy": {
+      "bytes": 32288,
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    "models/cwformer-causal-v5/step-1000/cwformer_streaming_int8.onnx": {
+      "bytes": 24953338,
+      "sha256": "f6277012cacec9733a4f07c4aaf8ea4fececab7f714e91600c2c96be935e3d81"
+    },
+    "models/cwformer-causal-v5/step-2000/mel_window.npy": {
+      "bytes": 1728,
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    },
+    "models/cwformer-causal-v5/step-2000/cwformer_streaming_fp32.onnx": {
+      "bytes": 83222226,
+      "sha256": "77888320fa74142f4f266b545dea169dcc075293d78025a4a3e9b81cf7118b73"
+    },
+    "models/cwformer-causal-v5/step-2000/mel_config.json": {
+      "bytes": 293,
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    "models/cwformer-causal-v5/step-2000/mel_basis.npy": {
+      "bytes": 32288,
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    "models/cwformer-causal-v5/step-2000/cwformer_streaming_int8.onnx": {
+      "bytes": 24953338,
+      "sha256": "2f4170a3cc71c9f27add830120e325490cfb41cb1af7a2327aff4fdfd0040528"
+    },
+    "models/cwformer-causal-v5/step-3000/mel_window.npy": {
+      "bytes": 1728,
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    },
+    "models/cwformer-causal-v5/step-3000/cwformer_streaming_fp32.onnx": {
+      "bytes": 83222226,
+      "sha256": "68620e75a0be4ba1e4cbbaaba056ea00ad6a770e9f26881eb5074b637ca0ce9a"
+    },
+    "models/cwformer-causal-v5/step-3000/mel_config.json": {
+      "bytes": 293,
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    "models/cwformer-causal-v5/step-3000/mel_basis.npy": {
+      "bytes": 32288,
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    "models/cwformer-causal-v5/step-3000/cwformer_streaming_int8.onnx": {
+      "bytes": 24953338,
+      "sha256": "af83cb51f4fb4c66b5346dd68e3334354a82549972f98383468d0b48da8e5b82"
+    }
+  }
+}

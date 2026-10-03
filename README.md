@@ -1,6 +1,6 @@
 # cw/boi
 
-A local Morse receiver and audio sender built for irregular hand keying, fading, interference, and continuous radio audio. The browser runs an adaptive DSP decoder; an optional local Python service adds the fine-tuned RNN-T engine or an experimental causal CWformer engine. No dictionary or word language model rewrites the copy.
+A local Morse receiver and audio sender built for irregular hand keying, fading, interference, and continuous radio audio. The browser runs an adaptive DSP decoder; an optional local Python service serves the fine-tuned RNN-T and causal CWformer engines. No dictionary or word language model rewrites the copy.
 
 ## Run
 
@@ -19,11 +19,13 @@ uv pip install --python .venv/bin/python -r neural/requirements.txt
 bun run neural
 ```
 
-Start the service before opening the page, or refresh after starting it, then select its model in the Decoder menu. In this workspace, the default is **CW boi · RNN-T v1** from `models/cw-boi-rnnt-v1.pt`, checked against [neural/release.json](neural/release.json). Weights are excluded from Git: a fresh checkout without that file automatically downloads the pinned published Morseformer model. Use `bun run neural --published` to select the published weights with the current streaming wrapper, or `--checkpoint path/to/model.pt` for an experiment. RNN-T has approximately four seconds of lookahead. Reproducing the original published decoder requires `neural/benchmark.py --decoder original`; `--published` only changes the weights.
+Start the service before opening the page, or refresh after starting it, then choose **Adaptive signal decoder**, **CW boi · RNN-T v1**, or **CWformer · v6** in the Decoder menu or Signal lab. **CWformer v6 is the recommended installed model** after the October 3 evaluation. One service serves both installed neural engines; switching in the browser stops the current session and clears its copy and lab results. The CLI's compatibility default remains **CW boi · RNN-T v1** from `models/cw-boi-rnnt-v1.pt`, checked against [neural/release.json](neural/release.json). Weights are excluded from Git: a fresh checkout without that file automatically downloads the pinned published Morseformer model. Use `bun run neural --published` to select the published weights with the current streaming wrapper, or `--checkpoint path/to/model.pt` for an experiment. RNN-T has approximately four seconds of lookahead. Reproducing the original published decoder requires `neural/benchmark.py --decoder original`; `--published` only changes the weights.
 
 The service binds to `127.0.0.1:8787`; Vite proxies `/api` to it. Audio stays in memory on this computer. CPU inference is supported; the 3080 is useful for training, not required for listening. `--device cuda` needs matching PyTorch and torchaudio CUDA builds. On Windows, invoke `.venv\Scripts\python.exe neural\server.py`.
 
-The optional causal engine runs with `bun run neural --engine cwformer`. It requires the local `models/cwformer-adapt-v4/cwformer_streaming_fp32.onnx` and adjacent mel assets; it does not download them automatically. It processes half-second chunks on CPU and remains experimental. Set **Filter width to 150 Hz** in Receiver settings to match its benchmark; the app starts at 100 Hz for RNN-T. Bandwidth remains adjustable through the UI/API/native CLI. Restart the service to change engines.
+CWformer is offered automatically when `models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx` and its adjacent mel assets are available; the service does not download them automatically. Missing or unloadable optional weights leave the default engine available. CWformer processes half-second chunks on CPU. Selecting it sets **Filter width to 150 Hz**; selecting RNN-T sets **100 Hz**. Bandwidth remains adjustable through the UI/API/native CLI.
+
+`--engine rnnt|cwformer` chooses the default for clients that omit an engine, including the Terminal bridge; browser requests select their engine explicitly. `--checkpoint` applies to that default engine. With the local v6 weights installed, use **`bun run neural --engine cwformer`** to make the bridge use CWformer while the browser can still choose either installed model. This is the current running service configuration. No service restart is needed to switch models in the browser.
 
 ## Listen through Terminal on macOS
 
@@ -49,9 +51,11 @@ The sender produces audio; hardware PTT/keying requires a separate interface.
 
 ## Measured behavior
 
-On the frozen October 2 continuous synthetic test, RNN-T v1 reduces CER from **18.12% to 15.12%**, and rough-fist CER from **30.77% to 18.30%**, versus the published model with its original streaming decoder. Noise false copy falls from **77 to 19 characters in eight minutes**. The updated adaptive decoder scores **15.56% CER** with zero false characters on those same synthetic negatives.
+On the frozen October 3 test, **CWformer v6 scores 9.88% character error rate**, versus **14.83% for RNN-T v1** and **10.18% for CWformer v4**, across 3,027 synthetic reference characters. Noise false copy is **0 versus RNN-T's 17 characters in eight minutes**. On a separately reserved real reception, v6 makes **7 errors in 422 characters**, versus 11 for both earlier neural engines. It passed every predeclared promotion guard.
 
-Two independently transcribed real operators total only **30.4 seconds / 37 characters**: RNN-T makes 6 errors versus the original model's 9. This is a useful check, not evidence of broad real-world superiority. Severe combined distortion still produces **72.06% CER** for RNN-T; neither engine reliably recovers erased information. Confidence and spectral SNR are diagnostics, not calibrated correctness probabilities.
+Short-gap training targets heavily weighted hand keying. Development recordings improve from **99 to 16 errors in 438 characters** versus CWformer v4; those recordings were used for selection, not final proof. The old 37-character Marine regression still favors RNN-T: 6 errors versus v6's 12. The new real final is one reception session, not nine independent operators. Severe combined distortion still produces **51.15% CER** for v6; confidence and spectral SNR are diagnostics, not calibrated correctness probabilities.
+
+The proposed adaptive DSP change improved real recordings but tied its synthetic final baseline, failing the strict improvement guard. Its patch is archived; the deployed adaptive decoder is unchanged. Causal-front-end retraining and the proposed pause reset were also rejected after regressions.
 
 See [full results, reproduction commands and training notes](benchmarks/README.md), and [recording provenance and limitations](benchmarks/CORPUS.md). Final evaluation data must not become checkpoint-selection data.
 
@@ -66,6 +70,6 @@ bun run build
 .venv/bin/python neural/check_cwformer.py
 ```
 
-The optional CWformer check requires its model assets. The current suite has 22 passing Bun tests; browser sender → AudioWorklet → RNN-T and adaptive loopback both recovered `CQ TEST 73`. Terminal/FFmpeg captured actual BlackHole audio, but its transcript is unverified. Both HTTP engines and the bridge passed integration checks with simulated capture. A complete live-device bridge session remains unvalidated.
+The optional CWformer check requires its model assets. The current suite has 23 passing Bun tests; browser sender → AudioWorklet → RNN-T, CWformer and adaptive loopback recovered `CQ TEST 73`. Terminal/FFmpeg captured actual BlackHole audio, but its transcript is unverified. Both HTTP engines and the bridge passed integration checks with simulated capture. A complete live-device bridge session remains unvalidated.
 
 Model, code and recording licenses: [THIRD_PARTY.md](THIRD_PARTY.md).

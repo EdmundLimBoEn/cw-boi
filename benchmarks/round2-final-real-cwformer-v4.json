@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "split": "real-round2-final",
+  "manifest": ".research/round2-real-final/manifest.json",
+  "manifestSHA256": "89abd7407877fefd17651de4e80a1a7fcf8ac20b4655815bb20f5f5e53d28caf",
+  "model": "models/cwformer-adapt-v4/cwformer_streaming_fp32.onnx",
+  "modelSHA256": "c1a956b35cc184a8fac7641b586d500514c18a99254aff2ed933697775e808a3",
+  "decoderSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+  "benchmarkSHA256": "ff217705f86a8338b094bda6d26e773bfcbbc49da9ad30ddc230b6b318f68f68",
+  "onnxruntimeVersion": "1.30.0",
+  "provider": "CPUExecutionProvider",
+  "knownCarrier": true,
+  "bandwidth": 150.0,
+  "complete": true,
+  "results": [
+    {
+      "id": "saq-20221116-reserved-01",
+      "condition": "real-hand-keyed",
+      "expected": "USING THE ALEXANDERSON 200 KW ALTERNATOR ON",
+      "actual": "USIMG THE ALEXANDERSON 2 00 KW ALTERNATO R ON",
+      "errors": 3,
+      "durationSeconds": 31.443,
+      "inferenceSeconds": 0.5035490829613991
+    },
+    {
+      "id": "saq-20221116-reserved-02",
+      "condition": "real-hand-keyed",
+      "expected": "2022 MARKS THE 50TH",
+      "actual": "2022 MARKS THE 50TH",
+      "errors": 0,
+      "durationSeconds": 17.122,
+      "inferenceSeconds": 0.2883320830296725
+    },
+    {
+      "id": "saq-20221116-reserved-03",
+      "condition": "real-hand-keyed",
+      "expected": "CONVENTION. UNESCO WORLD HERITAGE",
+      "actual": "CONVENTION. UNESCO WOILD HERITAGE",
+      "errors": 1,
+      "durationSeconds": 24.137,
+      "inferenceSeconds": 0.4077225420041941
+    },
+    {
+      "id": "saq-20221116-reserved-04",
+      "condition": "real-hand-keyed",
+      "expected": "ARE IRREPLACEABLE ASSETS OF HUMANITY BUT MANY OF THEM ARE",
+      "actual": "ARE IRREPLACEABLE ASSETS OF HUMANITY BUT MANY OF THEM ARE",
+      "errors": 0,
+      "durationSeconds": 37.861,
+      "inferenceSeconds": 0.6276666659978218
+    },
+    {
+      "id": "saq-20221116-reserved-05",
+      "condition": "real-hand-keyed",
+      "expected": "CHANGE. TO ENSURE THEIR PROTECTION,",
+      "actual": "CHANGE. TO ENSURE THEIR PROTECTION,",
+      "errors": 0,
+      "durationSeconds": 24.678,
+      "inferenceSeconds": 0.3882957079913467
+    },
+    {
+      "id": "saq-20221116-reserved-06",
+      "condition": "real-hand-keyed",
+      "expected": "COOPERATION TO PROMOTE PEACE, INTERNATIONAL UNDERSTANDING AND SUSTAINABLE DEVELOPMENT IS MORE",
+      "actual": "COOPERATION TO PROM O TE PEACE, INTERNATIONAL UNDERST ANDING AND SUSTAINABLE DEVELOPMENT IS MORE",
+      "errors": 3,
+      "durationSeconds": 62.797,
+      "inferenceSeconds": 0.9681829580222256
+    },
+    {
+      "id": "saq-20221116-reserved-07",
+      "condition": "real-hand-keyed",
+      "expected": "SIGNED: LENA SOMMESTAD, CHAIR SWEDISH NATIONAL",
+      "actual": "SIGNED7 LENA SOMMESTAD, CHAIR SWEDISS NATIONAL",
+      "errors": 2,
+      "durationSeconds": 31.495,
+      "inferenceSeconds": 0.48840974998893216
+    },
+    {
+      "id": "saq-20221116-reserved-08",
+      "condition": "real-hand-keyed",
+      "expected": "GRIMETON RADIO STATION AND THE ALEXANDER",
+      "actual": "GRIMETON RADIO STATION AND THE ALEXANDER",
+      "errors": 0,
+      "durationSeconds": 24.875,
+      "inferenceSeconds": 0.40812566701788455
+    },
+    {
+      "id": "saq-20221116-reserved-09",
+      "condition": "real-hand-keyed",
+      "expected": "FOR QSL INFO PLEASE READ OUR WEBSITE: WWW.ALEXANDER.N.SE",
+      "actual": "FOR QSL SNFO PLEASE READ OUR WEBSITE7 WWW.ALEXANDER.N.SE",
+      "errors": 2,
+      "durationSeconds": 42.05,
+      "inferenceSeconds": 0.8283807919942774
+    }
+  ],
+  "aggregate": {
+    "cases": 9,
+    "speechCases": 9,
+    "characters": 422,
+    "errors": 11,
+    "cer": 0.026066350710900472,
+    "exact": 4,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 296.45799999999997,
+    "inferenceSeconds": 4.908665249007754
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 9,
+      "speechCases": 9,
+      "characters": 422,
+      "errors": 11,
+      "cer": 0.026066350710900472,
+      "exact": 4,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 296.45799999999997,
+      "inferenceSeconds": 4.908665249007754
+    }
+  }
+}

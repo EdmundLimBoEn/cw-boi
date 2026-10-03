@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "split": "real-round2-final-sealed",
+  "privateManifest": ".research/round2-reserved/corpus-final-v2.json",
+  "manifestSHA256": "4ff69881fd40e26a9c6649c05ea4176bf8f898009418101e6411f12fc862a053",
+  "clips": 9,
+  "referenceCharactersIncludingSpaces": 422,
+  "durationSeconds": 296.458,
+  "sourceSessions": 1,
+  "frequency": 760,
+  "bandwidth": 100,
+  "source": "https://shortwavearchive.com/archive/saq-grimeton-radio-november-16-2022",
+  "sourceAudioSHA256": "9a3eebee0fe10111c10dda0ea85afd9afeb2e3ca4ff03f5389d6214858342959",
+  "license": "CC BY-NC 3.0 (archive site declaration); local evaluation only",
+  "review": "Independent publisher human transcript and fixed bandpass/Hilbert envelope timings at four known thresholds .055/.060/.065/.075. Complete-word unambiguous crops only; no app/neural outputs used. Crop selection and labels frozen before candidate evaluation.",
+  "limits": "One transmitter/receiver session, correlated crops, with noise reduction already applied by the receiver. Only unambiguous portions are scored; this does not represent all real-world reception. Upstream pretrained-model contamination cannot be ruled out.",
+  "access": "Whole source session excluded from training and development. Reveal private manifest only after root candidate freeze; then append immutable full manifest as neural/corpus-final-v2.json for reproducibility."
+}

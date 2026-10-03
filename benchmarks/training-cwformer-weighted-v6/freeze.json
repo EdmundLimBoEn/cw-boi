@@ -1,0 +1,33 @@
+{
+  "frozenAt": "2026-10-03T00:01:23.551874+00:00",
+  "candidate": "CWformer weighted v6 step2000",
+  "selectionReport": "benchmarks/training-cwformer-weighted-v6/comparison.json",
+  "model": "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+  "bandwidthHz": 150,
+  "runtime": "neural/cwformer_engine.py",
+  "runtimeSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+  "settings": "Current v4 runtime unchanged; fixed selected carrier; half-second input blocks; greedy CTC; no dictionary/language model.",
+  "promotion": "Not promoted. Frozen before new final evaluation.",
+  "artifacts": {
+    "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx": {
+      "bytes": 83222226,
+      "sha256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374"
+    },
+    "models/cwformer-weighted-v6/step-2000/mel_config.json": {
+      "bytes": 293,
+      "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+    },
+    "models/cwformer-weighted-v6/step-2000/mel_basis.npy": {
+      "bytes": 32288,
+      "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+    },
+    "models/cwformer-weighted-v6/step-2000/mel_window.npy": {
+      "bytes": 1728,
+      "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+    },
+    "models/cwformer-weighted-v6/step-2000/LICENSE": {
+      "bytes": 1068,
+      "sha256": "738e65f4bf38b8b2a51fc183bb3379f90e3224edf841494c97772e2a25726b48"
+    }
+  }
+}

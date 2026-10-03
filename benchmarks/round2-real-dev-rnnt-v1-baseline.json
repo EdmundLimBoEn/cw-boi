@@ -1,0 +1,884 @@
+{
+  "version": 1,
+  "split": "real-round2-dev",
+  "seed": null,
+  "manifest": ".research/real-dev-v2/manifest.json",
+  "manifestSHA256": "9331961f4420aa68602020cd7c193425782cd5c4c2626168271a59c8f1c47c9e",
+  "checkpoint": "models/cw-boi-rnnt-v1.pt",
+  "checkpointSHA256": "421ec784604b6d238aa2641d94160a4e6659b66206c3ac363f1d695173a06495",
+  "mode": "stream",
+  "decoder": "app",
+  "chunkSeconds": 1.0,
+  "device": "cpu",
+  "torchVersion": "2.14.1",
+  "morseformerVersion": "0.6.4",
+  "decoderSHA256": "382c4014b965ec8d9a56cbd79affd6cb161d7447cc63600d3e71052ff340ae5e",
+  "serverSHA256": "e72ed300de21da9f2443d5d423446877e3118e7ed63da35c2a6a622ec79c58e3",
+  "benchmarkSHA256": "94bf37693311363eb46157d24c7c723fb94f1b13b6034f9d4853b1c1fd9b6381",
+  "knownCarrier": true,
+  "complete": true,
+  "results": [
+    {
+      "id": "marine-electric-ljkr-position",
+      "condition": "real-hand-keyed",
+      "expected": "QTH 0815 GMT N 38.23.2 W 74.41.3W SPEED 12 KNOTS",
+      "actual": "QTH 1815 GM N38.3.2 W 7.41.3W SPEED 12 KNOTS",
+      "errors": 5,
+      "cer": 0.10416666666666667,
+      "errorsWithoutSpaces": 4,
+      "durationSeconds": 40.23,
+      "inferenceSeconds": 1.826198499999009,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 460.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "QTH 18"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "1"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "5 G"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "M N"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "3"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "8."
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "3"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "."
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "2 "
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "W 7"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "."
+        },
+        {
+          "atSeconds": 28.0,
+          "text": "41"
+        },
+        {
+          "atSeconds": 30.0,
+          "text": "."
+        },
+        {
+          "atSeconds": 32.0,
+          "text": "3W"
+        },
+        {
+          "atSeconds": 34.0,
+          "text": " SP"
+        },
+        {
+          "atSeconds": 36.0,
+          "text": "EED"
+        },
+        {
+          "atSeconds": 38.0,
+          "text": " 12"
+        },
+        {
+          "atSeconds": 40.0,
+          "text": " KN"
+        },
+        {
+          "atSeconds": 40.23,
+          "text": "OTS",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "marine-electric-wooh-standby",
+      "condition": "real-hand-keyed",
+      "expected": "PLEASE STANDBY FOR US",
+      "actual": "PLEASE STANDBY FOR US",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 15.2,
+      "inferenceSeconds": 1.0149622919852845,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 790.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "PLEAS"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "E STA"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "NDB"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "Y"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " FO"
+        },
+        {
+          "atSeconds": 15.2,
+          "text": "R US",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "gpk-signoff-announcement",
+      "condition": "real-hand-keyed",
+      "expected": "AT 312359 UTC PORTPATRICKRADIO/GPK WILL END THE",
+      "actual": "T 31239 UTC PORTPATRICKRADDIO/GPK OM ENDO TE",
+      "errors": 9,
+      "cer": 0.19148936170212766,
+      "errorsWithoutSpaces": 9,
+      "durationSeconds": 29.17,
+      "inferenceSeconds": 2.1927345410222188,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 536.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "T 312"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "3"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "9 U"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "TC"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " POR"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "TPA"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "TRIC"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "KRA"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "DDIO/"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": "GP"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "K O"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": "M"
+        },
+        {
+          "atSeconds": 29.17,
+          "text": " ENDO TE",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "gpk-signoff-history",
+      "condition": "real-hand-keyed",
+      "expected": "AFTER 76 YEARS= IN 1844 QTC NR1 FM SAMUEL MORSE WAS",
+      "actual": "TNTER  YEMMN 10 QQTC NR1 FM MAMUEL MORSE WA",
+      "errors": 16,
+      "cer": 0.3137254901960784,
+      "errorsWithoutSpaces": 14,
+      "durationSeconds": 31.5,
+      "inferenceSeconds": 1.2528264580178075,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 536.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "TNTER "
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " Y"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "EM"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "MN 1"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "0"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " "
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "QQTC"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": " NR1"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " FM"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": " MAM"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": "UEL"
+        },
+        {
+          "atSeconds": 30.0,
+          "text": " MO"
+        },
+        {
+          "atSeconds": 31.5,
+          "text": "RSE WA",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "gpk-signoff-closing",
+      "condition": "real-hand-keyed",
+      "expected": "ALL R/OS NOW KEN THE ANSWER TO THIS= NW 73 73/SLAINTE TO ALL R/OS",
+      "actual": "J R/OOS NOW KEN THE ANDSOER TO THM= NO  0OQMINTE TO AL R/OO",
+      "errors": 19,
+      "cer": 0.2923076923076923,
+      "errorsWithoutSpaces": 19,
+      "durationSeconds": 36.63,
+      "inferenceSeconds": 0.9431233339710161,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 536.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "J R/"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "OOS N"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "OW "
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "KEN T"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "HE AN"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "DSOER"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " TO"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " THM="
+        },
+        {
+          "atSeconds": 22.0,
+          "text": " NO"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " "
+        },
+        {
+          "atSeconds": 26.0,
+          "text": " 0"
+        },
+        {
+          "atSeconds": 30.0,
+          "text": "OQMI"
+        },
+        {
+          "atSeconds": 32.0,
+          "text": "NTE T"
+        },
+        {
+          "atSeconds": 34.0,
+          "text": "O AL"
+        },
+        {
+          "atSeconds": 36.0,
+          "text": " R"
+        },
+        {
+          "atSeconds": 36.63,
+          "text": "/OO",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "gpk-signoff-farewell",
+      "condition": "real-hand-keyed",
+      "expected": "PAST AND PRESENT FAREWELL + DE GPK GPK",
+      "actual": "PMT AND PRENT CMREOEDE GP GPK",
+      "errors": 13,
+      "cer": 0.34210526315789475,
+      "errorsWithoutSpaces": 11,
+      "durationSeconds": 21.59,
+      "inferenceSeconds": 0.5001954169711098,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 536.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "PMT AND"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " PR"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "ENT"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " CM"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "REOE"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "DE"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": " GP"
+        },
+        {
+          "atSeconds": 21.59,
+          "text": " GPK",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "marine-extra-ljkr-assist",
+      "condition": "real-hand-keyed",
+      "expected": "YES WE ARE PROCEEDING TO ASSIST SPEED 12 KNOTS",
+      "actual": "YES WE ARE PROCEDING UO ASSIST SPEED 12 KN OTS",
+      "errors": 3,
+      "cer": 0.06521739130434782,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 26.5,
+      "inferenceSeconds": 0.6673047909862362,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 460.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "YES WE A"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "RE P"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "ROC"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "ED"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "ING"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": " UO A"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": "SSI"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "ST SP"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": "EED"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " 12"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": " K"
+        },
+        {
+          "atSeconds": 26.5,
+          "text": "N OTS",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "marine-extra-wooh-abandon",
+      "condition": "real-hand-keyed",
+      "expected": "AT 0800GMT VESSEL DOWN BY HEAD PREPARING TO ABANDON",
+      "actual": "AT 0800GMT VESSEL DOWN BY HEAD PREPARING TO ABANDON",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 39.0,
+      "inferenceSeconds": 0.9986309579689987,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 785.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "AT 08"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "0"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "0"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "GMT"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": " VE"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "SSEL"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " DO"
+        },
+        {
+          "atSeconds": 20.0,
+          "text": "WN"
+        },
+        {
+          "atSeconds": 22.0,
+          "text": " BY"
+        },
+        {
+          "atSeconds": 24.0,
+          "text": " H"
+        },
+        {
+          "atSeconds": 26.0,
+          "text": "EAD"
+        },
+        {
+          "atSeconds": 28.0,
+          "text": " PR"
+        },
+        {
+          "atSeconds": 30.0,
+          "text": "EPA"
+        },
+        {
+          "atSeconds": 32.0,
+          "text": "RIN"
+        },
+        {
+          "atSeconds": 34.0,
+          "text": "G TO"
+        },
+        {
+          "atSeconds": 36.0,
+          "text": " AB"
+        },
+        {
+          "atSeconds": 38.0,
+          "text": "AN"
+        },
+        {
+          "atSeconds": 39.0,
+          "text": "DON",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "marine-extra-wooh-coal-carrier",
+      "condition": "real-hand-keyed",
+      "expected": "VESSEL COAL CARRIER BOUND",
+      "actual": "VESEL COAL CARRIER BOUND",
+      "errors": 1,
+      "cer": 0.04,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 19.8,
+      "inferenceSeconds": 0.4559772500069812,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 785.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "VESEL"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": " CO"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "AL"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": " C"
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "ARR"
+        },
+        {
+          "atSeconds": 16.0,
+          "text": "IER"
+        },
+        {
+          "atSeconds": 18.0,
+          "text": " B"
+        },
+        {
+          "atSeconds": 19.8,
+          "text": "OUND",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "marine-extra-wooh-destination",
+      "condition": "real-hand-keyed",
+      "expected": "FOR FALL RIVER",
+      "actual": "FOR FALL RIVER",
+      "errors": 0,
+      "cer": 0.0,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 10.1,
+      "inferenceSeconds": 0.21724637504667044,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 785.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "FOR F"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "ALL"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": " RIV"
+        },
+        {
+          "atSeconds": 10.1,
+          "text": "ER",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "marine-extra-wooh-flares",
+      "condition": "real-hand-keyed",
+      "expected": "YES HAVE FLARES II PFD?",
+      "actual": "YES HAVE FLARES II PFD",
+      "errors": 1,
+      "cer": 0.043478260869565216,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 15.35,
+      "inferenceSeconds": 0.3486455419915728,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 789.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 6.0,
+          "text": "YES HA"
+        },
+        {
+          "atSeconds": 8.0,
+          "text": "VE F"
+        },
+        {
+          "atSeconds": 10.0,
+          "text": "LA"
+        },
+        {
+          "atSeconds": 12.0,
+          "text": "RES "
+        },
+        {
+          "atSeconds": 14.0,
+          "text": "II P"
+        },
+        {
+          "atSeconds": 15.35,
+          "text": "FD",
+          "final": true
+        }
+      ]
+    },
+    {
+      "id": "marine-extra-wooh-vessel-name",
+      "condition": "real-hand-keyed",
+      "expected": "SS MARINE",
+      "actual": "S MARINE",
+      "errors": 1,
+      "cer": 0.1111111111111111,
+      "errorsWithoutSpaces": 1,
+      "durationSeconds": 5.8,
+      "inferenceSeconds": 0.06719479197636247,
+      "settings": {
+        "window_seconds": 6.0,
+        "hop_seconds": 2.0,
+        "sample_rate": 8000,
+        "frame_rate": 500,
+        "carrier_hz": 785.0,
+        "bandwidth_hz": 100.0,
+        "max_emit_per_frame": 5,
+        "confidence_threshold": 0.6,
+        "digit_threshold": 0.9,
+        "beam_width": 1,
+        "beam_emit_bonus": 0.0,
+        "callsign_prior_weight": 0.0
+      },
+      "fragments": [
+        {
+          "atSeconds": 5.8,
+          "text": "S MARINE",
+          "final": true
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "cases": 12,
+    "speechCases": 12,
+    "characters": 438,
+    "errors": 68,
+    "cer": 0.1552511415525114,
+    "exact": 3,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 290.87,
+    "inferenceSeconds": 10.485040249943268
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 12,
+      "speechCases": 12,
+      "characters": 438,
+      "errors": 68,
+      "cer": 0.1552511415525114,
+      "exact": 3,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 290.87,
+      "inferenceSeconds": 10.485040249943268
+    }
+  }
+}

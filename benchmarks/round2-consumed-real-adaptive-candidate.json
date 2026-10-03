@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "split": "real-holdout",
+  "manifest": ".research/real-final/manifest.json",
+  "manifestSHA256": "87a9dba85b642a46ea366ebe42db52ca6a9789f03c7f137446198bd1a47ecb0c",
+  "engine": "adaptive",
+  "mode": "stream",
+  "chunkSamples": 256,
+  "knownCarrier": true,
+  "sources": [
+    {
+      "file": "src/decoder.ts",
+      "sha256": "ab3fc739685bc76592acb579f7a6debff493f11910d6c33aa61ac905d81466db"
+    },
+    {
+      "file": "src/timing.ts",
+      "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+    },
+    {
+      "file": "src/morse.ts",
+      "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+    }
+  ],
+  "benchmarkSHA256": "20b228078ce7e0212e15c792c7f7957f3cd5a454174824938ae2a52e02978151",
+  "complete": true,
+  "results": [
+    {
+      "id": "marine-electric-nmf-callsign",
+      "condition": "real-hand-keyed",
+      "expected": "DE NMF NMF ? K",
+      "actual": "DE NMF NMFI?EK",
+      "errors": 2,
+      "cer": 0.14285714285714285,
+      "errorsWithoutSpaces": 2,
+      "durationSeconds": 9.65,
+      "inferenceSeconds": 0.07171241599999996
+    },
+    {
+      "id": "marine-electric-wooh-distress",
+      "condition": "real-hand-keyed",
+      "expected": "DOWN BY HEAD AT 0800GMT",
+      "actual": "DOWN BYHEAD AT 0800GMT",
+      "errors": 1,
+      "cer": 0.043478260869565216,
+      "errorsWithoutSpaces": 0,
+      "durationSeconds": 20.75,
+      "inferenceSeconds": 0.19674258400000003
+    }
+  ],
+  "summary": {
+    "cases": 2,
+    "speechCases": 2,
+    "characters": 37,
+    "errors": 3,
+    "cer": 0.08108108108108109,
+    "exact": 0,
+    "noiseCases": 0,
+    "noiseSeconds": 0,
+    "falseCharacters": 0,
+    "falseCharactersPerMinute": null,
+    "audioSeconds": 30.4,
+    "inferenceSeconds": 0.268455
+  },
+  "conditions": {
+    "real-hand-keyed": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 37,
+      "errors": 3,
+      "cer": 0.08108108108108109,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 30.4,
+      "inferenceSeconds": 0.268455
+    }
+  },
+  "baseline": {
+    "commit": "87ced16fb4402c2836d02aeff2c8a434afa58a81",
+    "sources": [
+      {
+        "file": "src/decoder.ts",
+        "sha256": "8326b1304e5cb93c6c522cd68950a7bcf0c5a87f40ab7fe1f2e07935da27c676"
+      },
+      {
+        "file": "src/timing.ts",
+        "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+      },
+      {
+        "file": "src/morse.ts",
+        "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+      }
+    ],
+    "results": [
+      {
+        "id": "marine-electric-nmf-callsign",
+        "condition": "real-hand-keyed",
+        "expected": "DE NMF NMF ? K",
+        "actual": "ZIO3M��T",
+        "errors": 13,
+        "cer": 0.9285714285714286,
+        "errorsWithoutSpaces": 9,
+        "durationSeconds": 9.65,
+        "inferenceSeconds": 0.072788083
+      },
+      {
+        "id": "marine-electric-wooh-distress",
+        "condition": "real-hand-keyed",
+        "expected": "DOWN BY HEAD AT 0800GMT",
+        "actual": "DOWNBYHEAD AT 0800GMT",
+        "errors": 2,
+        "cer": 0.08695652173913043,
+        "errorsWithoutSpaces": 0,
+        "durationSeconds": 20.75,
+        "inferenceSeconds": 0.19278479099999998
+      }
+    ],
+    "summary": {
+      "cases": 2,
+      "speechCases": 2,
+      "characters": 37,
+      "errors": 15,
+      "cer": 0.40540540540540543,
+      "exact": 0,
+      "noiseCases": 0,
+      "noiseSeconds": 0,
+      "falseCharacters": 0,
+      "falseCharactersPerMinute": null,
+      "audioSeconds": 30.4,
+      "inferenceSeconds": 0.26557287399999996
+    },
+    "conditions": {
+      "real-hand-keyed": {
+        "cases": 2,
+        "speechCases": 2,
+        "characters": 37,
+        "errors": 15,
+        "cer": 0.40540540540540543,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 30.4,
+        "inferenceSeconds": 0.26557287399999996
+      }
+    }
+  }
+}

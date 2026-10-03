@@ -28,7 +28,7 @@ ALPHABET = np.array(list('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'))
 WORDS = ['CQ', 'DE', 'UR', 'RST', 'QTH', 'NAME', 'RIG', 'PWR', 'ANT', 'TNX', 'FER', 'CALL', 'QSL', 'AGN', 'TEST', '73', '599', '559', '589', 'HR', 'WX', 'ES', 'BK', 'K']
 
 
-def continuous_waveform(rng, clean):
+def continuous_waveform(rng, clean, element_gap_scale=1):
     words = []
     for _ in range(10):
         if rng.random() < 0.45:
@@ -73,7 +73,7 @@ def continuous_waveform(rng, clean):
         if index and source[index - 1] != ' ':
             add(False, char_gap * unit)
         start = cursor
-        for on, duration in build_events(char, OperatorConfig(wpm=wpm, dash_dot_ratio=dash)):
+        for on, duration in build_events(char, OperatorConfig(wpm=wpm, dash_dot_ratio=dash, gap_inflation=element_gap_scale)):
             add(on, duration if on else duration * intra)
         spans.append((char, start, cursor))
 
@@ -86,14 +86,16 @@ def continuous_waveform(rng, clean):
     return rendered[offset:offset + WINDOW].copy(), label, contained
 
 
-def case(seed, family, punctuation=False, continuous=False, background=None, return_audio=False):
+def case(seed, family, punctuation=False, continuous=False, background=None, return_audio=False, element_gap_scale=1):
+    if not 0.1 <= element_gap_scale <= 1:
+        raise ValueError('Element gap scale must be between 0.1 and 1.')
     rng = np.random.default_rng(seed)
     clean = family == 'clean'
     chaotic = family == 'chaos'
     label = ''
     waveform = np.zeros(WINDOW, np.float32)
     if family != 'noise' and continuous:
-        waveform, label, _ = continuous_waveform(rng, clean)
+        waveform, label, _ = continuous_waveform(rng, clean, element_gap_scale)
     elif family != 'noise':
         for attempt in range(80):
             length = int(rng.integers(2, 13 if attempt < 30 else 6))
@@ -108,7 +110,8 @@ def case(seed, family, punctuation=False, continuous=False, background=None, ret
             wpm = rng.uniform(12, 40)
             jitter = rng.uniform(0, 0.035 if clean else 0.40)
             gap_jitter = rng.uniform(0, 0.04 if clean else 0.5)
-            events = build_events(label, OperatorConfig(wpm=wpm, dash_dot_ratio=3 if clean else rng.uniform(2.4, 4.8)))
+            events = build_events(label, OperatorConfig(wpm=wpm, dash_dot_ratio=3 if clean else rng.uniform(2.4, 4.8),
+                                                       gap_inflation=element_gap_scale))
             step = 0 if clean else rng.uniform(-0.35, 0.4)
             swing = 0 if clean else rng.uniform(0, 0.3)
             shaped = []

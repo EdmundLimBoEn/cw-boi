@@ -1,0 +1,978 @@
+{
+  "version": 1,
+  "completedAt": "2026-10-03T00:06:51.427320+00:00",
+  "plan": "benchmarks/round2-plan.json",
+  "planSHA256": "46af3ab714aebfd3112aa0b2ef25f6fbdf2b81d84c44b81a5ca23f9da9a94b8c",
+  "candidateFreeze": {
+    "frozenAt": "2026-10-03T00:01:54.231947+00:00",
+    "authority": "Root FINAL GO after candidate selection; frozen before final generation or unsealing.",
+    "adaptive": {
+      "sources": [
+        {
+          "file": "src/decoder.ts",
+          "sha256": "ab3fc739685bc76592acb579f7a6debff493f11910d6c33aa61ac905d81466db"
+        },
+        {
+          "file": "src/timing.ts",
+          "sha256": "fb29955bc5536d0203d7665b8a3b9610759bee006319d46f01317a27795331e1"
+        },
+        {
+          "file": "src/morse.ts",
+          "sha256": "73c543ad8287f7dcf224ce48f1159d57441f2fda34d992dab34a645e9ee0199a"
+        }
+      ],
+      "bandwidthHz": 100,
+      "knownCarrier": true
+    },
+    "cwformer-weighted-v6": {
+      "selectedStep": 2000,
+      "model": "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+      "modelSHA256": "8344b39dba22e595ea8170bd4ffdb514aaef1c4b67b7de3ef965b5f66a081374",
+      "runtime": "neural/cwformer_engine.py",
+      "runtimeSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+      "frontendAssets": [
+        {
+          "file": "models/cwformer-weighted-v6/step-2000/mel_config.json",
+          "sha256": "db0ecb619cffd7b3ba4d414f875a5a9e09960705e909d1de6868dd174b477aee"
+        },
+        {
+          "file": "models/cwformer-weighted-v6/step-2000/mel_basis.npy",
+          "sha256": "e79748dbf67af6093d8a824ff8e4a78e48ddb2988dff0c04f2d2c300a8600a4f"
+        },
+        {
+          "file": "models/cwformer-weighted-v6/step-2000/mel_window.npy",
+          "sha256": "54a1e8ffc84ea6049f4616c12753fe7c4b44077072584dfd0e508f5796ffdbe1"
+        }
+      ],
+      "bandwidthHz": 150,
+      "knownCarrier": true,
+      "runtimeChanged": false
+    },
+    "rnnt-v1": "Unchanged frozen87ced16 reference; no candidate runtime or checkpoint change."
+  },
+  "corpora": {
+    "synthetic": {
+      "seed": 2203917,
+      "split": "final",
+      "casesPerCondition": 16,
+      "noiseRepeatsPerKind": 4,
+      "speechCases": 96,
+      "negativeCases": 24,
+      "negativeSeconds": 480,
+      "manifest": ".research/round2-final/manifest.json",
+      "state": "evaluated-consumed",
+      "commandAfterCandidateFreezeOnly": "bun scripts/continuous-benchmark.ts --split final --seed 2203917 --cases-per-condition 16 --noise-repeats 4 --output .research/round2-final",
+      "manifestSHA256": "e8078cd3f7ef49a41a8cd402ee62f7f45ac5d5770078c68c6dd56d462e6a019d",
+      "characters": 3027,
+      "audioSeconds": 2534.523875
+    },
+    "real": {
+      "session": "SAQ 2022-11-16 16:00 UTC, Richard B. Langley off-air reception via University of Twente",
+      "manifest": ".research/round2-reserved/corpus-final-v2.json",
+      "manifestSHA256": "4ff69881fd40e26a9c6649c05ea4176bf8f898009418101e6411f12fc862a053",
+      "clips": 9,
+      "characters": 422,
+      "audioSeconds": 296.458,
+      "wholeSessionSeconds": 570.630125,
+      "carrierHz": 760,
+      "bandwidthHz": 100,
+      "annotation": "Non-overlapping complete-word crops. Every selected character agrees between receiver-authored public transcript and independent carrier envelope extraction at four fixed thresholds. Ambiguous regions excluded before any model evaluation. Whole session excluded from training and development.",
+      "independenceLimit": "One previously unused reception/session, not nine independent operators. Same historical transmitting station as earlier SAQ 2019 development audio; operator identity is not established.",
+      "state": "unsealed-unchanged-evaluated-consumed",
+      "sealedMetadata": "neural/corpus-final-v2-sealed.json",
+      "publishedManifest": "neural/corpus-final-v2.json",
+      "preparedManifest": ".research/round2-real-final/manifest.json",
+      "preparedManifestSHA256": "89abd7407877fefd17651de4e80a1a7fcf8ac20b4655815bb20f5f5e53d28caf"
+    }
+  },
+  "summaries": {
+    "synthetic": {
+      "adaptive-baseline": {
+        "cases": 120,
+        "speechCases": 96,
+        "characters": 3027,
+        "errors": 449,
+        "cer": 0.14833168153287082,
+        "exact": 60,
+        "noiseCases": 24,
+        "noiseSeconds": 480,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": 0,
+        "audioSeconds": 2534.5238749999994,
+        "inferenceSeconds": 30.923530419999988
+      },
+      "adaptive-candidate": {
+        "cases": 120,
+        "speechCases": 96,
+        "characters": 3027,
+        "errors": 449,
+        "cer": 0.14833168153287082,
+        "exact": 59,
+        "noiseCases": 24,
+        "noiseSeconds": 480,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": 0,
+        "audioSeconds": 2534.5238749999994,
+        "inferenceSeconds": 31.846942961999964
+      },
+      "rnnt-v1": {
+        "cases": 120,
+        "speechCases": 96,
+        "characters": 3027,
+        "errors": 449,
+        "cer": 0.14833168153287082,
+        "exact": 48,
+        "noiseCases": 24,
+        "noiseSeconds": 480.0,
+        "falseCharacters": 17,
+        "falseCharactersPerMinute": 2.125,
+        "audioSeconds": 2534.523875,
+        "inferenceSeconds": 91.60600400314434
+      },
+      "cwformer-v4": {
+        "cases": 120,
+        "speechCases": 96,
+        "characters": 3027,
+        "errors": 308,
+        "cer": 0.10175090849025438,
+        "exact": 66,
+        "noiseCases": 24,
+        "noiseSeconds": 480.0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": 0.0,
+        "audioSeconds": 2534.523875,
+        "inferenceSeconds": 42.140171999053564
+      },
+      "cwformer-v6": {
+        "cases": 120,
+        "speechCases": 96,
+        "characters": 3027,
+        "errors": 299,
+        "cer": 0.09877766765774694,
+        "exact": 67,
+        "noiseCases": 24,
+        "noiseSeconds": 480.0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": 0.0,
+        "audioSeconds": 2534.523875,
+        "inferenceSeconds": 42.02335929061519
+      }
+    },
+    "real": {
+      "adaptive-baseline": {
+        "cases": 9,
+        "speechCases": 9,
+        "characters": 422,
+        "errors": 71,
+        "cer": 0.16824644549763032,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 296.45799999999997,
+        "inferenceSeconds": 6.884827876000001
+      },
+      "adaptive-candidate": {
+        "cases": 9,
+        "speechCases": 9,
+        "characters": 422,
+        "errors": 48,
+        "cer": 0.11374407582938388,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 296.45799999999997,
+        "inferenceSeconds": 6.972156207999998
+      },
+      "rnnt-v1": {
+        "cases": 9,
+        "speechCases": 9,
+        "characters": 422,
+        "errors": 11,
+        "cer": 0.026066350710900472,
+        "exact": 3,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 296.45799999999997,
+        "inferenceSeconds": 7.098364375066012
+      },
+      "cwformer-v4": {
+        "cases": 9,
+        "speechCases": 9,
+        "characters": 422,
+        "errors": 11,
+        "cer": 0.026066350710900472,
+        "exact": 4,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 296.45799999999997,
+        "inferenceSeconds": 4.908665249007754
+      },
+      "cwformer-v6": {
+        "cases": 9,
+        "speechCases": 9,
+        "characters": 422,
+        "errors": 7,
+        "cer": 0.016587677725118485,
+        "exact": 5,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 296.45799999999997,
+        "inferenceSeconds": 4.968299540982116
+      }
+    }
+  },
+  "syntheticConditions": {
+    "adaptive-baseline": {
+      "chaos": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 524,
+        "errors": 404,
+        "cer": 0.7709923664122137,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 338.86687500000005,
+        "inferenceSeconds": 1.9767675430000056
+      },
+      "clean": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 527,
+        "errors": 0,
+        "cer": 0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 328.44937500000003,
+        "inferenceSeconds": 5.668735624
+      },
+      "crowded": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 535,
+        "errors": 0,
+        "cer": 0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 276.2445,
+        "inferenceSeconds": 4.6969653769999935
+      },
+      "fading": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 530,
+        "errors": 10,
+        "cer": 0.018867924528301886,
+        "exact": 10,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 288.4645,
+        "inferenceSeconds": 4.780584209000006
+      },
+      "human": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 525,
+        "errors": 0,
+        "cer": 0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 386.060125,
+        "inferenceSeconds": 6.080894792000001
+      },
+      "noise": {
+        "cases": 24,
+        "speechCases": 0,
+        "characters": 0,
+        "errors": 0,
+        "cer": null,
+        "exact": 0,
+        "noiseCases": 24,
+        "noiseSeconds": 480,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": 0,
+        "audioSeconds": 480,
+        "inferenceSeconds": 1.8780828329999861
+      },
+      "rough": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 386,
+        "errors": 35,
+        "cer": 0.09067357512953368,
+        "exact": 2,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 436.4385000000001,
+        "inferenceSeconds": 5.841500041999996
+      }
+    },
+    "adaptive-candidate": {
+      "chaos": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 524,
+        "errors": 399,
+        "cer": 0.7614503816793893,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 338.86687500000005,
+        "inferenceSeconds": 2.0748561700000137
+      },
+      "clean": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 527,
+        "errors": 0,
+        "cer": 0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 328.44937500000003,
+        "inferenceSeconds": 6.081290041000001
+      },
+      "crowded": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 535,
+        "errors": 0,
+        "cer": 0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 276.2445,
+        "inferenceSeconds": 4.673273375000004
+      },
+      "fading": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 530,
+        "errors": 13,
+        "cer": 0.024528301886792454,
+        "exact": 9,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 288.4645,
+        "inferenceSeconds": 4.823437417999994
+      },
+      "human": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 525,
+        "errors": 0,
+        "cer": 0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 386.060125,
+        "inferenceSeconds": 6.316830665999974
+      },
+      "noise": {
+        "cases": 24,
+        "speechCases": 0,
+        "characters": 0,
+        "errors": 0,
+        "cer": null,
+        "exact": 0,
+        "noiseCases": 24,
+        "noiseSeconds": 480,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": 0,
+        "audioSeconds": 480,
+        "inferenceSeconds": 2.0542851679999803
+      },
+      "rough": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 386,
+        "errors": 37,
+        "cer": 0.09585492227979274,
+        "exact": 2,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 436.4385000000001,
+        "inferenceSeconds": 5.822970123999977
+      }
+    },
+    "rnnt-v1": {
+      "chaos": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 524,
+        "errors": 368,
+        "cer": 0.7022900763358778,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 338.866875,
+        "inferenceSeconds": 7.418594169022981
+      },
+      "clean": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 527,
+        "errors": 2,
+        "cer": 0.003795066413662239,
+        "exact": 14,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 328.449375,
+        "inferenceSeconds": 30.133454957976937
+      },
+      "crowded": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 535,
+        "errors": 1,
+        "cer": 0.001869158878504673,
+        "exact": 15,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 276.2445,
+        "inferenceSeconds": 5.835245501075406
+      },
+      "fading": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 530,
+        "errors": 15,
+        "cer": 0.02830188679245283,
+        "exact": 7,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 288.4645,
+        "inferenceSeconds": 6.242454918974545
+      },
+      "human": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 525,
+        "errors": 4,
+        "cer": 0.007619047619047619,
+        "exact": 12,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 386.060125,
+        "inferenceSeconds": 22.44112987292465
+      },
+      "noise": {
+        "cases": 24,
+        "speechCases": 0,
+        "characters": 0,
+        "errors": 0,
+        "cer": null,
+        "exact": 0,
+        "noiseCases": 24,
+        "noiseSeconds": 480.0,
+        "falseCharacters": 17,
+        "falseCharactersPerMinute": 2.125,
+        "audioSeconds": 480.0,
+        "inferenceSeconds": 9.411973958020099
+      },
+      "rough": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 386,
+        "errors": 59,
+        "cer": 0.15284974093264247,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 436.4385,
+        "inferenceSeconds": 10.12315062514972
+      }
+    },
+    "cwformer-v4": {
+      "chaos": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 524,
+        "errors": 276,
+        "cer": 0.5267175572519084,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 338.866875,
+        "inferenceSeconds": 5.815179541124962
+      },
+      "clean": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 527,
+        "errors": 0,
+        "cer": 0.0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 328.449375,
+        "inferenceSeconds": 5.54259270807961
+      },
+      "crowded": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 535,
+        "errors": 0,
+        "cer": 0.0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 276.2445,
+        "inferenceSeconds": 4.496828500123229
+      },
+      "fading": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 530,
+        "errors": 6,
+        "cer": 0.011320754716981131,
+        "exact": 13,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 288.4645,
+        "inferenceSeconds": 4.829205124813598
+      },
+      "human": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 525,
+        "errors": 0,
+        "cer": 0.0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 386.060125,
+        "inferenceSeconds": 6.3790888338699006
+      },
+      "noise": {
+        "cases": 24,
+        "speechCases": 0,
+        "characters": 0,
+        "errors": 0,
+        "cer": null,
+        "exact": 0,
+        "noiseCases": 24,
+        "noiseSeconds": 480.0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": 0.0,
+        "audioSeconds": 480.0,
+        "inferenceSeconds": 7.852168084937148
+      },
+      "rough": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 386,
+        "errors": 26,
+        "cer": 0.06735751295336788,
+        "exact": 5,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 436.4385,
+        "inferenceSeconds": 7.225109206105117
+      }
+    },
+    "cwformer-v6": {
+      "chaos": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 524,
+        "errors": 268,
+        "cer": 0.5114503816793893,
+        "exact": 0,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 338.866875,
+        "inferenceSeconds": 5.906148541835137
+      },
+      "clean": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 527,
+        "errors": 0,
+        "cer": 0.0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 328.449375,
+        "inferenceSeconds": 5.536188873171341
+      },
+      "crowded": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 535,
+        "errors": 0,
+        "cer": 0.0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 276.2445,
+        "inferenceSeconds": 4.5527562109055
+      },
+      "fading": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 530,
+        "errors": 3,
+        "cer": 0.005660377358490566,
+        "exact": 14,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 288.4645,
+        "inferenceSeconds": 4.701464917976409
+      },
+      "human": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 525,
+        "errors": 0,
+        "cer": 0.0,
+        "exact": 16,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 386.060125,
+        "inferenceSeconds": 6.387147248897236
+      },
+      "noise": {
+        "cases": 24,
+        "speechCases": 0,
+        "characters": 0,
+        "errors": 0,
+        "cer": null,
+        "exact": 0,
+        "noiseCases": 24,
+        "noiseSeconds": 480.0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": 0.0,
+        "audioSeconds": 480.0,
+        "inferenceSeconds": 7.768968206830323
+      },
+      "rough": {
+        "cases": 16,
+        "speechCases": 16,
+        "characters": 386,
+        "errors": 28,
+        "cer": 0.07253886010362694,
+        "exact": 5,
+        "noiseCases": 0,
+        "noiseSeconds": 0,
+        "falseCharacters": 0,
+        "falseCharactersPerMinute": null,
+        "audioSeconds": 436.4385,
+        "inferenceSeconds": 7.170685290999245
+      }
+    }
+  },
+  "comparisons": {
+    "adaptive-upgrade": {
+      "candidate": "adaptive-candidate",
+      "baseline": "adaptive-baseline",
+      "allGuardsPass": false,
+      "guards": [
+        {
+          "name": "strictly-lower-aggregate-synthetic-CER",
+          "baseline": 0.14833168153287082,
+          "candidate": 0.14833168153287082,
+          "pass": false
+        },
+        {
+          "name": "clean-CER-within-allowance",
+          "baseline": 0,
+          "candidate": 0,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "human-CER-within-allowance",
+          "baseline": 0,
+          "candidate": 0,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "fading-CER-within-allowance",
+          "baseline": 0.018867924528301886,
+          "candidate": 0.024528301886792454,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "crowded-CER-within-allowance",
+          "baseline": 0,
+          "candidate": 0,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "negative-false-characters-do-not-increase",
+          "baseline": 0,
+          "candidate": 0,
+          "pass": true
+        },
+        {
+          "name": "real-session-errors-within-allowance",
+          "baseline": 71,
+          "candidate": 48,
+          "maximumAdditionalErrors": 1,
+          "pass": true
+        }
+      ]
+    },
+    "cwformer-upgrade": {
+      "candidate": "cwformer-v6",
+      "baseline": "cwformer-v4",
+      "allGuardsPass": true,
+      "guards": [
+        {
+          "name": "strictly-lower-aggregate-synthetic-CER",
+          "baseline": 0.10175090849025438,
+          "candidate": 0.09877766765774694,
+          "pass": true
+        },
+        {
+          "name": "clean-CER-within-allowance",
+          "baseline": 0.0,
+          "candidate": 0.0,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "human-CER-within-allowance",
+          "baseline": 0.0,
+          "candidate": 0.0,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "fading-CER-within-allowance",
+          "baseline": 0.011320754716981131,
+          "candidate": 0.005660377358490566,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "crowded-CER-within-allowance",
+          "baseline": 0.0,
+          "candidate": 0.0,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "negative-false-characters-do-not-increase",
+          "baseline": 0,
+          "candidate": 0,
+          "pass": true
+        },
+        {
+          "name": "real-session-errors-within-allowance",
+          "baseline": 11,
+          "candidate": 7,
+          "maximumAdditionalErrors": 1,
+          "pass": true
+        }
+      ]
+    },
+    "cwformer-default-vs-rnnt": {
+      "candidate": "cwformer-v6",
+      "baseline": "rnnt-v1",
+      "allGuardsPass": true,
+      "guards": [
+        {
+          "name": "strictly-lower-aggregate-synthetic-CER",
+          "baseline": 0.14833168153287082,
+          "candidate": 0.09877766765774694,
+          "pass": true
+        },
+        {
+          "name": "clean-CER-within-allowance",
+          "baseline": 0.003795066413662239,
+          "candidate": 0.0,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "human-CER-within-allowance",
+          "baseline": 0.007619047619047619,
+          "candidate": 0.0,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "fading-CER-within-allowance",
+          "baseline": 0.02830188679245283,
+          "candidate": 0.005660377358490566,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "crowded-CER-within-allowance",
+          "baseline": 0.001869158878504673,
+          "candidate": 0.0,
+          "maximumAbsoluteIncrease": 0.02,
+          "pass": true
+        },
+        {
+          "name": "negative-false-characters-do-not-increase",
+          "baseline": 17,
+          "candidate": 0,
+          "pass": true
+        },
+        {
+          "name": "real-session-errors-within-allowance",
+          "baseline": 11,
+          "candidate": 7,
+          "maximumAdditionalErrors": 1,
+          "pass": true
+        }
+      ]
+    }
+  },
+  "decisions": {
+    "adaptivePromotionGuardPassed": false,
+    "cwformerUpgradeGuardPassed": true,
+    "cwformerDefaultGuardPassed": true,
+    "adaptiveFailure": "Synthetic character errors tie at 449/3027, failing the predeclared strict improvement guard. Real-session errors improve from 71 to 48/422. The criterion is unchanged; this is a failed gate. The candidate is rejected and its acoustic changes are not selected for deployment."
+  },
+  "consumedMarineRegression": {
+    "characters": 37,
+    "adaptiveBaselineErrors": 15,
+    "adaptiveCandidateErrors": 3,
+    "rnntV1Errors": 6,
+    "cwformerV4Errors": 13,
+    "cwformerV6Errors": 12,
+    "warning": "CWformer v6 is still six characters worse than RNN-T v1 on the consumed 37-character Marine corpus despite passing the new session/default guards. It improves only one character versus CWformer v4. These consumed examples are not fresh promotion evidence.",
+    "reports": [
+      "benchmarks/round2-consumed-real-adaptive-candidate.json",
+      "benchmarks/rnnt-final-real-selected.json",
+      "benchmarks/real-final-cwformer-v4.json",
+      "benchmarks/training-cwformer-weighted-v6/marine-regression-step-2000.json"
+    ]
+  },
+  "reports": [
+    {
+      "engine": "adaptive",
+      "suite": "synthetic",
+      "file": "benchmarks/round2-final-synthetic-adaptive.json",
+      "sha256": "4acba906390c03bd5cac709851bf7669e3fa844406206c7004de788621b552b5"
+    },
+    {
+      "engine": "rnnt-v1",
+      "suite": "synthetic",
+      "file": "benchmarks/round2-final-synthetic-rnnt-v1.json",
+      "sha256": "b4b5ddaf0b78c862962f2101ac2f4c948974bbadcc93e6e315300b3b1837b22f"
+    },
+    {
+      "engine": "cwformer-v4",
+      "suite": "synthetic",
+      "file": "benchmarks/round2-final-synthetic-cwformer-v4.json",
+      "sha256": "99c52faeba0b4cd18ce272b2ff344511886a2c5030b8941e25587947c9cc6da3"
+    },
+    {
+      "engine": "cwformer-v6",
+      "suite": "synthetic",
+      "file": "benchmarks/round2-final-synthetic-cwformer-v6.json",
+      "sha256": "66bee2168734f77eb427e6393c99ba5949428dd5df286ee51b7a3f28088352d1"
+    },
+    {
+      "engine": "adaptive",
+      "suite": "real",
+      "file": "benchmarks/round2-final-real-adaptive.json",
+      "sha256": "e962d72fc59d90d9737aa640c6fd71ffde55af09b76551bb37cdb190b61a70b0"
+    },
+    {
+      "engine": "rnnt-v1",
+      "suite": "real",
+      "file": "benchmarks/round2-final-real-rnnt-v1.json",
+      "sha256": "3d5403a819c7ec0222c3194db11b15c4c4cf3af67fcd32d56078c45fc4b33948"
+    },
+    {
+      "engine": "cwformer-v4",
+      "suite": "real",
+      "file": "benchmarks/round2-final-real-cwformer-v4.json",
+      "sha256": "4910f2d40b149389687df7102dd25c825cc25f8e38287965ba778565e5bc0059"
+    },
+    {
+      "engine": "cwformer-v6",
+      "suite": "real",
+      "file": "benchmarks/round2-final-real-cwformer-v6.json",
+      "sha256": "3733578dbe5617655087c67965a8336c0cb2736de76d4d4c4fd61db1b42850da"
+    }
+  ],
+  "limitations": [
+    "Synthetic waveforms use a fresh random seed from the same generator, with supplied carrier; automatic acquisition is not scored.",
+    "Real final contains 9 correlated unambiguous crops from one SAQ 2022 session, with receiver noise reduction already applied. No broad all-operator or extreme-noise claim follows.",
+    "All settings and checkpoints were frozen before final generation/unsealing; no final-based tuning occurred.",
+    "Severe combined chaos still produces 268/524 errors (51.15% CER) for CWformer v6.",
+    "Both final corpora are now consumed evaluation data; future selection needs new reserved data."
+  ]
+}

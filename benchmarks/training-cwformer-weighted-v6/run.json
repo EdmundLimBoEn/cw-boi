@@ -1,0 +1,28 @@
+{
+  "check": false,
+  "checkpoint": "models\\adapt-v4\\step-2000.pt",
+  "output": "weighted-ablation\\models\\adapt-weighted-v6",
+  "steps": 3000,
+  "batch": 4,
+  "seed": 8721911,
+  "device": "cuda",
+  "workers": 2,
+  "lr": 1e-05,
+  "frontend": "legacy",
+  "save_every": 1000,
+  "short_gap_fraction": 0.4,
+  "element_gap_range": [
+    0.25,
+    1.0
+  ],
+  "noise_recording": [
+    "noise\\noise_20m_day.wav",
+    "noise\\noise_20m_night.wav"
+  ],
+  "upstreamRevision": "ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70",
+  "torch": "2.8.0+cu128",
+  "sourceSHA256": "93c2c5903005e179047e88e55fbdd41712b7d32c704cc9180906258d8afd40b8",
+  "frontendSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+  "generatorSHA256": "b12b6657bafd03b058d35a214e89eb6c27cf3823b357b448e4c4b3c447c756ba",
+  "initialCheckpointSHA256": "41d6658634c93539c81064bc00f0b5c23ec0c2be980370c011e8df4dc7293ebf"
+}

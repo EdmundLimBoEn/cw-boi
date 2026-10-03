@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import math
+import sys
 import threading
 import time
 import uuid
@@ -20,16 +21,14 @@ from morseformer.models.rnnt import RnntModel
 from scripts.decode_audio import _rnnt_cfg_from_state
 
 MODEL = 'rnnt_phase11b.pt'
-active_checkpoint = MODEL
-model_name = 'Morseformer 0.6.4'
 engine_name = 'rnnt'
 confidence_threshold = 0.6
 digit_threshold = 0.9
 RELEASE_CHECKPOINT = Path(__file__).resolve().parents[1] / 'models/cw-boi-rnnt-v1.pt'
 REVISION = '9eab86a3ad7482f8c5801eabf26ec46f9493b919'
 MAX_SAMPLES = 8000 * 600
-model = None
 device = 'cpu'
+engines = {}
 sessions = {}
 # ponytail: one local model lock; use per-device workers if multiple users need inference.
 model_lock = threading.Lock()
@@ -45,15 +44,63 @@ def load_model(path=None):
     return network.to(device).eval()
 
 
-def settings(query):
+def settings(query, engine=None):
+    engine = engine or {}
     carrier = float(query.get('frequency', ['650'])[0])
-    bandwidth = float(query.get('bandwidth', ['100'])[0])
+    bandwidth = float(query.get('bandwidth', [engine.get('bandwidth', 100)])[0])
     if not math.isfinite(carrier) or not 250 <= carrier <= 1400:
         raise ValueError('Carrier must be 250–1400 Hz.')
     if not math.isfinite(bandwidth) or not 40 <= bandwidth <= 500:
         raise ValueError('Bandwidth must be 40–500 Hz.')
     return StreamingConfig(carrier_hz=carrier, bandwidth_hz=bandwidth,
-                           confidence_threshold=confidence_threshold, digit_threshold=digit_threshold)
+                           confidence_threshold=engine.get('confidence_threshold', confidence_threshold),
+                           digit_threshold=engine.get('digit_threshold', digit_threshold))
+
+
+def requested_engine(query, default=None):
+    values = query.get('engine', [default or engine_name])
+    if len(values) != 1 or values[0] not in engines:
+        raise ValueError('Choose one available decoder engine: ' + ', '.join(engines) + '.')
+    return values[0]
+
+
+def engine_info(name):
+    engine = engines[name]
+    return {key: engine[key] for key in ('model', 'checkpoint', 'device', 'bandwidth',
+                                        'confidence_threshold', 'digit_threshold')} | {
+        'engine': name, 'base_revision': REVISION if name == 'rnnt' else None}
+
+
+def load_rnnt(checkpoint=None, published=False, confidence=None, digit=None):
+    name = 'RNN-T · custom checkpoint' if checkpoint else 'Morseformer 0.6.4'
+    acoustic, numeric = .6, .9
+    if not checkpoint and not published and RELEASE_CHECKPOINT.exists():
+        checkpoint = str(RELEASE_CHECKPOINT)
+        release = json.loads(Path(__file__).with_name('release.json').read_text())
+        if hashlib.sha256(RELEASE_CHECKPOINT.read_bytes()).hexdigest() != release['sha256']:
+            raise ValueError('Local release checkpoint hash differs from neural/release.json; use --checkpoint for an explicit experiment.')
+        name = release['name']
+        acoustic, numeric = release['confidence_threshold'], release['digit_threshold']
+    acoustic = acoustic if confidence is None else confidence
+    numeric = numeric if digit is None else digit
+    if not all(math.isfinite(value) and 0 <= value <= 1 for value in (acoustic, numeric)):
+        raise ValueError('Acoustic confidence thresholds must be between 0 and 1.')
+    path = Path(checkpoint) if checkpoint else None
+    return {'model': name, 'network': load_model(checkpoint), 'stream': StreamingDecoder, 'decode': decode_offline,
+            'checkpoint': f'{path.parent.name}/{path.name}' if path else MODEL, 'device': device, 'bandwidth': 100,
+            'confidence_threshold': acoustic, 'digit_threshold': numeric}
+
+
+def load_cwformer(checkpoint=None):
+    from cwformer_engine import Model as CwformerModel, StreamingDecoder as CwformerStream, decode_offline as cwformer_decode
+    from onnxruntime.capi.onnxruntime_pybind11_state import Fail, InvalidArgument, InvalidGraph, InvalidProtobuf, NoSuchFile, NotImplemented, RuntimeException
+    try:
+        network = CwformerModel(checkpoint)
+    except (Fail, InvalidArgument, InvalidGraph, InvalidProtobuf, NoSuchFile, NotImplemented, RuntimeException) as error:
+        raise RuntimeError(f'CWformer model could not load: {error}') from error
+    return {'model': 'CWformer · v6' if checkpoint is None else 'CWformer · custom', 'network': network, 'stream': CwformerStream, 'decode': cwformer_decode,
+            'checkpoint': f'{network.path.parent.name}/{network.path.name}', 'device': 'cpu', 'bandwidth': 150,
+            'confidence_threshold': None, 'digit_threshold': None}
 
 
 def samples_from_bytes(body):
@@ -95,9 +142,8 @@ class Handler(BaseHTTPRequestHandler):
         if not self.local_request():
             self.respond(403, {'error': 'This engine accepts local requests only.'})
         elif self.path == '/api/health':
-            self.respond(200, {'ready': True, 'model': model_name, 'engine': engine_name, 'checkpoint': active_checkpoint, 'device': device, 'base_revision': REVISION if engine_name == 'rnnt' else None,
-                               'confidence_threshold': confidence_threshold if engine_name == 'rnnt' else None,
-                               'digit_threshold': digit_threshold if engine_name == 'rnnt' else None})
+            self.respond(200, {'ready': True, **engine_info(engine_name),
+                               'engines': [engine_info(name) for name in engines]})
         else:
             self.respond(404, {'error': 'Unknown endpoint.'})
 
@@ -105,7 +151,7 @@ class Handler(BaseHTTPRequestHandler):
         if not self.local_request():
             return self.respond(403, {'error': 'This engine accepts local requests only.'})
         parsed = urlsplit(self.path)
-        query = parse_qs(parsed.query)
+        query = parse_qs(parsed.query, keep_blank_values=True)
         try:
             length = int(self.headers.get('Content-Length', '0'))
             if not 0 <= length <= MAX_SAMPLES * 4:
@@ -120,33 +166,41 @@ class Handler(BaseHTTPRequestHandler):
                     if now - sessions[key]['touched'] > 120:
                         del sessions[key]
                 if parsed.path == '/api/decode':
+                    name = requested_engine(query)
+                    engine = engines[name]
                     audio = samples_from_bytes(body)
-                    config = settings(query)
+                    config = settings(query, engine)
                     if len(audio) < 160:
                         text = ''
                     else:
-                        text = decode_offline(model, audio, config, device)
-                    return self.respond(200, {'text': text.strip(), 'model': active_checkpoint})
+                        text = engine['decode'](engine['network'], audio, config, engine['device'])
+                    return self.respond(200, {'text': text.strip(), 'model': engine['checkpoint'], 'engine': name})
                 if parsed.path == '/api/stream/start':
+                    name = requested_engine(query)
+                    engine = engines[name]
                     if len(sessions) >= 4:
                         return self.respond(429, {'error': 'Four decoder sessions are already active. Stop one and retry.'})
                     key = uuid.uuid4().hex
-                    sessions[key] = {'decoder': StreamingDecoder(model, settings(query), device), 'text': '', 'touched': now, 'samples': 0}
-                    return self.respond(200, {'session': key})
+                    sessions[key] = {'engine': name, 'decoder': engine['stream'](engine['network'], settings(query, engine), engine['device']),
+                                     'text': '', 'touched': now, 'samples': 0}
+                    return self.respond(200, {'session': key, 'engine': name})
                 key = query.get('session', [''])[0]
                 session = sessions.get(key)
                 if not session:
                     return self.respond(404, {'error': 'Decoder session expired. Start listening again.'})
+                if requested_engine(query, session['engine']) != session['engine']:
+                    raise ValueError('A decoder session cannot change engines. Start a new session.')
+                engine = engines[session['engine']]
                 session['touched'] = now
                 if parsed.path == '/api/stream/feed':
-                    tuned = settings(query)
+                    tuned = settings(query, engine)
                     audio = samples_from_bytes(body)
                     if session['samples'] + len(audio) > MAX_SAMPLES:
                         del sessions[key]
                         return self.respond(413, {'error': 'Neural sessions are limited to 10 minutes. Start a new session.'})
                     session['decoder'].cfg.carrier_hz = tuned.carrier_hz
                     session['decoder'].cfg.bandwidth_hz = tuned.bandwidth_hz
-                    if engine_name == 'rnnt':
+                    if session['engine'] == 'rnnt':
                         session['decoder']._fcfg.tone_freq = tuned.carrier_hz
                         session['decoder']._fcfg.bandwidth = tuned.bandwidth_hz
                     session['samples'] += len(audio)
@@ -159,7 +213,7 @@ class Handler(BaseHTTPRequestHandler):
                     del sessions[key]
                 else:
                     return self.respond(404, {'error': 'Unknown endpoint.'})
-                self.respond(200, {'text': session['text'].strip()})
+                self.respond(200, {'text': session['text'].strip(), 'engine': session['engine']})
         except (ValueError, TypeError, TimeoutError) as error:
             self.respond(400, {'error': str(error)})
         except Exception as error:
@@ -181,35 +235,26 @@ if __name__ == '__main__':
     engine_name = args.engine
     if args.published and (args.checkpoint or args.engine != 'rnnt'):
         parser.error('--published cannot be combined with --checkpoint or --engine cwformer.')
-    checkpoint = args.checkpoint
-    if checkpoint and engine_name == 'rnnt':
-        model_name = 'RNN-T · custom checkpoint'
-    if engine_name == 'rnnt' and not checkpoint and not args.published and RELEASE_CHECKPOINT.exists():
-        checkpoint = str(RELEASE_CHECKPOINT)
-        release = json.loads(Path(__file__).with_name('release.json').read_text())
-        if hashlib.sha256(RELEASE_CHECKPOINT.read_bytes()).hexdigest() != release['sha256']:
-            parser.error('Local release checkpoint hash differs from neural/release.json; use --checkpoint for an explicit experiment.')
-        model_name = release['name']
-        confidence_threshold = release['confidence_threshold']
-        digit_threshold = release['digit_threshold']
-    if args.confidence_threshold is not None:
-        confidence_threshold = args.confidence_threshold
-    if args.digit_threshold is not None:
-        digit_threshold = args.digit_threshold
-    if not all(math.isfinite(value) and 0 <= value <= 1 for value in (confidence_threshold, digit_threshold)):
-        parser.error('Acoustic confidence thresholds must be between 0 and 1.')
+    if args.engine == 'cwformer' and args.device != 'cpu':
+        parser.error('The CWformer ONNX engine currently uses CPU inference.')
+    if args.engine == 'cwformer' and (args.confidence_threshold is not None or args.digit_threshold is not None):
+        parser.error('Acoustic emission thresholds apply to the RNN-T engine only.')
     torch.set_num_threads(4)
-    if engine_name == 'cwformer':
-        if args.device != 'cpu':
-            parser.error('The CWformer ONNX engine currently uses CPU inference.')
-        from cwformer_engine import Model as CwformerModel, StreamingDecoder, decode_offline
-        model = CwformerModel(checkpoint)
-        checkpoint = str(model.path)
-        model_name = 'CWformer · experimental'
-    else:
-        model = load_model(checkpoint)
-    if checkpoint:
-        path = Path(checkpoint)
-        active_checkpoint = f'{path.parent.name}/{path.name}'
-    print(f'Neural CW engine ready on http://127.0.0.1:{args.port} ({device}, {active_checkpoint}).', flush=True)
+    try:
+        engines[engine_name] = (load_rnnt(args.checkpoint, args.published, args.confidence_threshold, args.digit_threshold)
+                                if engine_name == 'rnnt' else load_cwformer(args.checkpoint))
+    except (OSError, ValueError, RuntimeError, ImportError, KeyError) as error:
+        parser.error(str(error))
+    # Optional engines are local additions: a missing artifact must not prevent listening.
+    try:
+        if engine_name == 'rnnt':
+            from cwformer_engine import DEFAULT_MODEL
+            if DEFAULT_MODEL.is_file():
+                engines['cwformer'] = load_cwformer()
+        elif RELEASE_CHECKPOINT.is_file():
+            engines['rnnt'] = load_rnnt()
+    except (OSError, ValueError, RuntimeError, ImportError, KeyError) as error:
+        print(f'Optional decoder unavailable: {error}', file=sys.stderr, flush=True)
+    loaded = ', '.join(f"{name}: {entry['checkpoint']} ({entry['device']})" for name, entry in engines.items())
+    print(f'Neural CW engine ready on http://127.0.0.1:{args.port}; default {engine_name}; {loaded}.', flush=True)
     ThreadingHTTPServer(('127.0.0.1', args.port), Handler).serve_forever()

@@ -1,0 +1,109 @@
+{
+  "recordedAt": "2026-10-03T00:02:59.864124+00:00",
+  "commands": {
+    "adaptive-synthetic": [
+      "bun",
+      "scripts/benchmark-adaptive.ts",
+      "--manifest",
+      ".research/round2-final/manifest.json",
+      "--baseline",
+      "87ced16",
+      "--output",
+      "benchmarks/round2-final-synthetic-adaptive.json"
+    ],
+    "rnnt-v1-synthetic": [
+      ".venv/bin/python",
+      ".research/round2-baseline/neural/benchmark.py",
+      "--manifest",
+      ".research/round2-final/manifest.json",
+      "--checkpoint",
+      "models/cw-boi-rnnt-v1.pt",
+      "--decoder",
+      "app",
+      "--confidence-threshold",
+      "0.6",
+      "--digit-threshold",
+      "0.9",
+      "--threads",
+      "2",
+      "--output",
+      "benchmarks/round2-final-synthetic-rnnt-v1.json"
+    ],
+    "cwformer-v4-synthetic": [
+      ".venv/bin/python",
+      ".research/round2-baseline/neural/benchmark_cwformer.py",
+      "--manifest",
+      ".research/round2-final/manifest.json",
+      "--model",
+      "models/cwformer-adapt-v4/cwformer_streaming_fp32.onnx",
+      "--bandwidth",
+      "150",
+      "--output",
+      "benchmarks/round2-final-synthetic-cwformer-v4.json"
+    ],
+    "cwformer-v6-synthetic": [
+      ".venv/bin/python",
+      "neural/benchmark_cwformer.py",
+      "--manifest",
+      ".research/round2-final/manifest.json",
+      "--model",
+      "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+      "--bandwidth",
+      "150",
+      "--output",
+      "benchmarks/round2-final-synthetic-cwformer-v6.json"
+    ],
+    "adaptive-real": [
+      "bun",
+      "scripts/benchmark-adaptive.ts",
+      "--manifest",
+      ".research/round2-real-final/manifest.json",
+      "--baseline",
+      "87ced16",
+      "--output",
+      "benchmarks/round2-final-real-adaptive.json"
+    ],
+    "rnnt-v1-real": [
+      ".venv/bin/python",
+      ".research/round2-baseline/neural/benchmark.py",
+      "--manifest",
+      ".research/round2-real-final/manifest.json",
+      "--checkpoint",
+      "models/cw-boi-rnnt-v1.pt",
+      "--decoder",
+      "app",
+      "--confidence-threshold",
+      "0.6",
+      "--digit-threshold",
+      "0.9",
+      "--threads",
+      "2",
+      "--output",
+      "benchmarks/round2-final-real-rnnt-v1.json"
+    ],
+    "cwformer-v4-real": [
+      ".venv/bin/python",
+      ".research/round2-baseline/neural/benchmark_cwformer.py",
+      "--manifest",
+      ".research/round2-real-final/manifest.json",
+      "--model",
+      "models/cwformer-adapt-v4/cwformer_streaming_fp32.onnx",
+      "--bandwidth",
+      "150",
+      "--output",
+      "benchmarks/round2-final-real-cwformer-v4.json"
+    ],
+    "cwformer-v6-real": [
+      ".venv/bin/python",
+      "neural/benchmark_cwformer.py",
+      "--manifest",
+      ".research/round2-real-final/manifest.json",
+      "--model",
+      "models/cwformer-weighted-v6/step-2000/cwformer_streaming_fp32.onnx",
+      "--bandwidth",
+      "150",
+      "--output",
+      "benchmarks/round2-final-real-cwformer-v6.json"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "check": false,
+  "checkpoint": "models\\adapt-v4\\step-2000.pt",
+  "output": "causal-ablation\\models\\adapt-causal-v5",
+  "steps": 3000,
+  "batch": 4,
+  "seed": 8720911,
+  "device": "cuda",
+  "workers": 2,
+  "lr": 1e-05,
+  "frontend": "causal",
+  "save_every": 1000,
+  "noise_recording": [
+    "noise\\noise_20m_day.wav",
+    "noise\\noise_20m_night.wav"
+  ],
+  "upstreamRevision": "ef6ac7ca75b20833c811ea9ebf2bde1fa139fa70",
+  "torch": "2.8.0+cu128",
+  "sourceSHA256": "f6ec663c34cf0eef593af0dd2806a0ef12459168e746617325a3c42b38b649ec",
+  "frontendSHA256": "bf9cd27900622fcd24994a0ea9bc26b1fa41d5cdb9f8947e3c66805065a80561",
+  "generatorSHA256": "4b3a633683b3e8c5ce2921bd78be016c6603297cbb69aa2307af7ca6448f6772",
+  "initialCheckpointSHA256": "41d6658634c93539c81064bc00f0b5c23ec0c2be980370c011e8df4dc7293ebf"
+}

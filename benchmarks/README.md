@@ -1,4 +1,10 @@
-# Measured results, 2026-10-02
+# Measured results
+
+**Current: [October 3 results and reproduction](ROUND2_RESULTS.md).** CWformer v6 passed all seven release guards against both CWformer v4 and RNN-T v1 and is now the recommended installed neural model. The [deployment record](round2-deployment.json) identifies the exact artifact and post-evaluation path-only wiring change. The adaptive proposal was rejected and archived; its deployed source remains `87ced16`.
+
+## Historical: October 2 release
+
+The remaining results describe the October 2 release and its now-consumed evaluation data. References to "current" in this historical section mean that release.
 
 **RNN-T v1 is the local neural default.** Its frozen checkpoint and runtime passed all six [predeclared release guards](release-criteria.json): lower aggregate synthetic CER, bounded clean/fading/crowded regressions, no increase in noise false copy, and no more than one additional real-recording error. [Selection](rnnt-selection.json), [final comparison](rnnt-final-comparison.json), and [release manifest](../neural/release.json) retain hashes and settings. A fresh checkout without the local weights uses the pinned published model.
 

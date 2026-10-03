@@ -7,13 +7,15 @@ import { CHALLENGES, makeSignal, randomSource } from '../src/signals'
 const { values } = parseArgs({ options: {
   split: { type: 'string', default: 'dev' },
   output: { type: 'string' },
+  seed: { type: 'string' },
   'cases-per-condition': { type: 'string', default: '3' },
   'noise-repeats': { type: 'string', default: '1' },
 }, strict: true })
 if (!['dev', 'final'].includes(values.split!)) throw new Error('--split must be dev or final')
 const casesPerCondition = Number(values['cases-per-condition']), noiseRepeats = Number(values['noise-repeats'])
 if (![casesPerCondition, noiseRepeats].every(value => Number.isInteger(value) && value >= 1 && value <= 1000)) throw new Error('Case counts must be integers in [1, 1000]')
-const split = values.split!, seed = split === 'dev' ? 817351 : 917351
+const split = values.split!, seed = values.seed === undefined ? (split === 'dev' ? 817351 : 917351) : Number(values.seed)
+if ((values.seed !== undefined && !/^\d+$/.test(values.seed)) || !Number.isInteger(seed) || seed < 1 || seed > 0xffffffff) throw new Error('--seed must be an integer in [1, 4294967295]')
 const output = resolve(values.output ?? `.research/continuous-${split}`)
 const sampleRate = 8000
 const random = randomSource(seed)

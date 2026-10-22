@@ -32,6 +32,7 @@ engines = {}
 sessions = {}
 # ponytail: one local model lock; use per-device workers if multiple users need inference.
 model_lock = threading.Lock()
+active_handlers = threading.BoundedSemaphore(8)
 
 
 def load_model(path=None):
@@ -113,6 +114,22 @@ def samples_from_bytes(body):
 
 
 class Handler(BaseHTTPRequestHandler):
+    # StreamRequestHandler applies this before reading the request line or headers.
+    timeout = 30
+
+    def handle(self):
+        if not active_handlers.acquire(blocking=False):
+            # No request has been parsed yet; initialize send_response's context.
+            self.request_version = 'HTTP/1.0'
+            self.requestline = ''
+            self.command = None
+            self.close_connection = True
+            return self.respond(503, {'error': 'Neural server is busy. Retry shortly.'})
+        try:
+            super().handle()
+        finally:
+            active_handlers.release()
+
     def log_message(self, *_args):
         pass
 
@@ -156,64 +173,69 @@ class Handler(BaseHTTPRequestHandler):
             length = int(self.headers.get('Content-Length', '0'))
             if not 0 <= length <= MAX_SAMPLES * 4:
                 return self.respond(413, {'error': 'Audio is limited to 10 minutes.'})
-            self.connection.settimeout(30)
-            body = self.rfile.read(length)
-            if len(body) != length:
-                raise ValueError('Incomplete audio request.')
-            with model_lock, torch.inference_mode():
-                now = time.monotonic()
-                for key in list(sessions):
-                    if now - sessions[key]['touched'] > 120:
+            # Wait without buffering audio; only the lock holder may read a body.
+            if not model_lock.acquire(timeout=0.1):
+                return self.respond(503, {'error': 'Neural server is busy. Retry shortly.'})
+            try:
+                body = self.rfile.read(length)
+                if len(body) != length:
+                    raise ValueError('Incomplete audio request.')
+                with torch.inference_mode():
+                    now = time.monotonic()
+                    for key in list(sessions):
+                        if now - sessions[key]['touched'] > 120:
+                            del sessions[key]
+                    if parsed.path == '/api/decode':
+                        name = requested_engine(query)
+                        engine = engines[name]
+                        audio = samples_from_bytes(body)
+                        config = settings(query, engine)
+                        if len(audio) < 160:
+                            text = ''
+                        else:
+                            text = engine['decode'](engine['network'], audio, config, engine['device'])
+                        return self.respond(200, {'text': text.strip(), 'model': engine['checkpoint'], 'engine': name})
+                    if parsed.path == '/api/stream/start':
+                        name = requested_engine(query)
+                        engine = engines[name]
+                        if len(sessions) >= 4:
+                            return self.respond(429, {'error': 'Four decoder sessions are already active. Stop one and retry.'})
+                        key = uuid.uuid4().hex
+                        sessions[key] = {'engine': name, 'decoder': engine['stream'](engine['network'], settings(query, engine), engine['device']),
+                                         'text': '', 'touched': now, 'samples': 0}
+                        return self.respond(200, {'session': key, 'engine': name})
+                    key = query.get('session', [''])[0]
+                    session = sessions.get(key)
+                    if not session:
+                        return self.respond(404, {'error': 'Decoder session expired. Start listening again.'})
+                    if requested_engine(query, session['engine']) != session['engine']:
+                        raise ValueError('A decoder session cannot change engines. Start a new session.')
+                    engine = engines[session['engine']]
+                    session['touched'] = now
+                    if parsed.path == '/api/stream/feed':
+                        tuned = settings(query, engine)
+                        audio = samples_from_bytes(body)
+                        if session['samples'] + len(audio) > MAX_SAMPLES:
+                            del sessions[key]
+                            return self.respond(413, {'error': 'Neural sessions are limited to 10 minutes. Start a new session.'})
+                        session['decoder'].cfg.carrier_hz = tuned.carrier_hz
+                        session['decoder'].cfg.bandwidth_hz = tuned.bandwidth_hz
+                        if session['engine'] == 'rnnt':
+                            session['decoder']._fcfg.tone_freq = tuned.carrier_hz
+                            session['decoder']._fcfg.bandwidth = tuned.bandwidth_hz
+                        session['samples'] += len(audio)
+                        session['text'] += ''.join(session['decoder'].feed(audio))
+                    elif parsed.path == '/api/stream/finish':
+                        if session['samples'] >= 160:
+                            session['text'] += session['decoder'].flush()
                         del sessions[key]
-                if parsed.path == '/api/decode':
-                    name = requested_engine(query)
-                    engine = engines[name]
-                    audio = samples_from_bytes(body)
-                    config = settings(query, engine)
-                    if len(audio) < 160:
-                        text = ''
+                    elif parsed.path == '/api/stream/cancel':
+                        del sessions[key]
                     else:
-                        text = engine['decode'](engine['network'], audio, config, engine['device'])
-                    return self.respond(200, {'text': text.strip(), 'model': engine['checkpoint'], 'engine': name})
-                if parsed.path == '/api/stream/start':
-                    name = requested_engine(query)
-                    engine = engines[name]
-                    if len(sessions) >= 4:
-                        return self.respond(429, {'error': 'Four decoder sessions are already active. Stop one and retry.'})
-                    key = uuid.uuid4().hex
-                    sessions[key] = {'engine': name, 'decoder': engine['stream'](engine['network'], settings(query, engine), engine['device']),
-                                     'text': '', 'touched': now, 'samples': 0}
-                    return self.respond(200, {'session': key, 'engine': name})
-                key = query.get('session', [''])[0]
-                session = sessions.get(key)
-                if not session:
-                    return self.respond(404, {'error': 'Decoder session expired. Start listening again.'})
-                if requested_engine(query, session['engine']) != session['engine']:
-                    raise ValueError('A decoder session cannot change engines. Start a new session.')
-                engine = engines[session['engine']]
-                session['touched'] = now
-                if parsed.path == '/api/stream/feed':
-                    tuned = settings(query, engine)
-                    audio = samples_from_bytes(body)
-                    if session['samples'] + len(audio) > MAX_SAMPLES:
-                        del sessions[key]
-                        return self.respond(413, {'error': 'Neural sessions are limited to 10 minutes. Start a new session.'})
-                    session['decoder'].cfg.carrier_hz = tuned.carrier_hz
-                    session['decoder'].cfg.bandwidth_hz = tuned.bandwidth_hz
-                    if session['engine'] == 'rnnt':
-                        session['decoder']._fcfg.tone_freq = tuned.carrier_hz
-                        session['decoder']._fcfg.bandwidth = tuned.bandwidth_hz
-                    session['samples'] += len(audio)
-                    session['text'] += ''.join(session['decoder'].feed(audio))
-                elif parsed.path == '/api/stream/finish':
-                    if session['samples'] >= 160:
-                        session['text'] += session['decoder'].flush()
-                    del sessions[key]
-                elif parsed.path == '/api/stream/cancel':
-                    del sessions[key]
-                else:
-                    return self.respond(404, {'error': 'Unknown endpoint.'})
-                self.respond(200, {'text': session['text'].strip(), 'engine': session['engine']})
+                        return self.respond(404, {'error': 'Unknown endpoint.'})
+                    self.respond(200, {'text': session['text'].strip(), 'engine': session['engine']})
+            finally:
+                model_lock.release()
         except (ValueError, TypeError, TimeoutError) as error:
             self.respond(400, {'error': str(error)})
         except Exception as error:

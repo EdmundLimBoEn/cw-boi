@@ -244,7 +244,7 @@ export class CWDecoder {
     if (!this.settings.autoTune || prominence < this.settings.threshold + 7) return
     const l = Math.log(Math.max(power[peakBin - 1], 1e-15)), m = Math.log(Math.max(power[peakBin], 1e-15)), r = Math.log(Math.max(power[peakBin + 1], 1e-15))
     const delta = clamp(0.5 * (l - r) / (l - 2 * m + r || 1), -0.5, 0.5)
-    const candidate = (peakBin + delta) * hz
+    const candidate = clamp((peakBin + delta) * hz, 250, 1400)
     if (Math.abs(candidate - this.scanCandidate) < 35) this.scanCount++
     else { this.scanCandidate = candidate; this.scanCount = 1 }
     const close = Math.abs(candidate - this.frequency) < this.settings.bandwidth / 2
@@ -265,7 +265,7 @@ export class CWDecoder {
       if (power[peakBin] > strongest && power[peakBin] / localNoise(power, peakBin) > 10 ** ((this.settings.threshold + 7) / 10)) {
         strongest = power[peakBin]
         const l = Math.log(Math.max(power[peakBin - 1], 1e-15)), m = Math.log(Math.max(power[peakBin], 1e-15)), r = Math.log(Math.max(power[peakBin + 1], 1e-15))
-        carrier = (peakBin + clamp(0.5 * (l - r) / (l - 2 * m + r || 1), -0.5, 0.5)) * hz
+        carrier = clamp((peakBin + clamp(0.5 * (l - r) / (l - 2 * m + r || 1), -0.5, 0.5)) * hz, 250, 1400)
       }
     }
     if (this.settings.autoTune && strongest > 0) this.frequency = carrier

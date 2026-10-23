@@ -16,6 +16,7 @@ export class StationAudio {
   private keyOscillator: OscillatorNode | null = null
   private keyGain: GainNode | null = null
   private keyOutput: GainNode | null = null
+  private senderGeneration = 0
   private generation = 0
   private loadPromise: Promise<void> | null = null
   onReading: (reading: DecoderReading) => void = () => {}
@@ -120,7 +121,9 @@ export class StationAudio {
 
   async play(plan: Transmission, settings: SenderSettings, receive: boolean, onEnd: () => void) {
     this.stopSender()
+    const generation = this.senderGeneration
     const context = await this.ready()
+    if (generation !== this.senderGeneration) return null
     const oscillator = context.createOscillator()
     oscillator.frequency.value = settings.frequency
     const gain = context.createGain()
@@ -149,7 +152,9 @@ export class StationAudio {
 
   async playSamples(samples: Float32Array, sampleRate: number, volume: number, onEnd: () => void) {
     this.stopSender()
+    const generation = this.senderGeneration
     const context = await this.ready()
+    if (generation !== this.senderGeneration) return null
     const buffer = context.createBuffer(1, samples.length, sampleRate)
     buffer.copyToChannel(Float32Array.from(samples), 0)
     const source = context.createBufferSource()
@@ -165,6 +170,7 @@ export class StationAudio {
     }
     this.player = source; this.outputGain = output
     source.start()
+    return true
   }
 
   setVolume(volume: number) {
@@ -173,6 +179,7 @@ export class StationAudio {
   }
 
   stopSender() {
+    this.senderGeneration++
     if (this.player) {
       this.player.onended = null
       try { this.player.stop() } catch { /* The source may already have finished. */ }

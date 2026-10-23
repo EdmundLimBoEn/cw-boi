@@ -157,3 +157,21 @@ describe('Morse timing and audio', () => {
     expect(decoded.text.trim()).toBe(text)
   }, 15000)
 })
+
+for (const [frequency, sampleRate] of [[249, 8000], [1401, 8192]]) {
+  for (const lead of [0, sampleRate]) {
+    test(`autotune clamps ${frequency} Hz at ${sampleRate} Hz after ${lead} silent samples`, () => {
+      const decoder = new CWDecoder(sampleRate)
+      if (lead) decoder.process(new Float32Array(lead))
+      const samples = synthesize(transmission('CQ TEST 73', 20), frequency, sampleRate)
+      for (let offset = 0; offset < samples.length; offset += 256) {
+        const reading = decoder.process(samples.subarray(offset, offset + 256))
+        expect(decoder.frequency).toBeGreaterThanOrEqual(250)
+        expect(decoder.frequency).toBeLessThanOrEqual(1400)
+        expect(reading.frequency).toBeGreaterThanOrEqual(250)
+        expect(reading.frequency).toBeLessThanOrEqual(1400)
+      }
+      expect(decoder.finish().frequency).toBe(frequency < 250 ? 250 : 1400)
+    })
+  }
+}

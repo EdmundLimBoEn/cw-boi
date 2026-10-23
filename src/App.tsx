@@ -229,11 +229,12 @@ function App() {
         setSource('loopback'); setSourceName('Sender loopback')
       }
       if (ticket !== operation.current) return
-      startTime.current = await audio.play(plan, tx, loopback, () => {
+      const start = await audio.play(plan, tx, loopback, () => {
         setPlaying(false); setElapsed(plan.duration)
         if (currentSource.current === 'loopback') { void finishReception(); setSource('idle') }
       })
-      if (ticket !== operation.current) { audio.stopSender(); return }
+      if (start === null || ticket !== operation.current) return
+      startTime.current = start
       setPlaying(true)
     } catch (error) { if (ticket === operation.current) { stop(); setError(audioError(error)) } }
     finally { if (ticket === operation.current) setBusy(false) }
@@ -256,8 +257,8 @@ function App() {
       const samples = makeSignal(LAB_TEXT, challenge, SAMPLE_SEED, SAMPLE_RATE)
       const duration = samples.length / SAMPLE_RATE
       setSampleDuration(duration); setSourceName(challenge.name)
-      await audio.playSamples(samples, SAMPLE_RATE, tx.volume, () => { setSampleElapsed(duration); void finishReception(); setSource('idle') })
-      if (ticket !== operation.current) { audio.stopSender(); return }
+      const started = await audio.playSamples(samples, SAMPLE_RATE, tx.volume, () => { setSampleElapsed(duration); void finishReception(); setSource('idle') })
+      if (!started || ticket !== operation.current) return
       startTime.current = audio.context!.currentTime
       setSource('demo')
     } catch (error) { if (ticket === operation.current) { stop(); setError(audioError(error)) } }

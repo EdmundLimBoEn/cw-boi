@@ -33,6 +33,9 @@ sessions = {}
 # ponytail: one local model lock; use per-device workers if multiple users need inference.
 model_lock = threading.Lock()
 active_handlers = threading.BoundedSemaphore(8)
+# Keep complete bodies bounded even while waiting for inference.
+active_uploads = threading.BoundedSemaphore(2)
+UPLOAD_TIMEOUT = 30
 
 
 def load_model(path=None):
@@ -164,22 +167,46 @@ class Handler(BaseHTTPRequestHandler):
         else:
             self.respond(404, {'error': 'Unknown endpoint.'})
 
+    def read_body(self, length):
+        deadline = time.monotonic() + UPLOAD_TIMEOUT
+        body = bytearray()
+        while len(body) < length:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise TimeoutError('Audio upload deadline exceeded.')
+            self.connection.settimeout(remaining)
+            # read1 performs at most one socket read, so dripping bytes cannot
+            # restart the timeout inside a buffered read of the entire body.
+            chunk = self.rfile.read1(min(65536, length - len(body)))
+            if time.monotonic() >= deadline:
+                raise TimeoutError('Audio upload deadline exceeded.')
+            if not chunk:
+                raise ValueError('Incomplete audio request.')
+            body.extend(chunk)
+        return body
+
     def do_POST(self):
         if not self.local_request():
             return self.respond(403, {'error': 'This engine accepts local requests only.'})
         parsed = urlsplit(self.path)
         query = parse_qs(parsed.query, keep_blank_values=True)
+        upload_acquired = False
         try:
             length = int(self.headers.get('Content-Length', '0'))
             if not 0 <= length <= MAX_SAMPLES * 4:
                 return self.respond(413, {'error': 'Audio is limited to 10 minutes.'})
-            # Wait without buffering audio; only the lock holder may read a body.
+            audio = None
+            if parsed.path in {'/api/decode', '/api/stream/feed'}:
+                upload_acquired = active_uploads.acquire(blocking=False)
+                if not upload_acquired:
+                    return self.respond(503, {'error': 'Neural server is busy. Retry shortly.'})
+                audio = samples_from_bytes(self.read_body(length))
+            elif length:
+                raise ValueError('Control requests must have an empty body.')
+            self.connection.settimeout(self.timeout)
             if not model_lock.acquire(timeout=0.1):
                 return self.respond(503, {'error': 'Neural server is busy. Retry shortly.'})
             try:
-                body = self.rfile.read(length)
-                if len(body) != length:
-                    raise ValueError('Incomplete audio request.')
                 with torch.inference_mode():
                     now = time.monotonic()
                     for key in list(sessions):
@@ -188,7 +215,6 @@ class Handler(BaseHTTPRequestHandler):
                     if parsed.path == '/api/decode':
                         name = requested_engine(query)
                         engine = engines[name]
-                        audio = samples_from_bytes(body)
                         config = settings(query, engine)
                         if len(audio) < 160:
                             text = ''
@@ -214,21 +240,26 @@ class Handler(BaseHTTPRequestHandler):
                     session['touched'] = now
                     if parsed.path == '/api/stream/feed':
                         tuned = settings(query, engine)
-                        audio = samples_from_bytes(body)
                         if session['samples'] + len(audio) > MAX_SAMPLES:
                             del sessions[key]
                             return self.respond(413, {'error': 'Neural sessions are limited to 10 minutes. Start a new session.'})
-                        session['decoder'].cfg.carrier_hz = tuned.carrier_hz
-                        session['decoder'].cfg.bandwidth_hz = tuned.bandwidth_hz
-                        if session['engine'] == 'rnnt':
-                            session['decoder']._fcfg.tone_freq = tuned.carrier_hz
-                            session['decoder']._fcfg.bandwidth = tuned.bandwidth_hz
-                        session['samples'] += len(audio)
-                        session['text'] += ''.join(session['decoder'].feed(audio))
+                        try:
+                            session['decoder'].cfg.carrier_hz = tuned.carrier_hz
+                            session['decoder'].cfg.bandwidth_hz = tuned.bandwidth_hz
+                            if session['engine'] == 'rnnt':
+                                session['decoder']._fcfg.tone_freq = tuned.carrier_hz
+                                session['decoder']._fcfg.bandwidth = tuned.bandwidth_hz
+                            session['samples'] += len(audio)
+                            session['text'] += ''.join(session['decoder'].feed(audio))
+                        except Exception:
+                            del sessions[key]
+                            raise
                     elif parsed.path == '/api/stream/finish':
-                        if session['samples'] >= 160:
-                            session['text'] += session['decoder'].flush()
-                        del sessions[key]
+                        try:
+                            if session['samples'] >= 160:
+                                session['text'] += session['decoder'].flush()
+                        finally:
+                            del sessions[key]
                     elif parsed.path == '/api/stream/cancel':
                         del sessions[key]
                     else:
@@ -241,6 +272,9 @@ class Handler(BaseHTTPRequestHandler):
         except Exception as error:
             print(f'Inference failed: {type(error).__name__}', flush=True)
             self.respond(500, {'error': 'Neural decoding failed. Retry with a shorter recording.'})
+        finally:
+            if upload_acquired:
+                active_uploads.release()
 
 
 if __name__ == '__main__':

@@ -1,7 +1,8 @@
 import { afterEach, expect, mock, test } from 'bun:test'
-import { transmission } from './morse'
+import { DEFAULT_SENDER, transmission } from './morse'
 
 mock.module('./receiver.worklet.ts?worker&url', () => ({ default: 'receiver-worklet.js' }))
+import { DEFAULT_RECEIVER } from './decoder'
 const { StationAudio } = await import('./audio')
 
 function deferred() {
@@ -11,8 +12,9 @@ function deferred() {
 }
 
 class Node {
-  gain = { value: 0, setValueAtTime() {}, linearRampToValueAtTime() {} }
+  gain = { value: 0, setValueAtTime() {}, linearRampToValueAtTime() {}, setTargetAtTime() {}, cancelScheduledValues() {} }
   frequency = { value: 0 }
+  Q = { value: 0 }
   onended: (() => void) | null = null
   stops = 0
   disconnected = false
@@ -23,9 +25,14 @@ class Node {
 }
 const originalWindow = globalThis.window
 const originalContext = globalThis.AudioContext
+const originalWorklet = globalThis.AudioWorkletNode
+const originalNavigator = Object.getOwnPropertyDescriptor(globalThis, 'navigator')
 afterEach(() => {
   globalThis.window = originalWindow
   globalThis.AudioContext = originalContext
+  globalThis.AudioWorkletNode = originalWorklet
+  if (originalNavigator) Object.defineProperty(globalThis, 'navigator', originalNavigator)
+  else Reflect.deleteProperty(globalThis, 'navigator')
 })
 
 function setup() {
@@ -38,6 +45,8 @@ function setup() {
     audioWorklet = { addModule: () => module.promise }
     resume() { const pending = deferred(); resumes.push(pending); return pending.promise }
     createGain() { return new Node() }
+    createBiquadFilter() { return new Node() }
+    createMediaStreamSource() { return new Node() }
     createOscillator() { const node = new Node(); sources.push(node); return node }
     createBufferSource() { return this.createOscillator() }
     createBuffer() { return { copyToChannel() {} } }
@@ -102,3 +111,103 @@ for (const [kind, start] of Object.entries(starts)) {
     expect(sources[1].disconnected).toBe(true)
   })
 }
+
+test('straight key: stopping pending setup prevents oscillator creation', async () => {
+  const { audio, resumes, sources, module } = setup()
+  const pending = audio.prepareKey(DEFAULT_SENDER)
+  resumes[0].resolve()
+  await Promise.resolve()
+  audio.stopKey()
+  module.resolve()
+  await pending
+  expect(sources).toHaveLength(0)
+})
+
+for (const reverse of [false, true]) {
+  test(`straight key: cancelled setup cannot replace the new key (${reverse ? 'new' : 'old'} resumes first)`, async () => {
+    const { audio, resumes, sources, module } = setup()
+    module.resolve()
+    const old = audio.prepareKey(DEFAULT_SENDER)
+    audio.stopKey()
+    const current = audio.prepareKey(DEFAULT_SENDER)
+    resumes[reverse ? 1 : 0].resolve()
+    await (reverse ? current : old)
+    resumes[reverse ? 0 : 1].resolve()
+    await Promise.all([old, current])
+    expect(sources).toHaveLength(1)
+    expect(sources[0].stops).toBe(0)
+    expect(sources[0].disconnected).toBe(false)
+    audio.stopKey()
+    expect(sources[0].stops).toBe(1)
+    expect(sources[0].disconnected).toBe(true)
+  })
+}
+
+async function microphone() {
+  const state = setup()
+  const worklets: Worklet[] = []
+  class Worklet extends Node {
+    messages: { type: string }[] = []
+    port = {
+      onmessage: null as null | ((event: { data: unknown }) => void),
+      postMessage: (message: { type: string }) => { this.messages.push(message) },
+      close: mock(() => {}),
+    }
+    constructor() { super(); worklets.push(this) }
+    emit(data: unknown) { this.port.onmessage?.({ data }) }
+  }
+  const track = { onended: null as null | (() => Promise<void>), stop: mock(() => {}) }
+  const stream = { getTracks: () => [track], getAudioTracks: () => [track] }
+  Object.defineProperty(globalThis, 'navigator', { configurable: true, value: { mediaDevices: { getUserMedia: async () => stream } } })
+  globalThis.AudioWorkletNode = Worklet as unknown as typeof AudioWorkletNode
+  state.module.resolve()
+  const pending = state.audio.listen(DEFAULT_RECEIVER)
+  state.resumes[0].resolve()
+  // Wait until listen has acquired the stream and entered createReceiver's readiness.
+  while (state.resumes.length < 2) await Promise.resolve()
+  state.resumes[1].resolve()
+  expect(await pending).toBe(true)
+  return { ...state, track, worklets }
+}
+
+test('microphone disconnect delivers buffered samples and final reading before ending reception', async () => {
+  const { audio, track, worklets } = await microphone()
+  const events: string[] = []
+  const tail = new Float32Array([0.2, 0.1])
+  audio.onSamples = samples => { expect(samples).toEqual(tail); events.push('samples') }
+  audio.onReading = reading => { expect(reading.text).toBe('E'); events.push('reading') }
+  audio.onReceiverEnded = () => { events.push('ended') }
+  const pending = track.onended!()
+  expect(worklets[0].messages.at(-1)).toEqual({ type: 'stop' })
+  expect(worklets[0].port.close).not.toHaveBeenCalled()
+  expect(events).toEqual([])
+  worklets[0].emit({ type: 'samples', samples: tail })
+  worklets[0].emit({ type: 'finished', reading: { text: 'E' } })
+  await pending
+  expect(events).toEqual(['samples', 'reading', 'ended'])
+  expect(worklets[0].port.close).toHaveBeenCalledTimes(1)
+  expect(track.stop).toHaveBeenCalledTimes(1)
+})
+
+test('microphone disconnect completion cannot affect a newer receiver', async () => {
+  const { audio, track, worklets, resumes } = await microphone()
+  const ended = mock(() => {}), reading = mock(() => {}), samples = mock(() => {})
+  audio.onReceiverEnded = ended
+  audio.onReading = reading
+  audio.onSamples = samples
+  const queuedEnd = track.onended!
+  const pending = queuedEnd()
+  const current = audio.loopback(DEFAULT_RECEIVER)
+  resumes[2].resolve()
+  expect(await current).toBe(true)
+  worklets[0].emit({ type: 'samples', samples: new Float32Array([1]) })
+  worklets[0].emit({ type: 'finished', reading: { text: 'OLD' } })
+  await pending
+  await queuedEnd()
+  expect(ended).not.toHaveBeenCalled()
+  expect(reading).not.toHaveBeenCalled()
+  expect(samples).not.toHaveBeenCalled()
+  expect(worklets[1].disconnected).toBe(false)
+  expect(worklets[1].messages.some(message => message.type === 'stop')).toBe(false)
+  await audio.stopReceiver()
+})

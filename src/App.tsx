@@ -315,7 +315,7 @@ function App() {
       if (!await audio.loopback({ ...rx, frequency: tx.frequency, autoTune: false, wpm: tx.wpm, spacing: tx.spacing })) return
       if (ticket !== operation.current) return
       await audio.prepareKey(tx)
-      if (ticket !== operation.current) { audio.stopKey(); return }
+      if (ticket !== operation.current) return
       setArmed(true); setSource('key'); setSourceName('Straight key')
     } catch (error) { if (ticket === operation.current) { stop(); setError(audioError(error)) } }
     finally { if (ticket === operation.current) setBusy(false) }

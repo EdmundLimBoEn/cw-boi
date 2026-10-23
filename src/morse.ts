@@ -67,7 +67,7 @@ export function encodeText(text: string) {
 
 export function decodeText(text: string) {
   const normalized = text.trim().replace(/[·•]/g, '.').replace(/[−–—_]/g, '-').replace(/\s*[|/]\s*|\s{3,}/g, ' / ')
-  return normalized.split(/\s+/).filter(Boolean).map(code => code === '/' ? ' ' : REVERSE[code] ?? '�').join('')
+  return normalized.split(/\s+/).filter(Boolean).map(code => code === '/' ? ' ' : Object.hasOwn(REVERSE, code) ? REVERSE[code] : '�').join('')
 }
 
 export function synthesize(plan: Transmission, frequency: number, sampleRate = 22050, volume = 0.6) {

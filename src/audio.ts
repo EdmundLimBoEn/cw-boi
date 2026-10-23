@@ -16,6 +16,7 @@ export class StationAudio {
   private keyOscillator: OscillatorNode | null = null
   private keyGain: GainNode | null = null
   private keyOutput: GainNode | null = null
+  private keyGeneration = 0
   private senderGeneration = 0
   private generation = 0
   private loadPromise: Promise<void> | null = null
@@ -69,7 +70,13 @@ export class StationAudio {
       this.stream = stream
       this.input = context.createMediaStreamSource(stream)
       this.input.connect(this.filter!)
-      stream.getAudioTracks().forEach(track => { track.onended = () => { this.stopReceiver(); this.onReceiverEnded() } })
+      stream.getAudioTracks().forEach(track => { track.onended = async () => {
+        if (generation !== this.generation) return
+        const stopped = this.stopReceiver(true)
+        const stoppedGeneration = this.generation
+        await stopped
+        if (stoppedGeneration === this.generation) this.onReceiverEnded()
+      } })
       return true
     } catch (error) {
       stream.getTracks().forEach(track => track.stop())
@@ -191,10 +198,10 @@ export class StationAudio {
   }
 
   async prepareKey(settings: SenderSettings) {
-    this.releaseKey()
+    this.stopKey()
+    const generation = this.keyGeneration
     const context = await this.ready()
-    this.keyOscillator?.stop(); this.keyOscillator?.disconnect()
-    this.keyGain?.disconnect(); this.keyOutput?.disconnect()
+    if (generation !== this.keyGeneration) return
     this.keyOscillator = context.createOscillator()
     this.keyOscillator.frequency.value = settings.frequency
     this.keyGain = context.createGain()
@@ -219,6 +226,7 @@ export class StationAudio {
   }
 
   stopKey() {
+    this.keyGeneration++
     this.releaseKey()
     this.keyOscillator?.stop(); this.keyOscillator?.disconnect(); this.keyOscillator = null
     this.keyGain?.disconnect(); this.keyGain = null

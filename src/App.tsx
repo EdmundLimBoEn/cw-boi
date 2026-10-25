@@ -77,6 +77,7 @@ function App() {
   const helpDialog = useRef<HTMLDialogElement>(null)
   const worker = useRef<Worker | null>(null)
   const operation = useRef(0)
+  const keySetupPending = useRef(false)
   const keyIsDown = useRef(false)
   const startTime = useRef(0)
   const currentSource = useRef(source)
@@ -166,6 +167,7 @@ function App() {
 
   const stop = (finish = false) => {
     operation.current++
+    keySetupPending.current = false
     setNeuralBusy(false)
     if (finish && !busy && !neuralBusy) void finishReception()
     else { neuralStream.current?.cancel(); neuralStream.current = null; setNeuralBusy(false); station.current?.stopReceiver() }
@@ -305,6 +307,7 @@ function App() {
   async function armKey() {
     if (armed) { stop(true); return }
     stop(); setError(''); setBusy(true); setReading(EMPTY); setNeuralText(''); setReceiverTab('audio')
+    keySetupPending.current = true
     const ticket = operation.current
     try {
       const audio = getAudio()
@@ -318,7 +321,7 @@ function App() {
       if (ticket !== operation.current) return
       setArmed(true); setSource('key'); setSourceName('Straight key')
     } catch (error) { if (ticket === operation.current) { stop(); setError(audioError(error)) } }
-    finally { if (ticket === operation.current) setBusy(false) }
+    finally { if (ticket === operation.current) { keySetupPending.current = false; setBusy(false) } }
   }
 
   async function runChallenge(challenge: Challenge) {
@@ -411,7 +414,7 @@ function App() {
 
         <section className="panel sender-panel" aria-labelledby="sender-heading">
           <div className="panel-header"><div className="panel-title"><span className="channel-icon tx-icon"><Radio size={19} /></span><h2 id="sender-heading">Transmitter</h2><span className="channel-code">TX</span></div><span className="output-tag"><Headphones size={13} /> Audio out</span></div>
-          <div className="sender-body"><div className="segmented"><button aria-pressed={mode === 'compose'} className={mode === 'compose' ? 'active' : ''} onClick={() => { if (armed) stop(); setMode('compose') }}>Compose a message</button><button aria-pressed={mode === 'key'} className={mode === 'key' ? 'active' : ''} onClick={() => { if (playing) stop(); setMode('key') }}><Keyboard size={14} /> Straight key</button></div>
+          <div className="sender-body"><div className="segmented"><button aria-pressed={mode === 'compose'} className={mode === 'compose' ? 'active' : ''} onClick={() => { if (armed || keySetupPending.current) stop(); setMode('compose') }}>Compose a message</button><button aria-pressed={mode === 'key'} className={mode === 'key' ? 'active' : ''} onClick={() => { if (playing) stop(); setMode('key') }}><Keyboard size={14} /> Straight key</button></div>
             {mode === 'compose' ? <><div className="message-heading"><label htmlFor="tx-message">Your message</label><span>{message.length}/1000</span></div><div className="message-editor"><textarea id="tx-message" value={message} onChange={event => setMessage(event.target.value)} disabled={playing} spellCheck={false} maxLength={1000} placeholder="Say something in dits and dahs…" /><div className="message-morse" aria-label="Encoded Morse preview">{plan?.tokens.length ? plan.tokens.map((token, index) => <span className={index === activeToken ? 'current-token' : ''} key={index} title={token.text}>{token.code.replace(/\./g, '·').replace(/-/g, '−')}</span>) : <span className="muted">Your Morse appears here.</span>}</div></div>
               <div className="macro-row"><span>Quick calls</span>{[{ label: 'CQ', text: 'CQ CQ CQ DE ' }, { label: '73', text: '73' }, { label: 'TEST', text: 'VVV TEST' }, { label: '<SK>', text: '<SK>' }].map(macro => <button key={macro.label} disabled={playing} title={`Insert ${macro.text}`} onClick={() => setMessage(previous => `${previous.trim()} ${macro.text}`.trimStart().slice(0, 1000))}>{macro.label}</button>)}<button className="clear-message" disabled={playing || !message} onClick={() => setMessage('')}>Clear</button></div>
               {(planResult.error || !!plan?.unsupported.length) && <p className="input-error" role="alert">{planResult.error || `Not in Morse: ${plan?.unsupported.join(' ')}. Remove these characters to send.`}</p>}

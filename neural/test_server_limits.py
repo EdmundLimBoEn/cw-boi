@@ -29,6 +29,13 @@ class Connection:
         self.output = bytearray()
         self.timeout = None
         self.timeout_at_first_read = None
+        self.closed = False
+
+    def shutdown(self, _how):
+        pass
+
+    def close(self):
+        self.closed = True
 
     def settimeout(self, timeout):
         self.timeout = timeout
@@ -44,7 +51,6 @@ class Connection:
 class ServerLimitsTest(unittest.TestCase):
     def setUp(self):
         server.model_lock = threading.Lock()
-        server.active_handlers = threading.BoundedSemaphore(8)
         server.active_uploads = threading.BoundedSemaphore(2)
         server.sessions.clear()
 
@@ -61,39 +67,83 @@ class ServerLimitsTest(unittest.TestCase):
         self.assertEqual(self.run_request(None, conn)[0], 404)
         self.assertEqual(conn.timeout_at_first_read, 30)
 
-    def test_eight_slow_connections_reject_ninth_before_headers(self):
+    def test_eight_slow_connections_reject_excess_without_creating_threads(self):
         entered = threading.Barrier(9)
         release = threading.Event()
-        errors = []
+        workers = []
+        real_thread = threading.Thread
 
         class SlowHeaders(io.BytesIO):
             def readline(self, *args):
                 entered.wait(timeout=5)
-                release.wait(timeout=5)
+                if not release.wait(timeout=5):
+                    raise TimeoutError('Test did not release headers')
                 return b''
 
-        def slow_client():
-            conn = Connection(b'')
-            conn.reader = SlowHeaders()
-            try:
-                server.Handler(conn, ('127.0.0.1', 1234), object())
-            except Exception as error:
-                errors.append(error)
+        def create_thread(*args, **kwargs):
+            worker = real_thread(*args, **kwargs)
+            workers.append(worker)
+            return worker
 
-        workers = [threading.Thread(target=slow_client) for _ in range(8)]
-        for worker in workers:
-            worker.start()
-        try:
-            entered.wait(timeout=5)
-            # Empty input would normally close silently; overload must respond
-            # before reading even a request line.
-            self.assertEqual(self.run_request(b'')[0], 503)
-        finally:
-            release.set()
-            for worker in workers:
-                worker.join(timeout=5)
-        self.assertEqual(errors, [])
-        self.assertEqual(self.run_request(b'GET / HTTP/1.1\r\nHost: localhost\r\n\r\n')[0], 404)
+        # No listening socket is needed to exercise real server dispatch.
+        with patch('socketserver.socket.socket'), server.BoundedThreadingHTTPServer(
+                ('127.0.0.1', 0), server.Handler, bind_and_activate=False) as httpd:
+            with patch.object(server.threading, 'Thread', side_effect=create_thread), \
+                    patch.object(httpd, 'handle_error') as errors:
+                try:
+                    for _ in range(8):
+                        conn = Connection(b'')
+                        conn.reader = SlowHeaders()
+                        httpd.process_request(conn, ('127.0.0.1', 1234))
+                    entered.wait(timeout=5)
+                    for _ in range(16):
+                        excess = Connection(b'')
+                        httpd.process_request(excess, ('127.0.0.1', 1234))
+                        self.assertTrue(excess.closed)
+                        self.assertIsNone(excess.timeout_at_first_read)
+                    self.assertEqual(len(workers), 8)
+                finally:
+                    release.set()
+                    for worker in workers:
+                        worker.join(timeout=5)
+                        self.assertFalse(worker.is_alive())
+                errors.assert_not_called()
+                # Completed requests return capacity for a fresh request.
+                conn = Connection(b'GET / HTTP/1.1\r\nHost: localhost\r\n\r\n')
+                httpd.process_request(conn, ('127.0.0.1', 1234))
+                workers[-1].join(timeout=5)
+                self.assertEqual(len(workers), 9)
+                self.assertIn(b'404', conn.output)
+                self.assertTrue(conn.closed)
+
+    def test_thread_start_and_handler_failures_return_capacity(self):
+        # No listening socket is needed to exercise real server dispatch.
+        with patch('socketserver.socket.socket'), server.BoundedThreadingHTTPServer(
+                ('127.0.0.1', 0), server.Handler, bind_and_activate=False) as httpd:
+            # Leave one slot so that a single leaked permit prevents recovery.
+            for _ in range(7):
+                self.assertTrue(httpd.active_handlers.acquire(blocking=False))
+            with patch.object(server.threading.Thread, 'start', side_effect=RuntimeError('start failed')):
+                with self.assertRaisesRegex(RuntimeError, 'start failed'):
+                    httpd.process_request(Connection(b''), ('127.0.0.1', 1234))
+            completed = threading.Event()
+            real_dispatch = httpd.process_request_thread
+
+            def dispatch(*args):
+                try:
+                    real_dispatch(*args)
+                finally:
+                    completed.set()
+
+            conn = Connection(b'')
+            with patch.object(httpd, 'process_request_thread', side_effect=dispatch), \
+                    patch.object(httpd, 'finish_request', side_effect=RuntimeError('handler failed')), \
+                    patch.object(httpd, 'handle_error') as errors:
+                httpd.process_request(conn, ('127.0.0.1', 1234))
+                self.assertTrue(completed.wait(timeout=5))
+                errors.assert_called_once()
+            self.assertTrue(conn.closed)
+            self.assertTrue(httpd.active_handlers.acquire(blocking=False))
 
     def test_full_upload_slots_reject_without_reading_body(self):
         conn = Connection(b'POST /api/decode HTTP/1.1\r\nHost: localhost\r\nContent-Length: 19200000\r\n\r\n')

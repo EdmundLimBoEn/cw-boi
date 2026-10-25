@@ -57,8 +57,9 @@ export function transmission(text: string, wpm: number, spacing = wpm): Transmis
     })
     if (index < tokens.length - 1) time += gapUnit * (tokens[index + 1].text === ' ' ? 7 : 3)
   })
-  if (time > 600) throw new Error('This transmission is over 10 minutes. Shorten the message or increase the speed.')
-  return { tones, duration: tones.length ? time + Math.max(0.5, 7 * gapUnit) : 0, tokens, unsupported }
+  const duration = tones.length ? time + Math.max(0.5, 7 * gapUnit) : 0
+  if (duration > 600) throw new Error('This transmission is over 10 minutes. Shorten the message or increase the speed.')
+  return { tones, duration, tokens, unsupported }
 }
 
 export function encodeText(text: string) {

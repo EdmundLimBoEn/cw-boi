@@ -254,7 +254,7 @@ function App() {
       if (ticket !== operation.current) return
       if (!await audio.loopback(settings)) return
       if (ticket !== operation.current) return
-      const samples = makeSignal(LAB_TEXT, challenge, SAMPLE_SEED, SAMPLE_RATE)
+      const samples = challenge === sample ? sampleAudio : makeSignal(LAB_TEXT, challenge, SAMPLE_SEED, SAMPLE_RATE)
       const duration = samples.length / SAMPLE_RATE
       setSampleDuration(duration); setSourceName(challenge.name)
       const started = await audio.playSamples(samples, SAMPLE_RATE, tx.volume, () => { setSampleElapsed(duration); void finishReception(); setSource('idle') })

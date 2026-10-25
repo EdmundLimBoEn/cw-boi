@@ -7,8 +7,9 @@ const { StationAudio } = await import('./audio')
 
 function deferred() {
   let resolve!: () => void
-  const promise = new Promise<void>(done => { resolve = done })
-  return { promise, resolve }
+  let reject!: (error: Error) => void
+  const promise = new Promise<void>((done, fail) => { resolve = done; reject = fail })
+  return { promise, resolve, reject }
 }
 
 class Node {
@@ -222,5 +223,77 @@ test('microphone disconnect completion cannot affect a newer receiver', async ()
   expect(samples).not.toHaveBeenCalled()
   expect(worklets[1].disconnected).toBe(false)
   expect(worklets[1].messages.some(message => message.type === 'stop')).toBe(false)
+  await audio.stopReceiver()
+})
+
+for (const disconnected of [false, true]) {
+  test(`overlapping graceful stops preserve the flush (${disconnected ? 'microphone ended' : 'explicit stop'})`, async () => {
+    const { audio, track, worklets } = await microphone()
+    const samples = mock(() => {}), reading = mock(() => {}), ended = mock(() => {})
+    audio.onSamples = samples
+    audio.onReading = reading
+    audio.onReceiverEnded = ended
+    const first = disconnected ? track.onended!() : audio.stopReceiver(true)
+    let secondFinished = false
+    const second = audio.stopReceiver(true).then(() => { secondFinished = true })
+    await Promise.resolve()
+    expect(secondFinished).toBe(false)
+    const tail = new Float32Array([0.2, 0.1])
+    worklets[0].emit({ type: 'samples', samples: tail })
+    worklets[0].emit({ type: 'finished', reading: { text: 'E' } })
+    await Promise.all([first, second])
+    expect(samples).toHaveBeenCalledTimes(1)
+    expect(samples).toHaveBeenCalledWith(tail)
+    expect(reading).toHaveBeenCalledTimes(1)
+    expect(reading).toHaveBeenCalledWith({ text: 'E' })
+    expect(ended).toHaveBeenCalledTimes(disconnected ? 1 : 0)
+    expect(worklets[0].messages.filter(message => message.type === 'stop')).toHaveLength(1)
+    expect(worklets[0].port.close).toHaveBeenCalledTimes(1)
+    expect(track.stop).toHaveBeenCalledTimes(1)
+  })
+}
+
+test('explicit cancellation invalidates a pending graceful flush', async () => {
+  const { audio, track, worklets } = await microphone()
+  const samples = mock(() => {}), reading = mock(() => {}), ended = mock(() => {})
+  audio.onSamples = samples
+  audio.onReading = reading
+  audio.onReceiverEnded = ended
+  const pending = track.onended!()
+  await audio.stopReceiver()
+  worklets[0].emit({ type: 'samples', samples: new Float32Array([1]) })
+  worklets[0].emit({ type: 'finished', reading: { text: 'OLD' } })
+  await pending
+  expect(samples).not.toHaveBeenCalled()
+  expect(reading).not.toHaveBeenCalled()
+  expect(ended).not.toHaveBeenCalled()
+  expect(worklets[0].port.close).toHaveBeenCalledTimes(1)
+})
+
+test('stale microphone setup failure stops its tracks without disconnecting a replacement', async () => {
+  const { audio, resumes, worklets } = await microphone()
+  const oldTrack = { stop: mock(() => {}) }
+  const acquired = deferred()
+  navigator.mediaDevices.getUserMedia = async () => {
+    acquired.resolve()
+    return { getTracks: () => [oldTrack] } as unknown as MediaStream
+  }
+  const old = audio.listen(DEFAULT_RECEIVER)
+  resumes[2].resolve()
+  await acquired.promise
+  await new Promise(resolve => setTimeout(resolve, 0))
+  expect(resumes).toHaveLength(4)
+  await audio.stopReceiver()
+  const current = audio.loopback(DEFAULT_RECEIVER)
+  resumes[4].resolve()
+  expect(await current).toBe(true)
+  const failure = new Error('old readiness failed')
+  resumes[3].reject(failure)
+  await expect(old).rejects.toThrow(failure.message)
+  expect(oldTrack.stop).toHaveBeenCalledTimes(1)
+  expect(worklets[1].disconnected).toBe(false)
+  expect(worklets[1].port.close).not.toHaveBeenCalled()
+  audio.configure(DEFAULT_RECEIVER)
+  expect(worklets[1].messages.at(-1)).toEqual({ type: 'configure', settings: DEFAULT_RECEIVER })
   await audio.stopReceiver()
 })

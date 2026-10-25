@@ -4,11 +4,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
+    "dev": "vite --host 127.0.0.1",
     "build": "bun run assets:prepare && tsc -b && vite build",
     "assets:prepare": "bun run scripts/prepare-browser-assets.ts",
     "deploy": "node node_modules/cf/bin/cf deploy --prebuilt --mode production",
-    "preview": "vite preview --host 0.0.0.0",
+    "preview": "vite preview --host 127.0.0.1",
     "test": "bun test",
     "benchmark": "bun run scripts/benchmark.ts",
     "neural": ".venv/bin/python neural/server.py",

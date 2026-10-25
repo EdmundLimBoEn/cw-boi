@@ -38,6 +38,7 @@ afterEach(() => {
 function setup() {
   const resumes: ReturnType<typeof deferred>[] = []
   const sources: Node[] = []
+  const copyToChannel = mock((_samples: Float32Array, _channel: number) => {})
   const module = deferred()
   class Context {
     currentTime = 0
@@ -49,16 +50,28 @@ function setup() {
     createMediaStreamSource() { return new Node() }
     createOscillator() { const node = new Node(); sources.push(node); return node }
     createBufferSource() { return this.createOscillator() }
-    createBuffer() { return { copyToChannel() {} } }
+    createBuffer() { return { copyToChannel } }
   }
   globalThis.window = { isSecureContext: true } as Window & typeof globalThis
   globalThis.AudioContext = Context as unknown as typeof AudioContext
-  return { audio: new StationAudio(), resumes, sources, module }
+  return { audio: new StationAudio(), resumes, sources, module, copyToChannel }
 }
 const starts = {
   tones: (audio: InstanceType<typeof StationAudio>, onEnd: () => void) => audio.play(transmission('CQ', 20), { frequency: 650, volume: 0.5, wpm: 20, spacing: 20 }, false, onEnd),
   samples: (audio: InstanceType<typeof StationAudio>, onEnd: () => void) => audio.playSamples(new Float32Array(800), 8000, 0.5, onEnd),
 }
+
+test('sample playback passes the original sample view to copyToChannel without cloning', async () => {
+  const { audio, resumes, module, copyToChannel } = setup()
+  const samples = new Float32Array([1, 0.25, -0.5, 1]).subarray(1, 3)
+  module.resolve()
+  const pending = audio.playSamples(samples, 8000, 0.5, () => {})
+  resumes[0].resolve()
+  expect(await pending).toBe(true)
+  expect(copyToChannel).toHaveBeenCalledTimes(1)
+  expect(copyToChannel.mock.calls[0][0]).toBe(samples)
+  expect(copyToChannel.mock.calls[0][1]).toBe(0)
+})
 
 for (const [kind, start] of Object.entries(starts)) {
   test(`${kind}: stop while loading the worklet prevents source creation`, async () => {

@@ -157,13 +157,13 @@ export class StationAudio {
     return start
   }
 
-  async playSamples(samples: Float32Array, sampleRate: number, volume: number, onEnd: () => void) {
+  async playSamples(samples: Float32Array<ArrayBuffer>, sampleRate: number, volume: number, onEnd: () => void) {
     this.stopSender()
     const generation = this.senderGeneration
     const context = await this.ready()
     if (generation !== this.senderGeneration) return null
     const buffer = context.createBuffer(1, samples.length, sampleRate)
-    buffer.copyToChannel(Float32Array.from(samples), 0)
+    buffer.copyToChannel(samples, 0)
     const source = context.createBufferSource()
     const output = context.createGain()
     output.gain.value = volume

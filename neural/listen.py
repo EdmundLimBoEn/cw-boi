@@ -55,14 +55,23 @@ def pcm_chunks(input_index, seconds):
                '-acodec', 'pcm_f32le', '-f', 'f32le', 'pipe:1']
     process = subprocess.Popen(command, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE)
     deadline = time.monotonic() + seconds
+    drain_deadline = None
     pending = bytearray()
     remaining = seconds * 32000
     try:
-        while remaining > 0 and time.monotonic() < deadline:
-            ready, _, _ = select.select([process.stdout], [], [], min(0.25, max(0, deadline - time.monotonic())))
+        while True:
+            now = time.monotonic()
+            if drain_deadline is None and now >= deadline:
+                # ffmpeg's -t bounds capture; allow its queued output to reach EOF.
+                drain_deadline = now + 2
+            read_deadline = drain_deadline if drain_deadline is not None else deadline
+            if now >= read_deadline:
+                print('Audio capture truncated: timed out draining buffered audio.', file=sys.stderr)
+                break
+            ready, _, _ = select.select([process.stdout], [], [], min(0.25, read_deadline - now))
             if not ready:
                 continue
-            block = os.read(process.stdout.fileno(), min(32000 - len(pending), remaining))
+            block = os.read(process.stdout.fileno(), min(32000 - len(pending), remaining) or 1)
             if not block:
                 code = process.wait(timeout=2)
                 if code:
@@ -70,13 +79,22 @@ def pcm_chunks(input_index, seconds):
                 if len(pending) % 4:
                     raise RuntimeError('Audio capture ended in the middle of a float32 sample.')
                 break
+            if not remaining:
+                print('Audio capture truncated: output exceeded the capture duration limit.', file=sys.stderr)
+                break
             pending.extend(block)
             remaining -= len(block)
             if len(pending) == 32000:
+                paused = time.monotonic()
                 yield bytes(pending)
+                # Synchronous inference must not consume the pipe cleanup budget.
+                if drain_deadline is not None:
+                    drain_deadline += time.monotonic() - paused
                 pending.clear()
         if pending:
             complete = len(pending) // 4 * 4
+            if complete != len(pending):
+                print('Audio capture truncated: incomplete float32 sample discarded.', file=sys.stderr)
             if complete:
                 yield bytes(pending[:complete])
     finally:

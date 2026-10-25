@@ -16,7 +16,7 @@ def rejected(function, error=ValueError):
     raise AssertionError('Expected rejection')
 
 
-def run_capture(reads, fail=None, clock=None, waits=None, bandwidth=80):
+def run_capture(reads, fail=None, clock=None, waits=None, bandwidth=80, on_feed=None, select_result=None):
     process = Mock()
     process.stdout.fileno.return_value = 123
     process.poll.return_value = None
@@ -33,6 +33,8 @@ def run_capture(reads, fail=None, clock=None, waits=None, bandwidth=80):
         assert params['session'] == 'local-session'
         if action == 'feed':
             feeds += 1
+            if on_feed:
+                on_feed()
             if fail:
                 raise fail
             return {'text': 'CQ' if feeds == 1 else 'CQ DE'}
@@ -45,7 +47,7 @@ def run_capture(reads, fail=None, clock=None, waits=None, bandwidth=80):
     errors = StringIO()
     failure = None
     with (patch.object(listen.subprocess, 'Popen', return_value=process) as spawn,
-          patch.object(listen.select, 'select', return_value=([process.stdout], [], [])),
+          patch.object(listen.select, 'select', return_value=select_result or ([process.stdout], [], [])),
           patch.object(listen.os, 'read', side_effect=reads),
           patch.object(listen.time, 'monotonic', side_effect=clock or (lambda: 0)),
           patch.object(listen, 'request', side_effect=request),
@@ -106,10 +108,32 @@ if __name__ == '__main__':
     assert [action for action, _, _ in calls] == ['start', 'finish']
     process.terminate.assert_called_once()
 
-    calls, process, _, failure, errors = run_capture([], clock=[0, 3])
+    # Feed requests cross both capture and drain deadlines; neither may lose PCM.
+    now = [0]
+
+    def slow_feed():
+        now[0] += 3
+
+    calls, process, _, failure, errors = run_capture(
+        [b'\0\0\0?' * 8000, b'\0\0\0?' * 8000, b''],
+        clock=lambda: now[0], on_feed=slow_feed)
+    assert failure is None and 'truncated' not in errors
+    assert [action for action, _, _ in calls] == ['start', 'feed', 'feed', 'finish']
+    assert sum(len(body) for action, _, body in calls if action == 'feed') == 64000
+    assert now[0] == 6
+    # Reading EOF also checks the capture process exit status.
+    assert process.wait.call_count == 2
+
+    calls, process, _, failure, errors = run_capture([], clock=[0, 3, 6], select_result=([], [], []))
     assert failure is None and [action for action, _, _ in calls] == ['start', 'finish']
     assert 'No audio arrived' in errors and 'Terminal microphone permission' in errors
+    assert 'truncated' in errors and 'timed out draining' in errors
     process.terminate.assert_called_once()
+
+    calls, _, _, failure, errors = run_capture([b'\0' * 32000, b'\0' * 32000, b'x'])
+    assert failure is None and calls[-1][0] == 'finish'
+    assert sum(len(body) for action, _, body in calls if action == 'feed') == 64000
+    assert 'truncated' in errors and 'duration limit' in errors
 
     calls, _, _, failure, _ = run_capture([b'\0' * 3, b''])
     assert isinstance(failure, RuntimeError) and calls[-1][0] == 'cancel'

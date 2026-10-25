@@ -32,7 +32,6 @@ engines = {}
 sessions = {}
 # ponytail: one local model lock; use per-device workers if multiple users need inference.
 model_lock = threading.Lock()
-active_handlers = threading.BoundedSemaphore(8)
 # Keep complete bodies bounded even while waiting for inference.
 active_uploads = threading.BoundedSemaphore(2)
 UPLOAD_TIMEOUT = 30
@@ -116,22 +115,32 @@ def samples_from_bytes(body):
     return audio
 
 
+class BoundedThreadingHTTPServer(ThreadingHTTPServer):
+    def __init__(self, *args, **kwargs):
+        self.active_handlers = threading.BoundedSemaphore(8)
+        super().__init__(*args, **kwargs)
+
+    def process_request(self, request, client_address):
+        if not self.active_handlers.acquire(blocking=False):
+            # Do not create a thread or block the accept loop writing to a client.
+            self.shutdown_request(request)
+            return
+        try:
+            super().process_request(request, client_address)
+        except BaseException:
+            self.active_handlers.release()
+            raise
+
+    def process_request_thread(self, request, client_address):
+        try:
+            super().process_request_thread(request, client_address)
+        finally:
+            self.active_handlers.release()
+
+
 class Handler(BaseHTTPRequestHandler):
     # StreamRequestHandler applies this before reading the request line or headers.
     timeout = 30
-
-    def handle(self):
-        if not active_handlers.acquire(blocking=False):
-            # No request has been parsed yet; initialize send_response's context.
-            self.request_version = 'HTTP/1.0'
-            self.requestline = ''
-            self.command = None
-            self.close_connection = True
-            return self.respond(503, {'error': 'Neural server is busy. Retry shortly.'})
-        try:
-            super().handle()
-        finally:
-            active_handlers.release()
 
     def log_message(self, *_args):
         pass
@@ -313,4 +322,4 @@ if __name__ == '__main__':
         print(f'Optional decoder unavailable: {error}', file=sys.stderr, flush=True)
     loaded = ', '.join(f"{name}: {entry['checkpoint']} ({entry['device']})" for name, entry in engines.items())
     print(f'Neural CW engine ready on http://127.0.0.1:{args.port}; default {engine_name}; {loaded}.', flush=True)
-    ThreadingHTTPServer(('127.0.0.1', args.port), Handler).serve_forever()
+    BoundedThreadingHTTPServer(('127.0.0.1', args.port), Handler).serve_forever()

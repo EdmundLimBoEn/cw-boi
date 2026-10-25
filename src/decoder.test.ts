@@ -22,6 +22,19 @@ describe('Morse timing and audio', () => {
     expect(() => transmission('A'.repeat(1001), 20)).toThrow()
     expect(transmission('HELLO 😊', 20).unsupported).toEqual(['😊'])
   })
+  test('counts trailing silence toward the ten-minute transmission limit', () => {
+    for (const count of [624, 625]) {
+      expect(() => transmission('E'.repeat(count), 5)).toThrow('This transmission is over 10 minutes.')
+    }
+  })
+  test('exports a near-limit transmission within the importer duration limit', () => {
+    const plan = transmission('E'.repeat(623), 5)
+    expect(plan.duration).toBeCloseTo(599.19)
+    const wav = new DataView(wavBytes(synthesize(plan, 650)))
+    const duration = wav.getUint32(40, true) / wav.getUint32(28, true)
+    expect(duration).toBeGreaterThanOrEqual(plan.duration)
+    expect(duration).toBeLessThanOrEqual(600)
+  })
   test('exports valid mono PCM WAV', () => {
     const pcm = synthesize(transmission('CQ', 20), 650)
     const wav = wavBytes(pcm)

@@ -19,6 +19,7 @@ export class StationAudio {
   private keyGeneration = 0
   private senderGeneration = 0
   private generation = 0
+  private pendingReceiverStop: Promise<void> | null = null
   private loadPromise: Promise<void> | null = null
   onReading: (reading: DecoderReading) => void = () => {}
   onReceiverEnded: () => void = () => {}
@@ -80,7 +81,7 @@ export class StationAudio {
       return true
     } catch (error) {
       stream.getTracks().forEach(track => track.stop())
-      this.stopReceiver()
+      if (generation === this.generation) this.stopReceiver()
       throw error
     }
   }
@@ -99,6 +100,8 @@ export class StationAudio {
   }
 
   async stopReceiver(flush = false) {
+    if (flush && this.pendingReceiverStop) return this.pendingReceiverStop
+    this.pendingReceiverStop = null
     const generation = ++this.generation
     this.input?.disconnect()
     this.input = null
@@ -108,22 +111,28 @@ export class StationAudio {
     this.receiver = null
     this.filter = null; this.silence = null
     filter?.disconnect()
-    if (receiver) {
-      if (flush) await new Promise<void>(resolve => {
-        const timer = setTimeout(resolve, 300)
-        receiver.port.onmessage = ({ data }) => {
-          if (generation === this.generation) {
-            if (data.type === 'samples') capture?.(data.samples)
-            else this.onReading(data.reading ?? data)
+    const pending = (async () => {
+      if (receiver) {
+        if (flush) await new Promise<void>(resolve => {
+          const timer = setTimeout(resolve, 300)
+          receiver.port.onmessage = ({ data }) => {
+            if (generation === this.generation) {
+              if (data.type === 'samples') capture?.(data.samples)
+              else this.onReading(data.reading ?? data)
+            }
+            if (data.type === 'finished') { clearTimeout(timer); resolve() }
           }
-          if (data.type === 'finished') { clearTimeout(timer); resolve() }
-        }
-        receiver.port.postMessage({ type: 'stop' })
-      })
-      receiver.port.onmessage = null
-      receiver.disconnect(); receiver.port.close()
+          receiver.port.postMessage({ type: 'stop' })
+        })
+        receiver.port.onmessage = null
+        receiver.disconnect(); receiver.port.close()
+      }
+      silence?.disconnect()
+    })()
+    if (flush && receiver) this.pendingReceiverStop = pending
+    try { await pending } finally {
+      if (this.pendingReceiverStop === pending) this.pendingReceiverStop = null
     }
-    silence?.disconnect()
   }
 
   async play(plan: Transmission, settings: SenderSettings, receive: boolean, onEnd: () => void) {
